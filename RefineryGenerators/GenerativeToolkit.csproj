@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RefineryNodes</RootNamespace>
-    <AssemblyName>RefineryGenerators</AssemblyName>
+    <AssemblyName>GenerativeToolkit</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -69,16 +69,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\RefineryNodes\bin"
-mkdir "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\RefineryNodes\dyf"
-mkdir "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\RefineryNodes\extra"
-mkdir "$(AppData)\Dynamo\Dynamo Core\2.0\packages\RefineryNodes\bin"
-mkdir "$(AppData)\Dynamo\Dynamo Core\2.0\packages\RefineryNodes\dyf"
-mkdir "$(AppData)\Dynamo\Dynamo Core\2.0\packages\RefineryNodes\extra"
-Copy "$(TargetPath)" "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\RefineryNodes\bin\$(ProjectName).dll"
-Copy "$(ProjectDir)pkg.json" "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\RefineryNodes\pkg.json"
-Copy "$(TargetPath)" "$(AppData)\Dynamo\Dynamo Core\2.0\packages\RefineryNodes\bin\$(ProjectName).dll"
-Copy "$(ProjectDir)pkg.json" "$(AppData)\Dynamo\Dynamo Core\2.0\packages\RefineryNodes\pkg.json"</PostBuildEvent>
+    <PostBuildEvent>mkdir "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\GenerativeToolkit\bin"
+mkdir "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\GenerativeToolkit\dyf"
+mkdir "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\GenerativeToolkit\extra"
+mkdir "$(AppData)\Dynamo\Dynamo Core\2.0\packages\GenerativeToolkit\bin"
+mkdir "$(AppData)\Dynamo\Dynamo Core\2.0\packages\GenerativeToolkit\dyf"
+mkdir "$(AppData)\Dynamo\Dynamo Core\2.0\packages\GenerativeToolkit\extra"
+Copy "$(TargetPath)" "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\GenerativeToolkit\bin\$(ProjectName).dll"
+Copy "$(ProjectDir)pkg.json" "$(AppData)\Dynamo\Dynamo Revit\2.0\packages\GenerativeToolkit\pkg.json"
+Copy "$(TargetPath)" "$(AppData)\Dynamo\Dynamo Core\2.0\packages\GenerativeToolkit\bin\$(ProjectName).dll"
+Copy "$(ProjectDir)pkg.json" "$(AppData)\Dynamo\Dynamo Core\2.0\packages\GenerativeToolkit\pkg.json"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

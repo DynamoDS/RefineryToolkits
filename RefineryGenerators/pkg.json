@@ -19,6 +19,6 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "RefineryGenerators, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
+    "GenerativeToolkit, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
   ]
 }
