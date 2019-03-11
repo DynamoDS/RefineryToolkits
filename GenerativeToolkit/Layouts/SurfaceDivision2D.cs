@@ -14,10 +14,10 @@ namespace GenerativeToolkit.Layouts
     public class SurfaceDivision2D
     {
         [IsVisibleInDynamoLibrary(true)]
-        public static List<Geometry> DivideSurface(Surface surface, List<double> U, List<double> V)
+        public static List<Autodesk.DesignScript.Geometry.Geometry> DivideSurface(Surface surface, List<double> U, List<double> V)
         {
             List<IDisposable> disposables = new List<IDisposable>();
-            List<Geometry> dividedSurfaces = new List<Geometry>();
+            List<Autodesk.DesignScript.Geometry.Geometry> dividedSurfaces = new List<Autodesk.DesignScript.Geometry.Geometry>();
 
             List<PolySurface> polySurfaces = new List<PolySurface>();
             List<List<double>> UV = new List<List<double>>{ U, V };
@@ -34,8 +34,8 @@ namespace GenerativeToolkit.Layouts
                 polySurfaces.Add(PolySurface.ByJoinedSurfaces(crvSurf));
                 disposables.AddRange(crvSurf);
             }
-            List<Geometry> splitSurfaces = surface.Split(polySurfaces[1]).ToList();
-            List<Geometry> sortedSurfaces = splitSurfaces.OrderBy(x => uCurve.DistanceTo(x)).ToList();
+            List<Autodesk.DesignScript.Geometry.Geometry> splitSurfaces = surface.Split(polySurfaces[1]).ToList();
+            List<Autodesk.DesignScript.Geometry.Geometry> sortedSurfaces = splitSurfaces.OrderBy(x => uCurve.DistanceTo(x)).ToList();
             disposables.AddRange(splitSurfaces);
 
             foreach (var surf in sortedSurfaces)
