@@ -33,22 +33,169 @@ namespace Buildings
         /// Generates a building mass
         /// </summary>
         /// <param name="Type">Building type (ex. U, L, I, H, O, D)</param>
-        /// <param name="Length">Overall building length</param>
-        /// <param name="Width">Overall building width</param>
-        /// <param name="Offset">Building Floor offset</param>
-        /// <param name="BldgArea">Target gross building area</param>
-        /// <param name="CreateCore">Create core volumes and subtractions</param>
+        /// <param name="BasePlane">The building base plane.</param>
+        /// <param name="Length">Overall building length.</param>
+        /// <param name="Width">Overall building width.</param>
+        /// <param name="Depth">Building depth.</param>
+        /// <param name="BldgArea">Target gross building area.</param>
+        /// <param name="FloorHeight">Height of the floor.</param>
+        /// <param name="CreateCore">Create core volumes and subtractions?</param>
         /// <returns></returns>
         /// <search>building,design,refinery</search>
         [MultiReturn(new[] { "Floors", "Mass", "Cores", "TotalFloorArea", "BuildingVolume", "TopPlane" })]
         public static Dictionary<string, object> BuildingGenerator(string Type, Plane BasePlane, double Length, double Width, double Depth, double BldgArea, double FloorHeight, bool CreateCore)
         {
-            List<Surface> floors = null;
+            var floors = new List<Surface>();
             PolySurface mass = null;
             List<PolySurface> cores = null;
             double totalArea = 0;
             double totalVolume = 0;
             Plane topPlane = null;
+
+            PolyCurve boundary = null;
+            var holes = new List<PolyCurve>();
+            
+            switch (Type)
+            {
+                case "I":
+                    boundary = PolyCurve.ByPoints(new[]
+                    {
+                        Point.ByCoordinates(0, 0),
+                        Point.ByCoordinates(Width, 0),
+                        Point.ByCoordinates(Width, Length),
+                        Point.ByCoordinates(0, Length)
+                    }, connectLastToFirst: true);
+                    break;
+
+                case "U":
+                    // Center-point of the curved parts of the U.
+                    var uArcCenter = Point.ByCoordinates(Width / 2, Width / 2);
+
+                    boundary = PolyCurve.ByJoinedCurves(new Curve[]
+                    {
+                        PolyCurve.ByPoints(new[]
+                        {
+                            Point.ByCoordinates(0, Width / 2),
+                            Point.ByCoordinates(0, Length),
+                            Point.ByCoordinates(Depth, Length),
+                            Point.ByCoordinates(Depth, Width / 2)
+                        }),
+                        Arc.ByCenterPointStartPointEndPoint(
+                            uArcCenter,
+                            Point.ByCoordinates(Depth, Width / 2),
+                            Point.ByCoordinates(Width - Depth, Width / 2)
+                        ),
+                        PolyCurve.ByPoints(new[]
+                        {
+                            Point.ByCoordinates(Width - Depth, Width / 2),
+                            Point.ByCoordinates(Width - Depth, Length),
+                            Point.ByCoordinates(Width, Length),
+                            Point.ByCoordinates(Width, Width / 2)
+                        }),
+                        Arc.ByCenterPointStartPointEndPoint(
+                            uArcCenter,
+                            Point.ByCoordinates(0, Width / 2),
+                            Point.ByCoordinates(Width, Width / 2)
+                        )
+                    });
+
+                    break;
+
+                case "L":
+                    boundary = PolyCurve.ByPoints(new[]
+                    {
+                        Point.ByCoordinates(0, 0),
+                        Point.ByCoordinates(Width, 0),
+                        Point.ByCoordinates(Width, Depth),
+                        Point.ByCoordinates(Depth, Depth),
+                        Point.ByCoordinates(Depth, Length),
+                        Point.ByCoordinates(0, Length)
+                    }, connectLastToFirst: true);
+                    break;
+
+                case "H":
+                    boundary = PolyCurve.ByPoints(new[]
+                    {
+                        Point.ByCoordinates(0, 0),
+                        Point.ByCoordinates(Depth, 0),
+                        Point.ByCoordinates(Depth, (Length - Depth) / 2),
+                        Point.ByCoordinates(Width - Depth, (Length - Depth) / 2),
+                        Point.ByCoordinates(Width - Depth, 0),
+                        Point.ByCoordinates(Width, 0),
+                        Point.ByCoordinates(Width, Length),
+                        Point.ByCoordinates(Width - Depth, Length),
+                        Point.ByCoordinates(Width - Depth, (Length + Depth) / 2),
+                        Point.ByCoordinates(Depth, (Length + Depth) / 2),
+                        Point.ByCoordinates(Depth, Length),
+                        Point.ByCoordinates(0, Length)
+                    }, connectLastToFirst: true);
+                    break;
+
+                case "D":
+                    // Center-point of the curved parts of the D.
+                    var dArcCenter = Point.ByCoordinates(Width / 2, Width / 2);
+
+                    boundary = PolyCurve.ByJoinedCurves(new Curve[]
+                    {
+                        PolyCurve.ByPoints(new[]
+                        {
+                            Point.ByCoordinates(Width, Width / 2),
+                            Point.ByCoordinates(Width, Length),
+                            Point.ByCoordinates(0, Length),
+                            Point.ByCoordinates(0, Width / 2)
+                        }),
+                        Arc.ByCenterPointStartPointEndPoint(
+                            dArcCenter,
+                            Point.ByCoordinates(0, Width / 2),
+                            Point.ByCoordinates(Width, Width / 2)
+                        )
+                    });
+
+                    holes.Add(PolyCurve.ByJoinedCurves(new Curve[]
+                    {
+                        PolyCurve.ByPoints(new[]
+                        {
+                            Point.ByCoordinates(Width - Depth, Width / 2),
+                            Point.ByCoordinates(Width - Depth, Length - Depth),
+                            Point.ByCoordinates(Depth, Length - Depth),
+                            Point.ByCoordinates(Depth, Width / 2)
+                        }),
+                        Arc.ByCenterPointStartPointEndPoint(
+                            dArcCenter,
+                            Point.ByCoordinates(Depth, Width / 2),
+                            Point.ByCoordinates(Width - Depth, Width / 2)
+                        )
+                    }));
+                    
+                    break;
+            }
+
+            if (boundary != null)
+            {
+                Surface baseSurface = Surface.ByPatch(boundary);
+
+                if (holes.Count > 0)
+                {
+                    // A bug in Dynamo requires the boundary curve to be included in the trim curves, otherwise it trims the wrong part.
+                    holes.Add(boundary);
+                    baseSurface = baseSurface.TrimWithEdgeLoops(holes);
+                }
+
+                double floorCount = Math.Ceiling(BldgArea / baseSurface.Area);
+                Solid solid = baseSurface.Thicken(floorCount * FloorHeight);
+
+                mass = PolySurface.BySolid(solid);
+
+                for (int i = 0; i < floorCount; i++)
+                {
+                    floors.Add((Surface)baseSurface.Translate(Vector.ByCoordinates(0, 0, i * FloorHeight)));
+                }
+
+                totalArea = baseSurface.Area * floorCount;
+
+                topPlane = (Plane)BasePlane.Translate(Vector.ByCoordinates(0, 0, floorCount * FloorHeight));
+
+            }
 
             // return a dictionary
             return new Dictionary<string, object>
