@@ -27,7 +27,7 @@ namespace GenerativeToolkit.Layouts
 
         private static Node rootNode;
 
-        public static List<Geometry> Packer2DCustomOrder(List<Rectangle> rects, Rectangle bin)
+        public static List<Autodesk.DesignScript.Geometry.Geometry> Packer2DCustomOrder(List<Rectangle> rects, Rectangle bin)
         {
             // Initialize root node
             rootNode = new Node
@@ -41,7 +41,7 @@ namespace GenerativeToolkit.Layouts
             return Pack(rects);
         }
 
-        public static List<Geometry> Packer2DDescendingOrder(List<Rectangle> rects, Rectangle bin)
+        public static List<Autodesk.DesignScript.Geometry.Geometry> Packer2DDescendingOrder(List<Rectangle> rects, Rectangle bin)
         {
             // Sort rectangles into descending order based on area
             rects = rects.OrderByDescending(rect => (rect.Height * rect.Width)).ToList();
@@ -57,7 +57,7 @@ namespace GenerativeToolkit.Layouts
             return Pack(rects);
         }
 
-        public static List<Geometry> Packer2DAescendingOrder(List<Rectangle> rects, Rectangle bin)
+        public static List<Autodesk.DesignScript.Geometry.Geometry> Packer2DAescendingOrder(List<Rectangle> rects, Rectangle bin)
         {
             // Sort rectangles into descending order based on area
             rects = rects.OrderByDescending(rect => (rect.Height * rect.Width)).Reverse().ToList();
@@ -74,9 +74,9 @@ namespace GenerativeToolkit.Layouts
             return Pack(rects);
         }
 
-        private static List<Geometry> Pack(List<Rectangle> sortedRects)
+        private static List<Autodesk.DesignScript.Geometry.Geometry> Pack(List<Rectangle> sortedRects)
         {
-            List<Geometry> packedRectangles = new List<Geometry>();
+            List<Autodesk.DesignScript.Geometry.Geometry> packedRectangles = new List<Autodesk.DesignScript.Geometry.Geometry>();
 
             foreach (var rect in sortedRects)
             {
