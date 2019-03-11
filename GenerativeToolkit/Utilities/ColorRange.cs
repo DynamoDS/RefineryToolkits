@@ -12,6 +12,7 @@ namespace GenerativeToolkit.Utilities
     [IsVisibleInDynamoLibrary(false)]
     public class ColorRange
     {
+        // Random color range generator
         [IsVisibleInDynamoLibrary(true)]
         public static List<Color> RandomColorRange(int amount)
         {
@@ -43,6 +44,7 @@ namespace GenerativeToolkit.Utilities
             return rgb;
         }
 
+        // Colors from https://jonasjacek.github.io/colors/ 0-14
         [IsVisibleInDynamoLibrary(true)]
         public static List<Color> ContrastyColorRange(int amount)
         {
@@ -95,6 +97,7 @@ namespace GenerativeToolkit.Utilities
             }
         }
 
+        // Colors from https://www.materialpalette.com/colors
         [IsVisibleInDynamoLibrary(true)]
         public static List<Color> RandomColors(int amount, double correctionFactor)
         {
@@ -131,19 +134,18 @@ namespace GenerativeToolkit.Utilities
                 {
                     var randomColor = colorDict.ElementAt(rnd.Next(0, colorDict.Count));
                     double red = randomColor.Value[0];
-                    double green = randomColor.Value[0];
-                    double blue = randomColor.Value[0];
+                    double green = randomColor.Value[1];
+                    double blue = randomColor.Value[2];
 
                     Color color = DSCore.Color.ByARGB(r: randomColor.Value[0], g: randomColor.Value[1], b: randomColor.Value[2]);
                     if (!usedColors.Contains(randomColor.Key))
                     {
                         usedColors.Add(randomColor.Key);
-                        if (correctionFactor < 0)
+                        if (correctionFactor <= 0)
                         {
-                            correctionFactor = 1 + correctionFactor;
-                            red *= correctionFactor;
-                            green *= correctionFactor;
-                            blue *= correctionFactor;
+                            red *= 1 + correctionFactor;
+                            green *= 1 + correctionFactor;
+                            blue *= 1 + correctionFactor;
                         }
                         else
                         {
