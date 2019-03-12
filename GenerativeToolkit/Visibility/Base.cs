@@ -161,7 +161,6 @@ namespace GenerativeToolkit.Visibility
             if (point == null) { throw new ArgumentNullException("point"); }
 
             gVertex origin = gVertex.ByCoordinates(point.X, point.Y, point.Z);
-
             List<gVertex> vertices = Graphical.Graphs.VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<DSPoint> points = vertices.Select(v => Points.ToPoint(v)).ToList();
             Surface isovist;
