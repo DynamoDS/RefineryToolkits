@@ -150,7 +150,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
       "NodeType": "StringInputNode",
-      "InputValue": "O",
+      "InputValue": "U",
       "Id": "112435898fab4cb8af16186c71b272cc",
       "Inputs": [],
       "Outputs": [
@@ -235,10 +235,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 100.0,
+      "MaximumValue": 30.0,
       "MinimumValue": 0.0,
       "StepValue": 1.0,
-      "InputValue": 1.0,
+      "InputValue": 8.0,
       "Id": "ccf0989fbb9340908c606be34ad757d1",
       "Inputs": [],
       "Outputs": [
@@ -307,10 +307,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 100.0,
+      "MaximumValue": 40.0,
       "MinimumValue": 0.0,
       "StepValue": 1.0,
-      "InputValue": 20.0,
+      "InputValue": 11.0,
       "Id": "d15c56fd41e14e959637d6937cb655df",
       "Inputs": [],
       "Outputs": [
@@ -375,23 +375,23 @@
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
-      "HasRunWithoutCrash": false,
+      "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
       "Version": "2.0.2.6826",
-      "RunType": "Manual",
+      "RunType": "Automatic",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -8.6196764638565782,
-      "EyeY": 59.71240685977557,
-      "EyeZ": -46.327612320032223,
-      "LookX": 37.620712739531164,
-      "LookY": -53.606506673472772,
-      "LookZ": 50.575211439002267,
-      "UpX": 0.2801997440187064,
-      "UpY": 0.882947592858956,
-      "UpZ": 0.3766850829492609
+      "EyeX": -19.065677715510787,
+      "EyeY": 47.119016730464885,
+      "EyeZ": -49.178451402176506,
+      "LookX": 48.066713991185374,
+      "LookY": -41.013116544162095,
+      "LookZ": 53.42605052114655,
+      "UpX": 0.19926652573554976,
+      "UpY": 0.95458763224777543,
+      "UpZ": 0.22148432016953304
     },
     "NodeViews": [
       {
