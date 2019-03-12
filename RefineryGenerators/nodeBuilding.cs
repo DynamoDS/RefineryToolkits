@@ -38,7 +38,12 @@ namespace Buildings
         /// <param name="BldgArea">Target gross building area.</param>
         /// <param name="FloorHeight">Height of the floor.</param>
         /// <param name="CreateCore">Create core volumes and subtractions?</param>
-        /// <returns></returns>
+        /// <returns name="Floors">Building floor surfaces.</returns>
+        /// <returns name="Mass">Building volume as polysurface.</returns>
+        /// <returns name="Cores">Building cores as polysurfaces.</returns>
+        /// <returns name="TotalFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="BuildingVolume">Volume of Mass.</returns>
+        /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
         /// <search>building,design,refinery</search>
         [MultiReturn(new[] { "Floors", "Mass", "Cores", "TotalFloorArea", "BuildingVolume", "TopPlane" })]
         public static Dictionary<string, object> BuildingGenerator(
@@ -47,6 +52,8 @@ namespace Buildings
             double BldgArea, double FloorHeight, 
             bool CreateCore)
         {
+            //TODO: Why not make cores and mass solids?
+
             var floors = new List<Surface>();
             PolySurface mass = null;
             List<PolySurface> cores = null;
