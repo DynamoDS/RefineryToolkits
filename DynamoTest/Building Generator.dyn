@@ -150,7 +150,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
       "NodeType": "StringInputNode",
-      "InputValue": "D",
+      "InputValue": "O",
       "Id": "112435898fab4cb8af16186c71b272cc",
       "Inputs": [],
       "Outputs": [
@@ -188,111 +188,6 @@
       "Description": "Creates a plane in the world XY\n\nPlane.XY ( ): Plane"
     },
     {
-      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
-      "NodeType": "NumberInputNode",
-      "NumberType": "Double",
-      "InputValue": 30.0,
-      "Id": "5c748a5b754e47828ec05543fa7c5252",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "464950a059f64ed3a4d9f8a876600779",
-          "Name": "",
-          "Description": "Double",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Creates a number."
-    },
-    {
-      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
-      "NodeType": "NumberInputNode",
-      "NumberType": "Double",
-      "InputValue": 30.0,
-      "Id": "a0c5aa881f2949aa833a06a74c3e7330",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "50e6b52866184767926c997fd287d782",
-          "Name": "",
-          "Description": "Double",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Creates a number."
-    },
-    {
-      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
-      "NodeType": "NumberInputNode",
-      "NumberType": "Double",
-      "InputValue": 5.0,
-      "Id": "4bf321fe26654d92967fc8385458cea2",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "b7983e0559cc485484acd471b401ccf8",
-          "Name": "",
-          "Description": "Double",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Creates a number."
-    },
-    {
-      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
-      "NodeType": "NumberInputNode",
-      "NumberType": "Double",
-      "InputValue": 500.0,
-      "Id": "9dc23f7b25bf4cec8b5238f50fef4a51",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "d758ab26e6bc4183b8953b07167bba29",
-          "Name": "",
-          "Description": "Double",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Creates a number."
-    },
-    {
-      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
-      "NodeType": "NumberInputNode",
-      "NumberType": "Double",
-      "InputValue": 10.0,
-      "Id": "ae47dff734f34804a4cdfc3018cb9620",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "42ced0de4ee84de498f6a7a200d8f856",
-          "Name": "",
-          "Description": "Double",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Creates a number."
-    },
-    {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
       "InputValue": false,
@@ -311,6 +206,126 @@
       ],
       "Replication": "Disabled",
       "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 100.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 20.0,
+      "Id": "f8124ce2a95143d98a0a422bcd5b06c3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "47df38c3e1fe41dd8db0a421337cd68b",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 100.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 1.0,
+      "Id": "ccf0989fbb9340908c606be34ad757d1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9d17228dc3064221ab4ee286c102fc39",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 100.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 20.0,
+      "Id": "19a1a63827824bea9da42ea7e9166328",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "eeb6b13845e2477387f5ebd1b5ebcead",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 10000.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 339.0,
+      "Id": "a051f164c890406c8d3192fc8b0ce469",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "76767d84a2c04296a67aa3a1502978fb",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 100.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 20.0,
+      "Id": "d15c56fd41e14e959637d6937cb655df",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "853fa8d5302b4b19bcd780439beae223",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
     }
   ],
   "Connectors": [
@@ -325,34 +340,34 @@
       "Id": "a702ef01c7e148edbd8e94f2c5d8ae82"
     },
     {
-      "Start": "464950a059f64ed3a4d9f8a876600779",
-      "End": "a6622b15786749d5906a262c88e451c3",
-      "Id": "3fe47c1fbb4c497b895c8bc303349ecb"
-    },
-    {
-      "Start": "50e6b52866184767926c997fd287d782",
-      "End": "093bcaf14a864f34aeabc7b2af347e38",
-      "Id": "97d47e96a1d34e81aa284cc5afc467d2"
-    },
-    {
-      "Start": "b7983e0559cc485484acd471b401ccf8",
-      "End": "2b8bf65ffb614299a1f169e4fccb785b",
-      "Id": "e438f258c04c45378e589ad231f6daf2"
-    },
-    {
-      "Start": "d758ab26e6bc4183b8953b07167bba29",
-      "End": "2a672a1a5a0e49628a3ff2f2b71123f3",
-      "Id": "abb46d2a0d584be4a77ee59e792379d2"
-    },
-    {
-      "Start": "42ced0de4ee84de498f6a7a200d8f856",
-      "End": "788c8fe2a02a49c49a5d88295b910ff9",
-      "Id": "8d1063cf51c942ba81f5a7406cf7ed6f"
-    },
-    {
       "Start": "7e2ea95d08a04a9c9f672a9da0b2bdb5",
       "End": "75d84305bdc44b40a3b576e051dc596c",
       "Id": "9334e8b951db4656b257ac98eb484985"
+    },
+    {
+      "Start": "47df38c3e1fe41dd8db0a421337cd68b",
+      "End": "093bcaf14a864f34aeabc7b2af347e38",
+      "Id": "1959894437414411bde4d2ff2996f94f"
+    },
+    {
+      "Start": "9d17228dc3064221ab4ee286c102fc39",
+      "End": "2b8bf65ffb614299a1f169e4fccb785b",
+      "Id": "8ee2a2dca5d14766b8eba68323e12437"
+    },
+    {
+      "Start": "eeb6b13845e2477387f5ebd1b5ebcead",
+      "End": "a6622b15786749d5906a262c88e451c3",
+      "Id": "1d3f86ab4ea245689dc226fea539ac2b"
+    },
+    {
+      "Start": "76767d84a2c04296a67aa3a1502978fb",
+      "End": "2a672a1a5a0e49628a3ff2f2b71123f3",
+      "Id": "9240c0c6e95340c99a65c2f42bc8bba2"
+    },
+    {
+      "Start": "853fa8d5302b4b19bcd780439beae223",
+      "End": "788c8fe2a02a49c49a5d88295b910ff9",
+      "Id": "c27788d2f2ed48b2a70dcc95a7284475"
     }
   ],
   "Dependencies": [],
@@ -360,23 +375,23 @@
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
-      "HasRunWithoutCrash": true,
+      "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
       "Version": "2.0.2.6826",
-      "RunType": "Automatic",
+      "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": 52.457466816303111,
-      "EyeY": 69.2423362169525,
-      "EyeZ": -40.978367074379165,
-      "LookX": -46.617490051161809,
-      "LookY": -57.872889786046358,
-      "LookZ": 36.391837628855953,
-      "UpX": -0.417711317510447,
-      "UpY": 0.84804809615644694,
-      "UpZ": 0.32608539039515755
+      "EyeX": -8.6196764638565782,
+      "EyeY": 59.71240685977557,
+      "EyeZ": -46.327612320032223,
+      "LookX": 37.620712739531164,
+      "LookY": -53.606506673472772,
+      "LookZ": 50.575211439002267,
+      "UpX": 0.2801997440187064,
+      "UpY": 0.882947592858956,
+      "UpZ": 0.3766850829492609
     },
     "NodeViews": [
       {
@@ -386,8 +401,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 412.00000000000023,
-        "Y": 286.00000000000006
+        "X": 336.42393484455209,
+        "Y": 253.36488095560196
       },
       {
         "ShowGeometry": true,
@@ -396,8 +411,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 187.3333333333332,
-        "Y": 252.66666666666669
+        "X": 145.53747911857766,
+        "Y": 266.4077694222027
       },
       {
         "ShowGeometry": true,
@@ -406,58 +421,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 157.33333333333331,
-        "Y": 326.66666666666674
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Number",
-        "Id": "5c748a5b754e47828ec05543fa7c5252",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 162.66666666666669,
-        "Y": 417.99999999999994
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Number",
-        "Id": "a0c5aa881f2949aa833a06a74c3e7330",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 162.00000000000011,
-        "Y": 482.00000000000017
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Number",
-        "Id": "4bf321fe26654d92967fc8385458cea2",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 162.00000000000006,
-        "Y": 549.99999999999989
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Number",
-        "Id": "9dc23f7b25bf4cec8b5238f50fef4a51",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 162.6666666666668,
-        "Y": 609.33333333333314
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Number",
-        "Id": "ae47dff734f34804a4cdfc3018cb9620",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 156.66666666666669,
-        "Y": 674.66666666666652
+        "X": 118.97275480746185,
+        "Y": 325.52157477037207
       },
       {
         "ShowGeometry": true,
@@ -466,13 +431,63 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 133.99999999999994,
-        "Y": 739.99999999999989
+        "X": 71.0199457037931,
+        "Y": 738.28236215555785
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Width",
+        "Id": "f8124ce2a95143d98a0a422bcd5b06c3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -94.19791900792444,
+        "Y": 477.50869813805173
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Depth",
+        "Id": "ccf0989fbb9340908c606be34ad757d1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -93.625373059776734,
+        "Y": 543.92402812314253
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Length",
+        "Id": "19a1a63827824bea9da42ea7e9166328",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -94.770464956071748,
+        "Y": 415.10118978999219
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Total Floor Area",
+        "Id": "a051f164c890406c8d3192fc8b0ce469",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -95.343010904218886,
+        "Y": 601.75116888602338
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Floor Height",
+        "Id": "d15c56fd41e14e959637d6937cb655df",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -95.3430109042186,
+        "Y": 665.87631507852473
       }
     ],
     "Annotations": [],
-    "X": -66.316903167063572,
-    "Y": -282.67292803682915,
+    "X": 245.01643016626974,
+    "Y": -200.00626137016252,
     "Zoom": 1.1643898080562636
   }
 }
