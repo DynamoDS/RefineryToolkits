@@ -4,6 +4,7 @@ using System.Linq;
 
 using Autodesk.DesignScript.Runtime;
 using Autodesk.DesignScript.Geometry;
+using System.Threading;
 
 namespace Buildings
 {
@@ -338,7 +339,20 @@ namespace Buildings
                 {
                     // A bug in Dynamo requires the boundary curve to be included in the trim curves, otherwise it trims the wrong part.
                     holes.Add(boundary);
-                    baseSurface = baseSurface.TrimWithEdgeLoops(holes.Select(c => PolyCurve.ByJoinedCurves(new[] { c })));
+
+                    // TrimWithEdgeLoops fails occasionally, then succeeds with the same inputs. If at first we don't succeed...
+                    for (int attempts = 0; attempts < 5; attempts++)
+                    {
+                        try
+                        {
+                            baseSurface = baseSurface.TrimWithEdgeLoops(holes.Select(c => PolyCurve.ByJoinedCurves(new[] { c })));
+                            break;
+                        }
+                        catch (ApplicationException)
+                        { }
+                        
+                        Thread.Sleep(50);
+                    }
 
                     holes.ForEach(h => { if (h != null) { h.Dispose(); } });
                 }
