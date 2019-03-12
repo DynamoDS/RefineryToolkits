@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Autodesk.DesignScript.Runtime;
 using Autodesk.DesignScript.Geometry;
@@ -43,7 +41,11 @@ namespace Buildings
         /// <returns></returns>
         /// <search>building,design,refinery</search>
         [MultiReturn(new[] { "Floors", "Mass", "Cores", "TotalFloorArea", "BuildingVolume", "TopPlane" })]
-        public static Dictionary<string, object> BuildingGenerator(string Type, Plane BasePlane, double Length, double Width, double Depth, double BldgArea, double FloorHeight, bool CreateCore)
+        public static Dictionary<string, object> BuildingGenerator(
+            string Type, 
+            Plane BasePlane, double Length, double Width, double Depth, 
+            double BldgArea, double FloorHeight, 
+            bool CreateCore)
         {
             var floors = new List<Surface>();
             PolySurface mass = null;
@@ -57,7 +59,7 @@ namespace Buildings
                 return new Dictionary<string, object>();
             }
 
-            var baseSurface = MakeBaseSurface(Type, Length, Width, Depth);
+            Surface baseSurface = MakeBaseSurface(Type, Length, Width, Depth);
 
             if (baseSurface != null)
             {
@@ -104,11 +106,11 @@ namespace Buildings
                 case "I":
                     boundary = PolyCurve.ByPoints(new[]
                     {
-                                Point.ByCoordinates(0, 0),
-                                Point.ByCoordinates(Width, 0),
-                                Point.ByCoordinates(Width, Length),
-                                Point.ByCoordinates(0, Length)
-                            }, connectLastToFirst: true);
+                        Point.ByCoordinates(0, 0),
+                        Point.ByCoordinates(Width, 0),
+                        Point.ByCoordinates(Width, Length),
+                        Point.ByCoordinates(0, Length)
+                    }, connectLastToFirst: true);
                     break;
 
                 case "U":
@@ -126,30 +128,30 @@ namespace Buildings
 
                         boundary = PolyCurve.ByJoinedCurves(new Curve[]
                         {
-                                    PolyCurve.ByPoints(new[]
-                                    {
-                                        Point.ByCoordinates(0, Width / 2),
-                                        Point.ByCoordinates(0, Length),
-                                        Point.ByCoordinates(Depth, Length),
-                                        Point.ByCoordinates(Depth, Width / 2)
-                                    }),
-                                    Arc.ByCenterPointStartPointEndPoint(
-                                        uArcCenter,
-                                        Point.ByCoordinates(Depth, Width / 2),
-                                        Point.ByCoordinates(Width - Depth, Width / 2)
-                                    ),
-                                    PolyCurve.ByPoints(new[]
-                                    {
-                                        Point.ByCoordinates(Width - Depth, Width / 2),
-                                        Point.ByCoordinates(Width - Depth, Length),
-                                        Point.ByCoordinates(Width, Length),
-                                        Point.ByCoordinates(Width, Width / 2)
-                                    }),
-                                    Arc.ByCenterPointStartPointEndPoint(
-                                        uArcCenter,
-                                        Point.ByCoordinates(0, Width / 2),
-                                        Point.ByCoordinates(Width, Width / 2)
-                                    )
+                            PolyCurve.ByPoints(new[]
+                            {
+                                Point.ByCoordinates(0, Width / 2),
+                                Point.ByCoordinates(0, Length),
+                                Point.ByCoordinates(Depth, Length),
+                                Point.ByCoordinates(Depth, Width / 2)
+                            }),
+                            Arc.ByCenterPointStartPointEndPoint(
+                                uArcCenter,
+                                Point.ByCoordinates(Depth, Width / 2),
+                                Point.ByCoordinates(Width - Depth, Width / 2)
+                            ),
+                            PolyCurve.ByPoints(new[]
+                            {
+                                Point.ByCoordinates(Width - Depth, Width / 2),
+                                Point.ByCoordinates(Width - Depth, Length),
+                                Point.ByCoordinates(Width, Length),
+                                Point.ByCoordinates(Width, Width / 2)
+                            }),
+                            Arc.ByCenterPointStartPointEndPoint(
+                                uArcCenter,
+                                Point.ByCoordinates(0, Width / 2),
+                                Point.ByCoordinates(Width, Width / 2)
+                            )
                         });
                     }
                     else
@@ -161,14 +163,14 @@ namespace Buildings
 
                         boundary = PolyCurve.ByJoinedCurves(new Curve[]
                         {
-                                    Line.ByStartPointEndPoint(
-                                        Point.ByCoordinates(Width, Length),
-                                        Point.ByCoordinates(Width - Depth, Length)),
-                                    EllipseArc.ByPlaneRadiiAngles(ellipseCenter, Width / 2 - Depth, Length - Depth, 180, 180),
-                                    Line.ByStartPointEndPoint(
-                                        Point.ByCoordinates(Depth, Length),
-                                        Point.ByCoordinates(0, Length)),
-                                    EllipseArc.ByPlaneRadiiAngles(ellipseCenter, Width / 2, Length, 180, 180)
+                            Line.ByStartPointEndPoint(
+                                Point.ByCoordinates(Width, Length),
+                                Point.ByCoordinates(Width - Depth, Length)),
+                            EllipseArc.ByPlaneRadiiAngles(ellipseCenter, (Width / 2) - Depth, Length - Depth, 180, 180),
+                            Line.ByStartPointEndPoint(
+                                Point.ByCoordinates(Depth, Length),
+                                Point.ByCoordinates(0, Length)),
+                            EllipseArc.ByPlaneRadiiAngles(ellipseCenter, Width / 2, Length, 180, 180)
                         });
                     }
 
@@ -182,13 +184,13 @@ namespace Buildings
 
                     boundary = PolyCurve.ByPoints(new[]
                     {
-                                Point.ByCoordinates(0, 0),
-                                Point.ByCoordinates(Width, 0),
-                                Point.ByCoordinates(Width, Depth),
-                                Point.ByCoordinates(Depth, Depth),
-                                Point.ByCoordinates(Depth, Length),
-                                Point.ByCoordinates(0, Length)
-                            }, connectLastToFirst: true);
+                        Point.ByCoordinates(0, 0),
+                        Point.ByCoordinates(Width, 0),
+                        Point.ByCoordinates(Width, Depth),
+                        Point.ByCoordinates(Depth, Depth),
+                        Point.ByCoordinates(Depth, Length),
+                        Point.ByCoordinates(0, Length)
+                    }, connectLastToFirst: true);
                     break;
 
                 case "H":
@@ -199,19 +201,19 @@ namespace Buildings
 
                     boundary = PolyCurve.ByPoints(new[]
                     {
-                                Point.ByCoordinates(0, 0),
-                                Point.ByCoordinates(Depth, 0),
-                                Point.ByCoordinates(Depth, (Length - Depth) / 2),
-                                Point.ByCoordinates(Width - Depth, (Length - Depth) / 2),
-                                Point.ByCoordinates(Width - Depth, 0),
-                                Point.ByCoordinates(Width, 0),
-                                Point.ByCoordinates(Width, Length),
-                                Point.ByCoordinates(Width - Depth, Length),
-                                Point.ByCoordinates(Width - Depth, (Length + Depth) / 2),
-                                Point.ByCoordinates(Depth, (Length + Depth) / 2),
-                                Point.ByCoordinates(Depth, Length),
-                                Point.ByCoordinates(0, Length)
-                            }, connectLastToFirst: true);
+                        Point.ByCoordinates(0, 0),
+                        Point.ByCoordinates(Depth, 0),
+                        Point.ByCoordinates(Depth, (Length - Depth) / 2),
+                        Point.ByCoordinates(Width - Depth, (Length - Depth) / 2),
+                        Point.ByCoordinates(Width - Depth, 0),
+                        Point.ByCoordinates(Width, 0),
+                        Point.ByCoordinates(Width, Length),
+                        Point.ByCoordinates(Width - Depth, Length),
+                        Point.ByCoordinates(Width - Depth, (Length + Depth) / 2),
+                        Point.ByCoordinates(Depth, (Length + Depth) / 2),
+                        Point.ByCoordinates(Depth, Length),
+                        Point.ByCoordinates(0, Length)
+                    }, connectLastToFirst: true);
                     break;
 
                 case "D":
@@ -222,7 +224,7 @@ namespace Buildings
 
                     // The D is pointing "down" so that it matches with the U.
 
-                    if (Length > Width / 2 + Depth)
+                    if (Length > (Width / 2) + Depth)
                     {
                         // Enough room to make the curved part of the D an arc.
 
@@ -231,34 +233,34 @@ namespace Buildings
 
                         boundary = PolyCurve.ByJoinedCurves(new Curve[]
                         {
-                                    PolyCurve.ByPoints(new[]
-                                    {
-                                        Point.ByCoordinates(Width, Width / 2),
-                                        Point.ByCoordinates(Width, Length),
-                                        Point.ByCoordinates(0, Length),
-                                        Point.ByCoordinates(0, Width / 2)
-                                    }),
-                                    Arc.ByCenterPointStartPointEndPoint(
-                                        dArcCenter,
-                                        Point.ByCoordinates(0, Width / 2),
-                                        Point.ByCoordinates(Width, Width / 2)
-                                    )
+                            PolyCurve.ByPoints(new[]
+                            {
+                                Point.ByCoordinates(Width, Width / 2),
+                                Point.ByCoordinates(Width, Length),
+                                Point.ByCoordinates(0, Length),
+                                Point.ByCoordinates(0, Width / 2)
+                            }),
+                            Arc.ByCenterPointStartPointEndPoint(
+                                dArcCenter,
+                                Point.ByCoordinates(0, Width / 2),
+                                Point.ByCoordinates(Width, Width / 2)
+                            )
                         });
 
                         holes.Add(PolyCurve.ByJoinedCurves(new Curve[]
                         {
-                                    PolyCurve.ByPoints(new[]
-                                    {
-                                        Point.ByCoordinates(Width - Depth, Width / 2),
-                                        Point.ByCoordinates(Width - Depth, Length - Depth),
-                                        Point.ByCoordinates(Depth, Length - Depth),
-                                        Point.ByCoordinates(Depth, Width / 2)
-                                    }),
-                                    Arc.ByCenterPointStartPointEndPoint(
-                                        dArcCenter,
-                                        Point.ByCoordinates(Depth, Width / 2),
-                                        Point.ByCoordinates(Width - Depth, Width / 2)
-                                    )
+                            PolyCurve.ByPoints(new[]
+                            {
+                                Point.ByCoordinates(Width - Depth, Width / 2),
+                                Point.ByCoordinates(Width - Depth, Length - Depth),
+                                Point.ByCoordinates(Depth, Length - Depth),
+                                Point.ByCoordinates(Depth, Width / 2)
+                            }),
+                            Arc.ByCenterPointStartPointEndPoint(
+                                dArcCenter,
+                                Point.ByCoordinates(Depth, Width / 2),
+                                Point.ByCoordinates(Width - Depth, Width / 2)
+                            )
                         }));
                     }
                     else
@@ -270,22 +272,22 @@ namespace Buildings
 
                         boundary = PolyCurve.ByJoinedCurves(new Curve[]
                         {
-                                    PolyCurve.ByPoints(new[]
-                                    {
-                                        Point.ByCoordinates(Width, Length - Depth),
-                                        Point.ByCoordinates(Width, Length),
-                                        Point.ByCoordinates(0, Length),
-                                        Point.ByCoordinates(0, Length - Depth)
-                                    }),
-                                    EllipseArc.ByPlaneRadiiAngles(ellipseCenter, Width / 2, Length - Depth, 180, 180)
+                            PolyCurve.ByPoints(new[]
+                            {
+                                Point.ByCoordinates(Width, Length - Depth),
+                                Point.ByCoordinates(Width, Length),
+                                Point.ByCoordinates(0, Length),
+                                Point.ByCoordinates(0, Length - Depth)
+                            }),
+                            EllipseArc.ByPlaneRadiiAngles(ellipseCenter, Width / 2, Length - Depth, 180, 180)
                         });
 
                         holes.Add(PolyCurve.ByJoinedCurves(new Curve[]
                         {
-                                    Line.ByStartPointEndPoint(
-                                        Point.ByCoordinates(Width - Depth, Length - Depth),
-                                        Point.ByCoordinates(Depth, Length - Depth)),
-                                    EllipseArc.ByPlaneRadiiAngles(ellipseCenter, Width / 2 - Depth, Length - 2 * Depth, 180, 180)
+                            Line.ByStartPointEndPoint(
+                                Point.ByCoordinates(Width - Depth, Length - Depth),
+                                Point.ByCoordinates(Depth, Length - Depth)),
+                            EllipseArc.ByPlaneRadiiAngles(ellipseCenter, (Width / 2) - Depth, Length - (2 * Depth), 180, 180)
                         }));
                     }
 
@@ -302,6 +304,9 @@ namespace Buildings
                     boundary = Ellipse.ByOriginRadii(centerPoint, Width / 2, Length / 2);
                     holes.Add(Ellipse.ByOriginRadii(centerPoint, (Width / 2) - Depth, (Length / 2) - Depth));
 
+                    break;
+
+                default:
                     break;
             }
 
