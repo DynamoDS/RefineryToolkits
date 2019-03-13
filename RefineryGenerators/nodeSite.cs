@@ -8,7 +8,7 @@ namespace Site
     public static class Creation
     {
         /// <summary>
-        /// Use setback and height to create volume for building mass to fit into.
+        /// Use setback and height to create boundary volume for building mass to fit into.
         /// </summary>
         /// <param name="SiteOutline">Site boundary, from Revit.</param>
         /// <param name="Setback">Site setback distance.</param>
@@ -62,15 +62,29 @@ namespace Site
         /// Test site boundary against building mass.
         /// </summary>
         /// <param name="BuildingMass">Building mass from the generator</param>
-        /// <param name="BuildingMass">Site volume</param>
-        /// <returns>c, d</returns>
-        /// <search>addition,multiplication,math</search>
+        /// <param name="SiteMass">Site boundary volume.</param>
+        /// <returns name="IntersectionVolume">Volume of building outside of site boundary.</returns>
+        /// <returns name="DoesIntersect">Does the building mass intersect with the site boundary?</returns>
+        /// <returns name="Percent">Percent of building volume that is outside the site boundary.</returns>
+        /// <search>site,design,refinery</search>
         [MultiReturn(new[] { "IntersectionVolume", "DoesIntersect", "Percent" })]
         public static Dictionary<string, object> SiteClashTest(Solid BuildingMass, Solid SiteMass)
         {
             Solid volume = null;
             bool doesIntersect = false;
             double percent = 0;
+
+            if (BuildingMass != null && SiteMass != null)
+            {
+                volume = BuildingMass.Difference(SiteMass);
+
+                if (volume != null)
+                {
+                    doesIntersect = true;
+
+                    percent = volume.Volume / BuildingMass.Volume;
+                }
+            }
 
             // return a dictionary
             return new Dictionary<string, object>
