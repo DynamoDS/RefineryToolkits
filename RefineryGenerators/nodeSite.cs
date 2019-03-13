@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 
@@ -7,7 +8,7 @@ namespace Site
     public static class Creation
     {
         /// <summary>
-        /// Site setback
+        /// Use setback and height to create volume for building mass to fit into.
         /// </summary>
         /// <param name="SiteOutline">Site boundary, from Revit.</param>
         /// <param name="Setback">Site setback distance.</param>
@@ -42,7 +43,7 @@ namespace Site
                 {
                     HeightLimit = -HeightLimit;
                 }
-                
+
                 siteMass = siteOffset.ExtrudeAsSolid(HeightLimit);
             }
 
@@ -58,7 +59,7 @@ namespace Site
     public static class Analysis
     {
         /// <summary>
-        /// Test site boundary against building mass
+        /// Test site boundary against building mass.
         /// </summary>
         /// <param name="BuildingMass">Building mass from the generator</param>
         /// <param name="BuildingMass">Site volume</param>

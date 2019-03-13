@@ -29,7 +29,7 @@ namespace Buildings
         }
         
         /// <summary>
-        /// Generates a building mass
+        /// Generate a building mass.
         /// </summary>
         /// <param name="Type">Building type (ex. U, L, I, H, O, D)</param>
         /// <param name="BasePlane">The building base plane.</param>
@@ -405,7 +405,7 @@ namespace Buildings
     public static class Analysis
     {
         /// <summary>
-        /// Deconstructs a building mass into component horizontal and vertical parts 
+        /// Deconstruct a building mass into component horizontal and vertical surfaces.
         /// </summary>
         /// <param name="Mass">Building mass.</param>
         /// <param name="AngleThreshold">Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).</param>
