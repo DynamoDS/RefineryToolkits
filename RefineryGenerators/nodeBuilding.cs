@@ -27,7 +27,7 @@ namespace Buildings
                 {"SelectedType", selected},
             };
         }
-        
+
         /// <summary>
         /// Generate a building mass.
         /// </summary>
@@ -40,14 +40,14 @@ namespace Buildings
         /// <param name="FloorHeight">Height of the floor.</param>
         /// <param name="CreateCore">Create core volumes and subtractions?</param>
         /// <returns name="Floors">Building floor surfaces.</returns>
-        /// <returns name="Mass">Building volume as polysurface.</returns>
-        /// <returns name="Cores">Building cores as polysurfaces.</returns>
+        /// <returns name="BuildingMass">Building volume.</returns>
+        /// <returns name="Cores">Building core volumes.</returns>
         /// <returns name="TotalFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
         /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <returns name="BuildingVolume">Volume of Mass.</returns>
         /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "Mass", "Floors", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
+        [MultiReturn(new[] { "BuildingMass", "Floors", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
             Plane BasePlane = null, string Type = "L", 
             double Length = 40, double Width = 40, double Depth = 6, 
@@ -58,7 +58,7 @@ namespace Buildings
 
             var floors = new List<Surface>();
             Solid mass = null;
-            List<PolySurface> cores = null;
+            List<Solid> cores = null;
             double totalArea = 0;
             double totalVolume = 0;
             double facadeArea = 0;
@@ -100,7 +100,7 @@ namespace Buildings
             return new Dictionary<string, object>
             {
                 {"Floors", floors},
-                {"Mass", mass},
+                {"BuildingMass", mass},
                 {"Cores", cores},
                 {"TotalFloorArea", totalArea},
                 {"TotalFacadeArea", facadeArea},
