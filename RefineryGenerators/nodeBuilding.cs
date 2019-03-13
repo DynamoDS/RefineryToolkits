@@ -27,7 +27,7 @@ namespace Buildings
                 {"SelectedType", selected},
             };
         }
-
+        
         /// <summary>
         /// Generates a building mass
         /// </summary>
@@ -49,10 +49,10 @@ namespace Buildings
         /// <search>building,design,refinery</search>
         [MultiReturn(new[] { "Mass", "Floors", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
-            string Type, 
-            Plane BasePlane, double Length, double Width, double Depth, 
-            double BldgArea, double FloorHeight, 
-            bool CreateCore)
+            Plane BasePlane = null, string Type = "L", 
+            double Length = 40, double Width = 40, double Depth = 6, 
+            double BldgArea = 1000, double FloorHeight = 3, 
+            bool CreateCore = true)
         {
             //TODO: Why not make cores and mass solids?
 

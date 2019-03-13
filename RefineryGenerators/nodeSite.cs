@@ -10,21 +10,21 @@ namespace Site
         /// Site setback
         /// </summary>
         /// <param name="SiteOutline">Site boundary, from Revit.</param>
-        /// <param name="OffsetAmnt">Site setback amount.</param>
-        /// <param name="HeightLimit">Height limitation.</param>
+        /// <param name="Setback">Site setback distance.</param>
+        /// <param name="HeightLimit">Maximum building height.</param>
         /// <returns name="SiteMass">Allowable volume for building mass.</returns>
         /// <returns name="SiteOffset">Allowable footprint for building mass.</returns>
         /// <search>site,design,refactory</search>
         [MultiReturn(new[] { "SiteMass", "SiteOffset" })]
-        public static Dictionary<string, object> SiteMassGenerator(Curve SiteOutline, double SetbackAmnt, double HeightLimit)
+        public static Dictionary<string, object> SiteMassGenerator(Curve SiteOutline, double Setback = 0, double HeightLimit = 100)
         {
             Solid siteMass = null;
             Curve siteOffset = null;
 
-            if (SetbackAmnt >= 0 && HeightLimit > 0 && SiteOutline != null)
+            if (Setback >= 0 && HeightLimit > 0 && SiteOutline != null)
             {
-                var inset1 = SiteOutline.Offset(SetbackAmnt);
-                var inset2 = SiteOutline.Offset(-SetbackAmnt);
+                var inset1 = SiteOutline.Offset(Setback);
+                var inset2 = SiteOutline.Offset(-Setback);
 
                 if (inset1.Length < inset2.Length)
                 {
@@ -83,7 +83,7 @@ namespace Site
         /// <summary>
         /// Get site components from Revit element
         /// </summary>
-        /// <param name="RevitSite">Reference site element (usually a selected mass)</param>
+        /// <param name="RevitSite">Referenced site element (usually a selected mass).</param>
         /// <returns></returns>
         /// <search>refinery</search>
         [MultiReturn(new[] { "Elements", "BoundingBoxes", "Heights" })]
