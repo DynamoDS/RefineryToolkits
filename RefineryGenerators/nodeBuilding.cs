@@ -327,13 +327,49 @@ namespace Buildings
 
                     break;
 
+                case "A":
+                    if (Width <= Depth * 2 || Length <= Depth * 2)
+                    {
+                        break;
+                    }
+
+                    var angle = Math.Asin(Depth / (2 * Math.Sqrt(Math.Pow(Length, 2) + (Math.Pow(Width, 2) / 4)))) + Math.Atan2(2 * Length, Width);
+                    var DepthX = Depth / Math.Sin(angle);
+
+                    if (Width - (2 * (DepthX + (Depth / Math.Tan(angle)))) <= 0)
+                    {
+                        break;
+                    }
+
+                    boundary = PolyCurve.ByPoints(new[]
+                    {
+                        Point.ByCoordinates(DepthX, 0),
+                        Point.ByCoordinates((Width * 0.999) - DepthX - (Depth / Math.Tan(angle)), Depth),
+                        Point.ByCoordinates(DepthX + (Depth / Math.Tan(angle)), Depth),
+                        Point.ByCoordinates(Width / 2, Length - (DepthX * Math.Tan(angle) / 2)),
+                        Point.ByCoordinates(Width - DepthX, 0),
+                        Point.ByCoordinates(Width, 0),
+                        Point.ByCoordinates((Width + DepthX) / 2, Length),
+                        Point.ByCoordinates((Width - DepthX) / 2, Length),
+                        Point.ByCoordinates(Depth / Math.Tan(angle), Depth)
+                    }, connectLastToFirst: true);
+
+                    break;
+
                 default:
                     break;
             }
 
             if (boundary != null)
             {
-                baseSurface = Surface.ByPatch(boundary);
+                try
+                {
+                    baseSurface = Surface.ByPatch(boundary);
+                }
+                catch (ApplicationException)
+                {
+                    return default;
+                }
 
                 if (holes.Count > 0)
                 {
