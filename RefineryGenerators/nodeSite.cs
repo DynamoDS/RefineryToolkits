@@ -81,17 +81,25 @@ namespace Site
         }
 
         /// <summary>
-        /// Get site components from Revit element
+        /// Get site components from Revit element.
         /// </summary>
         /// <param name="RevitSite">Referenced site element (usually a selected mass).</param>
-        /// <returns></returns>
+        /// <returns name="Elements">Individual solids in site geometry.</returns>
+        /// <returns name="BoundingBoxes">Bounding box for each element.</returns>
+        /// <returns name="Heights">Height of each element.</returns>
         /// <search>refinery</search>
         [MultiReturn(new[] { "Elements", "BoundingBoxes", "Heights" })]
         public static Dictionary<string, object> SiteContext(PolySurface RevitSite)
         {
-            List<PolySurface> elements = null;
+            Solid[] elements = null;
             List<BoundingBox> boundingBoxes = null;
             List<double> heights = null;
+
+            elements = RevitSite.ExtractSolids();
+
+            boundingBoxes = elements.Select(e => e.BoundingBox).ToList();
+
+            heights = boundingBoxes.Select(b => b.MaxPoint.Z - b.MinPoint.Z).ToList();
 
             // return a dictionary
             return new Dictionary<string, object>
