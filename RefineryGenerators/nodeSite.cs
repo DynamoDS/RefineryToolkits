@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Autodesk.DesignScript.Runtime;
+﻿using System.Collections.Generic;
 using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 
 namespace Site
 {
@@ -14,20 +9,51 @@ namespace Site
         /// <summary>
         /// Site setback
         /// </summary>
-        /// <param name="SiteObject">Site object reference from Revit</param>
-        /// <param name="OffsetAmnt">Site setback amount</param>
-        /// <param name="HeightLimit">Height limitation</param>
-        /// <returns></returns>
-        /// <search>addition,multiplication,math</search>
-        [MultiReturn(new[] { "SiteMass" })]
-        public static Dictionary<string, object> SiteMassGenerator(PolySurface SiteObject, double SetbackAmnt, double HeightLimit)
+        /// <param name="SiteObject">Site object reference from Revit.</param>
+        /// <param name="OffsetAmnt">Site setback amount.</param>
+        /// <param name="HeightLimit">Height limitation.</param>
+        /// <returns name="SiteMass">Allowable volume for building mass.</returns>
+        /// <returns name="SiteOffset">Allowable footprint for building mass.</returns>
+        /// <search>site,design,refactory</search>
+        [MultiReturn(new[] { "SiteMass", "SiteOffset" })]
+        public static Dictionary<string, object> SiteMassGenerator(Curve SiteObject, double SetbackAmnt, double HeightLimit)
         {
             PolySurface siteMass = null;
+            Curve siteOffset = null;
+
+            if (SetbackAmnt >= 0 && HeightLimit > 0 && SiteObject != null)
+            {
+                var inset1 = SiteObject.Offset(SetbackAmnt);
+                var inset2 = SiteObject.Offset(-SetbackAmnt);
+
+                if (inset1.Length < inset2.Length)
+                {
+                    siteOffset = inset1;
+                    inset2.Dispose();
+                }
+                else
+                {
+                    siteOffset = inset2;
+                    inset1.Dispose();
+                }
+
+                // Ensure that the mass is always extruded upwards.
+                if (siteOffset.Normal.AngleWithVector(Vector.ZAxis()) > 90)
+                {
+                    HeightLimit = -HeightLimit;
+                }
+
+                using (var solid = siteOffset.ExtrudeAsSolid(HeightLimit))
+                {
+                    siteMass = PolySurface.BySolid(solid);
+                }
+            }
 
             // return a dictionary
             return new Dictionary<string, object>
             {
                 {"SiteMass", siteMass},
+                {"SiteOffset", siteOffset }
             };
         }
     }

@@ -4,7 +4,12 @@
   "Description": null,
   "Name": "Building Generator",
   "ElementResolver": {
-    "ResolutionMap": {}
+    "ResolutionMap": {
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
   },
   "Inputs": [],
   "Outputs": [],
@@ -326,6 +331,199 @@
       ],
       "Replication": "Disabled",
       "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Site.Creation.SiteMassGenerator@Autodesk.DesignScript.Geometry.Curve,double,double",
+      "Id": "1a869d3ba815497fbc0dba9da4ac3c43",
+      "Inputs": [
+        {
+          "Id": "0a1654438bb04bc19f3df8da2dd2490e",
+          "Name": "SiteObject",
+          "Description": "Curve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4d7ceda1ca8148139d081b83c26ec5d1",
+          "Name": "SetbackAmnt",
+          "Description": "double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3fcd6fe0d8be4987a69f3bb46fdbc138",
+          "Name": "HeightLimit",
+          "Description": "double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "caa9111b142f47dd8d377eebc5fb8f55",
+          "Name": "SiteMass",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "66e769406fc84541b98888b17c9c16bd",
+          "Name": "SiteOffset",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creation.SiteMassGenerator (SiteObject: Curve, SetbackAmnt: double, HeightLimit: double): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "[\n\tPoint.ByCoordinates(30, 0),\n\tPoint.ByCoordinates(0, 30),\n\tPoint.ByCoordinates(-30, 0),\n\tPoint.ByCoordinates(0, -18)\n];",
+      "Id": "1c71f559f665416a98eab89eab13ad78",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cacef2efabde4995961510f4c5e8deb0",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.NurbsCurve.ByControlPoints@Autodesk.DesignScript.Geometry.Point[],int,bool",
+      "Id": "36c1c4ae53a148fc9499fd3900fe310f",
+      "Inputs": [
+        {
+          "Id": "f698d7f87ea94105b5881608f105227a",
+          "Name": "points",
+          "Description": "Point[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "141d97f48b34472da7b19e671e263122",
+          "Name": "degree",
+          "Description": "int\nDefault value : 3",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9ac1c903c1bd4fd38ab72666ce6adea7",
+          "Name": "closeCurve",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "82f21dbe93b044f4bb8e6d7b983f9b33",
+          "Name": "NurbsCurve",
+          "Description": "NurbsCurve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Create a BSplineCurve by using explicit control points. NOTE 1: BSplineCurves with deg=1 have G1 discontinuities, which cause problems for extrusion, sweep, and other operations. They should be avoided. Use a PolyCurve instead. NOTE 2: If the curve is periodic (closed), then the first and last points MUST be the same.\n\nNurbsCurve.ByControlPoints (points: Point[], degree: int = 3, closeCurve: bool = false): NurbsCurve"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "b5df15f2f4d740cd96ce16e83bd954b1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "dcb51bd6fb304942bad6e7f03d8e38ed",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 20.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 3.0,
+      "Id": "8358ef33c93f48fe89060e8a7f6a03d3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "47d3837a107240bcb96d4c577bff8342",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 500.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 50.0,
+      "Id": "2fffeae7262d4feeb218dfe047fa659d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d9b8f8dbf1974dec806f2099c7693f89",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
     }
   ],
   "Connectors": [
@@ -368,6 +566,31 @@
       "Start": "853fa8d5302b4b19bcd780439beae223",
       "End": "788c8fe2a02a49c49a5d88295b910ff9",
       "Id": "c27788d2f2ed48b2a70dcc95a7284475"
+    },
+    {
+      "Start": "cacef2efabde4995961510f4c5e8deb0",
+      "End": "f698d7f87ea94105b5881608f105227a",
+      "Id": "538515b64be042aa99d767cec13f2c64"
+    },
+    {
+      "Start": "82f21dbe93b044f4bb8e6d7b983f9b33",
+      "End": "0a1654438bb04bc19f3df8da2dd2490e",
+      "Id": "2f941f51c19442a5971581201be340f5"
+    },
+    {
+      "Start": "dcb51bd6fb304942bad6e7f03d8e38ed",
+      "End": "9ac1c903c1bd4fd38ab72666ce6adea7",
+      "Id": "b5677259899b4d298975aa44d592846d"
+    },
+    {
+      "Start": "47d3837a107240bcb96d4c577bff8342",
+      "End": "4d7ceda1ca8148139d081b83c26ec5d1",
+      "Id": "e8b02daa105145c0be66fdd2abdde298"
+    },
+    {
+      "Start": "d9b8f8dbf1974dec806f2099c7693f89",
+      "End": "3fcd6fe0d8be4987a69f3bb46fdbc138",
+      "Id": "5cd313ee2b2c490cb81f35fa2805714c"
     }
   ],
   "Dependencies": [],
@@ -383,15 +606,15 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -19.065677715510787,
-      "EyeY": 47.119016730464885,
-      "EyeZ": -49.178451402176506,
-      "LookX": 48.066713991185374,
-      "LookY": -41.013116544162095,
-      "LookZ": 53.42605052114655,
-      "UpX": 0.19926652573554976,
-      "UpY": 0.95458763224777543,
-      "UpZ": 0.22148432016953304
+      "EyeX": -38.733554308759608,
+      "EyeY": 72.7106838991014,
+      "EyeZ": 76.755337100141872,
+      "LookX": 42.100780797292174,
+      "LookY": -64.739401381155034,
+      "LookZ": -91.57841649485141,
+      "UpX": 0.14514239020937436,
+      "UpY": 0.9376869369221964,
+      "UpZ": -0.31571647864798996
     },
     "NodeViews": [
       {
@@ -483,11 +706,71 @@
         "Excluded": false,
         "X": -95.3430109042186,
         "Y": 665.87631507852473
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Creation.SiteMassGenerator",
+        "Id": "1a869d3ba815497fbc0dba9da4ac3c43",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 335.60430252201752,
+        "Y": 1088.9655588298265
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "1c71f559f665416a98eab89eab13ad78",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -336.06030791808143,
+        "Y": 847.79452410915644
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "NurbsCurve.ByControlPoints",
+        "Id": "36c1c4ae53a148fc9499fd3900fe310f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2.7266900730845691,
+        "Y": 894.94950695000819
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "b5df15f2f4d740cd96ce16e83bd954b1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -175.39994599232773,
+        "Y": 1017.1749284070108
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Setback",
+        "Id": "8358ef33c93f48fe89060e8a7f6a03d3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -342.40663533335726,
+        "Y": 1080.9523500165665
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Max Height",
+        "Id": "2fffeae7262d4feeb218dfe047fa659d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -340.73009202447622,
+        "Y": 1154.9922411488851
       }
     ],
     "Annotations": [],
-    "X": 245.01643016626974,
-    "Y": -200.00626137016252,
-    "Zoom": 1.1643898080562636
+    "X": 299.83117045326821,
+    "Y": -122.99439048821932,
+    "Zoom": 0.743483769730131
   }
 }
