@@ -35,7 +35,7 @@ namespace GenerativeToolkit.Layouts
 
         #endregion
 
-        #region MaxRectangle Binpacker Node
+        #region Public Methods
 
         public static List<Rectangle> MaxPack(List<Rectangle> rects, Rectangle bin, string placementMethod)
         {
