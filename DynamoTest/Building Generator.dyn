@@ -17,13 +17,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Buildings.Creation.BuildingGenerator@string,Autodesk.DesignScript.Geometry.Plane,double,double,double,double,double,bool",
+      "FunctionSignature": "Buildings.Creation.BuildingGenerator@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,double,double,bool",
       "Id": "6e0dff2a079a4108bd788a9bf40217f1",
       "Inputs": [
         {
           "Id": "5cbe9aec7d3a4476b54735d31be3fdf9",
-          "Name": "Type",
-          "Description": "string",
+          "Name": "BasePlane",
+          "Description": "The building base plane.\n\nPlane",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -31,8 +31,8 @@
         },
         {
           "Id": "44a103da8a494afc9b0ab409814acf6d",
-          "Name": "BasePlane",
-          "Description": "Plane",
+          "Name": "Type",
+          "Description": "Building type (ex. U, L, I, H, O, D)\n\nstring\nDefault value : \"L\" (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -41,7 +41,7 @@
         {
           "Id": "a6622b15786749d5906a262c88e451c3",
           "Name": "Length",
-          "Description": "double",
+          "Description": "Overall building length.\n\ndouble\nDefault value : 40 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -50,7 +50,7 @@
         {
           "Id": "093bcaf14a864f34aeabc7b2af347e38",
           "Name": "Width",
-          "Description": "double",
+          "Description": "Overall building width.\n\ndouble\nDefault value : 40 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -59,7 +59,7 @@
         {
           "Id": "2b8bf65ffb614299a1f169e4fccb785b",
           "Name": "Depth",
-          "Description": "double",
+          "Description": "Building depth.\n\ndouble\nDefault value : 6 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -68,7 +68,7 @@
         {
           "Id": "2a672a1a5a0e49628a3ff2f2b71123f3",
           "Name": "BldgArea",
-          "Description": "double",
+          "Description": "Target gross building area.\n\ndouble\nDefault value : 1000 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -77,7 +77,7 @@
         {
           "Id": "788c8fe2a02a49c49a5d88295b910ff9",
           "Name": "FloorHeight",
-          "Description": "double",
+          "Description": "Height of the floor.\n\ndouble\nDefault value : 3 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -86,7 +86,7 @@
         {
           "Id": "75d84305bdc44b40a3b576e051dc596c",
           "Name": "CreateCore",
-          "Description": "bool",
+          "Description": "Create core volumes and subtractions?\n\nbool\nDefault value : true (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -97,7 +97,7 @@
         {
           "Id": "78a099dd40764a199dd4518d73b38181",
           "Name": "Floors",
-          "Description": "var",
+          "Description": "Building floor surfaces.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -106,7 +106,7 @@
         {
           "Id": "6ab595ad5d98449cb1ff74bb2b9e8160",
           "Name": "Mass",
-          "Description": "var",
+          "Description": "Building volume as polysurface.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -115,7 +115,7 @@
         {
           "Id": "ec3e15c867e74299ae06ba0d7c8a084e",
           "Name": "Cores",
-          "Description": "var",
+          "Description": "Building cores as polysurfaces.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -124,7 +124,7 @@
         {
           "Id": "7f3ea61f43c74ef6b6382b2204637397",
           "Name": "TotalFloorArea",
-          "Description": "var",
+          "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -132,8 +132,8 @@
         },
         {
           "Id": "52b4cdaf89b443099141707a47d3853d",
-          "Name": "BuildingVolume",
-          "Description": "var",
+          "Name": "TotalFacadeArea",
+          "Description": "Combined area of all facades (vertical surfaces).",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -141,8 +141,17 @@
         },
         {
           "Id": "b7e70afcd3a444048ffd84f1a71932e1",
+          "Name": "BuildingVolume",
+          "Description": "Volume of Mass.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bb5579e80843428a8c61322fc798e5a7",
           "Name": "TopPlane",
-          "Description": "var",
+          "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -150,7 +159,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Creation.BuildingGenerator (Type: string, BasePlane: Plane, Length: double, Width: double, Depth: double, BldgArea: double, FloorHeight: double, CreateCore: bool): var[]..[]"
+      "Description": "Generates a building mass\n\nCreation.BuildingGenerator (BasePlane: Plane, Type: string = \"L\", Length: double = 40, Width: double = 40, Depth: double = 6, BldgArea: double = 1000, FloorHeight: double = 3, CreateCore: bool = true): var[]..[]"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
@@ -340,8 +349,8 @@
       "Inputs": [
         {
           "Id": "0a1654438bb04bc19f3df8da2dd2490e",
-          "Name": "SiteObject",
-          "Description": "Curve",
+          "Name": "SiteOutline",
+          "Description": "Site boundary, from Revit.\n\nCurve",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -359,7 +368,7 @@
         {
           "Id": "3fcd6fe0d8be4987a69f3bb46fdbc138",
           "Name": "HeightLimit",
-          "Description": "double",
+          "Description": "Height limitation.\n\ndouble",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -370,7 +379,7 @@
         {
           "Id": "caa9111b142f47dd8d377eebc5fb8f55",
           "Name": "SiteMass",
-          "Description": "var",
+          "Description": "Allowable volume for building mass.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -379,7 +388,7 @@
         {
           "Id": "66e769406fc84541b98888b17c9c16bd",
           "Name": "SiteOffset",
-          "Description": "var",
+          "Description": "Allowable footprint for building mass.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -387,7 +396,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Creation.SiteMassGenerator (SiteObject: Curve, SetbackAmnt: double, HeightLimit: double): var[]..[]"
+      "Description": "Site setback\n\nCreation.SiteMassGenerator (SiteOutline: Curve, SetbackAmnt: double, HeightLimit: double): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -524,18 +533,155 @@
       ],
       "Replication": "Disabled",
       "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Buildings.Analysis.DeceonstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
+      "Id": "c7b541cf90f14223a53626ebe2da5eb1",
+      "Inputs": [
+        {
+          "Id": "8f5f457283824efdbf14dbdd05c4e49a",
+          "Name": "Mass",
+          "Description": "Building mass.\n\nTopology",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1738cd71c1a448629e00799105ff805c",
+          "Name": "AngleThreshold",
+          "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45 (disabled)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "276c418d18354511b91eb0bd0f605b99",
+          "Name": "VerticalSurfaces",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a3661acec1524a47b2526af2d683461b",
+          "Name": "HorizontalSurfaces",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Deconstructs a building mass into component horizontal and vertical parts\n\nAnalysis.DeceonstructFacadeShell (Mass: Topology, AngleThreshold: double = 45): var[]..[]"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 180.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 45.0,
+      "Id": "6670ef0cbc954069912c389748dfb27f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c978a9dce48247659757ef8542370061",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.PolySurface.ByJoinedSurfaces@Autodesk.DesignScript.Geometry.Surface[]",
+      "Id": "07c7db1a4e6343519b6569e48c6b455c",
+      "Inputs": [
+        {
+          "Id": "3c03fd4ed0914cc78c0a5aae089bb5ca",
+          "Name": "surfaces",
+          "Description": "Surfaces to join into polysurface\n\nSurface[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2b69bb4c0f6b4252b1400b291e79110d",
+          "Name": "PolySurface",
+          "Description": "PolySurface",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Make Polysurface by joining surfaces.\n\nPolySurface.ByJoinedSurfaces (surfaces: Surface[]): PolySurface"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.PolySurface.ByJoinedSurfaces@Autodesk.DesignScript.Geometry.Surface[]",
+      "Id": "c11d03baa8ce45a492af4905d8bf1a4b",
+      "Inputs": [
+        {
+          "Id": "c5864a1415194524a326e610b0064dd8",
+          "Name": "surfaces",
+          "Description": "Surfaces to join into polysurface\n\nSurface[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c99eaa402c484589a7a555c40bf6ae0e",
+          "Name": "PolySurface",
+          "Description": "PolySurface",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Make Polysurface by joining surfaces.\n\nPolySurface.ByJoinedSurfaces (surfaces: Surface[]): PolySurface"
     }
   ],
   "Connectors": [
     {
+      "Start": "78a099dd40764a199dd4518d73b38181",
+      "End": "8f5f457283824efdbf14dbdd05c4e49a",
+      "Id": "d19a5580667341bea1db5abe21aa757b"
+    },
+    {
       "Start": "b342722532654819a8a651e44b0c7799",
-      "End": "5cbe9aec7d3a4476b54735d31be3fdf9",
-      "Id": "2f4213bc74f345b8bf0ede96b52659bb"
+      "End": "44a103da8a494afc9b0ab409814acf6d",
+      "Id": "03b59b3fd8e44a81a2a7d2cacafbf5e2"
     },
     {
       "Start": "edcb70e199224b5889b54a9a8d050626",
-      "End": "44a103da8a494afc9b0ab409814acf6d",
-      "Id": "a702ef01c7e148edbd8e94f2c5d8ae82"
+      "End": "5cbe9aec7d3a4476b54735d31be3fdf9",
+      "Id": "898cb47f3e9348ba986724bcd7c90e98"
     },
     {
       "Start": "7e2ea95d08a04a9c9f672a9da0b2bdb5",
@@ -591,6 +737,21 @@
       "Start": "d9b8f8dbf1974dec806f2099c7693f89",
       "End": "3fcd6fe0d8be4987a69f3bb46fdbc138",
       "Id": "5cd313ee2b2c490cb81f35fa2805714c"
+    },
+    {
+      "Start": "276c418d18354511b91eb0bd0f605b99",
+      "End": "c5864a1415194524a326e610b0064dd8",
+      "Id": "626b55a2076c412386ce89e68c24e20d"
+    },
+    {
+      "Start": "a3661acec1524a47b2526af2d683461b",
+      "End": "3c03fd4ed0914cc78c0a5aae089bb5ca",
+      "Id": "a7785f1551694f74b6692f2bca2e9811"
+    },
+    {
+      "Start": "c978a9dce48247659757ef8542370061",
+      "End": "1738cd71c1a448629e00799105ff805c",
+      "Id": "a28edf2ab61c4e6c946bf2f885407a73"
     }
   ],
   "Dependencies": [],
@@ -606,15 +767,15 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -38.733554308759608,
-      "EyeY": 72.7106838991014,
-      "EyeZ": 76.755337100141872,
-      "LookX": 42.100780797292174,
-      "LookY": -64.739401381155034,
-      "LookZ": -91.57841649485141,
-      "UpX": 0.14514239020937436,
-      "UpY": 0.9376869369221964,
-      "UpZ": -0.31571647864798996
+      "EyeX": -43.460814844050155,
+      "EyeY": 70.941756076588376,
+      "EyeZ": 75.687285798406435,
+      "LookX": 46.828041332582721,
+      "LookY": -62.970473558642013,
+      "LookZ": -90.510365193115973,
+      "UpX": 0.15212973588748024,
+      "UpY": 0.94360850639365212,
+      "UpZ": -0.29404001448865119
     },
     "NodeViews": [
       {
@@ -634,8 +795,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 145.53747911857766,
-        "Y": 266.4077694222027
+        "X": 143.74412008692417,
+        "Y": 347.10892584661087
       },
       {
         "ShowGeometry": true,
@@ -644,8 +805,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 118.97275480746185,
-        "Y": 325.52157477037207
+        "X": 119.86943432328843,
+        "Y": 253.78721350423143
       },
       {
         "ShowGeometry": true,
@@ -766,11 +927,51 @@
         "Excluded": false,
         "X": -340.73009202447622,
         "Y": 1154.9922411488851
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Analysis.DeceonstructFacadeShell",
+        "Id": "c7b541cf90f14223a53626ebe2da5eb1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 978.718483647622,
+        "Y": 574.52973787187557
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Angle Threshold",
+        "Id": "6670ef0cbc954069912c389748dfb27f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 626.90253125160325,
+        "Y": 609.18746666220068
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "PolySurface.ByJoinedSurfaces",
+        "Id": "07c7db1a4e6343519b6569e48c6b455c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1400.8404827157267,
+        "Y": 638.876610125104
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "PolySurface.ByJoinedSurfaces",
+        "Id": "c11d03baa8ce45a492af4905d8bf1a4b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1398.1504441682466,
+        "Y": 526.791670646759
       }
     ],
     "Annotations": [],
-    "X": 299.83117045326821,
-    "Y": -122.99439048821932,
+    "X": 309.83117045326821,
+    "Y": -44.327723821552652,
     "Zoom": 0.743483769730131
   }
 }
