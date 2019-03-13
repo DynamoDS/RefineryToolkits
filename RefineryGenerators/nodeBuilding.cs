@@ -56,7 +56,7 @@ namespace Buildings
             //TODO: Why not make cores and mass solids?
 
             var floors = new List<Surface>();
-            PolySurface mass = null;
+            Solid mass = null;
             List<PolySurface> cores = null;
             double totalArea = 0;
             double totalVolume = 0;
@@ -76,12 +76,9 @@ namespace Buildings
 
                 double floorCount = Math.Ceiling(BldgArea / baseSurface.Area);
 
-                using (Solid solid = baseSurface.Thicken(floorCount * FloorHeight, both_sides: false))
-                {
-                    mass = PolySurface.BySolid(solid);
+                mass = baseSurface.Thicken(floorCount * FloorHeight, both_sides: false);
 
-                    totalVolume = solid.Volume;
-                }
+                totalVolume = mass.Volume;
 
                 for (int i = 0; i < floorCount; i++)
                 {
@@ -395,7 +392,6 @@ namespace Buildings
 
                 boundary.Dispose();
             }
-
 
             return baseSurface;
         }

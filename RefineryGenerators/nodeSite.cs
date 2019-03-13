@@ -9,22 +9,22 @@ namespace Site
         /// <summary>
         /// Site setback
         /// </summary>
-        /// <param name="SiteObject">Site object reference from Revit.</param>
+        /// <param name="SiteOutline">Site boundary, from Revit.</param>
         /// <param name="OffsetAmnt">Site setback amount.</param>
         /// <param name="HeightLimit">Height limitation.</param>
         /// <returns name="SiteMass">Allowable volume for building mass.</returns>
         /// <returns name="SiteOffset">Allowable footprint for building mass.</returns>
         /// <search>site,design,refactory</search>
         [MultiReturn(new[] { "SiteMass", "SiteOffset" })]
-        public static Dictionary<string, object> SiteMassGenerator(Curve SiteObject, double SetbackAmnt, double HeightLimit)
+        public static Dictionary<string, object> SiteMassGenerator(Curve SiteOutline, double SetbackAmnt, double HeightLimit)
         {
-            PolySurface siteMass = null;
+            Solid siteMass = null;
             Curve siteOffset = null;
 
-            if (SetbackAmnt >= 0 && HeightLimit > 0 && SiteObject != null)
+            if (SetbackAmnt >= 0 && HeightLimit > 0 && SiteOutline != null)
             {
-                var inset1 = SiteObject.Offset(SetbackAmnt);
-                var inset2 = SiteObject.Offset(-SetbackAmnt);
+                var inset1 = SiteOutline.Offset(SetbackAmnt);
+                var inset2 = SiteOutline.Offset(-SetbackAmnt);
 
                 if (inset1.Length < inset2.Length)
                 {
@@ -42,11 +42,8 @@ namespace Site
                 {
                     HeightLimit = -HeightLimit;
                 }
-
-                using (var solid = siteOffset.ExtrudeAsSolid(HeightLimit))
-                {
-                    siteMass = PolySurface.BySolid(solid);
-                }
+                
+                siteMass = siteOffset.ExtrudeAsSolid(HeightLimit);
             }
 
             // return a dictionary
@@ -68,9 +65,9 @@ namespace Site
         /// <returns>c, d</returns>
         /// <search>addition,multiplication,math</search>
         [MultiReturn(new[] { "IntersectionVolume", "DoesIntersect", "Percent" })]
-        public static Dictionary<string, object> SiteClashTest(PolySurface BuildingMass, double SiteMass)
+        public static Dictionary<string, object> SiteClashTest(Solid BuildingMass, Solid SiteMass)
         {
-            PolySurface volume = null;
+            Solid volume = null;
             bool doesIntersect = false;
             double percent = 0;
 
@@ -89,17 +86,17 @@ namespace Site
         /// <param name="RevitSite">Reference site element (usually a selected mass)</param>
         /// <returns></returns>
         /// <search>refinery</search>
-        [MultiReturn(new[] { "Solids", "BoundingBoxes", "Heights" })]
+        [MultiReturn(new[] { "Elements", "BoundingBoxes", "Heights" })]
         public static Dictionary<string, object> SiteContext(PolySurface RevitSite)
         {
-            List<Solid> solids = null;
+            List<PolySurface> elements = null;
             List<BoundingBox> boundingBoxes = null;
             List<double> heights = null;
 
             // return a dictionary
             return new Dictionary<string, object>
             {
-                {"Solids", solids},
+                {"Elements", elements},
                 {"BoundingBoxes", boundingBoxes},
                 {"Heights", heights}
             };
