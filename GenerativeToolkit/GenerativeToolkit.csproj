@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="CoreNodeModels, Version=2.1.0.7465, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.1.0.7465\lib\net47\CoreNodeModels.dll</HintPath>
@@ -118,9 +119,11 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -130,6 +133,14 @@
     </Reference>
     <Reference Include="ProtoGeometry, Version=2.1.0.23964, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.1.0.7465\lib\net47\ProtoGeometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPI">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitNodes">
+      <HintPath>..\..\..\..\..\..\Program Files\Dynamo\Dynamo Revit\2\Revit_2019\RevitNodes.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -153,10 +164,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Geometry\Curves.cs" />
+    <Compile Include="HelperFunctions\DeskFunctions.cs" />
     <Compile Include="Layouts\BinPacking2D.cs" />
     <Compile Include="Layouts\MaxRectanglesBinPacking.cs" />
     <Compile Include="Layouts\ShelfAlgorithms.cs" />
     <Compile Include="Layouts\SurfaceDivision2D.cs" />
+    <Compile Include="Relationships\Openess.cs" />
     <Compile Include="Visibility\Base.cs" />
     <Compile Include="Visibility\Visibility.cs" />
     <Compile Include="Geometry\Points.cs" />
@@ -164,6 +177,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ColorRange.cs" />
     <Compile Include="Utilities\SeededShuffle.cs" />
+    <Compile Include="Visibility\VisibleSpacesFromPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -171,7 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Navigation\" />
-    <Folder Include="Relationships\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PlacementMethod\PlacementMethod.csproj">
