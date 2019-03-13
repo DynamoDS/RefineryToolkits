@@ -401,21 +401,38 @@ namespace Buildings
             return baseSurface;
         }
     }
-
+    
     public static class Analysis
     {
         /// <summary>
         /// Deconstructs a building mass into component horizontal and vertical parts 
         /// </summary>
-        /// <param name="Mass">Building mass</param>
-        /// <param name="tolerance">Tolerance for vertical and horizontal classification</param>
-        /// <returns></returns>
+        /// <param name="Mass">Building mass.</param>
+        /// <param name="AngleThreshold">Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).</param>
+        /// <returns name="VerticalSurfaces">Vertical surfaces.</returns>
+        /// <returns name="HorizontalSurfaces">Horizontal surfaces.</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "VerticalSurfaces", "HoriztonalSurfaces" })]
-        public static Dictionary<string, object> DeceonstructFacadeShell(PolySurface Mass, double tolerance)
+        [MultiReturn(new[] { "VerticalSurfaces", "HorizontalSurfaces" })]
+        public static Dictionary<string, object> DeceonstructFacadeShell(Topology Mass, double AngleThreshold = 45)
         {
-            List<Surface> horizontal = null;
-            List<Surface> vertical = null;
+            List<Surface> horizontal = new List<Surface>();
+            List<Surface> vertical = new List<Surface>();
+
+            if (Mass != null)
+            {
+                foreach (var surface in Mass.Faces.Select(f => f.SurfaceGeometry()))
+                {
+                    var angle = surface.NormalAtParameter(0.5, 0.5).AngleWithVector(Vector.ZAxis());
+                    if (angle < AngleThreshold || angle > 180 - AngleThreshold)
+                    {
+                        horizontal.Add(surface);
+                    }
+                    else
+                    {
+                        vertical.Add(surface);
+                    }
+                }
+            }
 
             // return a dictionary
             return new Dictionary<string, object>
