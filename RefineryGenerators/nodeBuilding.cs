@@ -43,10 +43,11 @@ namespace Buildings
         /// <returns name="Mass">Building volume as polysurface.</returns>
         /// <returns name="Cores">Building cores as polysurfaces.</returns>
         /// <returns name="TotalFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <returns name="BuildingVolume">Volume of Mass.</returns>
         /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "Floors", "Mass", "Cores", "TotalFloorArea", "BuildingVolume", "TopPlane" })]
+        [MultiReturn(new[] { "Mass", "Floors", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
             string Type, 
             Plane BasePlane, double Length, double Width, double Depth, 
@@ -60,6 +61,7 @@ namespace Buildings
             List<PolySurface> cores = null;
             double totalArea = 0;
             double totalVolume = 0;
+            double facadeArea = 0;
             Plane topPlane = null;
 
             if (Length <= 0 || Width <= 0 || Depth <= 0 || BldgArea <= 0 || FloorHeight <= 0)
@@ -80,6 +82,8 @@ namespace Buildings
 
                 totalVolume = mass.Volume;
 
+                facadeArea = mass.Area - (2 * baseSurface.Area);
+
                 for (int i = 0; i < floorCount; i++)
                 {
                     floors.Add((Surface)baseSurface.Translate(Vector.ByCoordinates(0, 0, i * FloorHeight)));
@@ -99,6 +103,7 @@ namespace Buildings
                 {"Mass", mass},
                 {"Cores", cores},
                 {"TotalFloorArea", totalArea},
+                {"TotalFacadeArea", facadeArea},
                 {"BuildingVolume", totalVolume},
                 {"TopPlane", topPlane}
             };
