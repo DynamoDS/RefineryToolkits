@@ -11,7 +11,7 @@ namespace GenerativeToolkit.HelperFunctions
 {
     class DeskFunctions
     {
-        #region Get room boundaries as Polygons
+        #region Public Methods
         [IsVisibleInDynamoLibrary(false)]
         public static List<Polygon> PolygonsFromRooms(List<Room> rooms)
         {
@@ -29,7 +29,7 @@ namespace GenerativeToolkit.HelperFunctions
         }
         #endregion
 
-        #region Filter unplaced Rooms 
+        #region Private Methods
         [IsVisibleInDynamoLibrary(false)]
         private static List<Room> FilterRooms(List<Room> rooms)
         {
@@ -44,9 +44,7 @@ namespace GenerativeToolkit.HelperFunctions
             }
             return filteredRooms;
         }
-        #endregion
 
-        #region Get all rooms Boundary Polygon
         [IsVisibleInDynamoLibrary(false)]
         private static List<Polygon> BoundaryPolygon(IEnumerable<IEnumerable<Curve>> boundarySegments)
         {
@@ -67,9 +65,7 @@ namespace GenerativeToolkit.HelperFunctions
 
             return polygons;
         }
-        #endregion
 
-        #region Combine intersecting rooms only seperated with a room seperation line
         [IsVisibleInDynamoLibrary(false)]
         private static List<Polygon> CombineIntersectingRooms(List<Polygon> polygons)
         {

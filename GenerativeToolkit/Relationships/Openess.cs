@@ -13,11 +13,7 @@ namespace GenerativeToolkit.Relationships
     [IsVisibleInDynamoLibrary(false)]
     public class Openess
     {
-        internal Openess()
-        {
-
-        }
-
+        #region Public Methods
         [IsVisibleInDynamoLibrary(true)]
         public static List<double> DeskOpeness(List<Room> rooms, List<Revit.Elements.FamilyInstance> elements, List<double> deskWidth, List<double> deskLength, double offset)
         {
@@ -33,7 +29,9 @@ namespace GenerativeToolkit.Relationships
 
             return openessScore;
         }
+        #endregion
 
+        #region Private Methods
         private static List<Autodesk.DesignScript.Geometry.Line> IntersectionLine(Revit.Elements.FamilyInstance element, double deskWidth, double deskLength, double offset)
         {
             Autodesk.DesignScript.Geometry.Point locationPoint = (Autodesk.DesignScript.Geometry.Point) element.GetLocation();
@@ -95,5 +93,6 @@ namespace GenerativeToolkit.Relationships
             }
             return score;
         }
+        #endregion
     }
 }
