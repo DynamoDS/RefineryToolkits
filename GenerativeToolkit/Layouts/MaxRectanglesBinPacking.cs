@@ -1,4 +1,5 @@
 ﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace GenerativeToolkit.Layouts
 {
+    [IsVisibleInDynamoLibrary(false)]
     public class MaxRectanglesBinPacking
     {
         internal MaxRectanglesBinPacking()
@@ -36,7 +38,7 @@ namespace GenerativeToolkit.Layouts
         #endregion
 
         #region Public Methods
-
+        [IsVisibleInDynamoLibrary(true)]
         public static List<Rectangle> MaxPack(List<Rectangle> rects, Rectangle bin, string placementMethod)
         {
             freeRectangles = new List<FreeRectangle>();

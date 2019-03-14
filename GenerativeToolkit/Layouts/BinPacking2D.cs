@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 
 namespace GenerativeToolkit.Layouts
 {
+    [IsVisibleInDynamoLibrary(false)]
     public class BinPacking2D
     {
         internal BinPacking2D()
@@ -27,6 +29,7 @@ namespace GenerativeToolkit.Layouts
 
         private static Node rootNode;
 
+        [IsVisibleInDynamoLibrary(false)]
         public static List<Autodesk.DesignScript.Geometry.Geometry> Packer2DCustomOrder(List<Rectangle> rects, Rectangle bin)
         {
             // Initialize root node
@@ -41,6 +44,7 @@ namespace GenerativeToolkit.Layouts
             return Pack(rects);
         }
 
+        [IsVisibleInDynamoLibrary(false)]
         public static List<Autodesk.DesignScript.Geometry.Geometry> Packer2DDescendingOrder(List<Rectangle> rects, Rectangle bin)
         {
             // Sort rectangles into descending order based on area
@@ -57,6 +61,7 @@ namespace GenerativeToolkit.Layouts
             return Pack(rects);
         }
 
+        [IsVisibleInDynamoLibrary(false)]
         public static List<Autodesk.DesignScript.Geometry.Geometry> Packer2DAescendingOrder(List<Rectangle> rects, Rectangle bin)
         {
             // Sort rectangles into descending order based on area

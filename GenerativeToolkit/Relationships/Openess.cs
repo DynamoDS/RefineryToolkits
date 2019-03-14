@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Autodesk.DesignScript.Runtime;
 using Revit.Elements;
-using Autodesk.Revit.DB;
 
 namespace GenerativeToolkit.Relationships
 {
