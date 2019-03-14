@@ -1,4 +1,5 @@
 ﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace GenerativeToolkit.Layouts
 {
+    [IsVisibleInDynamoLibrary(false)]
     public class ShelfAlgorithms
     {
         internal ShelfAlgorithms()
@@ -35,6 +37,7 @@ namespace GenerativeToolkit.Layouts
         private static Bin bin;
         private static Shelf currentShelf;
 
+        [IsVisibleInDynamoLibrary(false)]
         public static List<Rectangle> ShelfNF(List<Rectangle> rects, Rectangle binRect)
         {
             // Initialize bin
