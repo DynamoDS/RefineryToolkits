@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Autodesk.DesignScript.Runtime;
-using Autodesk.DesignScript.Geometry;
 using System.Threading;
+using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 
 namespace Buildings
 {
+    /// <summary>
+    /// Creation description.
+    /// </summary>
     public static class Creation
     {
         /// <summary>
@@ -49,9 +51,9 @@ namespace Buildings
         /// <search>building,design,refinery</search>
         [MultiReturn(new[] { "BuildingMass", "Floors", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
-            Plane BasePlane = null, string Type = "L", 
-            double Length = 40, double Width = 40, double Depth = 6, 
-            double BldgArea = 1000, double FloorHeight = 3, 
+            Plane BasePlane = null, string Type = "L",
+            double Length = 40, double Width = 40, double Depth = 6,
+            double BldgArea = 1000, double FloorHeight = 3,
             bool CreateCore = true)
         {
             //TODO: Why not make cores and mass solids?
@@ -388,7 +390,7 @@ namespace Buildings
                         }
                         catch (ApplicationException)
                         { }
-                        
+
                         Thread.Sleep(50);
                     }
 
@@ -401,7 +403,10 @@ namespace Buildings
             return baseSurface;
         }
     }
-    
+
+    /// <summary>
+    /// Analysis description.
+    /// </summary>
     public static class Analysis
     {
         /// <summary>

@@ -5,6 +5,9 @@ using Autodesk.DesignScript.Runtime;
 
 namespace Site
 {
+    /// <summary>
+    /// Creation description.
+    /// </summary>
     public static class Creation
     {
         /// <summary>
@@ -56,6 +59,9 @@ namespace Site
         }
     }
 
+    /// <summary>
+    /// Analysis description.
+    /// </summary>
     public static class Analysis
     {
         /// <summary>
