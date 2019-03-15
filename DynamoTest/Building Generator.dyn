@@ -23,7 +23,7 @@
         {
           "Id": "5cbe9aec7d3a4476b54735d31be3fdf9",
           "Name": "BasePlane",
-          "Description": "Plane",
+          "Description": "The building base plane.\n\nPlane",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -32,7 +32,7 @@
         {
           "Id": "44a103da8a494afc9b0ab409814acf6d",
           "Name": "Type",
-          "Description": "string\nDefault value : \"L\" (disabled)",
+          "Description": "Building type (ex. U, L, I, H, O, D)\n\nstring\nDefault value : \"L\" (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -41,7 +41,7 @@
         {
           "Id": "a6622b15786749d5906a262c88e451c3",
           "Name": "Length",
-          "Description": "double\nDefault value : 40 (disabled)",
+          "Description": "Overall building length.\n\ndouble\nDefault value : 40 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -50,7 +50,7 @@
         {
           "Id": "093bcaf14a864f34aeabc7b2af347e38",
           "Name": "Width",
-          "Description": "double\nDefault value : 40 (disabled)",
+          "Description": "Overall building width.\n\ndouble\nDefault value : 40 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -59,7 +59,7 @@
         {
           "Id": "2b8bf65ffb614299a1f169e4fccb785b",
           "Name": "Depth",
-          "Description": "double\nDefault value : 6 (disabled)",
+          "Description": "Building depth.\n\ndouble\nDefault value : 6 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -68,7 +68,7 @@
         {
           "Id": "2a672a1a5a0e49628a3ff2f2b71123f3",
           "Name": "BldgArea",
-          "Description": "double\nDefault value : 1000 (disabled)",
+          "Description": "Target gross building area.\n\ndouble\nDefault value : 1000 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -77,7 +77,7 @@
         {
           "Id": "788c8fe2a02a49c49a5d88295b910ff9",
           "Name": "FloorHeight",
-          "Description": "double\nDefault value : 3 (disabled)",
+          "Description": "Height of the floor.\n\ndouble\nDefault value : 3 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -86,7 +86,7 @@
         {
           "Id": "75d84305bdc44b40a3b576e051dc596c",
           "Name": "CreateCore",
-          "Description": "bool\nDefault value : true (disabled)",
+          "Description": "Create core volumes and subtractions?\n\nbool\nDefault value : true (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -96,8 +96,8 @@
       "Outputs": [
         {
           "Id": "78a099dd40764a199dd4518d73b38181",
-          "Name": "Mass",
-          "Description": "var",
+          "Name": "Floors",
+          "Description": "Building floor surfaces.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -105,8 +105,8 @@
         },
         {
           "Id": "6ab595ad5d98449cb1ff74bb2b9e8160",
-          "Name": "Floors",
-          "Description": "var",
+          "Name": "BuildingMass",
+          "Description": "Building volume.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -115,7 +115,7 @@
         {
           "Id": "ec3e15c867e74299ae06ba0d7c8a084e",
           "Name": "Cores",
-          "Description": "var",
+          "Description": "Building core volumes.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -123,8 +123,8 @@
         },
         {
           "Id": "7f3ea61f43c74ef6b6382b2204637397",
-          "Name": "TopPlane",
-          "Description": "var",
+          "Name": "TotalFloorArea",
+          "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -132,8 +132,8 @@
         },
         {
           "Id": "52b4cdaf89b443099141707a47d3853d",
-          "Name": "BuildingVolume",
-          "Description": "var",
+          "Name": "TotalFacadeArea",
+          "Description": "Combined area of all facades (vertical surfaces).",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -141,8 +141,8 @@
         },
         {
           "Id": "b7e70afcd3a444048ffd84f1a71932e1",
-          "Name": "TotalFloorArea",
-          "Description": "var",
+          "Name": "BuildingVolume",
+          "Description": "Volume of Mass.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -150,8 +150,8 @@
         },
         {
           "Id": "bb5579e80843428a8c61322fc798e5a7",
-          "Name": "TotalFacadeArea",
-          "Description": "var",
+          "Name": "TopPlane",
+          "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -159,7 +159,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Creation.BuildingGenerator (BasePlane: Plane, Type: string = \"L\", Length: double = 40, Width: double = 40, Depth: double = 6, BldgArea: double = 1000, FloorHeight: double = 3, CreateCore: bool = true): var[]..[]"
+      "Description": "Generate a building mass.\n\nCreation.BuildingGenerator (BasePlane: Plane, Type: string = \"L\", Length: double = 40, Width: double = 40, Depth: double = 6, BldgArea: double = 1000, FloorHeight: double = 3, CreateCore: bool = true): var[]..[]"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
@@ -225,10 +225,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 100.0,
+      "MaximumValue": 100000.0,
       "MinimumValue": 0.0,
-      "StepValue": 1.0,
-      "InputValue": 20.0,
+      "StepValue": 1000.0,
+      "InputValue": 25000.0,
       "Id": "f8124ce2a95143d98a0a422bcd5b06c3",
       "Inputs": [],
       "Outputs": [
@@ -249,10 +249,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 30.0,
+      "MaximumValue": 30000.0,
       "MinimumValue": 0.0,
-      "StepValue": 1.0,
-      "InputValue": 8.0,
+      "StepValue": 1000.0,
+      "InputValue": 8000.0,
       "Id": "ccf0989fbb9340908c606be34ad757d1",
       "Inputs": [],
       "Outputs": [
@@ -273,10 +273,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 100.0,
+      "MaximumValue": 100000.0,
       "MinimumValue": 0.0,
-      "StepValue": 1.0,
-      "InputValue": 20.0,
+      "StepValue": 1000.0,
+      "InputValue": 30000.0,
       "Id": "19a1a63827824bea9da42ea7e9166328",
       "Inputs": [],
       "Outputs": [
@@ -297,10 +297,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 10000.0,
+      "MaximumValue": 10000000.0,
       "MinimumValue": 0.0,
-      "StepValue": 1.0,
-      "InputValue": 339.0,
+      "StepValue": 1000.0,
+      "InputValue": 400000.0,
       "Id": "a051f164c890406c8d3192fc8b0ce469",
       "Inputs": [],
       "Outputs": [
@@ -321,10 +321,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 40.0,
+      "MaximumValue": 40000.0,
       "MinimumValue": 0.0,
-      "StepValue": 1.0,
-      "InputValue": 11.0,
+      "StepValue": 1000.0,
+      "InputValue": 11000.0,
       "Id": "d15c56fd41e14e959637d6937cb655df",
       "Inputs": [],
       "Outputs": [
@@ -350,7 +350,7 @@
         {
           "Id": "0a1654438bb04bc19f3df8da2dd2490e",
           "Name": "SiteOutline",
-          "Description": "Curve",
+          "Description": "Site boundary, from Revit.\n\nCurve",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -359,7 +359,7 @@
         {
           "Id": "4d7ceda1ca8148139d081b83c26ec5d1",
           "Name": "Setback",
-          "Description": "double\nDefault value : 0 (disabled)",
+          "Description": "Site setback distance.\n\ndouble\nDefault value : 0 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -368,7 +368,7 @@
         {
           "Id": "3fcd6fe0d8be4987a69f3bb46fdbc138",
           "Name": "HeightLimit",
-          "Description": "double\nDefault value : 100 (disabled)",
+          "Description": "Maximum building height.\n\ndouble\nDefault value : 100 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -379,7 +379,7 @@
         {
           "Id": "caa9111b142f47dd8d377eebc5fb8f55",
           "Name": "SiteMass",
-          "Description": "var",
+          "Description": "Allowable volume for building mass.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -388,7 +388,7 @@
         {
           "Id": "66e769406fc84541b98888b17c9c16bd",
           "Name": "SiteOffset",
-          "Description": "var",
+          "Description": "Allowable footprint for building mass.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -396,17 +396,17 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Creation.SiteMassGenerator (SiteOutline: Curve, Setback: double = 0, HeightLimit: double = 100): var[]..[]"
+      "Description": "Use setback and height to create boundary volume for building mass to fit into.\n\nCreation.SiteMassGenerator (SiteOutline: Curve, Setback: double = 0, HeightLimit: double = 100): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
-      "Code": "[\n\tPoint.ByCoordinates(30, 0),\n\tPoint.ByCoordinates(0, 30),\n\tPoint.ByCoordinates(-30, 0),\n\tPoint.ByCoordinates(0, -18)\n];",
+      "Code": "[\n\tPoint.ByCoordinates(30000, 0),\n\tPoint.ByCoordinates(0, 30000),\n\tPoint.ByCoordinates(-30000, 0),\n\tPoint.ByCoordinates(0, -18000)\n];",
       "Id": "1c71f559f665416a98eab89eab13ad78",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "cacef2efabde4995961510f4c5e8deb0",
+          "Id": "c24389c4845d4611b1463e21511827aa",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -417,54 +417,6 @@
       ],
       "Replication": "Disabled",
       "Description": "Allows for DesignScript code to be authored directly"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.DesignScript.Geometry.NurbsCurve.ByControlPoints@Autodesk.DesignScript.Geometry.Point[],int,bool",
-      "Id": "36c1c4ae53a148fc9499fd3900fe310f",
-      "Inputs": [
-        {
-          "Id": "f698d7f87ea94105b5881608f105227a",
-          "Name": "points",
-          "Description": "Point[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "141d97f48b34472da7b19e671e263122",
-          "Name": "degree",
-          "Description": "int\nDefault value : 3",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "9ac1c903c1bd4fd38ab72666ce6adea7",
-          "Name": "closeCurve",
-          "Description": "bool\nDefault value : false",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "82f21dbe93b044f4bb8e6d7b983f9b33",
-          "Name": "NurbsCurve",
-          "Description": "NurbsCurve",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Create a BSplineCurve by using explicit control points. NOTE 1: BSplineCurves with deg=1 have G1 discontinuities, which cause problems for extrusion, sweep, and other operations. They should be avoided. Use a PolyCurve instead. NOTE 2: If the curve is periodic (closed), then the first and last points MUST be the same.\n\nNurbsCurve.ByControlPoints (points: Point[], degree: int = 3, closeCurve: bool = false): NurbsCurve"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
@@ -490,10 +442,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 20.0,
+      "MaximumValue": 20000.0,
       "MinimumValue": 0.0,
-      "StepValue": 1.0,
-      "InputValue": 3.0,
+      "StepValue": 1000.0,
+      "InputValue": 3000.0,
       "Id": "8358ef33c93f48fe89060e8a7f6a03d3",
       "Inputs": [],
       "Outputs": [
@@ -514,10 +466,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 500.0,
+      "MaximumValue": 500000.0,
       "MinimumValue": 0.0,
-      "StepValue": 1.0,
-      "InputValue": 50.0,
+      "StepValue": 1000.0,
+      "InputValue": 40000.0,
       "Id": "2fffeae7262d4feeb218dfe047fa659d",
       "Inputs": [],
       "Outputs": [
@@ -543,7 +495,7 @@
         {
           "Id": "8f5f457283824efdbf14dbdd05c4e49a",
           "Name": "Mass",
-          "Description": "Topology",
+          "Description": "Building mass.\n\nTopology",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -552,7 +504,7 @@
         {
           "Id": "1738cd71c1a448629e00799105ff805c",
           "Name": "AngleThreshold",
-          "Description": "double\nDefault value : 45 (disabled)",
+          "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -563,7 +515,7 @@
         {
           "Id": "276c418d18354511b91eb0bd0f605b99",
           "Name": "VerticalSurfaces",
-          "Description": "var",
+          "Description": "Vertical surfaces.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -572,7 +524,7 @@
         {
           "Id": "a3661acec1524a47b2526af2d683461b",
           "Name": "HorizontalSurfaces",
-          "Description": "var",
+          "Description": "Horizontal surfaces.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -580,7 +532,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Analysis.DeceonstructFacadeShell (Mass: Topology, AngleThreshold: double = 45): var[]..[]"
+      "Description": "Deconstruct a building mass into component horizontal and vertical surfaces.\n\nAnalysis.DeceonstructFacadeShell (Mass: Topology, AngleThreshold: double = 45): var[]..[]"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
@@ -675,7 +627,7 @@
         {
           "Id": "1c5fae4dddf8454ca119f97f12de85ed",
           "Name": "RevitSite",
-          "Description": "PolySurface",
+          "Description": "Referenced site element (usually a selected mass).\n\nPolySurface",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -686,7 +638,7 @@
         {
           "Id": "6567cc61b98642a6912c23bb88cf9d62",
           "Name": "Elements",
-          "Description": "var",
+          "Description": "Individual solids in site geometry.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -695,7 +647,7 @@
         {
           "Id": "84c54bf717704ea2846f164c78a9cf49",
           "Name": "BoundingBoxes",
-          "Description": "var",
+          "Description": "Bounding box for each element.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -704,7 +656,7 @@
         {
           "Id": "5e869c0527a84e1c8a4eae6df4495987",
           "Name": "Heights",
-          "Description": "var",
+          "Description": "Height of each element.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -712,7 +664,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Analysis.SiteContext (RevitSite: PolySurface): var[]..[]"
+      "Description": "Get site components from Revit element.\n\nAnalysis.SiteContext (RevitSite: PolySurface): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -812,7 +764,7 @@
         {
           "Id": "766aaf67ac1d4b4aac75f1e4f805eb2f",
           "Name": "BuildingMass",
-          "Description": "Solid",
+          "Description": "Building mass from the generator\n\nSolid",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -820,8 +772,8 @@
         },
         {
           "Id": "007691434a4d479b91e173a70f1b0865",
-          "Name": "SiteBoundary",
-          "Description": "Solid",
+          "Name": "SiteMass",
+          "Description": "Site boundary volume.\n\nSolid",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -832,7 +784,7 @@
         {
           "Id": "20b3f0ba7d9741da9086af99ea4cf2cf",
           "Name": "IntersectionVolume",
-          "Description": "var",
+          "Description": "Volume of building outside of site boundary.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -841,7 +793,7 @@
         {
           "Id": "bc582398070f4f16a72d1cfdb986d139",
           "Name": "DoesIntersect",
-          "Description": "var",
+          "Description": "Does the building mass intersect with the site boundary?",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -850,7 +802,7 @@
         {
           "Id": "02e40b62f5c74a6fab51388ba315a987",
           "Name": "Percent",
-          "Description": "var",
+          "Description": "Percent of building volume that is outside the site boundary.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -858,7 +810,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Analysis.SiteClashTest (BuildingMass: Solid, SiteBoundary: Solid): var[]..[]"
+      "Description": "Test site boundary against building mass.\n\nAnalysis.SiteClashTest (BuildingMass: Solid, SiteMass: Solid): var[]..[]"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -917,6 +869,104 @@
       ],
       "Replication": "Disabled",
       "Description": "Visualize the output of node."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.ElementCreation.CreateRevitMass@Autodesk.DesignScript.Geometry.Solid,string",
+      "Id": "aaa83d27f9f54c43a87fd92b85436041",
+      "Inputs": [
+        {
+          "Id": "a582a4db8d954fff80912a1e4d4f70a3",
+          "Name": "Mass",
+          "Description": "The building mass.\n\nSolid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f59c4919661847119981498f98692da4",
+          "Name": "CategoryName",
+          "Description": "A category for the mass.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e1c1d869b2fb4a598aee4733c332a50f",
+          "Name": "MassElement",
+          "Description": "Revit DirectShape element.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates a Revit mass as a direct shape from building masser\n\nElementCreation.CreateRevitMass (Mass: Solid, CategoryName: string): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Mass\";",
+      "Id": "3f9d9ec88c9c40008254b32adb945105",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "93a9f542e1304c50a6d684d9970480db",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.PolyCurve.ByPoints@Autodesk.DesignScript.Geometry.Point[],bool",
+      "Id": "e8f4f180689643a1bbf1b1cdeefea8a8",
+      "Inputs": [
+        {
+          "Id": "56107251afdc4a1aa6b649f35143c9ff",
+          "Name": "points",
+          "Description": "Points to make polycurve\n\nPoint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "35fda788f57c45b586399d3d53839599",
+          "Name": "connectLastToFirst",
+          "Description": "make close or open polycurve\n\nbool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1e0bc7e5d0d44976be761d718e3e0032",
+          "Name": "PolyCurve",
+          "Description": "PolyCurve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Make PolyCurve by connecting points. Set the 'connectLastToFirst' input to true to close the PolyCurve.\n\nPolyCurve.ByPoints (points: Point[], connectLastToFirst: bool = false): PolyCurve"
     }
   ],
   "Connectors": [
@@ -981,19 +1031,14 @@
       "Id": "2129e8be141d4ebe961aefd2a19a9655"
     },
     {
-      "Start": "cacef2efabde4995961510f4c5e8deb0",
-      "End": "f698d7f87ea94105b5881608f105227a",
-      "Id": "538515b64be042aa99d767cec13f2c64"
-    },
-    {
-      "Start": "82f21dbe93b044f4bb8e6d7b983f9b33",
-      "End": "0a1654438bb04bc19f3df8da2dd2490e",
-      "Id": "2f941f51c19442a5971581201be340f5"
+      "Start": "c24389c4845d4611b1463e21511827aa",
+      "End": "56107251afdc4a1aa6b649f35143c9ff",
+      "Id": "1bacdbe468f547fdac7aa832f11f72ba"
     },
     {
       "Start": "dcb51bd6fb304942bad6e7f03d8e38ed",
-      "End": "9ac1c903c1bd4fd38ab72666ce6adea7",
-      "Id": "b5677259899b4d298975aa44d592846d"
+      "End": "35fda788f57c45b586399d3d53839599",
+      "Id": "6dc0a91ee86445cdb57cdddc0ebb6f6c"
     },
     {
       "Start": "47d3837a107240bcb96d4c577bff8342",
@@ -1044,13 +1089,23 @@
       "Start": "02e40b62f5c74a6fab51388ba315a987",
       "End": "09e3369e758a403d91c13cac61bacf50",
       "Id": "da03f09098974820ac3cbccc3cb225cd"
+    },
+    {
+      "Start": "93a9f542e1304c50a6d684d9970480db",
+      "End": "f59c4919661847119981498f98692da4",
+      "Id": "bce7ee5b3a3441d0bcc3063e42d99771"
+    },
+    {
+      "Start": "1e0bc7e5d0d44976be761d718e3e0032",
+      "End": "0a1654438bb04bc19f3df8da2dd2490e",
+      "Id": "e1313fd790d84a0c90e488545dea461f"
     }
   ],
   "Dependencies": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
-      "ScaleFactor": 1.0,
+      "ScaleFactor": 100.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
       "Version": "2.0.2.6826",
@@ -1059,15 +1114,15 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -36.3597016694616,
-      "EyeY": 69.1536468378199,
-      "EyeZ": 80.196716847952487,
-      "LookX": 39.726928157994166,
-      "LookY": -61.182364319873543,
-      "LookZ": -95.019796242662025,
-      "UpX": 0.12133087914451578,
-      "UpY": 0.94924264357311428,
-      "UpZ": -0.29020203546582451
+      "EyeX": -37533.226108044393,
+      "EyeY": 63995.296203963175,
+      "EyeZ": 41365.878737981955,
+      "LookX": 38640.599846802943,
+      "LookY": -44248.577869920809,
+      "LookZ": -51860.420552125979,
+      "UpX": 0.22381858870550506,
+      "UpY": 0.92718385456687158,
+      "UpZ": -0.30039197589244687
     },
     "NodeViews": [
       {
@@ -1127,8 +1182,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -93.625373059776734,
-        "Y": 543.92402812314253
+        "X": -93.625373059776621,
+        "Y": 541.06354646850218
       },
       {
         "ShowGeometry": true,
@@ -1177,18 +1232,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -324.40347421233366,
-        "Y": 938.35915520765911
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "NurbsCurve.ByControlPoints",
-        "Id": "36c1c4ae53a148fc9499fd3900fe310f",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 14.383523778832341,
-        "Y": 985.51413804851086
+        "X": -343.77177530240078,
+        "Y": 883.159497100968
       },
       {
         "ShowGeometry": true,
@@ -1197,8 +1242,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -163.74311228657996,
-        "Y": 1107.7395595055136
+        "X": -167.61677250459343,
+        "Y": 1051.5714863443191
       },
       {
         "ShowGeometry": true,
@@ -1217,8 +1262,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -329.07325831872845,
-        "Y": 1245.5568722473877
+        "X": -329.073258318728,
+        "Y": 1245.55687224739
       },
       {
         "ShowGeometry": true,
@@ -1329,11 +1374,41 @@
         "Excluded": false,
         "X": 1294.1356203323403,
         "Y": 1173.2976015578513
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "ElementCreation.CreateRevitMass",
+        "Id": "aaa83d27f9f54c43a87fd92b85436041",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 993.15589372519548,
+        "Y": 252.19334089817357
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "3f9d9ec88c9c40008254b32adb945105",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 849.37828400736987,
+        "Y": 342.49948226518984
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "PolyCurve.ByPoints",
+        "Id": "e8f4f180689643a1bbf1b1cdeefea8a8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 3.9334606049146714,
+        "Y": 1023.8504814809933
       }
     ],
     "Annotations": [],
-    "X": 324.49783711993473,
-    "Y": -110.32772382155265,
-    "Zoom": 0.743483769730131
+    "X": 375.5383297660012,
+    "Y": -48.582808708822085,
+    "Zoom": 0.688410060920174
   }
 }
