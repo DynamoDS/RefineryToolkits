@@ -12,8 +12,11 @@ namespace GenerativeToolkit.HelperFunctions
     class DeskFunctions
     {
         #region Public Methods
+        //Is this a good way to do this????
+        public static List<Polygon> RoomPolygons { get; set; }
+
         [IsVisibleInDynamoLibrary(false)]
-        public static List<Polygon> PolygonsFromRooms(List<Room> rooms)
+        public static List<Polygon> PolygonsFromSpaces(List<Room> rooms)
         {
             rooms = FilterRooms(rooms);
             List<Polygon> boundaryPolygon = new List<Polygon>();
@@ -22,8 +25,8 @@ namespace GenerativeToolkit.HelperFunctions
                 IEnumerable<IEnumerable<Curve>> segments = room.CoreBoundary;
                 boundaryPolygon.AddRange(BoundaryPolygon(segments));
             }
+            RoomPolygons = boundaryPolygon;
             List<Polygon> roomPolygons = CombineIntersectingRooms(boundaryPolygon);
-            boundaryPolygon.ForEach(x => x.Dispose());
 
             return roomPolygons;
         }

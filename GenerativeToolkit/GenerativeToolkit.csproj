@@ -102,11 +102,8 @@
       <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.1.0.7465\lib\net47\GeometryColor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Graphical">
-      <HintPath>..\..\Graphical\Graphical\bin\Debug\Graphical.dll</HintPath>
-    </Reference>
     <Reference Include="GraphicalDynamo">
-      <HintPath>..\..\GraphicalDynamo\GraphicalDynamo\bin\Debug 2.x\GraphicalDynamo.dll</HintPath>
+      <HintPath>..\packages\GraphicalDynamo.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
@@ -173,9 +170,6 @@
     <Compile Include="Layouts\SurfaceDivision2D.cs" />
     <Compile Include="Navigation\PathFinding.cs" />
     <Compile Include="Relationships\Openess.cs" />
-    <Compile Include="Visibility\Base.cs" />
-    <Compile Include="Visibility\Isovist.cs" />
-    <Compile Include="Visibility\Visibility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ColorRange.cs" />
     <Compile Include="Utilities\SeededShuffle.cs" />
