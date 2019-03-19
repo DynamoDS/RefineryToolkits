@@ -69,33 +69,37 @@ namespace Site
         /// </summary>
         /// <param name="BuildingMass">Building mass from the generator</param>
         /// <param name="SiteMass">Site boundary volume.</param>
-        /// <returns name="IntersectionVolume">Volume of building outside of site boundary.</returns>
+        /// <returns name="BuildingInside">Volume of building inside of site boundary.</returns>
+        /// <returns name="BuildingOutside">Volume of building outside of site boundary.</returns>
         /// <returns name="DoesIntersect">Does the building mass intersect with the site boundary?</returns>
         /// <returns name="Percent">Percent of building volume that is outside the site boundary.</returns>
         /// <search>site,design,refinery</search>
-        [MultiReturn(new[] { "IntersectionVolume", "DoesIntersect", "Percent" })]
+        [MultiReturn(new[] { "BuildingInside", "BuildingOutside", "DoesIntersect", "Percent" })]
         public static Dictionary<string, object> SiteClashTest(Solid BuildingMass, Solid SiteMass)
         {
-            Solid volume = null;
+            Solid insideVolume = null;
+            Solid outsideVolume = null;
             bool doesIntersect = false;
             double percent = 0;
 
             if (BuildingMass != null && SiteMass != null)
             {
-                volume = BuildingMass.Difference(SiteMass);
+                outsideVolume = BuildingMass.Difference(SiteMass);
+                insideVolume = BuildingMass.Difference(outsideVolume);
 
-                if (volume != null)
+                if (outsideVolume != null)
                 {
                     doesIntersect = true;
 
-                    percent = volume.Volume / BuildingMass.Volume;
+                    percent = outsideVolume.Volume / BuildingMass.Volume;
                 }
             }
 
             // return a dictionary
             return new Dictionary<string, object>
             {
-                {"IntersectionVolume", volume},
+                {"BuildingInside", insideVolume},
+                {"BuildingOutside", outsideVolume},
                 {"DoesIntersect", doesIntersect},
                 {"Percent", percent}
             };
