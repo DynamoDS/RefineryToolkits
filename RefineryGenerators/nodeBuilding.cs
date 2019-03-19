@@ -52,9 +52,13 @@ namespace Buildings
         /// <search>building,design,refinery</search>
         [MultiReturn(new[] { "BuildingSolid", "Floors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
-            Plane BasePlane = null, string Type = "L",
-            double Length = 40, double Width = 40, double Depth = 6,
-            double BldgArea = 1000, double FloorHeight = 3,
+            Plane BasePlane = null, 
+            string Type = "L",
+            double Length = 40, 
+            double Width = 40, 
+            double Depth = 6,
+            double BldgArea = 1000, 
+            double FloorHeight = 3,
             bool CreateCore = true)
         {
             var floors = new List<Surface>();
@@ -69,6 +73,11 @@ namespace Buildings
             if (Length <= 0 || Width <= 0 || Depth <= 0 || BldgArea <= 0 || FloorHeight <= 0)
             {
                 return new Dictionary<string, object>();
+            }
+
+            if (BasePlane == null)
+            {
+                BasePlane = Plane.XY();
             }
 
             Surface baseSurface = MakeBaseSurface(Type, Length, Width, Depth);
