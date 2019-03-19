@@ -41,24 +41,24 @@ namespace Buildings
         /// <param name="BldgArea">Target gross building area.</param>
         /// <param name="FloorHeight">Height of the floor.</param>
         /// <param name="CreateCore">Create core volumes and subtractions?</param>
+        /// <returns name="BuildingSolid">Building volume.</returns>
         /// <returns name="Floors">Building floor surfaces.</returns>
-        /// <returns name="BuildingMass">Building volume.</returns>
+        /// <returns name="FloorElevations">Elevation of each floor in building.</returns>
         /// <returns name="Cores">Building core volumes.</returns>
+        /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
+        /// <returns name="BuildingVolume">Volume of Mass.</returns>
         /// <returns name="TotalFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
         /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
-        /// <returns name="BuildingVolume">Volume of Mass.</returns>
-        /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "BuildingMass", "Floors", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
+        [MultiReturn(new[] { "BuildingSolid", "Floors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
             Plane BasePlane = null, string Type = "L",
             double Length = 40, double Width = 40, double Depth = 6,
             double BldgArea = 1000, double FloorHeight = 3,
             bool CreateCore = true)
         {
-            //TODO: Why not make cores and mass solids?
-
             var floors = new List<Surface>();
+            var floorElevations = new List<double>();
             Solid mass = null;
             List<Solid> cores = null;
             double totalArea = 0;
@@ -89,6 +89,7 @@ namespace Buildings
                 for (int i = 0; i < floorCount; i++)
                 {
                     floors.Add((Surface)baseSurface.Translate(Vector.ByCoordinates(0, 0, i * FloorHeight)));
+                    floorElevations.Add(BasePlane.Origin.Z + (i * FloorHeight));
                 }
 
                 totalArea = baseSurface.Area * floorCount;
@@ -101,13 +102,14 @@ namespace Buildings
             // return a dictionary
             return new Dictionary<string, object>
             {
+                {"BuildingSolid", mass},
                 {"Floors", floors},
-                {"BuildingMass", mass},
+                {"FloorElevations", floorElevations},
                 {"Cores", cores},
+                {"TopPlane", topPlane},
+                {"BuildingVolume", totalVolume},
                 {"TotalFloorArea", totalArea},
                 {"TotalFacadeArea", facadeArea},
-                {"BuildingVolume", totalVolume},
-                {"TopPlane", topPlane}
             };
         }
 
@@ -442,8 +444,8 @@ namespace Buildings
             // return a dictionary
             return new Dictionary<string, object>
             {
-                {"VerticalSurfaces", horizontal},
-                {"HorizontalSurfaces", vertical}
+                {"VerticalSurfaces", vertical},
+                {"HorizontalSurfaces", horizontal}
             };
         }
     }

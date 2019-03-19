@@ -36,12 +36,13 @@ namespace Revit
         /// <summary>
         /// Creates a Revit mass as a direct shape from building masser
         /// </summary>
-        /// <param name="Mass">The building mass.</param>
+        /// <param name="BuildingSolid">The building volume.</param>
+        /// <param name="FloorElevations">Elevation of each floor in building.</param>
         /// <param name="CategoryName">A category for the mass.</param>
-        /// <returns name="MassElement">Revit DirectShape element.</returns>
+        /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
-        [MultiReturn(new[] { "MassElement" })]
-        public static Dictionary<string, object> CreateRevitMass(Solid Mass, string CategoryName = "Mass")
+        [MultiReturn(new[] { "RevitBuilding" })]
+        public static Dictionary<string, object> CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, IEnumerable<double> FloorElevations, string CategoryName = "Mass")
         {
             Autodesk.Revit.DB.DirectShape shape = null;
             
@@ -77,7 +78,7 @@ namespace Revit
             // return a dictionary
             return new Dictionary<string, object>
             {
-                {"MassElement", shape},
+                {"RevitBuilding", shape},
             };
         }
     }
