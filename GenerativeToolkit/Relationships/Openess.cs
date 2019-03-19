@@ -16,7 +16,7 @@ namespace GenerativeToolkit.Relationships
         [IsVisibleInDynamoLibrary(true)]
         public static List<double> DeskOpeness(List<Room> rooms, List<Revit.Elements.FamilyInstance> elements, List<double> deskWidth, List<double> deskLength, double offset)
         {
-            List<Polygon> roomPolygons = HelperFunctions.DeskFunctions.PolygonsFromSpaces(rooms);
+            List<Polygon> roomPolygons = HelperFunctions.DeskFunctions.RoomPolygons(rooms);
             List<double> openessScore = new List<double>();
             for (int i = 0; i < elements.Count; i++)
             {

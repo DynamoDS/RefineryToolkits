@@ -62,8 +62,10 @@ namespace GenerativeToolkit.Layouts
 
         #endregion
 
-        #region Find best freerectangle and place next rectangle
+        #region Private Methods
 
+        ////------ Find best freerectangle and place next rectangle ------////
+    
         private static void PlaceItem(Rectangle item, string placementMethod)
         {
             FreeRectangle f = BestFreeRect(item, placementMethod);
@@ -199,10 +201,9 @@ namespace GenerativeToolkit.Layouts
         {
             return Rectangle.ByWidthLength(item.Height, item.Width);
         }
-        
-        #endregion
 
-        #region Scoring Methods
+        ////------ Scoring Methods ------////
+        
         // Best Short Side Fits
         private static double BSSF_Score(FreeRectangle f, Rectangle item)
         {
@@ -247,9 +248,7 @@ namespace GenerativeToolkit.Layouts
             return freeFArea - rectArea;
         }
 
-        #endregion
-
-        #region Split Free area
+        ////------ Split Free area ------//// 
 
         private static void SplitFreeRectangle(FreeRectangle fRect, Rectangle item)
         {
@@ -283,11 +282,8 @@ namespace GenerativeToolkit.Layouts
             }
         }
 
-        #endregion
+        ////------ Rectangle Boundary points ------////
 
-        #region Rectangle Boundary points
-
-        //Get Rectangle boundary points
         private static List<double> RectBounds(Rectangle rect)
         {
             double BottomLeftX = rect.StartPoint.X - rect.Width;
@@ -296,11 +292,9 @@ namespace GenerativeToolkit.Layouts
             double TopRightY = rect.StartPoint.Y + rect.Height;
             return new List<double> { BottomLeftX, BottomLeftY, TopRightX, TopRightY };
         }
-        
-        #endregion
 
-        #region Remove overlaps and redundant rectangles
-
+        ////------ Remove overlaps and redundant rectangles ------////
+  
         private static void RemoveOverlaps(List<double> itemBounds)
         {
             List<FreeRectangle> freeRects = new List<FreeRectangle>();
@@ -472,7 +466,8 @@ namespace GenerativeToolkit.Layouts
                     }
                 }
             }
-        }        
-        #endregion      
+        }
+
+        #endregion
     }
 }

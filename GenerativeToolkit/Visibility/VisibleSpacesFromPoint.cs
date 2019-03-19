@@ -15,9 +15,9 @@ namespace GenerativeToolkit.Visibility
         [IsVisibleInDynamoLibrary(true)]
         public static List<List<Room>> VisibleRoomsFromDesk(List<Room> rooms, List<Point> points )
         {
-            List<Polygon> spacePolygons = HelperFunctions.DeskFunctions.PolygonsFromSpaces(rooms);
-            List<Polygon> roomPolygons = HelperFunctions.DeskFunctions.RoomPolygons;
-
+            List<Polygon> roomPolygons = HelperFunctions.DeskFunctions.RoomPolygons(rooms);
+            List<Polygon> spacePolygons = HelperFunctions.DeskFunctions.PolygonsFromSpaces(roomPolygons);
+            
             GraphicalDynamo.Graphs.BaseGraph baseGraph = GraphicalDynamo.Graphs.BaseGraph.ByPolygons(spacePolygons);
 
             List<List<Room>> visibleRooms = new List<List<Room>>();
@@ -35,16 +35,6 @@ namespace GenerativeToolkit.Visibility
             return visibleRooms;
 
         }
-
-        /*
-        private static Surface MakeIsovist(List<Polygon> polygons, Point point)
-        {
-            GraphicalDynamo.Graphs.BaseGraph baseGraph = GraphicalDynamo.Graphs.BaseGraph.ByPolygons(polygons);
-            Surface isovist = GraphicalDynamo.Graphs.BaseGraph.IsovistFromPoint(baseGraph, point);
-            return isovist;
-        }
-        /
-        */
 
         private static List<Room> VisibleSpaces(Surface isovist, List<Polygon> roomPolygons, List<Room> rooms)
         {
