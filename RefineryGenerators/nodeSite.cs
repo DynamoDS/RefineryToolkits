@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
@@ -25,32 +26,32 @@ namespace Site
             Solid siteMass = null;
             Curve siteOffset = null;
 
-            if (Setback >= 0 && HeightLimit > 0 && SiteOutline != null)
+            if (SiteOutline == null) { throw new ArgumentNullException(nameof(SiteOutline)); }
+            if (Setback <= 0) { throw new ArgumentOutOfRangeException(nameof(Setback), $"{nameof(Setback)} must be greater than 0."); }
+            if (HeightLimit <= 0) { throw new ArgumentOutOfRangeException(nameof(HeightLimit), $"{nameof(HeightLimit)} must be greater than 0."); }
+            
+            var inset1 = SiteOutline.Offset(Setback);
+            var inset2 = SiteOutline.Offset(-Setback);
+
+            if (inset1.Length < inset2.Length)
             {
-                var inset1 = SiteOutline.Offset(Setback);
-                var inset2 = SiteOutline.Offset(-Setback);
-
-                if (inset1.Length < inset2.Length)
-                {
-                    siteOffset = inset1;
-                    inset2.Dispose();
-                }
-                else
-                {
-                    siteOffset = inset2;
-                    inset1.Dispose();
-                }
-
-                // Ensure that the mass is always extruded upwards.
-                if (siteOffset.Normal.AngleWithVector(Vector.ZAxis()) > 90)
-                {
-                    HeightLimit = -HeightLimit;
-                }
-
-                siteMass = siteOffset.ExtrudeAsSolid(HeightLimit);
+                siteOffset = inset1;
+                inset2.Dispose();
+            }
+            else
+            {
+                siteOffset = inset2;
+                inset1.Dispose();
             }
 
-            // return a dictionary
+            // Ensure that the mass is always extruded upwards.
+            if (siteOffset.Normal.AngleWithVector(Vector.ZAxis()) > 90)
+            {
+                HeightLimit = -HeightLimit;
+            }
+
+            siteMass = siteOffset.ExtrudeAsSolid(HeightLimit);
+
             return new Dictionary<string, object>
             {
                 {"SiteMass", siteMass},
@@ -82,20 +83,19 @@ namespace Site
             bool doesIntersect = false;
             double percent = 0;
 
-            if (BuildingMass != null && SiteMass != null)
+            if (BuildingMass == null) { throw new ArgumentNullException(nameof(BuildingMass)); }
+            if (SiteMass == null) { throw new ArgumentNullException(nameof(SiteMass)); }
+
+            outsideVolume = BuildingMass.Difference(SiteMass);
+            insideVolume = BuildingMass.Difference(outsideVolume);
+
+            if (outsideVolume != null)
             {
-                outsideVolume = BuildingMass.Difference(SiteMass);
-                insideVolume = BuildingMass.Difference(outsideVolume);
+                doesIntersect = true;
 
-                if (outsideVolume != null)
-                {
-                    doesIntersect = true;
-
-                    percent = outsideVolume.Volume / BuildingMass.Volume;
-                }
+                percent = outsideVolume.Volume / BuildingMass.Volume;
             }
 
-            // return a dictionary
             return new Dictionary<string, object>
             {
                 {"BuildingInside", insideVolume},
@@ -120,13 +120,14 @@ namespace Site
             List<BoundingBox> boundingBoxes = null;
             List<double> heights = null;
 
+            if (RevitSite == null) { throw new ArgumentNullException(nameof(RevitSite)); }
+
             elements = RevitSite.ExtractSolids();
 
             boundingBoxes = elements.Select(e => e.BoundingBox).ToList();
 
             heights = boundingBoxes.Select(b => b.MaxPoint.Z - b.MinPoint.Z).ToList();
 
-            // return a dictionary
             return new Dictionary<string, object>
             {
                 {"Elements", elements},

@@ -15,19 +15,14 @@ namespace Buildings
         /// <summary>
         /// Typology selection
         /// </summary>
-        /// <param name="selection">Select building type by index (ex. U, L, I, H, O, D)</param>
+        /// <param name="ShapeIndex">Select building type by index (U, L, I, H, O, D).</param>
         /// <returns></returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "SelectedType" })]
-        public static Dictionary<string, object> SelectBuildingType(int selection)
+        public static string SelectBuildingType(int ShapeIndex = 0)
         {
-            string selected = "H";
-
-            // return a dictionary
-            return new Dictionary<string, object>
-            {
-                {"SelectedType", selected},
-            };
+            var options = new[] { "U", "L", "I", "H", "O", "D" };
+            
+            return options[ShapeIndex % options.Length];
         }
 
         /// <summary>
@@ -70,10 +65,11 @@ namespace Buildings
             double facadeArea = 0;
             Plane topPlane = null;
 
-            if (Length <= 0 || Width <= 0 || Depth <= 0 || BldgArea <= 0 || FloorHeight <= 0)
-            {
-                return new Dictionary<string, object>();
-            }
+            if (Length <= 0) { throw new ArgumentOutOfRangeException(nameof(Length)); }
+            if (Width <= 0) { throw new ArgumentOutOfRangeException(nameof(Width)); }
+            if (Depth <= 0) { throw new ArgumentOutOfRangeException(nameof(Depth)); }
+            if (BldgArea <= 0) { throw new ArgumentOutOfRangeException(nameof(BldgArea)); }
+            if (FloorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(FloorHeight)); }
 
             if (BasePlane == null)
             {
@@ -82,33 +78,31 @@ namespace Buildings
 
             Surface baseSurface = MakeBaseSurface(Type, Length, Width, Depth);
 
-            if (baseSurface != null)
+            if (baseSurface == null) { throw new ArgumentException("Could not create building shape."); }
+            
+            // Surface is constructed with lower left corner at (0,0). Move and rotate to given base plane.
+            baseSurface = (Surface)baseSurface.Transform(CoordinateSystem.ByOrigin(Width / 2, Length / 2), BasePlane.ToCoordinateSystem());
+
+            double floorCount = Math.Ceiling(BldgArea / baseSurface.Area);
+
+            mass = baseSurface.Thicken(floorCount * FloorHeight, both_sides: false);
+
+            totalVolume = mass.Volume;
+
+            facadeArea = mass.Area - (2 * baseSurface.Area);
+
+            for (int i = 0; i < floorCount; i++)
             {
-                // Surface is constructed with lower left corner at (0,0). Move and rotate to given base plane.
-                baseSurface = (Surface)baseSurface.Transform(CoordinateSystem.ByOrigin(Width / 2, Length / 2), BasePlane.ToCoordinateSystem());
-
-                double floorCount = Math.Ceiling(BldgArea / baseSurface.Area);
-
-                mass = baseSurface.Thicken(floorCount * FloorHeight, both_sides: false);
-
-                totalVolume = mass.Volume;
-
-                facadeArea = mass.Area - (2 * baseSurface.Area);
-
-                for (int i = 0; i < floorCount; i++)
-                {
-                    floors.Add((Surface)baseSurface.Translate(Vector.ByCoordinates(0, 0, i * FloorHeight)));
-                    floorElevations.Add(BasePlane.Origin.Z + (i * FloorHeight));
-                }
-
-                totalArea = baseSurface.Area * floorCount;
-
-                topPlane = (Plane)BasePlane.Translate(Vector.ByCoordinates(0, 0, floorCount * FloorHeight));
-
-                baseSurface.Dispose();
+                floors.Add((Surface)baseSurface.Translate(Vector.ByCoordinates(0, 0, i * FloorHeight)));
+                floorElevations.Add(BasePlane.Origin.Z + (i * FloorHeight));
             }
 
-            // return a dictionary
+            totalArea = baseSurface.Area * floorCount;
+
+            topPlane = (Plane)BasePlane.Translate(Vector.ByCoordinates(0, 0, floorCount * FloorHeight));
+
+            baseSurface.Dispose();
+
             return new Dictionary<string, object>
             {
                 {"BuildingSolid", mass},
@@ -434,23 +428,25 @@ namespace Buildings
             List<Surface> horizontal = new List<Surface>();
             List<Surface> vertical = new List<Surface>();
 
-            if (Mass != null)
+            if (Mass == null) { throw new ArgumentNullException(nameof(Mass)); }
+            if (AngleThreshold < 0 || AngleThreshold > 90)
             {
-                foreach (var surface in Mass.Faces.Select(f => f.SurfaceGeometry()))
+                throw new ArgumentOutOfRangeException(nameof(AngleThreshold), "AngleThreshold must be between 0 and 90.");
+            }
+
+            foreach (var surface in Mass.Faces.Select(f => f.SurfaceGeometry()))
+            {
+                var angle = surface.NormalAtParameter(0.5, 0.5).AngleWithVector(Vector.ZAxis());
+                if (angle < AngleThreshold || angle > 180 - AngleThreshold)
                 {
-                    var angle = surface.NormalAtParameter(0.5, 0.5).AngleWithVector(Vector.ZAxis());
-                    if (angle < AngleThreshold || angle > 180 - AngleThreshold)
-                    {
-                        horizontal.Add(surface);
-                    }
-                    else
-                    {
-                        vertical.Add(surface);
-                    }
+                    horizontal.Add(surface);
+                }
+                else
+                {
+                    vertical.Add(surface);
                 }
             }
 
-            // return a dictionary
             return new Dictionary<string, object>
             {
                 {"VerticalSurfaces", vertical},

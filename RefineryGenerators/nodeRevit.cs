@@ -27,13 +27,14 @@ namespace Revit
         /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
         /// <returns name="FloorElements">Revit floor elements.</returns>
         /// <search>refinery</search>
-        [MultiReturn(new[] { "FloorElements" })]
-        public static Dictionary<string, object> CreateRevitFloors(
+        public static List<Floor> CreateRevitFloors(
             Autodesk.DesignScript.Geometry.Surface[] Floors, 
             string FloorTypeName = "Generic 150mm", 
             string LevelPrefix = "Dynamo Level")
         {
-            var revitFloors = new List<Floor>();
+            if (Floors == null) { throw new ArgumentNullException(nameof(Floors)); }
+
+            var FloorElements = new List<Floor>();
             var collector = new FilteredElementCollector(Document);
 
             if (!(collector
@@ -52,60 +53,46 @@ namespace Revit
 
             for (var i = 0; i < Floors.Length; i++)
             {
-                if (Floors[i] == null)
+                if (Floors[i] == null) { throw new ArgumentNullException(nameof(Floors)); }
+                
+                var levelName = $"{LevelPrefix} {i + 1}";
+                var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
+
+                if (revitLevel != null)
                 {
-                    throw new ArgumentNullException(nameof(Floors));
+                    // Adjust existing level to correct height.
+                    revitLevel.Elevation = Floors[i].BoundingBox.MaxPoint.Z / footToMm;
+                }
+                else
+                {
+                    // Create new level.
+                    revitLevel = Level.Create(Document, Floors[i].BoundingBox.MaxPoint.Z / footToMm);
+                    revitLevel.Name = levelName;
                 }
 
-                try
-                {
-                    var levelName = $"{LevelPrefix} {i + 1}";
-                    var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
-                    if (revitLevel != null)
-                    {
-                        revitLevel.Elevation = Floors[i].BoundingBox.MaxPoint.Z / footToMm;
-                    }
-                    else
-                    {
-                        revitLevel = Level.Create(Document, Floors[i].BoundingBox.MaxPoint.Z / footToMm);
-                        revitLevel.Name = levelName;
-                    }
+                var revitCurves = new CurveArray();
+                Floors[i].PerimeterCurves().ForEach(x => revitCurves.Append(x.ToRevitType()));
 
-                    var revitCurves = new CurveArray();
-                    Floors[i].PerimeterCurves().ForEach(x => revitCurves.Append(x.ToRevitType()));
+                var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
 
-                    var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
-
-                    revitFloors.Add(revitFloor);
-                }
-
-                catch (Exception ex)
-                {
-                    throw new ArgumentException(ex.Message);
-                }
+                FloorElements.Add(revitFloor);
             }
 
             TransactionManager.Instance.TransactionTaskDone();
 
-            // return a dictionary
-            return new Dictionary<string, object>
-            {
-                {"FloorElements", revitFloors},
-            };
+            return FloorElements;
         }
 
         /// <summary>
         /// Creates a Revit mass as a direct shape from building masser
         /// </summary>
         /// <param name="BuildingSolid">The building volume.</param>
-        /// <param name="FloorElevations">Elevation of each floor in building.</param>
         /// <param name="CategoryName">A category for the mass.</param>
         /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
-        [MultiReturn(new[] { "RevitBuilding" })]
-        public static Dictionary<string, object> CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, IEnumerable<double> FloorElevations, string CategoryName = "Mass")
+        public static DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, string CategoryName = "Mass")
         {
-            DirectShape shape = null;
+            DirectShape RevitBuilding = null;
             
             if (BuildingSolid == null)
             {
@@ -116,17 +103,17 @@ namespace Revit
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
-            shape = DirectShape.CreateElement(Document, category.Id);
+            RevitBuilding = DirectShape.CreateElement(Document, category.Id);
 
             try
             {
-                shape.SetShape(new[] { DynamoToRevitBRep.ToRevitType(BuildingSolid) });
+                RevitBuilding.SetShape(new[] { DynamoToRevitBRep.ToRevitType(BuildingSolid) });
             }
             catch (Exception ex)
             {
                 try
                 {
-                    shape.SetShape(BuildingSolid.ToRevitType());
+                    RevitBuilding.SetShape(BuildingSolid.ToRevitType());
                 }
                 catch
                 {
@@ -136,11 +123,7 @@ namespace Revit
 
             TransactionManager.Instance.TransactionTaskDone();
 
-            // return a dictionary
-            return new Dictionary<string, object>
-            {
-                {"RevitBuilding", shape},
-            };
+            return RevitBuilding;
         }
     }
 }
