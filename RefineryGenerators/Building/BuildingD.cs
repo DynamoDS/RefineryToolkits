@@ -95,6 +95,26 @@ namespace Buildings
         {
             var boundary = new List<Curve>();
 
+            if (UsesDepth)
+            {
+                // One core along the top leg of building.
+
+                double coreHeight = Depth * (1 - (2 * hallwayToDepth));
+
+                boundary.Add(Rectangle.ByWidthLength(
+                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length - (Depth / 2)), Vector.ZAxis()),
+                    CoreArea / coreHeight,
+                    coreHeight));
+            }
+            else
+            {
+                // Simple box building, core is in the center with the same aspect ratio as floorplate.
+                boundary.Add(Rectangle.ByWidthLength(
+                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
+                    Width * (CoreArea / FloorArea),
+                    Length * (CoreArea / FloorArea)));
+            }
+
             return boundary;
         }
     }

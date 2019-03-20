@@ -70,7 +70,7 @@ namespace Buildings
             }
             else
             {
-                // Simple box building, core has same aspect ratio as floorplate.
+                // Simple box building, core is in the center with the same aspect ratio as floorplate.
                 boundary.Add(Rectangle.ByWidthLength(
                     Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()), 
                     Width * (CoreArea / FloorArea), 
