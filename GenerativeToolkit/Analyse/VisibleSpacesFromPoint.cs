@@ -7,7 +7,7 @@ using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using Revit.Elements;
 
-namespace GenerativeToolkit.Visibility
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     [IsVisibleInDynamoLibrary(false)]
     public class VisibleSpacesFromPoint

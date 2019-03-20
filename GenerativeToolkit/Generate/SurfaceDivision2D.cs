@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenerativeToolkit.Layouts
+namespace Autodesk.GenerativeToolkit.Generate
 {
     [IsVisibleInDynamoLibrary(false)]
     public class SurfaceDivision2D

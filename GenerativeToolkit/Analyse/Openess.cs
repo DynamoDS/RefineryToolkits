@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 using Autodesk.DesignScript.Runtime;
 using Revit.Elements;
 
-namespace GenerativeToolkit.Relationships
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     [IsVisibleInDynamoLibrary(false)]
     public class Openess
     {
         #region Public Methods
         [IsVisibleInDynamoLibrary(true)]
-        public static List<double> DeskOpeness(List<Room> rooms, List<Revit.Elements.FamilyInstance> elements, List<double> deskWidth, List<double> deskLength, double offset)
+        public static List<double> DeskOpeness(List<Room> rooms, List<FamilyInstance> elements, List<double> deskWidth, List<double> deskLength, double offset)
         {
             List<Polygon> roomPolygons = HelperFunctions.DeskFunctions.RoomPolygons(rooms);
             List<double> openessScore = new List<double>();
@@ -31,7 +31,7 @@ namespace GenerativeToolkit.Relationships
         #endregion
 
         #region Private Methods
-        private static List<Autodesk.DesignScript.Geometry.Line> IntersectionLine(Revit.Elements.FamilyInstance element, double deskWidth, double deskLength, double offset)
+        private static List<Autodesk.DesignScript.Geometry.Line> IntersectionLine(FamilyInstance element, double deskWidth, double deskLength, double offset)
         {
             Autodesk.DesignScript.Geometry.Point locationPoint = (Autodesk.DesignScript.Geometry.Point) element.GetLocation();
             double width = deskWidth + offset;
@@ -50,7 +50,7 @@ namespace GenerativeToolkit.Relationships
             return lines;
         }
 
-        private static double ElementRoation(Revit.Elements.FamilyInstance element)
+        private static double ElementRoation(FamilyInstance element)
         {
             Autodesk.Revit.DB.FamilyInstance unwrappedElement = (Autodesk.Revit.DB.FamilyInstance) element.InternalElement;
             double x = unwrappedElement.HandOrientation.X;

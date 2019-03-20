@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Revit.Elements;
 
-namespace GenerativeToolkit.HelperFunctions
+namespace Autodesk.GenerativeToolkit.HelperFunctions
 {
     class DeskFunctions
     {

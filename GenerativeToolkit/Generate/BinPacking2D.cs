@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenerativeToolkit.Layouts
+namespace Autodesk.GenerativeToolkit.Generate
 {
     [IsVisibleInDynamoLibrary(false)]
-    public class MaxRectanglesBinPacking
+    public class BinPacking2D
     {
-        internal MaxRectanglesBinPacking()
+        internal BinPacking2D()
         {
 
         }
