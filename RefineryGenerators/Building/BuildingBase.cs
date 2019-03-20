@@ -59,7 +59,9 @@ namespace Buildings
             if (baseSurface == null) { throw new ArgumentException("Could not create building shape."); }
 
             // Surface is constructed with lower left corner at (0,0). Move and rotate to given base plane.
-            baseSurface = (Surface)baseSurface.Transform(CoordinateSystem.ByOrigin(width / 2, length / 2), BasePlane.ToCoordinateSystem());
+            baseSurface = (Surface)baseSurface.Transform(
+                CoordinateSystem.ByOrigin(width / 2, length / 2), 
+                BasePlane.ToCoordinateSystem());
 
             FloorArea = baseSurface.Area;
 
@@ -85,12 +87,17 @@ namespace Buildings
             {
                 var coreBases = MakeCoreSurface();
 
-                if (coreBases == null || coreBases.Count == 0) { throw new ArgumentException("Could not create core shape."); }
+                if (coreBases == null || coreBases.Count == 0) { return; }
 
                 foreach (var coreBase in coreBases){
-                    Cores.Add(coreBase.Thicken(FloorCount * FloorHeight, both_sides: false));
+                    var core = coreBase.Thicken(FloorCount * FloorHeight, both_sides: false);
+
+                    Cores.Add((Solid)core.Transform(
+                        CoordinateSystem.ByOrigin(width / 2, length / 2), 
+                        BasePlane.ToCoordinateSystem()));
 
                     coreBase.Dispose();
+                    core.Dispose();
                 }
             }
         }
