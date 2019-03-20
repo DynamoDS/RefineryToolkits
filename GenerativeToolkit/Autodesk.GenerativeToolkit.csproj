@@ -176,17 +176,14 @@
     <Compile Include="Generate\AmenitySpace.cs" />
     <Compile Include="Generate\BinPacking3D.cs" />
     <Compile Include="Generate\DeskLayout.cs" />
-    <Compile Include="HelperFunctions\DeskFunctions.cs" />
     <Compile Include="xOld\Layouts\BinPacking2D - Copy.cs" />
     <Compile Include="Generate\BinPacking2D.cs" />
     <Compile Include="xOld\Layouts\ShelfAlgorithms.cs" />
     <Compile Include="Generate\SurfaceDivision2D.cs" />
     <Compile Include="xOld\Navigation\PathFinding.cs" />
-    <Compile Include="Analyse\Openess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="xOld\Utilities\ColorRange.cs" />
     <Compile Include="Rank\SeededShuffle.cs" />
-    <Compile Include="Analyse\VisibleSpacesFromPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -195,6 +192,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="HelperFunctions\" />
     <Folder Include="Integrate\" />
     <Folder Include="xOld\Relationships\" />
     <Folder Include="xOld\Visibility\" />
