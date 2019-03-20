@@ -6,7 +6,7 @@ using Autodesk.DesignScript.Runtime;
 
 namespace Buildings
 {
-    internal enum ShapeType { U, L, I, H, O, D, A }
+    internal enum ShapeType { U, L, H, O, D, A }
 
     /// <summary>
     /// Creation description.
@@ -16,7 +16,7 @@ namespace Buildings
         /// <summary>
         /// Typology selection
         /// </summary>
-        /// <param name="ShapeIndex">Select building type by index (U, L, I, H, O, D).</param>
+        /// <param name="ShapeIndex">Select building type by index (U, L, H, O, D).</param>
         /// <returns></returns>
         /// <search>building,design,refinery</search>
         public static string SelectBuildingType(int ShapeIndex = 0)
@@ -27,7 +27,7 @@ namespace Buildings
         /// <summary>
         /// Generate a building mass.
         /// </summary>
-        /// <param name="Type">Building type (U, L, I, H, O, or D).</param>
+        /// <param name="Type">Building type (U, L, H, O, or D).</param>
         /// <param name="BasePlane">The building base plane.</param>
         /// <param name="Length">Overall building length.</param>
         /// <param name="Width">Overall building width.</param>
@@ -77,9 +77,6 @@ namespace Buildings
                     break;
                 case ShapeType.L:
                     building = new BuildingL();
-                    break;
-                case ShapeType.I:
-                    building = new BuildingI();
                     break;
                 case ShapeType.H:
                     building = new BuildingH();

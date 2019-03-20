@@ -133,7 +133,6 @@
     <Compile Include="Building\BuildingO.cs" />
     <Compile Include="Building\BuildingA.cs" />
     <Compile Include="Building\BuildingU.cs" />
-    <Compile Include="Building\BuildingI.cs" />
     <Compile Include="nodeBuilding.cs" />
     <Compile Include="nodeRevit.cs" />
     <Compile Include="nodeSite.cs" />
