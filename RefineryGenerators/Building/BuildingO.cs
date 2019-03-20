@@ -31,7 +31,7 @@ namespace Buildings
             Curve boundary = null;
             var holes = new List<Curve>();
 
-            UsesDepth = Width <= Depth * 2 || Length <= Depth * 2 ? true : false;
+            UsesDepth = Width <= Depth * 2 || Length <= Depth * 2 ? false : true;
 
             if (IsCurved)
             {

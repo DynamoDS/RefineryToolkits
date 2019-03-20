@@ -99,17 +99,6 @@ namespace Buildings
 
                 if (UsesDepth)
                 {
-                    // Solid straight U (rectangle)
-                    boundary = PolyCurve.ByPoints(new[]
-                    {
-                        Point.ByCoordinates(0, 0),
-                        Point.ByCoordinates(Width, 0),
-                        Point.ByCoordinates(Width, Length),
-                        Point.ByCoordinates(0, Length)
-                    }, connectLastToFirst: true);
-                }
-                else
-                {
                     boundary = PolyCurve.ByPoints(new[]
                     {
                         Point.ByCoordinates(0, 0),
@@ -119,6 +108,17 @@ namespace Buildings
                         Point.ByCoordinates(Width - Depth, Depth),
                         Point.ByCoordinates(Depth, Depth),
                         Point.ByCoordinates(Depth, Length),
+                        Point.ByCoordinates(0, Length)
+                    }, connectLastToFirst: true);
+                }
+                else
+                {
+                    // Solid straight U (rectangle)
+                    boundary = PolyCurve.ByPoints(new[]
+                    {
+                        Point.ByCoordinates(0, 0),
+                        Point.ByCoordinates(Width, 0),
+                        Point.ByCoordinates(Width, Length),
                         Point.ByCoordinates(0, Length)
                     }, connectLastToFirst: true);
                 }
