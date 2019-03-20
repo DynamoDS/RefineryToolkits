@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Autodesk.GenerativeToolkit")]
+[assembly: AssemblyTitle("Autodesk.GenerativeToolkit.Graphs")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GenerativeToolkit")]
+[assembly: AssemblyProduct("GenerativeToolkit.Graphs")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c0338a2e-8280-4b65-8007-5d2e8b7a243b")]
+[assembly: Guid("e7aec112-deea-4d3e-a125-386cf8d93eac")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenerativeToolkit.Utilities
+namespace Autodesk.GenerativeToolkit.Rank
 {
     [IsVisibleInDynamoLibrary(false)]
     public class SeededShuffle
