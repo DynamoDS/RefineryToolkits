@@ -53,7 +53,7 @@ namespace Buildings
 
                 if (UsesDepth)
                 {
-                    holes.Add(Rectangle.ByWidthLength(centerPlane, Width - (2 * Depth), Length - (2 * Depth)));
+                    holes.Add(boundary.Offset(Depth));
                 }
             }
 
