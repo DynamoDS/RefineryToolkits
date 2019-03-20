@@ -33,7 +33,7 @@ namespace Buildings
 
             var arcHeight = Math.Min(
                 Length - (UsesDepth ? Depth : 0),
-                Width / 2));
+                Width / 2);
 
             Plane arcCenter = Plane.ByOriginNormal(
                 Point.ByCoordinates(Width / 2, arcHeight),
