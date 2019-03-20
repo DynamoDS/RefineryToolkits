@@ -6,7 +6,7 @@ using Autodesk.DesignScript.Runtime;
 
 namespace Buildings
 {
-    internal enum ShapeType { U, L, H, O, D, A }
+    internal enum ShapeType { U, L, H, O, D }
 
     /// <summary>
     /// Creation description.
@@ -66,32 +66,39 @@ namespace Buildings
                 BasePlane = Plane.XY();
             }
 
-            if (!Enum.TryParse(Type, out ShapeType shapeType)) { throw new ArgumentOutOfRangeException(nameof(Type)); }
-
             BuildingBase building = null;
 
-            switch (shapeType)
+            if (Enum.TryParse(Type, out ShapeType shapeType))
             {
-                case ShapeType.U:
-                    building = new BuildingU();
-                    break;
-                case ShapeType.L:
-                    building = new BuildingL();
-                    break;
-                case ShapeType.H:
-                    building = new BuildingH();
-                    break;
-                case ShapeType.O:
-                    building = new BuildingO();
-                    break;
-                case ShapeType.D:
-                    building = new BuildingD();
-                    break;
-                case ShapeType.A:
-                    building = new BuildingA();
-                    break;
-                default:
-                    throw new NotImplementedException();
+
+                switch (shapeType)
+                {
+                    case ShapeType.U:
+                        building = new BuildingU();
+                        break;
+                    case ShapeType.L:
+                        building = new BuildingL();
+                        break;
+                    case ShapeType.H:
+                        building = new BuildingH();
+                        break;
+                    case ShapeType.O:
+                        building = new BuildingO();
+                        break;
+                    case ShapeType.D:
+                        building = new BuildingD();
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            else if (Type == "A")
+            {
+                building = new BuildingA();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(Type), "Unsupported shape letter.");
             }
 
             building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore);
