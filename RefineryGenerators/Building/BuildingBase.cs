@@ -18,7 +18,7 @@ namespace Buildings
         public Plane BasePlane { get; private set; }
         public double FloorArea { get; private set; }
         public double FloorHeight { get; private set; }
-        public bool IsSmooth { get; private set; }
+        public bool IsCurved { get; private set; }
         public Solid Mass { get; private set; }
         public List<Solid> Cores { get; private set; } = new List<Solid>();
         public double TotalVolume { get; private set; }
@@ -43,14 +43,14 @@ namespace Buildings
         {
         }
 
-        public void CreateBuilding(double length, double width, double depth, Plane basePlane, double targetBuildingArea, double floorHeight, bool createCores = true, bool isSmooth = false)
+        public void CreateBuilding(double length, double width, double depth, Plane basePlane, double targetBuildingArea, double floorHeight, bool createCores = true, bool isCurved = false)
         {
             Length = length;
             Width = width;
             Depth = depth;
             BasePlane = basePlane;
             FloorHeight = floorHeight;
-            IsSmooth = isSmooth;
+            IsCurved = isCurved;
 
             Setup();
 

@@ -21,7 +21,7 @@ namespace Buildings
         {
             Curve boundary = null;
 
-            if (IsSmooth)
+            if (IsCurved)
             {
                 return default;
             }

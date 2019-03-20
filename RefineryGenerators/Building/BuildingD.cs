@@ -16,7 +16,7 @@ namespace Buildings
 
         protected override void Setup()
         {
-            if (!IsSmooth)
+            if (!IsCurved)
             {
                 facetLength = Width / (1 + Math.Sqrt(2));
             }
@@ -39,7 +39,7 @@ namespace Buildings
                 Point.ByCoordinates(Width / 2, arcHeight),
                 Vector.ZAxis());
 
-            if (IsSmooth)
+            if (IsCurved)
             {
                 boundaryCurves.Add(EllipseArc.ByPlaneRadiiAngles(arcCenter, Width / 2, arcHeight, 180, 180));
 

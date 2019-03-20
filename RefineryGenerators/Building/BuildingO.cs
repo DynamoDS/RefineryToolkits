@@ -33,7 +33,7 @@ namespace Buildings
 
             UsesDepth = Width <= Depth * 2 || Length <= Depth * 2 ? true : false;
 
-            if (IsSmooth)
+            if (IsCurved)
             {
                 using (Point centerPoint = Point.ByCoordinates(Width / 2, Length / 2))
                 {

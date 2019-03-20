@@ -34,6 +34,7 @@ namespace Buildings
         /// <param name="Depth">Building depth.</param>
         /// <param name="BldgArea">Target gross building area.</param>
         /// <param name="FloorHeight">Height of the floor.</param>
+        /// <param name="IsCurved">Should sides of building be curved or faceted?</param>
         /// <param name="CreateCore">Create core volumes and subtractions?</param>
         /// <returns name="BuildingSolid">Building volume.</returns>
         /// <returns name="Floors">Building floor surfaces.</returns>
@@ -53,6 +54,7 @@ namespace Buildings
             double Depth = 6,
             double BldgArea = 1000, 
             double FloorHeight = 3,
+            bool IsCurved = false,
             bool CreateCore = true)
         {
             if (Length <= 0) { throw new ArgumentOutOfRangeException(nameof(Length)); }
@@ -101,7 +103,7 @@ namespace Buildings
                 throw new ArgumentOutOfRangeException(nameof(Type), "Unsupported shape letter.");
             }
 
-            building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore);
+            building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore, IsCurved);
 
             return new Dictionary<string, object>
             {
