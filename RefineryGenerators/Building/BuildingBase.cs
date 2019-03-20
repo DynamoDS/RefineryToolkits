@@ -28,6 +28,13 @@ namespace Buildings
         public List<Surface> Floors { get; private set; } = new List<Surface>();
         public int FloorCount { get; set; }
         public ShapeType Type { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether this building has a hole in the center.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance has a hole; otherwise, <c>false</c>.
+        /// </value>
+        public bool UsesDepth { get; protected set; }
 
         protected double CoreArea => (FloorArea * coreSizeFactorArea) + (FloorCount * coreSizeFactorFloors);
         public double TotalArea => FloorArea * FloorCount;

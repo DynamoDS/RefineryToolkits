@@ -7,8 +7,6 @@ namespace Buildings
 {
     internal class BuildingU : BuildingBase
     {
-        private double facetLength;
-
         public BuildingU()
         {
             Type = ShapeType.U;
@@ -16,10 +14,7 @@ namespace Buildings
 
         protected override void Setup()
         {
-            if (!IsSmooth)
-            {
-                facetLength = Width / (1 + Math.Sqrt(2));
-            }
+            UsesDepth = Width > 2 * Depth && Length > Depth ? true : false;
         }
 
         protected override (Curve boundary, List<Curve> holes) CreateBaseCurves()
@@ -49,7 +44,7 @@ namespace Buildings
                                 Point.ByCoordinates(Width, Length))
                         };
 
-                        if (Width > 2 * Depth && Length > Depth)
+                        if (UsesDepth)
                         {
                             // Big enough to have an interior part of the U.
 
@@ -102,7 +97,7 @@ namespace Buildings
             {
                 // Straight U
 
-                if (Width <= 2 * Depth || Length <= Depth)
+                if (UsesDepth)
                 {
                     // Solid straight U (rectangle)
                     boundary = PolyCurve.ByPoints(new[]
@@ -136,14 +131,23 @@ namespace Buildings
         {
             var boundary = new List<Curve>();
 
-            var coreWidth = Depth * (1 - (2 * hallwayToDepth));
-
-            using (Plane center = (Plane)Plane.XY().Translate(Width / 2, Depth / 2, 0))
+            if (UsesDepth)
             {
-                boundary.Add(Rectangle.ByWidthLength(center, coreWidth, CoreArea / coreWidth));
+                var coreHeight = Depth * (1 - (2 * hallwayToDepth));
+            
+                boundary.Add(Rectangle.ByWidthLength(
+                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Depth / 2), Vector.ZAxis()), 
+                    CoreArea / coreHeight,
+                    coreHeight));
             }
-
-            Rectangle asdf = null;
+            else
+            {
+                // Simple box building, core has same aspect ratio as floorplate.
+                boundary.Add(Rectangle.ByWidthLength(
+                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
+                    Width * (CoreArea / FloorArea),
+                    Length * (CoreArea / FloorArea)));
+            }
 
             return boundary;
         }

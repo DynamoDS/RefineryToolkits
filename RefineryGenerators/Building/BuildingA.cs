@@ -9,7 +9,7 @@ namespace Buildings
     {
         public BuildingA()
         {
-            Type = ShapeType.A;
+            UsesDepth = true;
         }
 
         protected override void Setup() { }
