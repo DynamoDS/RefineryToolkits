@@ -110,8 +110,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             crvList.ForEach(crv => crv.Dispose());
             loftSrf.Dispose();
             intersectingCurves.ForEach(crv => crv.Dispose());
-            extendCurves.ForEach(crv => crv.Dispose());
-            split.ForEach(surf => surf.Dispose());          
+            extendCurves.ForEach(crv => crv.Dispose());    
 
             return newOutput;
 
