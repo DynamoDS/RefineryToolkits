@@ -97,7 +97,21 @@ namespace Buildings
 
         protected abstract void Setup();
         protected abstract (Curve boundary, List<Curve> holes) CreateBaseCurves();
-        protected abstract List<Curve> CreateCoreCurves();
+
+        /// <summary>
+        /// Creates boundary curves at the base of all cores. Defaults to creating a centered rectangle of the same aspect as the building's bounds.
+        /// </summary>
+        protected virtual List<Curve> CreateCoreCurves()
+        {
+            // Simple box building, core has same aspect ratio as floorplate.
+            return new List<Curve>
+            {
+                Rectangle.ByWidthLength(
+                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
+                    Math.Pow(Width, 2) * (CoreArea / FloorArea),
+                    Math.Pow(Length, 2) * (CoreArea / FloorArea))
+            };
+        }
 
         public virtual bool IsValid()
         {

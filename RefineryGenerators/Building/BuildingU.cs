@@ -129,27 +129,23 @@ namespace Buildings
 
         protected override List<Curve> CreateCoreCurves()
         {
-            var boundary = new List<Curve>();
-
             if (UsesDepth)
             {
                 var coreHeight = Depth * (1 - (2 * hallwayToDepth));
-            
-                boundary.Add(Rectangle.ByWidthLength(
-                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Depth / 2), Vector.ZAxis()), 
-                    CoreArea / coreHeight,
-                    coreHeight));
+
+                return new List<Curve>
+                {
+                    Rectangle.ByWidthLength(
+                        Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Depth / 2), Vector.ZAxis()),
+                        CoreArea / coreHeight,
+                        coreHeight)
+                };
             }
             else
             {
                 // Simple box building, core has same aspect ratio as floorplate.
-                boundary.Add(Rectangle.ByWidthLength(
-                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
-                    Width * (CoreArea / FloorArea),
-                    Length * (CoreArea / FloorArea)));
+                return base.CreateCoreCurves();
             }
-
-            return boundary;
         }
     }
 }
