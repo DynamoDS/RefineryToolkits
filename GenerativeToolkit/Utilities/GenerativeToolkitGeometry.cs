@@ -267,7 +267,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="offset"></param>
         /// <search></search>
         [MultiReturn(new[] { "insetCrvs", "outsetCrvs" })]
-        public static Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]> OffsetPerimeterCurves(Autodesk.DesignScript.Geometry.Surface surface, double offset)
+        public static Dictionary<string, List<Autodesk.DesignScript.Geometry.Curve>> OffsetPerimeterCurves(Autodesk.DesignScript.Geometry.Surface surface, double offset)
         {
             List<Autodesk.DesignScript.Geometry.Curve> srfPerimCrvs = surface.PerimeterCurves().ToList();
 
@@ -287,56 +287,19 @@ namespace Autodesk.GenerativeToolkit.Utilities
                 outOffset = offset;
             }
 
-            List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>(){(plyCrv.Offset(inOffset))};
-            List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>(){(plyCrv.Offset(outOffset))};
+            List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrvList = plyCrv.Offset(inOffset).Explode().Cast<Autodesk.DesignScript.Geometry.Curve>().ToList();
+            List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrvList = plyCrv.Offset(outOffset).Explode().Cast<Autodesk.DesignScript.Geometry.Curve>().ToList();
 
-            Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(inOffsetCrv);
-            Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(outOffsetCrv);
-
-            List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrvList = inOffsetPolyCrv.Curves().ToList();
-            List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrvList = outOffsetPolyCrv.Curves().ToList();
-
-            List<Autodesk.DesignScript.Geometry.Point> inPts = new List<Autodesk.DesignScript.Geometry.Point>();
-            List<Autodesk.DesignScript.Geometry.Point> outPts = new List<Autodesk.DesignScript.Geometry.Point>();
-
-            foreach (Autodesk.DesignScript.Geometry.Curve c in inOffsetCrvList)
+            Dictionary<string, List<Autodesk.DesignScript.Geometry.Curve>> newOutput;
+            newOutput = new Dictionary<string, List<Autodesk.DesignScript.Geometry.Curve>>
             {
-                inPts.Add(c.StartPoint);
-            }
-            foreach (Autodesk.DesignScript.Geometry.Curve c in outOffsetCrvList)
-            {
-                outPts.Add(c.StartPoint);
-            }
-
-            Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv2 = PolyCurve.ByPoints(inPts,true);
-            Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv2 = PolyCurve.ByPoints(outPts,true);
-
-            Autodesk.DesignScript.Geometry.Surface inOffsetSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(inOffsetPolyCrv2);
-            Autodesk.DesignScript.Geometry.Surface outOffsetSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(outOffsetPolyCrv2);
-
-            Autodesk.DesignScript.Geometry.Curve[] inPerimCrvs = inOffsetSrf.PerimeterCurves();
-            Autodesk.DesignScript.Geometry.Curve[] outPerimCrvs = outOffsetSrf.PerimeterCurves();
-
-            Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]> newOutput;
-            newOutput = new Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]>
-            {
-                {"insetCrvs",inPerimCrvs},
-                {"outsetCrvs",outPerimCrvs}
+                {"insetCrvs",inOffsetCrvList},
+                {"outsetCrvs",outOffsetCrvList}
             };
 
             //Dispose all redundant geometry
-            inOffsetSrf.Dispose();
-            outOffsetSrf.Dispose();
-            inOffsetPolyCrv.Dispose();
-            outOffsetPolyCrv.Dispose();
-            inOffsetPolyCrv2.Dispose();
-            outOffsetPolyCrv2.Dispose();
-
             plyCrv.Dispose();
-            foreach (Autodesk.DesignScript.Geometry.Curve c in srfPerimCrvs)
-            {
-                c.Dispose();
-            }
+            srfPerimCrvs.ForEach(crv => crv.Dispose());
 
             return newOutput;
 
