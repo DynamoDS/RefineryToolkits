@@ -135,7 +135,7 @@ namespace Buildings
                 return default;
             }
 
-            if (holes.Count > 0)
+            if (holes != null && holes.Count > 0)
             {
                 // A bug in Dynamo requires the boundary curve to be included in the trim curves, otherwise it trims the wrong part.
                 holes.Add(boundary);
