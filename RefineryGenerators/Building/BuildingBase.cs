@@ -115,8 +115,8 @@ namespace Buildings
             {
                 Rectangle.ByWidthLength(
                     Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
-                    Math.Pow(Width, 2) * (CoreArea / FloorArea),
-                    Math.Pow(Length, 2) * (CoreArea / FloorArea))
+                    Width * Math.Sqrt(CoreArea / FloorArea),
+                    Length * Math.Sqrt(CoreArea / FloorArea))
             };
         }
 
