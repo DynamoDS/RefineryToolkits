@@ -61,13 +61,42 @@ namespace Buildings
                         Point.ByCoordinates(Width, Length),
                         Point.ByCoordinates(0, Length)));
                 }
+
+                if (UsesDepth)
+                {
+                    var curves = new List<Curve>
+                    {
+                        EllipseArc.ByPlaneRadiiAngles(arcCenter, (Width / 2) - Depth, arcHeight - Depth, 0, -180)
+                    };
+
+                    if (arcHeight < Length - Depth)
+                    {
+                        curves.Add(PolyCurve.ByPoints(new[]
+                        {
+                            Point.ByCoordinates(Depth, arcHeight),
+                            Point.ByCoordinates(Depth, Length - Depth),
+                            Point.ByCoordinates(Width - Depth, Length - Depth),
+                            Point.ByCoordinates(Width - Depth, arcHeight)
+                        }));
+                    }
+                    else
+                    {
+                        curves.Add(Line.ByStartPointEndPoint(
+                            Point.ByCoordinates(Depth, arcHeight),
+                            Point.ByCoordinates(Width - Depth, arcHeight)));
+                    }
+
+                    holes.Add(PolyCurve.ByJoinedCurves(curves));
+
+                    curves.ForEach(x => x.Dispose());
+                }
             }
             else
             {
                 // Faceted D.
 
                 double baseWidth = Width * Math.Tan(Math.PI / 8);
-                double sideWidth = (baseWidth * arcHeight) / (2 * Width);
+                double sideWidth = baseWidth * arcHeight / (2 * Width);
 
                 boundaryCurves.Add(PolyCurve.ByPoints(new[]
                     {
@@ -79,14 +108,29 @@ namespace Buildings
                         Point.ByCoordinates(Width, arcHeight - sideWidth)
                     }, 
                     connectLastToFirst: true));
+                
+                if (UsesDepth)
+                {
+                    double angleA = Math.Atan2(2 * (arcHeight - sideWidth), Width - baseWidth);
+                    double offsetBaseWidth = baseWidth - (2 * Depth / Math.Tan((Math.PI - angleA) / 2));
+                    double offsetSideWidth = sideWidth - (Depth / Math.Tan((angleA / 2) + (Math.PI / 4)));
+
+                    holes.Add(PolyCurve.ByPoints(new []
+                        {
+                            Point.ByCoordinates(Width - Depth, Length - Depth),
+                            Point.ByCoordinates(Width - Depth, arcHeight - offsetSideWidth),
+                            Point.ByCoordinates((Width + offsetBaseWidth) / 2, Depth),
+                            Point.ByCoordinates((Width - offsetBaseWidth) / 2, Depth),
+                            Point.ByCoordinates(Depth, arcHeight - offsetSideWidth),
+                            Point.ByCoordinates(Depth, Length - Depth)
+
+                        },
+                        connectLastToFirst: true));
+                }
+
             }
 
             var boundary = PolyCurve.ByJoinedCurves(boundaryCurves);
-
-            if (UsesDepth)
-            {
-                holes.Add(boundary.Offset(Depth));
-            }
 
             return (boundary, holes);
         }
