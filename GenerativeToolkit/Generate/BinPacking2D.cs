@@ -60,12 +60,31 @@ namespace Autodesk.GenerativeToolkit.Generate
             return placedRectangles;
         }
 
+        #region Placement Methods
+        [IsVisibleInDynamoLibrary(true)]
+        public static string BSSF()
+        {
+            return "BSSF";
+        }
+        [IsVisibleInDynamoLibrary(true)]
+        public static string BLSF()
+        {
+            return "BLSF";
+        }
+        [IsVisibleInDynamoLibrary(true)]
+        public static string BAF()
+        {
+            return "BAF";
+        }
+
+        #endregion
+
         #endregion
 
         #region Private Methods
 
         ////------ Find best freerectangle and place next rectangle ------////
-    
+
         private static void PlaceItem(Rectangle item, string placementMethod)
         {
             FreeRectangle f = BestFreeRect(item, placementMethod);
