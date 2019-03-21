@@ -23,26 +23,23 @@ namespace Revit
         /// Creates Revit floors from building floor surfaces.
         /// </summary>
         /// <param name="Floors">Floor surfaces.</param>
-        /// <param name="FloorTypeName">Type of created Revit floors.</param>
+        /// <param name="FloorType">Type of created Revit floors.</param>
         /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
         /// <returns name="FloorElements">Revit floor elements.</returns>
         /// <search>refinery</search>
         public static List<Floor> CreateRevitFloors(
             Autodesk.DesignScript.Geometry.Surface[] Floors, 
-            string FloorTypeName = "Generic 150mm", 
+            Elements.FloorType FloorType = null, 
             string LevelPrefix = "Dynamo Level")
         {
             if (Floors == null) { throw new ArgumentNullException(nameof(Floors)); }
 
             var FloorElements = new List<Floor>();
             var collector = new FilteredElementCollector(Document);
-
-            if (!(collector
-                .OfClass(typeof(FloorType))
-                .First<Element>(e => e.Name.Equals(FloorTypeName, global::System.StringComparison.Ordinal)) 
-                is FloorType floorType))
+            
+            if (!(FloorType.InternalElement is FloorType floorType))
             {
-                throw new ArgumentOutOfRangeException(nameof(FloorTypeName));
+                throw new ArgumentOutOfRangeException(nameof(FloorType));
             }
 
             var levels = collector.OfClass(typeof(Level)).ToElements()
@@ -87,10 +84,10 @@ namespace Revit
         /// Creates a Revit mass as a direct shape from building masser
         /// </summary>
         /// <param name="BuildingSolid">The building volume.</param>
-        /// <param name="CategoryName">A category for the mass.</param>
+        /// <param name="Category">A category for the mass.</param>
         /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
-        public static DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, string CategoryName = "Mass")
+        public static DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, Elements.Category Category)
         {
             DirectShape RevitBuilding = null;
             
@@ -99,11 +96,11 @@ namespace Revit
                 throw new ArgumentNullException(nameof(BuildingSolid));
             }
 
-            var category = Document.Settings.Categories.get_Item(CategoryName);
+            var revitCategory = Document.Settings.Categories.get_Item(Category.Name);
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
-            RevitBuilding = DirectShape.CreateElement(Document, category.Id);
+            RevitBuilding = DirectShape.CreateElement(Document, revitCategory.Id);
 
             try
             {
