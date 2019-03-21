@@ -23,75 +23,84 @@ namespace Buildings
 
             if (IsCurved)
             {
-                if (Length > Width / 2)
+                var holes = new List<Curve>();
+                var boundaryCurves = new List<Curve>();
+
+                var arcHeight = Math.Min(Length, Width / 2);
+
+                using (Plane arcCenter = Plane.ByOriginNormal(
+                    Point.ByCoordinates(Width / 2, arcHeight),
+                    Vector.ZAxis()))
                 {
-                    // Enough room to make the curved part of the U an arc.
+                    boundaryCurves.Add(EllipseArc.ByPlaneRadiiAngles(arcCenter, Width / 2, arcHeight, 180, 180));
 
-                    // Center-point of the curved parts of the U.
-                    using (var arcCenter = Point.ByCoordinates(Width / 2, Width / 2))
+                    if (UsesDepth)
                     {
-                        var boundaryCurves = new List<Curve>()
+                        if (arcHeight < Length)
                         {
-                            Line.ByStartPointEndPoint(
-                                Point.ByCoordinates(0, Length),
-                                Point.ByCoordinates(0, Width / 2)),
-                            Arc.ByCenterPointStartPointEndPoint(
-                                arcCenter,
-                                Point.ByCoordinates(0, Width / 2),
-                                Point.ByCoordinates(Width, Width / 2)),
-                            Line.ByStartPointEndPoint(
-                                Point.ByCoordinates(Width, Width / 2),
-                                Point.ByCoordinates(Width, Length))
-                        };
+                            // Top of U has straight parts.
 
-                        if (UsesDepth)
-                        {
-                            // Big enough to have an interior part of the U.
-
-                            boundaryCurves.AddRange(new Curve[]
-                            {
-                                PolyCurve.ByPoints(new[]
+                            boundaryCurves.Add(PolyCurve.ByPoints(new[]
                                 {
+                                    Point.ByCoordinates(Width, arcHeight),
                                     Point.ByCoordinates(Width, Length),
                                     Point.ByCoordinates(Width - Depth, Length),
-                                    Point.ByCoordinates(Width - Depth, Width / 2)
-                                }),
-                                Arc.ByCenterPointStartPointSweepAngle(
-                                    arcCenter,
-                                    Point.ByCoordinates(Width - Depth, Width / 2),
-                                    -180,
-                                    Vector.ZAxis()),
-                                PolyCurve.ByPoints(new[]
-                                {
-                                    Point.ByCoordinates(Depth, Width / 2),
-                                    Point.ByCoordinates(Depth, Length)
-                                })
-                            });
+                                    Point.ByCoordinates(Width - Depth, arcHeight)
+                                }));
+                        }
+                        else
+                        {
+                            // Top of U has no straight parts.
+                            boundaryCurves.Add(Line.ByStartPointEndPoint(
+                                Point.ByCoordinates(Width, Length),
+                                Point.ByCoordinates(Width - Depth, Length)));
                         }
 
-                        boundary = PolyCurve.ByJoinedCurves(boundaryCurves);
-                    }
-                }
-                else
-                {
-                    // Short U. Use ellipses and no straight part.
-                    using (var ellipseCenter = Plane.ByOriginNormal(
-                        Point.ByCoordinates(Width / 2, Length),
-                        Vector.ZAxis()))
-                    {
-                        boundary = PolyCurve.ByJoinedCurves(new Curve[]
+                        boundaryCurves.Add(EllipseArc.ByPlaneRadiiAngles(arcCenter, (Width / 2) - Depth, arcHeight - Depth, 0, -180));
+
+                        if (arcHeight < Length)
                         {
-                                Line.ByStartPointEndPoint(
-                                    Point.ByCoordinates(Width, Length),
-                                    Point.ByCoordinates(Width - Depth, Length)),
-                                EllipseArc.ByPlaneRadiiAngles(ellipseCenter, (Width / 2) - Depth, Length - Depth, 180, 180),
-                                Line.ByStartPointEndPoint(
-                                    Point.ByCoordinates(Depth, Length),
-                                    Point.ByCoordinates(0, Length)),
-                                EllipseArc.ByPlaneRadiiAngles(ellipseCenter, Width / 2, Length, 180, 180)
-                        });
+                            // Top of U has straight parts.
+                            boundaryCurves.Add(PolyCurve.ByPoints(new[]
+                                {
+                            Point.ByCoordinates(Depth, arcHeight),
+                            Point.ByCoordinates(Depth, Length),
+                            Point.ByCoordinates(0, Length),
+                            Point.ByCoordinates(0, arcHeight)
+                        }));
+                        }
+                        else
+                        {
+                            // Top of U has no straight parts.
+                            boundaryCurves.Add(Line.ByStartPointEndPoint(
+                                Point.ByCoordinates(Depth, Length),
+                                Point.ByCoordinates(0, Length)));
+                        }
+                    }
+                    else
+                    {
+                        // U has no interior.
+
+                        if (arcHeight < Length)
+                        {
+                            boundaryCurves.Add(PolyCurve.ByPoints(new[]
+                            {
+                                Point.ByCoordinates(Width, arcHeight),
+                                Point.ByCoordinates(Width, Length),
+                                Point.ByCoordinates(0, Length),
+                                Point.ByCoordinates(0, arcHeight)
+                            }));
+                        }
+                        else
+                        {
+                            boundaryCurves.Add(Line.ByStartPointEndPoint(
+                                Point.ByCoordinates(Width, Length),
+                                Point.ByCoordinates(0, Length)));
+                        }
                     }
                 }
+
+                boundary = PolyCurve.ByJoinedCurves(boundaryCurves);
             }
             else
             {
