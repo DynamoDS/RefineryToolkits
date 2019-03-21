@@ -21,33 +21,26 @@ namespace Buildings
         {
             Curve boundary = null;
 
-            if (IsCurved)
+            if (UsesDepth)
             {
-                return default;
+                boundary = PolyCurve.ByPoints(new[]
+                {
+                    Point.ByCoordinates(0, 0),
+                    Point.ByCoordinates(Width, 0),
+                    Point.ByCoordinates(Width, Depth),
+                    Point.ByCoordinates(Depth, Depth),
+                    Point.ByCoordinates(Depth, Length),
+                    Point.ByCoordinates(0, Length)
+                }, connectLastToFirst: true);
             }
             else
             {
-                if (UsesDepth)
-                {
-                    boundary = PolyCurve.ByPoints(new[]
-                    {
-                        Point.ByCoordinates(0, 0),
-                        Point.ByCoordinates(Width, 0),
-                        Point.ByCoordinates(Width, Depth),
-                        Point.ByCoordinates(Depth, Depth),
-                        Point.ByCoordinates(Depth, Length),
-                        Point.ByCoordinates(0, Length)
-                    }, connectLastToFirst: true);
-                }
-                else
-                {
-                    // L is too chunky - make a box.
+                // L is too chunky - make a box.
 
-                    boundary = Rectangle.ByWidthLength(
-                        Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
-                        Width,
-                        Length);
-                }
+                boundary = Rectangle.ByWidthLength(
+                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
+                    Width,
+                    Length);
             }
 
             return (boundary, default);
