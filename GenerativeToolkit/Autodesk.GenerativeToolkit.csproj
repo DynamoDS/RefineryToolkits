@@ -54,6 +54,9 @@
       <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.1.0.7465\lib\net47\CoreNodeModelsWpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CromulentBisgetti.ContainerPacking">
+      <HintPath>..\..\3DContainerPacking\src\CromulentBisgetti.ContainerPacking\bin\Debug\netstandard2.0\CromulentBisgetti.ContainerPacking.dll</HintPath>
+    </Reference>
     <Reference Include="DesignScriptBuiltin, Version=2.1.0.7465, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.1.0.7465\lib\net47\DesignScriptBuiltin.dll</HintPath>
       <Private>False</Private>
