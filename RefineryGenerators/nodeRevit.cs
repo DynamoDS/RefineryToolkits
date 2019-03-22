@@ -101,14 +101,12 @@ namespace Revit
                     loops.ForEach(x => x.Dispose());
                     revitFloor.Dispose();
                 }
-
-                revitLevel.Dispose();
+                
                 revitCurves.Dispose();
             }
 
             TransactionManager.Instance.TransactionTaskDone();
-
-            floorType.Dispose();
+            
             collector.Dispose();
 
             return FloorElements;
