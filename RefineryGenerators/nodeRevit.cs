@@ -27,10 +27,8 @@ namespace Revit
         /// <param name="FloorType">Type of created Revit floors.</param>
         /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
         /// <returns name="FloorElements">Revit floor elements.</returns>
-        /// <returns name="Openings">Openings in Revit floors.</returns>
         /// <search>refinery</search>
-        [MultiReturn(new[] { "FloorElements", "Openings" })]
-        public static Dictionary<string, object> CreateRevitFloors(
+        public static List<List<Elements.Floor>> CreateRevitFloors(
             Autodesk.DesignScript.Geometry.Surface[][] Floors, 
             Elements.FloorType FloorType = null, 
             string LevelPrefix = "Dynamo Level")
@@ -42,8 +40,7 @@ namespace Revit
                 throw new ArgumentOutOfRangeException(nameof(FloorType));
             }
 
-            var FloorElements = new List<Elements.Floor>();
-            var Openings = new List<UnknownElement>();
+            var FloorElements = new List<List<Elements.Floor>>();
             var collector = new FilteredElementCollector(Document);
 
             var levels = collector.OfClass(typeof(Autodesk.Revit.DB.Level)).ToElements()
@@ -56,8 +53,10 @@ namespace Revit
             {
 
                 if (Floors[i] == null) { throw new ArgumentNullException(nameof(Floors)); }
+
+                FloorElements.Add(new List<Elements.Floor>());
                 
-                var levelName = $"{LevelPrefix} {i + 1}";
+                string levelName = $"{LevelPrefix} {i + 1}";
                 var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
 
                 if (revitLevel != null)
@@ -84,8 +83,9 @@ namespace Revit
                     
                     var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
 
-                    FloorElements.Add(revitFloor.ToDSType(false) as Elements.Floor);
+                    FloorElements.Last().Add(revitFloor.ToDSType(false) as Elements.Floor);
 
+                    // Need to finish creating the floor before we add openings in it.
                     TransactionManager.Instance.ForceCloseTransaction();
                     TransactionManager.Instance.EnsureInTransaction(Document);
 
@@ -95,19 +95,23 @@ namespace Revit
 
                         loop.Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
 
-                        var opening = Document.Create.NewOpening(revitFloor, revitCurves, true);
-
-                        Openings.Add(opening.ToDSType(false) as UnknownElement);
+                        Document.Create.NewOpening(revitFloor, revitCurves, true);
                     });
+
+                    loops.ForEach(x => x.Dispose());
+                    revitFloor.Dispose();
                 }
+
+                revitLevel.Dispose();
+                revitCurves.Dispose();
             }
 
             TransactionManager.Instance.TransactionTaskDone();
 
-            return new Dictionary<string, object>{
-                {"FloorElements", FloorElements},
-                {"Openings", Openings}
-            };
+            floorType.Dispose();
+            collector.Dispose();
+
+            return FloorElements;
         }
 
         /// <summary>
@@ -147,6 +151,8 @@ namespace Revit
             }
 
             TransactionManager.Instance.TransactionTaskDone();
+
+            revitCategory.Dispose();
             
             return RevitBuilding.ToDSType(false) as Elements.DirectShape;
         }
