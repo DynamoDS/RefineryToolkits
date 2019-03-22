@@ -8,9 +8,9 @@ namespace Buildings
 {
     internal abstract class BuildingBase : IDisposable
     {
-        protected double hallwayToDepth = 0.1;
-        protected double coreSizeFactorFloors = 10;
-        protected double coreSizeFactorArea = 0.1;
+        protected double hallwayToDepth;
+        protected double coreSizeFactorFloors;
+        protected double coreSizeFactorArea;
 
         public double Length { get; private set; }
         public double Width { get; private set; }
@@ -45,7 +45,11 @@ namespace Buildings
         {
         }
 
-        public void CreateBuilding(double length, double width, double depth, Plane basePlane, double targetBuildingArea, double floorHeight, bool createCores = true, bool isCurved = false)
+        public void CreateBuilding(
+            double length, double width, double depth, 
+            Plane basePlane, double targetBuildingArea, double floorHeight, 
+            bool createCores, bool isCurved,
+            double hallwayToDepth, double coreSizeFactorFloors, double coreSizeFactorArea)
         {
             Length = length;
             Width = width;
@@ -53,6 +57,9 @@ namespace Buildings
             BasePlane = basePlane;
             FloorHeight = floorHeight;
             IsCurved = isCurved;
+            this.hallwayToDepth = hallwayToDepth;
+            this.coreSizeFactorFloors = coreSizeFactorFloors;
+            this.coreSizeFactorArea = coreSizeFactorArea;
 
             Setup();
 

@@ -17,7 +17,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Buildings.Creation.BuildingGenerator@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,double,double,bool,bool",
+      "FunctionSignature": "Buildings.Creation.BuildingGenerator@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,double,double,bool,bool,double,double,double",
       "Id": "6e0dff2a079a4108bd788a9bf40217f1",
       "Inputs": [
         {
@@ -100,6 +100,33 @@
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
+        },
+        {
+          "Id": "ced679f8b8664415a7db6dd9b9732e98",
+          "Name": "HallwayToDepth",
+          "Description": "Core sizing logic: ratio between building depth and width of hallways on either side of core.\n\ndouble\nDefault value : 0.1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "aae9c1c5a1d6485992e54ae1fdffe99a",
+          "Name": "CoreSizeFactorFloors",
+          "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 4",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "285b07f52e5347598396793b3708f335",
+          "Name": "CoreSizeFactorArea",
+          "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 0.1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
         }
       ],
       "Outputs": [
@@ -140,7 +167,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "7f3ea61f43c74ef6b6382b2204637397",
+          "Id": "52b4cdaf89b443099141707a47d3853d",
           "Name": "Cores",
           "Description": "Building core volumes.",
           "UsingDefaultValue": false,
@@ -149,7 +176,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "52b4cdaf89b443099141707a47d3853d",
+          "Id": "b7e70afcd3a444048ffd84f1a71932e1",
           "Name": "TopPlane",
           "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
           "UsingDefaultValue": false,
@@ -195,7 +222,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Generate a building mass.\n\nCreation.BuildingGenerator (BasePlane: Plane, Type: string = \"L\", Length: double = 40, Width: double = 40, Depth: double = 6, BldgArea: double = 1000, FloorHeight: double = 3, IsCurved: bool = false, CreateCore: bool = true): var[]..[]"
+      "Description": "Generate a building mass.\n\nCreation.BuildingGenerator (BasePlane: Plane, Type: string = \"L\", Length: double = 40, Width: double = 40, Depth: double = 6, BldgArea: double = 1000, FloorHeight: double = 3, IsCurved: bool = false, CreateCore: bool = true, HallwayToDepth: double = 0.1, CoreSizeFactorFloors: double = 4, CoreSizeFactorArea: double = 0.1): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -220,7 +247,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
-      "InputValue": true,
+      "InputValue": false,
       "Id": "1f3615a504394e92b80abf8b3e2efa35",
       "Inputs": [],
       "Outputs": [
@@ -268,7 +295,7 @@
       "MaximumValue": 30000.0,
       "MinimumValue": 0.0,
       "StepValue": 1000.0,
-      "InputValue": 6000.0,
+      "InputValue": 7000.0,
       "Id": "ccf0989fbb9340908c606be34ad757d1",
       "Inputs": [],
       "Outputs": [
@@ -292,7 +319,7 @@
       "MaximumValue": 50000.0,
       "MinimumValue": 0.0,
       "StepValue": 1000.0,
-      "InputValue": 21000.0,
+      "InputValue": 26000.0,
       "Id": "19a1a63827824bea9da42ea7e9166328",
       "Inputs": [],
       "Outputs": [
@@ -313,10 +340,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 1000.0,
+      "MaximumValue": 10000.0,
       "MinimumValue": 0.0,
       "StepValue": 1.0,
-      "InputValue": 648.0,
+      "InputValue": 924.0,
       "Id": "a051f164c890406c8d3192fc8b0ce469",
       "Inputs": [],
       "Outputs": [
@@ -813,7 +840,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Creates a Revit mass as a direct shape from building masser\n\nElementCreation.CreateRevitMass (BuildingSolid: Solid, Category: Category): var"
+      "Description": "Creates a Revit mass as a direct shape from building masser\n\nElementCreation.CreateRevitMass (BuildingSolid: Solid, Category: Category): DirectShape"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -930,7 +957,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Creates Revit floors from building floor surfaces.\n\nElementCreation.CreateRevitFloors (Floors: Surface[], FloorType: FloorType, LevelPrefix: string = \"Dynamo Level\"): var[]"
+      "Description": "Creates Revit floors from building floor surfaces.\n\nElementCreation.CreateRevitFloors (Floors: Surface[], FloorType: FloorType, LevelPrefix: string = \"Dynamo Level\"): Floor[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -974,10 +1001,10 @@
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
       "InputValue": {
-        "R": 0,
-        "G": 201,
+        "R": 255,
+        "G": 255,
         "B": 255,
-        "A": 133
+        "A": 90
       },
       "NodeType": "ColorInputNode",
       "Id": "53f3bc6234e34804beabeec4752f1723",
@@ -1007,8 +1034,8 @@
           "Name": "geometry",
           "Description": "Geometry",
           "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
+          "Level": 1,
+          "UseLevels": true,
           "KeepListStructure": false
         },
         {
@@ -1038,10 +1065,10 @@
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
       "InputValue": {
-        "R": 1,
-        "G": 112,
-        "B": 142,
-        "A": 133
+        "R": 0,
+        "G": 255,
+        "B": 255,
+        "A": 143
       },
       "NodeType": "ColorInputNode",
       "Id": "b1d0ab592b384566ac02c8f6f2fbf711",
@@ -1536,8 +1563,8 @@
       "ConcreteType": "CoreNodeModels.Input.IntegerSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Integer",
-      "InputValue": 1,
-      "MaximumValue": 15,
+      "InputValue": 0,
+      "MaximumValue": 8,
       "MinimumValue": 0,
       "StepValue": 1,
       "Id": "fa3903bce8dc4b9195d4c44edfef4bc0",
@@ -1567,7 +1594,7 @@
           "Name": "geometry",
           "Description": "Geometry",
           "UsingDefaultValue": false,
-          "Level": 2,
+          "Level": 1,
           "UseLevels": false,
           "KeepListStructure": false
         },
@@ -1679,6 +1706,108 @@
       ],
       "Replication": "Disabled",
       "Description": "All floor types available in the document."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 1.0,
+      "MinimumValue": 0.0,
+      "StepValue": 0.1,
+      "InputValue": 0.2,
+      "Id": "f0d86438db844c1995873b789d942c97",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5f89441ffae141a5bf2b31923e7bf653",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 20.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "InputValue": 5.0,
+      "Id": "5b82dbb5658a429e9511965602897776",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b57f13af47524b959004eb4b698f57ad",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Double",
+      "MaximumValue": 1.0,
+      "MinimumValue": 0.0,
+      "StepValue": 0.1,
+      "InputValue": 0.1,
+      "Id": "b70f98c1c50748ee9f87c312a12e3ef2",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "62de9b7e9e6142f28de1bae6175d9d3c",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "x*1000000;",
+      "Id": "c0da184a1b4a424ebf7693aecff1da5b",
+      "Inputs": [
+        {
+          "Id": "ac48328e72c84817a282739487724d5a",
+          "Name": "x",
+          "Description": "x",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8e037e5f6ff1418aab5cbf29780b7803",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
     }
   ],
   "Connectors": [
@@ -1698,14 +1827,24 @@
       "Id": "ad943dc2b3c74931aff796f7c72546fc"
     },
     {
-      "Start": "6ab595ad5d98449cb1ff74bb2b9e8160",
-      "End": "157b83d943854e0ba09f97c40a000115",
-      "Id": "9f348b859ac84c709017cba5b7641aaa"
+      "Start": "78a099dd40764a199dd4518d73b38181",
+      "End": "a582a4db8d954fff80912a1e4d4f70a3",
+      "Id": "2ec0d379e7904a57a618229a0312e976"
     },
     {
-      "Start": "7f3ea61f43c74ef6b6382b2204637397",
+      "Start": "6ab595ad5d98449cb1ff74bb2b9e8160",
+      "End": "42184c2b2e4b465f8655340f5d7e492c",
+      "Id": "289da6cb7de54f7b8cdfd3f96d1e7e63"
+    },
+    {
+      "Start": "ec3e15c867e74299ae06ba0d7c8a084e",
+      "End": "157b83d943854e0ba09f97c40a000115",
+      "Id": "8eed12cc243941beb909f2536aa50fbc"
+    },
+    {
+      "Start": "52b4cdaf89b443099141707a47d3853d",
       "End": "93b3a8c1c2e043478df0ec290d2f7707",
-      "Id": "1692499549e04f9386ce3800af61951f"
+      "Id": "2dbf162979c74128b1ad05f48fca59a6"
     },
     {
       "Start": "edcb70e199224b5889b54a9a8d050626",
@@ -1916,6 +2055,26 @@
       "Start": "181f8e1046af4b1281e061e462a052b6",
       "End": "c045712e4bbc4050ae87269218c0ba85",
       "Id": "6a266efd9e87439d982505095c003d1c"
+    },
+    {
+      "Start": "5f89441ffae141a5bf2b31923e7bf653",
+      "End": "ced679f8b8664415a7db6dd9b9732e98",
+      "Id": "9028b164cef4494cb7e736dbb7549fb8"
+    },
+    {
+      "Start": "b57f13af47524b959004eb4b698f57ad",
+      "End": "ac48328e72c84817a282739487724d5a",
+      "Id": "bed2af5dd2e045639e0fdeb07adc1910"
+    },
+    {
+      "Start": "62de9b7e9e6142f28de1bae6175d9d3c",
+      "End": "285b07f52e5347598396793b3708f335",
+      "Id": "d5dab1a8b02e4085be17acfd835a5c03"
+    },
+    {
+      "Start": "8e037e5f6ff1418aab5cbf29780b7803",
+      "End": "aae9c1c5a1d6485992e54ae1fdffe99a",
+      "Id": "e109871b3aca44d69f00db16fe0eff5c"
     }
   ],
   "Dependencies": [],
@@ -1931,15 +2090,15 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": 20793.249880944608,
-      "EyeY": 66664.759082049219,
-      "EyeZ": 50634.272919908282,
-      "LookX": -27159.507644234149,
-      "LookY": -52170.815482339036,
-      "LookZ": -58304.056056822905,
-      "UpX": -0.18950954645909265,
-      "UpY": 0.89363264032355283,
-      "UpZ": -0.40682531380129894
+      "EyeX": 17574.011077224019,
+      "EyeY": 54427.139144799949,
+      "EyeZ": 57574.731942319217,
+      "LookX": -37601.758839027971,
+      "LookY": -37826.161533231745,
+      "LookZ": -60228.483357394922,
+      "UpX": -0.14300882082554064,
+      "UpY": 0.96284901245760257,
+      "UpZ": -0.22906386964303718
     },
     "NodeViews": [
       {
@@ -1959,8 +2118,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 111.54054672013962,
-        "Y": 219.54623113573118
+        "X": 95.0195678465679,
+        "Y": -4.0376829532743841
       },
       {
         "ShowGeometry": true,
@@ -1969,8 +2128,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 65.467353968360442,
-        "Y": 692.93619631619265
+        "X": 48.946375094788721,
+        "Y": 469.35228222718706
       },
       {
         "ShowGeometry": true,
@@ -1979,8 +2138,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -102.52680661107325,
-        "Y": 443.2677157695515
+        "X": -119.04778548464498,
+        "Y": 219.68380168054591
       },
       {
         "ShowGeometry": true,
@@ -1989,8 +2148,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -101.95426066292544,
-        "Y": 506.82256410000196
+        "X": -118.47523953649716,
+        "Y": 283.23865001099637
       },
       {
         "ShowGeometry": true,
@@ -1999,8 +2158,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -103.09935255922056,
-        "Y": 380.86020742149196
+        "X": -119.62033143279228,
+        "Y": 157.27629333248638
       },
       {
         "ShowGeometry": true,
@@ -2009,8 +2168,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -103.6718985073677,
-        "Y": 567.51018651752315
+        "X": -120.19287738093942,
+        "Y": 343.92627242851756
       },
       {
         "ShowGeometry": true,
@@ -2019,8 +2178,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -103.67189850736742,
-        "Y": 631.6353327100245
+        "X": -120.19287738093914,
+        "Y": 408.05141862101891
       },
       {
         "ShowGeometry": false,
@@ -2119,8 +2278,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1558.2689597068756,
-        "Y": 623.66260425393216
+        "X": 1561.6011050422592,
+        "Y": 610.14721662904128
       },
       {
         "ShowGeometry": false,
@@ -2169,8 +2328,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 246.80576860787824,
-        "Y": 572.8960171763058
+        "X": 230.28478973430651,
+        "Y": 349.31210308730022
       },
       {
         "ShowGeometry": true,
@@ -2189,8 +2348,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2970.66010556327,
-        "Y": 98.2681526135122
+        "X": 2995.5943839515953,
+        "Y": 47.587886061716404
       },
       {
         "ShowGeometry": true,
@@ -2199,8 +2358,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2815.6460504703491,
-        "Y": 129.03430095256522
+        "X": 2840.5803288586744,
+        "Y": 78.354034400769422
       },
       {
         "ShowGeometry": true,
@@ -2209,8 +2368,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2978.3245360042542,
-        "Y": 232.74019874142766
+        "X": 3001.7315831405022,
+        "Y": 206.53605441946451
       },
       {
         "ShowGeometry": true,
@@ -2219,8 +2378,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2819.4311764075151,
-        "Y": 285.94564883783778
+        "X": 2843.8379055768796,
+        "Y": 259.74150451587462
       },
       {
         "ShowGeometry": true,
@@ -2319,8 +2478,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2684.4752282947575,
-        "Y": 233.99140011232231
+        "X": 2708.881957464122,
+        "Y": 207.78725579035915
       },
       {
         "ShowGeometry": false,
@@ -2369,8 +2528,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 218.14297015261263,
-        "Y": 303.043017431031
+        "X": 211.09298437395307,
+        "Y": 78.512004032534207
       },
       {
         "ShowGeometry": true,
@@ -2379,8 +2538,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -103.72540070662376,
-        "Y": 302.73141431478132
+        "X": -120.24637958019548,
+        "Y": 79.14750022577573
       },
       {
         "ShowGeometry": true,
@@ -2409,8 +2568,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 66.692067469688141,
-        "Y": 757.536681714612
+        "X": 50.171088596116419,
+        "Y": 533.95276762560638
       },
       {
         "ShowGeometry": true,
@@ -2431,11 +2590,51 @@
         "Excluded": false,
         "X": 1059.1953626839145,
         "Y": -182.70577377134984
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Hallway to Depth Ratio",
+        "Id": "f0d86438db844c1995873b789d942c97",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -108.51697165873441,
+        "Y": 604.10248997495489
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Core Size: Floors",
+        "Id": "5b82dbb5658a429e9511965602897776",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -109.69062847269453,
+        "Y": 672.564028004099
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Core Size: Floor Area",
+        "Id": "b70f98c1c50748ee9f87c312a12e3ef2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -107.47267683608368,
+        "Y": 742.21437730067134
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "c0da184a1b4a424ebf7693aecff1da5b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 225.70137041519069,
+        "Y": 676.19173048975563
       }
     ],
     "Annotations": [],
-    "X": -509.77590307498542,
-    "Y": 191.54407392263948,
-    "Zoom": 0.71665540462516764
+    "X": -419.15083558877109,
+    "Y": 256.73418504715022,
+    "Zoom": 0.69171235837242229
   }
 }

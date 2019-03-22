@@ -36,6 +36,9 @@ namespace Buildings
         /// <param name="FloorHeight">Height of the floor.</param>
         /// <param name="IsCurved">Should sides of building be curved or faceted?</param>
         /// <param name="CreateCore">Create core volumes and subtractions?</param>
+        /// <param name="HallwayToDepth">Core sizing logic: ratio between building depth and width of hallways on either side of core.</param>
+        /// <param name="CoreSizeFactorFloors">Core sizing logic: Add <code>(# of floors) * CoreSizeFactorFloors</code> area to core footprint.</param>
+        /// <param name="CoreSizeFactorArea">Core sizing logic: Add <code>(single floor area) * CoreSizeFactorArea</code> area to core footprint.</param>
         /// <returns name="BuildingSolid">Building volume.</returns>
         /// <returns name="Floors">Building floor surfaces.</returns>
         /// <returns name="NetFloors">Building floor surfaces with core removed.</returns>
@@ -57,7 +60,10 @@ namespace Buildings
             double BldgArea = 1000, 
             double FloorHeight = 3,
             bool IsCurved = false,
-            bool CreateCore = true)
+            bool CreateCore = true,
+            double HallwayToDepth = 0.1,
+            double CoreSizeFactorFloors = 4,
+            double CoreSizeFactorArea = 0.1)
         {
             if (Length <= 0) { throw new ArgumentOutOfRangeException(nameof(Length)); }
             if (Width <= 0) { throw new ArgumentOutOfRangeException(nameof(Width)); }
@@ -105,7 +111,7 @@ namespace Buildings
                 throw new ArgumentOutOfRangeException(nameof(Type), "Unsupported shape letter.");
             }
 
-            building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore, IsCurved);
+            building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore, IsCurved, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
 
             return new Dictionary<string, object>
             {
