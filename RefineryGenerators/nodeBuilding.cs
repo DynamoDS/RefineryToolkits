@@ -173,5 +173,53 @@ namespace Buildings
                 {"HorizontalSurfaces", horizontal}
             };
         }
+
+        /// <summary>
+        /// Get list of closed polycurve edges of surface. First list item is outside boundary.
+        /// </summary>
+        /// <param name="Surface">The surface.</param>
+        /// <returns name="Edges">Edges of surface.</returns>
+        /// <exception cref="ArgumentNullException">Surface</exception>
+        public static PolyCurve[] GetSurfaceLoops(Surface Surface)
+        {
+            if (Surface == null) { throw new ArgumentNullException(nameof(Surface)); }
+
+            var curves = Surface.PerimeterCurves();
+
+            var loops = new List<PolyCurve>();
+
+            foreach (var curve in curves)
+            {
+                var added = false;
+
+                for (var i = 0; i < loops.Count; i++)
+                {
+                    try
+                    {
+                        loops[i] = PolyCurve.ByJoinedCurves(new[]
+                        {
+                            loops[i],
+                            curve
+                        });
+
+                        added = true;
+                        break;
+                    }
+                    catch (ApplicationException)
+                    {
+                        continue;
+                    }
+                }
+
+                if (!added)
+                {
+                    loops.Add(PolyCurve.ByJoinedCurves(new[] { curve }));
+                }
+            }
+
+            if (loops.Any(loop => !loop.IsClosed)) { throw new ArgumentException("Created non-closed polycurve."); }
+
+            return loops.OrderByDescending(c => Surface.ByPatch(c).Area).ToArray();
+        }
     }
 }
