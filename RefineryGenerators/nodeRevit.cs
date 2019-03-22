@@ -4,6 +4,7 @@ using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.Revit.DB;
+using Revit.Elements;
 using Revit.GeometryConversion;
 using RevitServices.Persistence;
 using RevitServices.Transactions;
@@ -27,24 +28,24 @@ namespace Revit
         /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
         /// <returns name="FloorElements">Revit floor elements.</returns>
         /// <search>refinery</search>
-        public static List<Floor> CreateRevitFloors(
+        public static List<Elements.Floor> CreateRevitFloors(
             Autodesk.DesignScript.Geometry.Surface[] Floors, 
             Elements.FloorType FloorType = null, 
             string LevelPrefix = "Dynamo Level")
         {
             if (Floors == null) { throw new ArgumentNullException(nameof(Floors)); }
 
-            var FloorElements = new List<Floor>();
+            var FloorElements = new List<Elements.Floor>();
             var collector = new FilteredElementCollector(Document);
             
-            if (!(FloorType.InternalElement is FloorType floorType))
+            if (!(FloorType.InternalElement is Autodesk.Revit.DB.FloorType floorType))
             {
                 throw new ArgumentOutOfRangeException(nameof(FloorType));
             }
 
-            var levels = collector.OfClass(typeof(Level)).ToElements()
-                .Where(e => e is Level)
-                .Cast<Level>();
+            var levels = collector.OfClass(typeof(Autodesk.Revit.DB.Level)).ToElements()
+                .Where(e => e is Autodesk.Revit.DB.Level)
+                .Cast<Autodesk.Revit.DB.Level>();
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
@@ -63,7 +64,7 @@ namespace Revit
                 else
                 {
                     // Create new level.
-                    revitLevel = Level.Create(Document, Floors[i].BoundingBox.MaxPoint.Z / footToMm);
+                    revitLevel = Autodesk.Revit.DB.Level.Create(Document, Floors[i].BoundingBox.MaxPoint.Z / footToMm);
                     revitLevel.Name = levelName;
                 }
 
@@ -72,7 +73,7 @@ namespace Revit
 
                 var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
 
-                FloorElements.Add(revitFloor);
+                FloorElements.Add(revitFloor.ToDSType(false) as Elements.Floor);
             }
 
             TransactionManager.Instance.TransactionTaskDone();
@@ -87,10 +88,8 @@ namespace Revit
         /// <param name="Category">A category for the mass.</param>
         /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
-        public static DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, Elements.Category Category)
+        public static Elements.DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, Elements.Category Category)
         {
-            DirectShape RevitBuilding = null;
-            
             if (BuildingSolid == null)
             {
                 throw new ArgumentNullException(nameof(BuildingSolid));
@@ -100,7 +99,7 @@ namespace Revit
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
-            RevitBuilding = DirectShape.CreateElement(Document, revitCategory.Id);
+            var RevitBuilding = Autodesk.Revit.DB.DirectShape.CreateElement(Document, revitCategory.Id);
 
             try
             {
@@ -119,8 +118,8 @@ namespace Revit
             }
 
             TransactionManager.Instance.TransactionTaskDone();
-
-            return RevitBuilding;
+            
+            return RevitBuilding.ToDSType(false) as Elements.DirectShape;
         }
     }
 }
