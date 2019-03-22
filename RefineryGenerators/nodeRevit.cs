@@ -27,21 +27,24 @@ namespace Revit
         /// <param name="FloorType">Type of created Revit floors.</param>
         /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
         /// <returns name="FloorElements">Revit floor elements.</returns>
+        /// <returns name="Openings">Openings in Revit floors.</returns>
         /// <search>refinery</search>
-        public static List<Elements.Floor> CreateRevitFloors(
-            Autodesk.DesignScript.Geometry.Surface[] Floors, 
+        [MultiReturn(new[] { "FloorElements", "Openings" })]
+        public static Dictionary<string, object> CreateRevitFloors(
+            Autodesk.DesignScript.Geometry.Surface[][] Floors, 
             Elements.FloorType FloorType = null, 
             string LevelPrefix = "Dynamo Level")
         {
             if (Floors == null) { throw new ArgumentNullException(nameof(Floors)); }
-
-            var FloorElements = new List<Elements.Floor>();
-            var collector = new FilteredElementCollector(Document);
             
             if (!(FloorType.InternalElement is Autodesk.Revit.DB.FloorType floorType))
             {
                 throw new ArgumentOutOfRangeException(nameof(FloorType));
             }
+
+            var FloorElements = new List<Elements.Floor>();
+            var Openings = new List<UnknownElement>();
+            var collector = new FilteredElementCollector(Document);
 
             var levels = collector.OfClass(typeof(Autodesk.Revit.DB.Level)).ToElements()
                 .Where(e => e is Autodesk.Revit.DB.Level)
@@ -51,6 +54,7 @@ namespace Revit
 
             for (var i = 0; i < Floors.Length; i++)
             {
+
                 if (Floors[i] == null) { throw new ArgumentNullException(nameof(Floors)); }
                 
                 var levelName = $"{LevelPrefix} {i + 1}";
@@ -59,26 +63,51 @@ namespace Revit
                 if (revitLevel != null)
                 {
                     // Adjust existing level to correct height.
-                    revitLevel.Elevation = Floors[i].BoundingBox.MaxPoint.Z / footToMm;
+                    revitLevel.Elevation = BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm;
                 }
                 else
                 {
                     // Create new level.
-                    revitLevel = Autodesk.Revit.DB.Level.Create(Document, Floors[i].BoundingBox.MaxPoint.Z / footToMm);
+                    revitLevel = Autodesk.Revit.DB.Level.Create(Document, BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm);
                     revitLevel.Name = levelName;
                 }
 
                 var revitCurves = new CurveArray();
-                Floors[i].PerimeterCurves().ForEach(x => revitCurves.Append(x.ToRevitType()));
 
-                var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
+                foreach (var surface in Floors[i])
+                {
+                    var loops = Buildings.Analysis.GetSurfaceLoops(surface);
 
-                FloorElements.Add(revitFloor.ToDSType(false) as Elements.Floor);
+                    revitCurves.Clear();
+
+                    loops[0].Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
+                    
+                    var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
+
+                    FloorElements.Add(revitFloor.ToDSType(false) as Elements.Floor);
+
+                    TransactionManager.Instance.ForceCloseTransaction();
+                    TransactionManager.Instance.EnsureInTransaction(Document);
+
+                    loops.Skip(1).ToArray().ForEach(loop =>
+                    {
+                        revitCurves.Clear();
+
+                        loop.Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
+
+                        var opening = Document.Create.NewOpening(revitFloor, revitCurves, true);
+
+                        Openings.Add(opening.ToDSType(false) as UnknownElement);
+                    });
+                }
             }
 
             TransactionManager.Instance.TransactionTaskDone();
 
-            return FloorElements;
+            return new Dictionary<string, object>{
+                {"FloorElements", FloorElements},
+                {"Openings", Openings}
+            };
         }
 
         /// <summary>
