@@ -38,14 +38,16 @@ namespace Buildings
         /// <param name="CreateCore">Create core volumes and subtractions?</param>
         /// <returns name="BuildingSolid">Building volume.</returns>
         /// <returns name="Floors">Building floor surfaces.</returns>
+        /// <returns name="NetFloors">Building floor surfaces with core removed.</returns>
         /// <returns name="FloorElevations">Elevation of each floor in building.</returns>
         /// <returns name="Cores">Building core volumes.</returns>
         /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
         /// <returns name="BuildingVolume">Volume of Mass.</returns>
-        /// <returns name="TotalFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="GrossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="NetFloorArea">Combined area of all floors with core removed.</returns>
         /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "BuildingSolid", "Floors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
+        [MultiReturn(new[] { "BuildingSolid", "Floors", "NetFloors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "GrossFloorArea", "NetFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
             Plane BasePlane = null, 
             string Type = "L",
@@ -109,11 +111,13 @@ namespace Buildings
             {
                 {"BuildingSolid", building.Mass},
                 {"Floors", building.Floors},
+                {"NetFloors", building.NetFloors},
                 {"FloorElevations", building.FloorElevations},
                 {"Cores", building.Cores},
                 {"TopPlane", building.TopPlane},
                 {"BuildingVolume", building.TotalVolume},
-                {"TotalFloorArea", building.TotalArea},
+                {"GrossFloorArea", building.GrossFloorArea},
+                {"NetFloorArea", building.NetFloorArea},
                 {"TotalFacadeArea", building.FacadeArea},
             };
         }

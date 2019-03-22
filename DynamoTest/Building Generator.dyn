@@ -123,6 +123,15 @@
         },
         {
           "Id": "ec3e15c867e74299ae06ba0d7c8a084e",
+          "Name": "NetFloors",
+          "Description": "Building floor surfaces with core removed.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7f3ea61f43c74ef6b6382b2204637397",
           "Name": "FloorElevations",
           "Description": "Elevation of each floor in building.",
           "UsingDefaultValue": false,
@@ -149,7 +158,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b7e70afcd3a444048ffd84f1a71932e1",
+          "Id": "bb5579e80843428a8c61322fc798e5a7",
           "Name": "BuildingVolume",
           "Description": "Volume of Mass.",
           "UsingDefaultValue": false,
@@ -158,8 +167,8 @@
           "KeepListStructure": false
         },
         {
-          "Id": "bb5579e80843428a8c61322fc798e5a7",
-          "Name": "TotalFloorArea",
+          "Id": "408bd53ea3974ec38be736ef7a305810",
+          "Name": "GrossFloorArea",
           "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -167,7 +176,16 @@
           "KeepListStructure": false
         },
         {
-          "Id": "408bd53ea3974ec38be736ef7a305810",
+          "Id": "eb8e48b7ea92413fb2352500990c5d91",
+          "Name": "NetFloorArea",
+          "Description": "Combined area of all floors with core removed.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "db0cbf55898a4b05bca16aa809d5edc3",
           "Name": "TotalFacadeArea",
           "Description": "Combined area of all facades (vertical surfaces).",
           "UsingDefaultValue": false,
