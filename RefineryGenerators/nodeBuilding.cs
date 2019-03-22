@@ -194,20 +194,26 @@ namespace Buildings
 
                 for (var i = 0; i < loops.Count; i++)
                 {
-                    try
-                    {
-                        loops[i] = PolyCurve.ByJoinedCurves(new[]
-                        {
-                            loops[i],
-                            curve
-                        });
+                    var loop = loops[i];
 
-                        added = true;
-                        break;
-                    }
-                    catch (ApplicationException)
+                    if (loop.IsClosed) { continue; }
+
+                    if (loop.StartPoint.IsAlmostEqualTo(curve.StartPoint)
+                        || loop.StartPoint.IsAlmostEqualTo(curve.EndPoint)
+                        || loop.EndPoint.IsAlmostEqualTo(curve.StartPoint)
+                        || loop.EndPoint.IsAlmostEqualTo(curve.EndPoint))
                     {
-                        continue;
+                        try
+                        {
+                            loops[i] = loop.Join(new[] { curve });
+
+                            added = true;
+                            break;
+                        }
+                        catch (ApplicationException)
+                        {
+                            continue;
+                        }
                     }
                 }
 
