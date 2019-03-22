@@ -8,9 +8,9 @@ namespace Buildings
 {
     internal abstract class BuildingBase : IDisposable
     {
-        protected double hallwayToDepth = 0.1;
-        protected double coreSizeFactorFloors = 10;
-        protected double coreSizeFactorArea = 0.1;
+        protected double hallwayToDepth;
+        protected double coreSizeFactorFloors;
+        protected double coreSizeFactorArea;
 
         public double Length { get; private set; }
         public double Width { get; private set; }
@@ -25,7 +25,8 @@ namespace Buildings
         public Plane TopPlane { get; private set; }
         public double FacadeArea { get; private set; }
         public List<double> FloorElevations { get; private set; } = new List<double>();
-        public List<Surface> Floors { get; private set; } = new List<Surface>();
+        public List<Surface[]> Floors { get; private set; } = new List<Surface[]>();
+        public List<Surface[]> NetFloors { get; internal set; }
         public int FloorCount { get; set; }
         public ShapeType Type { get; set; }
         /// <summary>
@@ -37,13 +38,18 @@ namespace Buildings
         public bool UsesDepth { get; protected set; }
 
         protected double CoreArea => (FloorArea * coreSizeFactorArea) + (FloorCount * coreSizeFactorFloors);
-        public double TotalArea => FloorArea * FloorCount;
+        public double GrossFloorArea => FloorArea * FloorCount;
+        public double NetFloorArea => (FloorArea - CoreArea) * FloorCount;
 
         public BuildingBase()
         {
         }
 
-        public void CreateBuilding(double length, double width, double depth, Plane basePlane, double targetBuildingArea, double floorHeight, bool createCores = true, bool isCurved = false)
+        public void CreateBuilding(
+            double length, double width, double depth, 
+            Plane basePlane, double targetBuildingArea, double floorHeight, 
+            bool createCores, bool isCurved,
+            double hallwayToDepth, double coreSizeFactorFloors, double coreSizeFactorArea)
         {
             Length = length;
             Width = width;
@@ -51,6 +57,9 @@ namespace Buildings
             BasePlane = basePlane;
             FloorHeight = floorHeight;
             IsCurved = isCurved;
+            this.hallwayToDepth = hallwayToDepth;
+            this.coreSizeFactorFloors = coreSizeFactorFloors;
+            this.coreSizeFactorArea = coreSizeFactorArea;
 
             Setup();
 
@@ -75,7 +84,7 @@ namespace Buildings
 
             for (int i = 0; i < FloorCount; i++)
             {
-                Floors.Add((Surface)baseSurface.Translate(Vector.ByCoordinates(0, 0, i * FloorHeight)));
+                Floors.Add(new[] { (Surface)baseSurface.Translate(Vector.ByCoordinates(0, 0, i * FloorHeight)) });
                 FloorElevations.Add(BasePlane.Origin.Z + (i * FloorHeight));
             }
 
@@ -99,6 +108,21 @@ namespace Buildings
                     coreBase.Dispose();
                     core.Dispose();
                 }
+
+                NetFloors = new List<Surface[]>();
+
+                foreach (var floor in Floors)
+                {
+                    NetFloors.Add(Cores.Aggregate(floor, 
+                        (f, core) => f.SelectMany(
+                                surface => surface.SubtractFrom(core))
+                            .Cast<Surface>()
+                            .ToArray()));
+                }
+            }
+            else
+            {
+                NetFloors = Floors;
             }
         }
 
@@ -198,7 +222,7 @@ namespace Buildings
             Cores.ForEach(x => x.Dispose());
             BasePlane.Dispose();
             TopPlane.Dispose();
-            Floors.ForEach(x => x.Dispose());
+            Floors.ForEach(x => x.ForEach(y => y.Dispose()));
         }
     }
 }

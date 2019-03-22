@@ -36,16 +36,21 @@ namespace Buildings
         /// <param name="FloorHeight">Height of the floor.</param>
         /// <param name="IsCurved">Should sides of building be curved or faceted?</param>
         /// <param name="CreateCore">Create core volumes and subtractions?</param>
+        /// <param name="HallwayToDepth">Core sizing logic: ratio between building depth and width of hallways on either side of core.</param>
+        /// <param name="CoreSizeFactorFloors">Core sizing logic: Add <code>(# of floors) * CoreSizeFactorFloors</code> area to core footprint.</param>
+        /// <param name="CoreSizeFactorArea">Core sizing logic: Add <code>(single floor area) * CoreSizeFactorArea</code> area to core footprint.</param>
         /// <returns name="BuildingSolid">Building volume.</returns>
         /// <returns name="Floors">Building floor surfaces.</returns>
+        /// <returns name="NetFloors">Building floor surfaces with core removed.</returns>
         /// <returns name="FloorElevations">Elevation of each floor in building.</returns>
         /// <returns name="Cores">Building core volumes.</returns>
         /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
         /// <returns name="BuildingVolume">Volume of Mass.</returns>
-        /// <returns name="TotalFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="GrossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="NetFloorArea">Combined area of all floors with core removed.</returns>
         /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "BuildingSolid", "Floors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "TotalFloorArea", "TotalFacadeArea", })]
+        [MultiReturn(new[] { "BuildingSolid", "Floors", "NetFloors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "GrossFloorArea", "NetFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
             Plane BasePlane = null, 
             string Type = "L",
@@ -55,7 +60,10 @@ namespace Buildings
             double BldgArea = 1000, 
             double FloorHeight = 3,
             bool IsCurved = false,
-            bool CreateCore = true)
+            bool CreateCore = true,
+            double HallwayToDepth = 0.1,
+            double CoreSizeFactorFloors = 4,
+            double CoreSizeFactorArea = 0.1)
         {
             if (Length <= 0) { throw new ArgumentOutOfRangeException(nameof(Length)); }
             if (Width <= 0) { throw new ArgumentOutOfRangeException(nameof(Width)); }
@@ -103,17 +111,19 @@ namespace Buildings
                 throw new ArgumentOutOfRangeException(nameof(Type), "Unsupported shape letter.");
             }
 
-            building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore, IsCurved);
+            building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore, IsCurved, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
 
             return new Dictionary<string, object>
             {
                 {"BuildingSolid", building.Mass},
                 {"Floors", building.Floors},
+                {"NetFloors", building.NetFloors},
                 {"FloorElevations", building.FloorElevations},
                 {"Cores", building.Cores},
                 {"TopPlane", building.TopPlane},
                 {"BuildingVolume", building.TotalVolume},
-                {"TotalFloorArea", building.TotalArea},
+                {"GrossFloorArea", building.GrossFloorArea},
+                {"NetFloorArea", building.NetFloorArea},
                 {"TotalFacadeArea", building.FacadeArea},
             };
         }
@@ -162,6 +172,60 @@ namespace Buildings
                 {"VerticalSurfaces", vertical},
                 {"HorizontalSurfaces", horizontal}
             };
+        }
+
+        /// <summary>
+        /// Get list of closed polycurve edges of surface. First list item is outside boundary.
+        /// </summary>
+        /// <param name="Surface">The surface.</param>
+        /// <returns name="Edges">Edges of surface.</returns>
+        /// <exception cref="ArgumentNullException">Surface</exception>
+        public static PolyCurve[] GetSurfaceLoops(Surface Surface)
+        {
+            if (Surface == null) { throw new ArgumentNullException(nameof(Surface)); }
+
+            var curves = Surface.PerimeterCurves();
+
+            var loops = new List<PolyCurve>();
+
+            foreach (var curve in curves)
+            {
+                var added = false;
+
+                for (var i = 0; i < loops.Count; i++)
+                {
+                    var loop = loops[i];
+
+                    if (loop.IsClosed) { continue; }
+
+                    if (loop.StartPoint.IsAlmostEqualTo(curve.StartPoint)
+                        || loop.StartPoint.IsAlmostEqualTo(curve.EndPoint)
+                        || loop.EndPoint.IsAlmostEqualTo(curve.StartPoint)
+                        || loop.EndPoint.IsAlmostEqualTo(curve.EndPoint))
+                    {
+                        try
+                        {
+                            loops[i] = loop.Join(new[] { curve });
+
+                            added = true;
+                            break;
+                        }
+                        catch (ApplicationException)
+                        {
+                            continue;
+                        }
+                    }
+                }
+
+                if (!added)
+                {
+                    loops.Add(PolyCurve.ByJoinedCurves(new[] { curve }));
+                }
+            }
+
+            if (loops.Any(loop => !loop.IsClosed)) { throw new ArgumentException("Created non-closed polycurve."); }
+
+            return loops.OrderByDescending(c => Surface.ByPatch(c).Area).ToArray();
         }
     }
 }

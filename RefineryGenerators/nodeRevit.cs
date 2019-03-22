@@ -4,6 +4,7 @@ using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.Revit.DB;
+using Revit.Elements;
 using Revit.GeometryConversion;
 using RevitServices.Persistence;
 using RevitServices.Transactions;
@@ -27,55 +28,86 @@ namespace Revit
         /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
         /// <returns name="FloorElements">Revit floor elements.</returns>
         /// <search>refinery</search>
-        public static List<Floor> CreateRevitFloors(
-            Autodesk.DesignScript.Geometry.Surface[] Floors, 
+        public static List<List<Elements.Floor>> CreateRevitFloors(
+            Autodesk.DesignScript.Geometry.Surface[][] Floors, 
             Elements.FloorType FloorType = null, 
             string LevelPrefix = "Dynamo Level")
         {
             if (Floors == null) { throw new ArgumentNullException(nameof(Floors)); }
-
-            var FloorElements = new List<Floor>();
-            var collector = new FilteredElementCollector(Document);
             
-            if (!(FloorType.InternalElement is FloorType floorType))
+            if (!(FloorType.InternalElement is Autodesk.Revit.DB.FloorType floorType))
             {
                 throw new ArgumentOutOfRangeException(nameof(FloorType));
             }
 
-            var levels = collector.OfClass(typeof(Level)).ToElements()
-                .Where(e => e is Level)
-                .Cast<Level>();
+            var FloorElements = new List<List<Elements.Floor>>();
+            var collector = new FilteredElementCollector(Document);
+
+            var levels = collector.OfClass(typeof(Autodesk.Revit.DB.Level)).ToElements()
+                .Where(e => e is Autodesk.Revit.DB.Level)
+                .Cast<Autodesk.Revit.DB.Level>();
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
             for (var i = 0; i < Floors.Length; i++)
             {
+
                 if (Floors[i] == null) { throw new ArgumentNullException(nameof(Floors)); }
+
+                FloorElements.Add(new List<Elements.Floor>());
                 
-                var levelName = $"{LevelPrefix} {i + 1}";
+                string levelName = $"{LevelPrefix} {i + 1}";
                 var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
 
                 if (revitLevel != null)
                 {
                     // Adjust existing level to correct height.
-                    revitLevel.Elevation = Floors[i].BoundingBox.MaxPoint.Z / footToMm;
+                    revitLevel.Elevation = BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm;
                 }
                 else
                 {
                     // Create new level.
-                    revitLevel = Level.Create(Document, Floors[i].BoundingBox.MaxPoint.Z / footToMm);
+                    revitLevel = Autodesk.Revit.DB.Level.Create(Document, BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm);
                     revitLevel.Name = levelName;
                 }
 
                 var revitCurves = new CurveArray();
-                Floors[i].PerimeterCurves().ForEach(x => revitCurves.Append(x.ToRevitType()));
 
-                var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
+                foreach (var surface in Floors[i])
+                {
+                    var loops = Buildings.Analysis.GetSurfaceLoops(surface);
 
-                FloorElements.Add(revitFloor);
+                    revitCurves.Clear();
+
+                    loops[0].Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
+                    
+                    var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
+
+                    FloorElements.Last().Add(revitFloor.ToDSType(false) as Elements.Floor);
+
+                    // Need to finish creating the floor before we add openings in it.
+                    TransactionManager.Instance.ForceCloseTransaction();
+                    TransactionManager.Instance.EnsureInTransaction(Document);
+
+                    loops.Skip(1).ToArray().ForEach(loop =>
+                    {
+                        revitCurves.Clear();
+
+                        loop.Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
+
+                        Document.Create.NewOpening(revitFloor, revitCurves, true);
+                    });
+
+                    loops.ForEach(x => x.Dispose());
+                    revitFloor.Dispose();
+                }
+                
+                revitCurves.Dispose();
             }
 
             TransactionManager.Instance.TransactionTaskDone();
+            
+            collector.Dispose();
 
             return FloorElements;
         }
@@ -87,10 +119,8 @@ namespace Revit
         /// <param name="Category">A category for the mass.</param>
         /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
-        public static DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, Elements.Category Category)
+        public static Elements.DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, Elements.Category Category)
         {
-            DirectShape RevitBuilding = null;
-            
             if (BuildingSolid == null)
             {
                 throw new ArgumentNullException(nameof(BuildingSolid));
@@ -100,7 +130,7 @@ namespace Revit
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
-            RevitBuilding = DirectShape.CreateElement(Document, revitCategory.Id);
+            var RevitBuilding = Autodesk.Revit.DB.DirectShape.CreateElement(Document, revitCategory.Id);
 
             try
             {
@@ -120,7 +150,9 @@ namespace Revit
 
             TransactionManager.Instance.TransactionTaskDone();
 
-            return RevitBuilding;
+            revitCategory.Dispose();
+            
+            return RevitBuilding.ToDSType(false) as Elements.DirectShape;
         }
     }
 }
