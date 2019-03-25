@@ -71,16 +71,10 @@ namespace Buildings
             if (BldgArea <= 0) { throw new ArgumentOutOfRangeException(nameof(BldgArea)); }
             if (FloorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(FloorHeight)); }
 
-            if (BasePlane == null)
-            {
-                BasePlane = Plane.XY();
-            }
-
             BuildingBase building = null;
 
             if (Enum.TryParse(Type, out ShapeType shapeType))
             {
-
                 switch (shapeType)
                 {
                     case ShapeType.U:
@@ -113,14 +107,22 @@ namespace Buildings
 
             building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore, IsCurved, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
 
+            var mass = building.Mass;
+            var floors = building.Floors;
+            var netFloors = building.NetFloors;
+            var cores = building.Cores;
+            var topPlane = building.TopPlane;
+
+            building.Dispose();
+
             return new Dictionary<string, object>
             {
-                {"BuildingSolid", building.Mass},
-                {"Floors", building.Floors},
-                {"NetFloors", building.NetFloors},
+                {"BuildingSolid", mass},
+                {"Floors", floors},
+                {"NetFloors", netFloors},
                 {"FloorElevations", building.FloorElevations},
-                {"Cores", building.Cores},
-                {"TopPlane", building.TopPlane},
+                {"Cores", cores},
+                {"TopPlane", topPlane},
                 {"BuildingVolume", building.TotalVolume},
                 {"GrossFloorArea", building.GrossFloorArea},
                 {"NetFloorArea", building.NetFloorArea},
@@ -221,6 +223,8 @@ namespace Buildings
                 {
                     loops.Add(PolyCurve.ByJoinedCurves(new[] { curve }));
                 }
+
+                curve.Dispose();
             }
 
             if (loops.Any(loop => !loop.IsClosed)) { throw new ArgumentException("Created non-closed polycurve."); }

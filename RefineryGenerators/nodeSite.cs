@@ -33,16 +33,10 @@ namespace Site
             var inset1 = SiteOutline.Offset(Setback);
             var inset2 = SiteOutline.Offset(-Setback);
 
-            if (inset1.Length < inset2.Length)
-            {
-                siteOffset = inset1;
-                inset2.Dispose();
-            }
-            else
-            {
-                siteOffset = inset2;
-                inset1.Dispose();
-            }
+            siteOffset = inset1.Length < inset2.Length ? inset1 : inset2;
+
+            inset1.Dispose();
+            inset2.Dispose();
 
             // Ensure that the mass is always extruded upwards.
             if (siteOffset.Normal.AngleWithVector(Vector.ZAxis()) > 90)

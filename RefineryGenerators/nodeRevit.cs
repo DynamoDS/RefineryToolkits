@@ -130,17 +130,17 @@ namespace Revit
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
-            var RevitBuilding = Autodesk.Revit.DB.DirectShape.CreateElement(Document, revitCategory.Id);
+            var revitBuilding = Autodesk.Revit.DB.DirectShape.CreateElement(Document, revitCategory.Id);
 
             try
             {
-                RevitBuilding.SetShape(new[] { DynamoToRevitBRep.ToRevitType(BuildingSolid) });
+                revitBuilding.SetShape(new[] { DynamoToRevitBRep.ToRevitType(BuildingSolid) });
             }
             catch (Exception ex)
             {
                 try
                 {
-                    RevitBuilding.SetShape(BuildingSolid.ToRevitType());
+                    revitBuilding.SetShape(BuildingSolid.ToRevitType());
                 }
                 catch
                 {
@@ -151,8 +151,12 @@ namespace Revit
             TransactionManager.Instance.TransactionTaskDone();
 
             revitCategory.Dispose();
-            
-            return RevitBuilding.ToDSType(false) as Elements.DirectShape;
+
+            var directShape = revitBuilding.ToDSType(false) as Elements.DirectShape;
+
+            revitBuilding.Dispose();
+
+            return directShape;
         }
     }
 }
