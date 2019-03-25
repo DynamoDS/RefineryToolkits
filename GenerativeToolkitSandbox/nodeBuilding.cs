@@ -4,14 +4,14 @@ using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 
-namespace Buildings
+namespace GenerativeToolkit
 {
     internal enum ShapeType { U, L, H, O, D }
 
     /// <summary>
-    /// Creation description.
+    /// Buildings description.
     /// </summary>
-    public static class Creation
+    public static class Buildings
     {
         /// <summary>
         /// Typology selection
@@ -129,13 +129,7 @@ namespace Buildings
                 {"TotalFacadeArea", building.FacadeArea},
             };
         }
-    }
 
-    /// <summary>
-    /// Analysis description.
-    /// </summary>
-    public static class Analysis
-    {
         /// <summary>
         /// Deconstruct a building mass into component horizontal and vertical surfaces.
         /// </summary>

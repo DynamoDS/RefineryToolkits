@@ -4,12 +4,12 @@ using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 
-namespace Site
+namespace GenerativeToolkit
 {
     /// <summary>
-    /// Creation description.
+    /// Site description.
     /// </summary>
-    public static class Creation
+    public static class Site
     {
         /// <summary>
         /// Use setback and height to create boundary volume for building mass to fit into.
@@ -52,13 +52,7 @@ namespace Site
                 {"SiteOffset", siteOffset }
             };
         }
-    }
 
-    /// <summary>
-    /// Analysis description.
-    /// </summary>
-    public static class Analysis
-    {
         /// <summary>
         /// Test site boundary against building mass.
         /// </summary>

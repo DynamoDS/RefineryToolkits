@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using Autodesk.DesignScript.Geometry;
 
-namespace Buildings
+namespace GenerativeToolkit
 {
     internal abstract class BuildingBase : IDisposable
     {
@@ -223,6 +223,7 @@ namespace Buildings
             BasePlane.Dispose();
             TopPlane.Dispose();
             Floors.ForEach(x => x.ForEach(y => y.Dispose()));
+            NetFloors.ForEach(x => x.ForEach(y => y.Dispose()));
         }
     }
 }

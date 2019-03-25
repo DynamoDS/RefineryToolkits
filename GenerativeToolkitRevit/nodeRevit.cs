@@ -9,12 +9,12 @@ using Revit.GeometryConversion;
 using RevitServices.Persistence;
 using RevitServices.Transactions;
 
-namespace Revit
+namespace GenerativeToolkit
 {
     /// <summary>
-    /// ElementCreation description.
+    /// Revit description.
     /// </summary>
-    public static class ElementCreation
+    public static class RevitTools
     {
         private const double footToMm = 12 * 25.4;
 
@@ -28,9 +28,9 @@ namespace Revit
         /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
         /// <returns name="FloorElements">Revit floor elements.</returns>
         /// <search>refinery</search>
-        public static List<List<Elements.Floor>> CreateRevitFloors(
-            Autodesk.DesignScript.Geometry.Surface[][] Floors, 
-            Elements.FloorType FloorType = null, 
+        public static List<List<Revit.Elements.Floor>> CreateRevitFloors(
+            Autodesk.DesignScript.Geometry.Surface[][] Floors,
+            Revit.Elements.FloorType FloorType = null, 
             string LevelPrefix = "Dynamo Level")
         {
             if (Floors == null) { throw new ArgumentNullException(nameof(Floors)); }
@@ -40,7 +40,7 @@ namespace Revit
                 throw new ArgumentOutOfRangeException(nameof(FloorType));
             }
 
-            var FloorElements = new List<List<Elements.Floor>>();
+            var FloorElements = new List<List<Revit.Elements.Floor>>();
             var collector = new FilteredElementCollector(Document);
 
             var levels = collector.OfClass(typeof(Autodesk.Revit.DB.Level)).ToElements()
@@ -54,7 +54,7 @@ namespace Revit
 
                 if (Floors[i] == null) { throw new ArgumentNullException(nameof(Floors)); }
 
-                FloorElements.Add(new List<Elements.Floor>());
+                FloorElements.Add(new List<Revit.Elements.Floor>());
                 
                 string levelName = $"{LevelPrefix} {i + 1}";
                 var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
@@ -75,7 +75,7 @@ namespace Revit
 
                 foreach (var surface in Floors[i])
                 {
-                    var loops = Buildings.Analysis.GetSurfaceLoops(surface);
+                    var loops = Buildings.GetSurfaceLoops(surface);
 
                     revitCurves.Clear();
 
@@ -83,7 +83,7 @@ namespace Revit
                     
                     var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
 
-                    FloorElements.Last().Add(revitFloor.ToDSType(false) as Elements.Floor);
+                    FloorElements.Last().Add(revitFloor.ToDSType(false) as Revit.Elements.Floor);
 
                     // Need to finish creating the floor before we add openings in it.
                     TransactionManager.Instance.ForceCloseTransaction();
@@ -119,7 +119,7 @@ namespace Revit
         /// <param name="Category">A category for the mass.</param>
         /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
-        public static Elements.DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, Elements.Category Category)
+        public static Revit.Elements.DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, Revit.Elements.Category Category)
         {
             if (BuildingSolid == null)
             {
@@ -152,7 +152,7 @@ namespace Revit
 
             revitCategory.Dispose();
 
-            var directShape = revitBuilding.ToDSType(false) as Elements.DirectShape;
+            var directShape = revitBuilding.ToDSType(false) as Revit.Elements.DirectShape;
 
             revitBuilding.Dispose();
 
