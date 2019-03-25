@@ -107,22 +107,14 @@ namespace GenerativeToolkit
 
             building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore, IsCurved, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
 
-            var mass = building.Mass;
-            var floors = building.Floors;
-            var netFloors = building.NetFloors;
-            var cores = building.Cores;
-            var topPlane = building.TopPlane;
-
-            building.Dispose();
-
             return new Dictionary<string, object>
             {
-                {"BuildingSolid", mass},
-                {"Floors", floors},
-                {"NetFloors", netFloors},
+                {"BuildingSolid", building.Mass},
+                {"Floors", building.Floors},
+                {"NetFloors", building.NetFloors},
                 {"FloorElevations", building.FloorElevations},
-                {"Cores", cores},
-                {"TopPlane", topPlane},
+                {"Cores", building.Cores},
+                {"TopPlane", building.TopPlane},
                 {"BuildingVolume", building.TotalVolume},
                 {"GrossFloorArea", building.GrossFloorArea},
                 {"NetFloorArea", building.NetFloorArea},
