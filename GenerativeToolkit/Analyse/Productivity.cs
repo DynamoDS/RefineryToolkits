@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GenerativeToolkit.Analyse
 {
-    class Productivity
+    static class Productivity
     {
     }
 }

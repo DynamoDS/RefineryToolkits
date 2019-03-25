@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GenerativeToolkit.Analyse
 {
-    class ShortestPath
+    static class ShortestPath
     {
     }
 }
