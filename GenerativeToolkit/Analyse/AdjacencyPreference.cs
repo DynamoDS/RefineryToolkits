@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GenerativeToolkit.Analyse
 {
-    class AdjacencyPreference
+    static class AdjacencyPreference
     {
     }
 }
