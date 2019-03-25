@@ -107,7 +107,7 @@
     <Analyzer Include="..\packages\Text.Analyzers.2.6.3\analyzers\dotnet\cs\Text.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\nodes-Sandbox\GenerativeToolkitSandbox.csproj">
+    <ProjectReference Include="..\GenerativeToolkitSandbox\GenerativeToolkitSandbox.csproj">
       <Project>{89df56a1-a27b-43d9-9d70-b650b2db4b64}</Project>
       <Name>GenerativeToolkitSandbox</Name>
     </ProjectReference>
