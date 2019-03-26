@@ -5,6 +5,8 @@ using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.Revit.DB;
 using Revit.Elements;
+using RevitElements = Autodesk.Revit.DB;
+using DynamoRevitElements = Revit.Elements;
 using Revit.GeometryConversion;
 using RevitServices.Persistence;
 using RevitServices.Transactions;
@@ -14,7 +16,7 @@ namespace GenerativeToolkit
     /// <summary>
     /// Revit description.
     /// </summary>
-    public static class RevitTools
+    public static class Revit
     {
         private const double footToMm = 12 * 25.4;
 
@@ -28,24 +30,24 @@ namespace GenerativeToolkit
         /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
         /// <returns name="FloorElements">Revit floor elements.</returns>
         /// <search>refinery</search>
-        public static List<List<Revit.Elements.Floor>> CreateRevitFloors(
+        public static List<List<DynamoRevitElements.Floor>> CreateRevitFloors(
             Autodesk.DesignScript.Geometry.Surface[][] Floors,
-            Revit.Elements.FloorType FloorType = null, 
+            DynamoRevitElements.FloorType FloorType = null, 
             string LevelPrefix = "Dynamo Level")
         {
             if (Floors == null) { throw new ArgumentNullException(nameof(Floors)); }
             
-            if (!(FloorType.InternalElement is Autodesk.Revit.DB.FloorType floorType))
+            if (!(FloorType.InternalElement is RevitElements.FloorType floorType))
             {
                 throw new ArgumentOutOfRangeException(nameof(FloorType));
             }
 
-            var FloorElements = new List<List<Revit.Elements.Floor>>();
+            var FloorElements = new List<List<DynamoRevitElements.Floor>>();
             var collector = new FilteredElementCollector(Document);
 
-            var levels = collector.OfClass(typeof(Autodesk.Revit.DB.Level)).ToElements()
-                .Where(e => e is Autodesk.Revit.DB.Level)
-                .Cast<Autodesk.Revit.DB.Level>();
+            var levels = collector.OfClass(typeof(RevitElements.Level)).ToElements()
+                .Where(e => e is RevitElements.Level)
+                .Cast<RevitElements.Level>();
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
@@ -54,7 +56,7 @@ namespace GenerativeToolkit
 
                 if (Floors[i] == null) { throw new ArgumentNullException(nameof(Floors)); }
 
-                FloorElements.Add(new List<Revit.Elements.Floor>());
+                FloorElements.Add(new List<DynamoRevitElements.Floor>());
                 
                 string levelName = $"{LevelPrefix} {i + 1}";
                 var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
@@ -67,7 +69,7 @@ namespace GenerativeToolkit
                 else
                 {
                     // Create new level.
-                    revitLevel = Autodesk.Revit.DB.Level.Create(Document, BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm);
+                    revitLevel = RevitElements.Level.Create(Document, BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm);
                     revitLevel.Name = levelName;
                 }
 
@@ -83,7 +85,7 @@ namespace GenerativeToolkit
                     
                     var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
 
-                    FloorElements.Last().Add(revitFloor.ToDSType(false) as Revit.Elements.Floor);
+                    FloorElements.Last().Add(revitFloor.ToDSType(false) as DynamoRevitElements.Floor);
 
                     // Need to finish creating the floor before we add openings in it.
                     TransactionManager.Instance.ForceCloseTransaction();
@@ -119,7 +121,7 @@ namespace GenerativeToolkit
         /// <param name="Category">A category for the mass.</param>
         /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
-        public static Revit.Elements.DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, Revit.Elements.Category Category)
+        public static DynamoRevitElements.DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, DynamoRevitElements.Category Category)
         {
             if (BuildingSolid == null)
             {
@@ -130,7 +132,7 @@ namespace GenerativeToolkit
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
-            var revitBuilding = Autodesk.Revit.DB.DirectShape.CreateElement(Document, revitCategory.Id);
+            var revitBuilding = RevitElements.DirectShape.CreateElement(Document, revitCategory.Id);
 
             try
             {
@@ -152,7 +154,7 @@ namespace GenerativeToolkit
 
             revitCategory.Dispose();
 
-            var directShape = revitBuilding.ToDSType(false) as Revit.Elements.DirectShape;
+            var directShape = revitBuilding.ToDSType(false) as DynamoRevitElements.DirectShape;
 
             revitBuilding.Dispose();
 
