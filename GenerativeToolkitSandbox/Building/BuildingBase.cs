@@ -12,21 +12,21 @@ namespace GenerativeToolkit
         protected double coreSizeFactorFloors;
         protected double coreSizeFactorArea;
 
-        public double Length { get; private set; }
-        public double Width { get; private set; }
-        public double Depth { get; private set; }
-        public Plane BasePlane { get; private set; }
-        public double FloorArea { get; private set; }
-        public double FloorHeight { get; private set; }
-        public bool IsCurved { get; private set; }
-        public Solid Mass { get; private set; }
-        public List<Solid> Cores { get; private set; } = new List<Solid>();
-        public double TotalVolume { get; private set; }
-        public Plane TopPlane { get; private set; }
-        public double FacadeArea { get; private set; }
-        public List<double> FloorElevations { get; private set; } = new List<double>();
-        public List<Surface[]> Floors { get; private set; } = new List<Surface[]>();
-        public List<Surface[]> NetFloors { get; internal set; }
+        public double Length { get; protected set; }
+        public double Width { get; protected set; }
+        public double Depth { get; protected set; }
+        public Plane BasePlane { get; protected set; }
+        public double FloorArea { get; protected set; }
+        public double FloorHeight { get; protected set; }
+        public bool IsCurved { get; protected set; }
+        public Solid Mass { get; protected set; }
+        public List<Solid> Cores { get; protected set; } = new List<Solid>();
+        public double TotalVolume { get; protected set; }
+        public Plane TopPlane { get; protected set; }
+        public double FacadeArea { get; protected set; }
+        public List<double> FloorElevations { get; protected set; } = new List<double>();
+        public List<Surface[]> Floors { get; protected set; } = new List<Surface[]>();
+        public List<Surface[]> NetFloors { get; protected set; }
         public int FloorCount { get; set; }
         public ShapeType Type { get; set; }
         /// <summary>
@@ -41,15 +41,29 @@ namespace GenerativeToolkit
         public double GrossFloorArea => FloorArea * FloorCount;
         public double NetFloorArea => (FloorArea - CoreArea) * FloorCount;
 
+        public Dictionary<string, object> Output => new Dictionary<string, object>
+        {
+            {"BuildingSolid", Mass},
+            {"Floors", Floors},
+            {"NetFloors", NetFloors},
+            {"FloorElevations", FloorElevations},
+            {"Cores", Cores},
+            {"TopPlane", TopPlane},
+            {"BuildingVolume", TotalVolume},
+            {"GrossFloorArea", GrossFloorArea},
+            {"NetFloorArea", NetFloorArea},
+            {"TotalFacadeArea", FacadeArea},
+        };
+
         public BuildingBase()
         {
         }
 
         public void CreateBuilding(
-            double length, double width, double depth, 
-            Plane basePlane, double targetBuildingArea, double floorHeight, 
-            bool createCores, bool isCurved,
-            double hallwayToDepth, double coreSizeFactorFloors, double coreSizeFactorArea)
+            Plane basePlane, double targetBuildingArea, double floorHeight,
+            double width = 0, double length = 0, double depth = 0,
+            bool isCurved = false, bool createCores = false,
+            double hallwayToDepth = 0, double coreSizeFactorFloors = 0, double coreSizeFactorArea = 0)
         {
             Length = length;
             Width = width;

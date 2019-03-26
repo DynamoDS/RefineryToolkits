@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building\BuildingBase.cs" />
+    <Compile Include="Building\BuildingFromCurve.cs" />
     <Compile Include="Building\BuildingL.cs" />
     <Compile Include="Building\BuildingH.cs" />
     <Compile Include="Building\BuildingD.cs" />

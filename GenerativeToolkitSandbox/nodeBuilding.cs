@@ -52,12 +52,12 @@ namespace GenerativeToolkit
         /// <search>building,design,refinery</search>
         [MultiReturn(new[] { "BuildingSolid", "Floors", "NetFloors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "GrossFloorArea", "NetFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
-            Plane BasePlane = null, 
+            Plane BasePlane = null,
             string Type = "L",
-            double Length = 40, 
-            double Width = 40, 
+            double Length = 40,
+            double Width = 40,
             double Depth = 6,
-            double BldgArea = 1000, 
+            double BldgArea = 1000,
             double FloorHeight = 3,
             bool IsCurved = false,
             bool CreateCore = true,
@@ -105,21 +105,9 @@ namespace GenerativeToolkit
                 throw new ArgumentOutOfRangeException(nameof(Type), "Unsupported shape letter.");
             }
 
-            building.CreateBuilding(Length, Width, Depth, BasePlane, BldgArea, FloorHeight, CreateCore, IsCurved, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
+            building.CreateBuilding(BasePlane, BldgArea, FloorHeight, Width, Length, Depth, IsCurved, CreateCore, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
 
-            return new Dictionary<string, object>
-            {
-                {"BuildingSolid", building.Mass},
-                {"Floors", building.Floors},
-                {"NetFloors", building.NetFloors},
-                {"FloorElevations", building.FloorElevations},
-                {"Cores", building.Cores},
-                {"TopPlane", building.TopPlane},
-                {"BuildingVolume", building.TotalVolume},
-                {"GrossFloorArea", building.GrossFloorArea},
-                {"NetFloorArea", building.NetFloorArea},
-                {"TotalFacadeArea", building.FacadeArea},
-            };
+            return building.Output;
         }
 
         /// <summary>
@@ -216,6 +204,36 @@ namespace GenerativeToolkit
             if (loops.Any(loop => !loop.IsClosed)) { throw new ArgumentException("Created non-closed polycurve."); }
 
             return loops.OrderByDescending(c => Surface.ByPatch(c).Area).ToArray();
+        }
+
+        /// <summary>
+        /// Generate a building mass from base curves.
+        /// </summary>
+        /// <param name="EdgeLoops">Closed curve boundary of building. All curves after first will be treated as holes.</param>
+        /// <param name="BldgArea">Target gross building area.</param>
+        /// <param name="FloorHeight">Height of the floor.</param>
+        /// <returns name="BuildingSolid">Building volume.</returns>
+        /// <returns name="Floors">Building floor surfaces.</returns>
+        /// <returns name="NetFloors">Building floor surfaces with core removed.</returns>
+        /// <returns name="FloorElevations">Elevation of each floor in building.</returns>
+        /// <returns name="Cores">Building core volumes.</returns>
+        /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
+        /// <returns name="BuildingVolume">Volume of Mass.</returns>
+        /// <returns name="GrossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="NetFloorArea">Combined area of all floors with core removed.</returns>
+        /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
+        /// <search>building,design,refinery</search>
+        [MultiReturn(new[] { "BuildingSolid", "Floors", "NetFloors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "GrossFloorArea", "NetFloorArea", "TotalFacadeArea", })]
+        public static Dictionary<string, object> BuildingGeneratorByCurves(
+            List<Curve> EdgeLoops,
+            double BldgArea = 1000,
+            double FloorHeight = 3)
+        {
+            if (EdgeLoops == null || EdgeLoops.Count == 0) { throw new ArgumentNullException(nameof(EdgeLoops)); }
+
+            var building = new BuildingFromCurves(EdgeLoops[0], EdgeLoops.Skip(1).ToList(), BldgArea, FloorHeight);
+
+            return building.Output;
         }
     }
 }
