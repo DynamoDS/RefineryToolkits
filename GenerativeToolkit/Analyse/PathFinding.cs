@@ -7,11 +7,14 @@ using System.Linq;
 using DSPolygon = Autodesk.DesignScript.Geometry.Polygon;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
 using graphs = GenerativeToolkit.Graphs;
+using Dynamo.Graph.Nodes;
+using Autodesk.DesignScript.Geometry;
+using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 #endregion
 
 namespace Autodesk.GenerativeToolkit.Analyse
 {
-    public class PathFinding
+    public static class PathFinding
     {
         /// <summary>
         /// Returns a graph representing the shortest path 
@@ -20,9 +23,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="visGraph">Visibility Graph</param>
         /// <param name="origin">Origin point</param>
         /// <param name="destination">Destination point</param>
-        /// <returns name="graph">Graph representing the shortest path</returns>
+        /// <returns name="path">Graph representing the shortest path</returns>
         /// <returns name="length">Length of path</returns>
-        [MultiReturn(new[] { "graph", "length" })]
+        [MultiReturn(new[] { "path", "length" })]
         [IsVisibleInDynamoLibrary(true)]
         public static Dictionary<string, object> ShortestPath(List<DSPolygon> boundary, List<DSPolygon> internals, DSPoint origin, DSPoint destination)
         {
@@ -45,9 +48,27 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             return new Dictionary<string, object>()
             {
-                {"graph", baseGraph },
+                {"path", baseGraph },
                 {"length", baseGraph.graph.edges.Select(e => e.Length).Sum() }
             };
+        }
+
+        /// <summary>
+        /// Returns the input graph as a list of lines
+        /// </summary>
+        /// <returns name="lines">List of lines representing the graph.</returns>
+        [NodeCategory("Query")]
+        [IsVisibleInDynamoLibrary(true)]
+        public static List<Line> Lines(BaseGraph path)
+        {
+            List<Line> lines = new List<Line>();
+            foreach (gEdge edge in path.graph.edges)
+            {
+                var start = Points.ToPoint(edge.StartVertex);
+                var end = Points.ToPoint(edge.EndVertex);
+                lines.Add(Line.ByStartPointEndPoint(start, end));
+            }
+            return lines;
         }
     }  
 }

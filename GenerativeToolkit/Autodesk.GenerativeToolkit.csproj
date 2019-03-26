@@ -183,7 +183,6 @@
     <Compile Include="Rank\SeededShuffle.cs" />
     <Compile Include="Utilities\GraphicalGeometry\Curves.cs" />
     <Compile Include="Utilities\GraphicalGeometry\Points.cs" />
-    <Compile Include="Utilities\GraphicalGeometry\Polygons.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

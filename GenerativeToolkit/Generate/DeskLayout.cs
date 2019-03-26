@@ -9,11 +9,8 @@ using System.Collections;
 
 namespace GenerativeToolkit.Generate
 {
-    class DeskLayout
+    public static class DeskLayout
     {
-        internal DeskLayout()
-        {
-        }
 
         #region Create
         /// <summary>
@@ -24,6 +21,7 @@ namespace GenerativeToolkit.Generate
         /// <param name="deskDepth">the depth of the desks in mm</param>
         /// <param name="backToBack">the distance in mm between two desks where the people sat at them are back to back</param>
         /// <search></search>
+        [IsVisibleInDynamoLibrary(true)]
         public static object Create(Autodesk.DesignScript.Geometry.Surface surface, double deskWidth = 1400, double deskDepth = 800, double backToBack = 2200)
         {
             Surface boundingSrf = Autodesk.GenerativeToolkit.Utilities.Surface.BoundingSurface(surface);

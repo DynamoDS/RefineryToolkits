@@ -9,12 +9,9 @@ using System.Collections;
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
-    public class AmenitySpace
+    [IsVisibleInDynamoLibrary(false)]
+    public static class AmenitySpace
     {
-        internal AmenitySpace()
-        {
-        }
-
         #region Create
         /// <summary>
         /// Creates an amentiy space on a given surface, returning both the amenity space and the remaining space within the original surface
@@ -23,6 +20,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="offset"></param>
         /// <param name="depth"></param>
         /// <search></search>
+        [IsVisibleInDynamoLibrary(true)]
         [MultiReturn(new[] { "amenitySrf", "remainSrf" })]
         public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(Autodesk.DesignScript.Geometry.Surface surface, double offset, double depth)
         {

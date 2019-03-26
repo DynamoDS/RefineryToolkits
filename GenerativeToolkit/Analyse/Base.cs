@@ -45,23 +45,6 @@ namespace Autodesk.GenerativeToolkit.Analyse
             return graph.GetType() == typeof(graphs.VisibilityGraph);
         }
 
-        /// <summary>
-        /// Returns the input graph as a list of lines
-        /// </summary>
-        /// <returns name="lines">List of lines representing the graph.</returns>
-        [NodeCategory("Query")]
-        public List<Line> Lines()
-        {
-            List<Line> lines = new List<Line>();
-            foreach (gEdge edge in graph.edges)
-            {
-                var start = Points.ToPoint(edge.StartVertex);
-                var end = Points.ToPoint(edge.EndVertex);
-                lines.Add(Line.ByStartPointEndPoint(start, end));
-            }
-            return lines;
-        }
-
         #endregion
 
         #region Internal Constructors
