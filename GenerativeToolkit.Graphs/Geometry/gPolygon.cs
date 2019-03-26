@@ -164,7 +164,8 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </returns>
         internal double IsLeft(gEdge edge, gVertex vertex)
         {
-            return (edge.EndVertex.X - edge.StartVertex.X) * (vertex.Y - edge.StartVertex.X) - (edge.EndVertex.Y - edge.StartVertex.Y) * (vertex.X - edge.StartVertex.X);
+            var left = (edge.EndVertex.X - edge.StartVertex.X) * (vertex.Y - edge.StartVertex.Y) - (edge.EndVertex.Y - edge.StartVertex.Y) * (vertex.X - edge.StartVertex.X);
+            return left;
         }
         #endregion
 
