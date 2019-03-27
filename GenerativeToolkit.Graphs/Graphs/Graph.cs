@@ -21,7 +21,7 @@ namespace GenerativeToolkit.Graphs
         /// <summary>
         /// GUID to verify uniqueness of graph when cloned
         /// </summary>
-        internal Guid Id { get; private set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// Polygons dictionary with their Id as dictionary key

@@ -137,6 +137,7 @@
     <Compile Include="Geometry\GeometryPolygon.cs" />
     <Compile Include="Geometry\GeometryVector.cs" />
     <Compile Include="Geometry\GeometryVertex.cs" />
+    <Compile Include="Graphs\EdgeKey.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="Graphs\VisibilityGraph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

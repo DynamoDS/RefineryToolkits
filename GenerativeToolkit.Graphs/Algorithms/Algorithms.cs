@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GenerativeToolkit.Graphs.Graphs;
+using GenerativeToolkit.Graphs;
 using GenerativeToolkit.Graphs.Geometry;
 using GenerativeToolkit.Graphs.DataStructures;
 

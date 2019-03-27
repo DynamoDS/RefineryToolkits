@@ -13,7 +13,7 @@ using GenerativeToolkit.Graphs.Geometry;
 using Dynamo.Graph.Nodes;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using System.Drawing;
-using graphs = GenerativeToolkit.Graphs.Graphs;
+using GenerativeToolkit.Graphs;
 #endregion
 
 namespace Autodesk.GenerativeToolkit.Analyse
@@ -25,7 +25,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
     public class BaseGraph : IGraphicItem
     {
         #region Internal Properties
-        internal graphs.Graph graph { get; set; }
+        internal Graph graph { get; set; }
         internal DSCore.Color edgeDefaultColour = DSCore.Color.ByARGB(255, 150, 200, 255);
         internal DSCore.Color vertexDefaultColour = DSCore.Color.ByARGB(255, 75, 125, 180);
 
@@ -41,7 +41,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         [NodeCategory("Query")]
         public static bool IsVisibilityGraph(BaseGraph graph)
         {
-            return graph.GetType() == typeof(graphs.VisibilityGraph);
+            return graph.GetType() == typeof(Visibility);
         }
 
         #endregion
@@ -51,7 +51,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
         internal BaseGraph(List<GeometryPolygon> gPolygons)
         {
-            graph = new graphs.Graph(gPolygons);
+            graph = new Graph(gPolygons);
         }
         #endregion
 
@@ -117,7 +117,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
             if (lines == null) { throw new NullReferenceException("lines"); }
             BaseGraph g = new BaseGraph()
             {
-                graph = new graphs.Graph()
+                graph = new Graph()
             };
 
             foreach (Line line in lines)
@@ -149,9 +149,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
         [IsVisibleInDynamoLibrary(false)]
         public void Tessellate(IRenderPackage package, TessellationParameters parameters)
         {
-            if (this.GetType() == typeof(VisibilityGraph))
+            if (this.GetType() == typeof(Visibility))
             {
-                VisibilityGraph visGraph = this as VisibilityGraph;
+                Visibility visGraph = this as Visibility;
                 if (visGraph.Factors != null && visGraph.colorRange != null)
                 {
                     visGraph.TessellateVisibilityGraph(package, parameters);

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DSPolygon = Autodesk.DesignScript.Geometry.Polygon;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using graphs = GenerativeToolkit.Graphs;
+using GenerativeToolkit.Graphs;
 using Dynamo.Graph.Nodes;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
@@ -30,7 +30,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         public static Dictionary<string, object> ShortestPath(List<DSPolygon> boundary, List<DSPolygon> internals, DSPoint origin, DSPoint destination)
         {
             BaseGraph graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
-            VisibilityGraph visGraph = VisibilityGraph.ByBaseGraph(graph);
+            Visibility visGraph = Visibility.ByBaseGraph(graph);
 
             if (visGraph == null) { throw new ArgumentNullException("visGraph"); }
             if (origin == null) { throw new ArgumentNullException("origin"); }
@@ -39,11 +39,11 @@ namespace Autodesk.GenerativeToolkit.Analyse
             GeometryVertex gOrigin = GeometryVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
             GeometryVertex gDestination = GeometryVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
 
-            graphs.Graphs.VisibilityGraph visibilityGraph = visGraph.graph as graphs.Graphs.VisibilityGraph;
+            VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
 
             BaseGraph baseGraph = new BaseGraph()
             {
-                graph = graphs.Graphs.VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination)
+                graph = VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination)
             };
 
             return new Dictionary<string, object>()
