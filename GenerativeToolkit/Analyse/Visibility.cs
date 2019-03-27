@@ -13,8 +13,8 @@ using Dynamo.Graph.Nodes;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using System.Drawing;
 using GenerativeToolkit.Graphs.Geometry;
+using graphs = GenerativeToolkit.Graphs;
 using GenerativeToolkit.Graphs.Extensions;
-using GenerativeToolkit.Graphs;
 #endregion
 
 namespace Autodesk.GenerativeToolkit.Analyse
@@ -23,7 +23,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
     /// Representation of a Graph.
     /// </summary>
     [IsVisibleInDynamoLibrary(false)]
-    public class Visibility : BaseGraph
+    public class VisibilityGraph : BaseGraph
     {
         #region Internal Properties
         internal Dictionary<double, DSCore.Color> colorRange { get; private set; }
@@ -39,7 +39,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
         #region Internal Constructors
 
-        internal Visibility() { }
+        internal VisibilityGraph() { }
 
         #endregion
 
@@ -53,11 +53,11 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// polygons and at least one is not convex/concave to its polygon.</param>
         /// <returns name="visGraph">Visibility graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public static Visibility ByBaseGraph(BaseGraph baseGraph, bool reduced = true)
+        public static VisibilityGraph ByBaseGraph(BaseGraph baseGraph, bool reduced = true)
         {
             if (baseGraph == null) { throw new ArgumentNullException("graph"); }
-            var visGraph = new VisibilityGraph(baseGraph.graph, reduced, true);
-            var visibilityGraph = new Visibility()
+            var visGraph = new graphs.Graphs.VisibilityGraph(baseGraph.graph, reduced, true);
+            var visibilityGraph = new VisibilityGraph()
             {
                 graph = visGraph
             };
@@ -80,18 +80,18 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <returns name="visGraph">Connected VisibilityGraph</returns>
         [NodeCategory("Actions")]
         [IsVisibleInDynamoLibrary(false)]
-        public static Visibility ConnectGraphs(List<Visibility> visibilityGraphs, List<Line> lines)
+        public static VisibilityGraph ConnectGraphs(List<VisibilityGraph> visibilityGraphs, List<Line> lines)
         {
             if (visibilityGraphs == null) { throw new ArgumentNullException("visibilityGraphs"); }
 
-            List<VisibilityGraph> visGraphs = visibilityGraphs.Select(vg => (VisibilityGraph)vg.graph).ToList();
-            VisibilityGraph mergedGraph = VisibilityGraph.Merge(visGraphs);
+            List<graphs.Graphs.VisibilityGraph> visGraphs = visibilityGraphs.Select(vg => (graphs.Graphs.VisibilityGraph)vg.graph).ToList();
+            graphs.Graphs.VisibilityGraph mergedGraph = graphs.Graphs.VisibilityGraph.Merge(visGraphs);
 
             var edges = lines.Select(l => l.ToEdge()).ToList();
 
-            return new Visibility()
+            return new VisibilityGraph()
             {
-                graph = VisibilityGraph.AddEdges(mergedGraph, edges)
+                graph = graphs.Graphs.VisibilityGraph.AddEdges(mergedGraph, edges)
             };
         }
 
@@ -107,15 +107,15 @@ namespace Autodesk.GenerativeToolkit.Analyse
         [NodeCategory("Query")]
         [MultiReturn(new[] { "visGraph", "factors" })]
         public static Dictionary<string, object> Connectivity(
-            Visibility visGraph,
+            VisibilityGraph visGraph,
             [DefaultArgument("null")] List<DSCore.Color> colours,
             [DefaultArgument("null")] List<double> indices)
         {
             if (visGraph == null) { throw new ArgumentNullException("visGraph"); }
 
-            VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
+            graphs.Graphs.VisibilityGraph visibilityGraph = visGraph.graph as graphs.Graphs.VisibilityGraph;
 
-            Visibility graph = new Visibility()
+            VisibilityGraph graph = new VisibilityGraph()
             {
                 graph = visibilityGraph,
                 Factors = visibilityGraph.ConnectivityFactor()

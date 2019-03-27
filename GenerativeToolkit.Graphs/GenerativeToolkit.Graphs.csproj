@@ -127,17 +127,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\Algorithms.cs" />
+    <Compile Include="Core\SweepLine\EventChainer.cs" />
+    <Compile Include="Core\SweepLine\SweepEvent.cs" />
+    <Compile Include="Core\SweepLine\SweepLine.cs" />
     <Compile Include="DataStructures\BinaryHeap.cs" />
     <Compile Include="DataStructures\PriorityQ.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\NumericExtensions.cs" />
-    <Compile Include="Geometry\GeometryBase.cs" />
-    <Compile Include="Geometry\GeometryBoundingBox.cs" />
-    <Compile Include="Geometry\GeometryEdge.cs" />
-    <Compile Include="Geometry\GeometryPolygon.cs" />
-    <Compile Include="Geometry\GeometryVector.cs" />
-    <Compile Include="Geometry\GeometryVertex.cs" />
-    <Compile Include="Graphs\EdgeKey.cs" />
+    <Compile Include="Geometry\gBase.cs" />
+    <Compile Include="Geometry\gBoundingBox.cs" />
+    <Compile Include="Geometry\gEdge.cs" />
+    <Compile Include="Geometry\gPolygon.cs" />
+    <Compile Include="Geometry\gVector.cs" />
+    <Compile Include="Geometry\gVertex.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="Graphs\VisibilityGraph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,6 +147,8 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Octree\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

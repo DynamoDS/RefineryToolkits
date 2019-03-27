@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GenerativeToolkit.Graphs.Core;
 
 namespace GenerativeToolkit.Graphs.Geometry
 {
@@ -10,7 +11,7 @@ namespace GenerativeToolkit.Graphs.Geometry
     /// gPolygon class to hold graph´s polygon information in relation to its function on the graph
     /// like if it is internal or limit boundary.
     /// </summary>
-    public class GeometryPolygon : GeometryBase, ICloneable
+    public class gPolygon : gBase, ICloneable
     {
         #region Internal Variables
 
@@ -27,19 +28,19 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <summary>
         /// Polygon's edges
         /// </summary>
-        internal List<GeometryEdge> edges = new List<GeometryEdge>();
+        internal List<gEdge> edges = new List<gEdge>();
 
         /// <summary>
         /// Polygon's Vertices
         /// </summary>
-        internal List<GeometryVertex> vertices = new List<GeometryVertex>();
+        internal List<gVertex> vertices = new List<gVertex>();
         #endregion
 
         #region Public Variables
         /// <summary>
         /// gPolygon's vertices
         /// </summary>
-        public List<GeometryVertex> Vertices
+        public List<gVertex> Vertices
         {
             get { return vertices; }
         }
@@ -47,7 +48,7 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <summary>
         /// gPolygon's edges
         /// </summary>
-        public List<GeometryEdge> Edges
+        public List<gEdge> Edges
         {
             get
             {
@@ -68,9 +69,9 @@ namespace GenerativeToolkit.Graphs.Geometry
         #endregion
 
         #region Internal Constructors
-        internal GeometryPolygon() { }
+        internal gPolygon() { }
 
-        internal GeometryPolygon(int _id, bool _isExternal)
+        internal gPolygon(int _id, bool _isExternal)
         {
             id = _id;
             isBoundary = _isExternal;
@@ -84,51 +85,51 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <param name="vertices"></param>
         /// <param name="isExternal"></param>
         /// <returns></returns>
-        public static GeometryPolygon ByVertices(List<GeometryVertex> vertices, bool isExternal = false)
+        public static gPolygon ByVertices(List<gVertex> vertices, bool isExternal = false)
         {
-            GeometryPolygon polygon = new GeometryPolygon(-1, isExternal);
+            gPolygon polygon = new gPolygon(-1, isExternal);
             polygon.vertices = vertices;
             int vertexCount = vertices.Count;
             for (var j = 0; j < vertexCount; j++)
             {
                 int next_index = (j + 1) % vertexCount;
-                GeometryVertex vertex = vertices[j];
-                GeometryVertex next_vertex = vertices[next_index];
-                polygon.edges.Add( new GeometryEdge(vertex, next_vertex));
+                gVertex vertex = vertices[j];
+                gVertex next_vertex = vertices[next_index];
+                polygon.edges.Add( new gEdge(vertex, next_vertex));
             }
             return polygon;
         }
 
-        public static GeometryPolygon ByCenterRadiusAndSides(GeometryVertex center, double radius, int sides)
+        public static gPolygon ByCenterRadiusAndSides(gVertex center, double radius, int sides)
         {
             // TODO: create polygon by plane?
             if(sides < 3) { throw new ArgumentOutOfRangeException("sides", "Any polygon must have at least 3 sides."); }
-            List<GeometryVertex> vertices = new List<GeometryVertex>();
+            List<gVertex> vertices = new List<gVertex>();
             double angle = (Math.PI * 2) / sides;
             for(var i = 0; i < sides; i++)
             {
-                var vertex = GeometryVertex.ByCoordinates(
+                var vertex = gVertex.ByCoordinates(
                         (Math.Sin(i * angle) * radius) + center.X,
                         (Math.Cos(i * angle) * radius) + center.Y,
                         center.Z
                         );
                 vertices.Add(vertex);
             }
-            return GeometryPolygon.ByVertices(vertices);
+            return gPolygon.ByVertices(vertices);
         }
         #endregion
 
         #region Internal Methods
-        internal void AddVertex(GeometryVertex vertex)
+        internal void AddVertex(gVertex vertex)
         {
             vertex.polygonId = this.id;
             vertices.Add(vertex);
         }
 
-        internal GeometryPolygon AddVertex(GeometryVertex v, GeometryEdge intersectingEdge)
+        internal gPolygon AddVertex(gVertex v, gEdge intersectingEdge)
         {
             //Assumes that vertex v intersects one of polygons edges.
-            GeometryPolygon newPolygon = (GeometryPolygon)this.Clone();
+            gPolygon newPolygon = (gPolygon)this.Clone();
 
             // Assign the polygon Id to the new vertex.
             v.polygonId = this.id;
@@ -144,7 +145,7 @@ namespace GenerativeToolkit.Graphs.Geometry
             for (var i = 0; i < verticesCount; i++)
             {
                 int nextIndex = (i + 1) % verticesCount;
-                newPolygon.edges.Add(new GeometryEdge(newPolygon.vertices[i], newPolygon.vertices[nextIndex]));
+                newPolygon.edges.Add(new gEdge(newPolygon.vertices[i], newPolygon.vertices[nextIndex]));
             }
 
             return newPolygon;
@@ -161,7 +162,7 @@ namespace GenerativeToolkit.Graphs.Geometry
         ///     equal 0 for vertex on the edge
         ///     less than 0 for vertex right of the edege
         /// </returns>
-        internal double IsLeft(GeometryEdge edge, GeometryVertex vertex)
+        internal double IsLeft(gEdge edge, gVertex vertex)
         {
             var left = (edge.EndVertex.X - edge.StartVertex.X) * (vertex.Y - edge.StartVertex.Y) - (edge.EndVertex.Y - edge.StartVertex.Y) * (vertex.X - edge.StartVertex.X);
             return left;
@@ -175,19 +176,19 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        public bool ContainsVertex(GeometryVertex vertex)
+        public bool ContainsVertex(gVertex vertex)
         {
             // http://geomalgorithms.com/a03-_inclusion.html
-            GeometryVertex maxVertex = vertices.OrderByDescending(v => v.DistanceTo(vertex)).First();
+            gVertex maxVertex = vertices.OrderByDescending(v => v.DistanceTo(vertex)).First();
             double maxDistance = vertex.DistanceTo(maxVertex) * 1.5;
-            GeometryVertex v2 = GeometryVertex.ByCoordinates(vertex.X + maxDistance, vertex.Y, vertex.Z);
-            GeometryEdge ray = GeometryEdge.ByStartVertexEndVertex(vertex, v2);
+            gVertex v2 = gVertex.ByCoordinates(vertex.X + maxDistance, vertex.Y, vertex.Z);
+            gEdge ray = gEdge.ByStartVertexEndVertex(vertex, v2);
             int windNumber = 0;
-            foreach (GeometryEdge edge in edges)
+            foreach (gEdge edge in edges)
             {
                 if(vertex.OnEdge(edge)) { return true; }
-                GeometryVertex intersection = ray.Intersection(edge) as GeometryVertex;
-                if (intersection is GeometryVertex)
+                gVertex intersection = ray.Intersection(edge) as gVertex;
+                if (intersection is gVertex)
                 {
                     if (edge.StartVertex.Y <= vertex.Y)
                     {
@@ -222,21 +223,21 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="edge"></param>
         /// <returns></returns>
-        public bool ContainsEdge(GeometryEdge edge)
+        public bool ContainsEdge(gEdge edge)
         {
             // TODO: Check if edge intersects polygon in vertices different than start/end.
             return this.ContainsVertex(edge.StartVertex)
                 && this.ContainsVertex(edge.EndVertex)
-                && this.ContainsVertex(GeometryVertex.MidVertex(edge.StartVertex, edge.EndVertex));
+                && this.ContainsVertex(gVertex.MidVertex(edge.StartVertex, edge.EndVertex));
         }
         /// <summary>
         /// Checks if a polygon is planar
         /// </summary>
         /// <param name="polygon">gPolygon</param>
         /// <returns>boolean</returns>
-        public static bool IsPlanar(GeometryPolygon polygon)
+        public static bool IsPlanar(gPolygon polygon)
         {
-            return GeometryVertex.Coplanar(polygon.Vertices);
+            return gVertex.Coplanar(polygon.Vertices);
         }
 
         /// <summary>
@@ -245,21 +246,20 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <param name="polygon">gPolygon</param>
         /// <param name="otherPolygon">Other gPolygon</param>
         /// <returns></returns>
-        public static bool Coplanar(GeometryPolygon polygon, GeometryPolygon otherPolygon)
+        public static bool Coplanar(gPolygon polygon, gPolygon otherPolygon)
         {
-            List<GeometryVertex> joinedVertices = new List<GeometryVertex>(polygon.Vertices);
+            List<gVertex> joinedVertices = new List<gVertex>(polygon.Vertices);
             joinedVertices.AddRange(otherPolygon.Vertices);
 
-            return GeometryVertex.Coplanar(joinedVertices);
+            return gVertex.Coplanar(joinedVertices);
         }
-        /*
 
         /// <summary>
         /// Determines if two polygons are intersecting
         /// </summary>
         /// <param name="polygon"></param>
         /// <returns></returns>
-        public bool Intersects(GeometryPolygon polygon)
+        public bool Intersects(gPolygon polygon)
         {
             if (!this.BoundingBox.Intersects(polygon.BoundingBox)) { return false; }
             var sw = new SweepLine(this, polygon, SweepLineType.Intersects);
@@ -271,7 +271,7 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="clip"></param>
         /// <returns></returns>
-        public List<GeometryPolygon> Union(GeometryPolygon clip)
+        public List<gPolygon> Union(gPolygon clip)
         {
             
             var swLine = new SweepLine(this, clip, SweepLineType.Boolean);
@@ -279,11 +279,11 @@ namespace GenerativeToolkit.Graphs.Geometry
             return swLine.ComputeBooleanOperation(BooleanType.Union);
         }
 
-        public static List<GeometryPolygon> Union(List<GeometryPolygon> subjects, List<GeometryPolygon> clips)
+        public static List<gPolygon> Union(List<gPolygon> subjects, List<gPolygon> clips)
         {
-            List<GeometryPolygon> result = new List<GeometryPolygon>(subjects);
+            List<gPolygon> result = new List<gPolygon>(subjects);
             int count = 0;
-            foreach (GeometryPolygon clip in clips)
+            foreach (gPolygon clip in clips)
             {
                 for (var i = count; i < result.Count; i++)
                 {
@@ -299,18 +299,18 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="clip"></param>
         /// <returns></returns>
-        public List<GeometryPolygon> Difference(GeometryPolygon clip)
+        public List<gPolygon> Difference(gPolygon clip)
         {
             var swLine = new SweepLine(this, clip, SweepLineType.Boolean);
 
             return swLine.ComputeBooleanOperation(BooleanType.Differenece);
         }
 
-        public static List<GeometryPolygon> Difference(List<GeometryPolygon> subjects, List<GeometryPolygon> clips)
+        public static List<gPolygon> Difference(List<gPolygon> subjects, List<gPolygon> clips)
         {
-            List<GeometryPolygon> result = new List<GeometryPolygon>(subjects);
+            List<gPolygon> result = new List<gPolygon>(subjects);
             int count = 0;
-            foreach (GeometryPolygon clip in clips)
+            foreach (gPolygon clip in clips)
             {
                 for(var i = count; i < result.Count; i++)
                 {
@@ -326,18 +326,18 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="clip"></param>
         /// <returns></returns>
-        public List<GeometryPolygon> Intersection(GeometryPolygon clip)
+        public List<gPolygon> Intersection(gPolygon clip)
         {
             var swLine = new SweepLine(this, clip, SweepLineType.Boolean);
 
             return swLine.ComputeBooleanOperation(BooleanType.Intersection);
         }
 
-        public static List<GeometryPolygon> Intersection(List<GeometryPolygon> subjects, List<GeometryPolygon> clips)
+        public static List<gPolygon> Intersection(List<gPolygon> subjects, List<gPolygon> clips)
         {
-            List<GeometryPolygon> result = new List<GeometryPolygon>(subjects);
+            List<gPolygon> result = new List<gPolygon>(subjects);
             int count = 0;
-            foreach (GeometryPolygon clip in clips)
+            foreach (gPolygon clip in clips)
             {
                 for (var i = count; i < result.Count; i++)
                 {
@@ -347,7 +347,7 @@ namespace GenerativeToolkit.Graphs.Geometry
             }
             return result;
         }
-        */
+
         #endregion
 
         /// <summary>
@@ -356,24 +356,24 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <returns>Cloned gPolygon</returns>
         public object Clone()
         {
-            GeometryPolygon newPolygon = new GeometryPolygon(this.id, this.isBoundary);
-            newPolygon.edges = new List<GeometryEdge>(this.edges);
-            newPolygon.vertices = new List<GeometryVertex>(this.vertices);
+            gPolygon newPolygon = new gPolygon(this.id, this.isBoundary);
+            newPolygon.edges = new List<gEdge>(this.edges);
+            newPolygon.vertices = new List<gVertex>(this.vertices);
             return newPolygon;
         }
 
-        internal override GeometryBoundingBox ComputeBoundingBox()
+        internal override gBoundingBox ComputeBoundingBox()
         {
             var xCoord = new List<double>(this.vertices.Count);
             var yCoord = new List<double>(this.vertices.Count);
             var zCoord = new List<double>(this.vertices.Count);
-            foreach(GeometryVertex v in vertices)
+            foreach(gVertex v in vertices)
             {
                 xCoord.Add(v.X);
                 yCoord.Add(v.Y);
                 zCoord.Add(v.Z);
             }
-            return new GeometryBoundingBox(xCoord, yCoord, zCoord);
+            return new gBoundingBox(xCoord, yCoord, zCoord);
         }
     }
 }

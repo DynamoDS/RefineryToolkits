@@ -9,7 +9,7 @@ namespace GenerativeToolkit.Graphs.Geometry
     /// <summary>
     /// Base abstract class for all spatial geometries
     /// </summary>
-    public abstract class GeometryBase
+    public abstract class gBase
     {
 
         #region Properties
@@ -17,12 +17,12 @@ namespace GenerativeToolkit.Graphs.Geometry
         //internal int thresholdDecimals { get; private set; }
         #endregion
 
-        private GeometryBoundingBox boundingBox;
+        private gBoundingBox boundingBox;
 
         /// <summary>
         /// Geometry's Axis Aligned Bounding Box
         /// </summary>
-        public GeometryBoundingBox BoundingBox
+        public gBoundingBox BoundingBox
         {
             get
             {
@@ -31,7 +31,7 @@ namespace GenerativeToolkit.Graphs.Geometry
             }
         }
 
-        internal abstract GeometryBoundingBox ComputeBoundingBox();
+        internal abstract gBoundingBox ComputeBoundingBox();
 
     }
 }

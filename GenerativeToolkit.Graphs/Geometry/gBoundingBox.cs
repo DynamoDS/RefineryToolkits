@@ -10,7 +10,7 @@ namespace GenerativeToolkit.Graphs.Geometry
     /// <summary>
     /// Axis Aligned Bounding Box
     /// </summary>
-    public class GeometryBoundingBox
+    public class gBoundingBox
     {
         #region Private Properties
         private double[] min = new double[3];
@@ -21,22 +21,22 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <summary>
         /// Bounding Box's minimum vertex
         /// </summary>
-        public GeometryVertex MinVertex
+        public gVertex MinVertex
         {
-            get { return GeometryVertex.ByCoordinatesArray(min); }
+            get { return gVertex.ByCoordinatesArray(min); }
         }
 
         /// <summary>
         /// Bounding Box's maximum vertex
         /// </summary>
-        public GeometryVertex MaxVertex
+        public gVertex MaxVertex
         {
-            get { return GeometryVertex.ByCoordinatesArray(max); }
+            get { return gVertex.ByCoordinatesArray(max); }
         }
         #endregion
 
         #region Private Constructor
-        internal GeometryBoundingBox(IEnumerable<double> xCoordinates, IEnumerable<double> yCoordinates, IEnumerable<double> zCoordinates)
+        internal gBoundingBox(IEnumerable<double> xCoordinates, IEnumerable<double> yCoordinates, IEnumerable<double> zCoordinates)
         {
             this.min = new double[3] { xCoordinates.Min(), yCoordinates.Min(), zCoordinates.Min() };
             this.max = new double[3] { xCoordinates.Max(), yCoordinates.Max(), zCoordinates.Max() };
@@ -50,9 +50,9 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public static GeometryBoundingBox ByMinVertexMaxVertex(GeometryVertex min, GeometryVertex max)
+        public static gBoundingBox ByMinVertexMaxVertex(gVertex min, gVertex max)
         {
-            return new GeometryBoundingBox(new double[2] { min.X, max.X}, new double[2] { min.Y, max.Y }, new double[2] { min.Z, max.Z });
+            return new gBoundingBox(new double[2] { min.X, max.X}, new double[2] { min.Y, max.Y }, new double[2] { min.Z, max.Z });
         }
         #endregion
 
@@ -62,7 +62,7 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Intersects(GeometryBoundingBox other)
+        public bool Intersects(gBoundingBox other)
         {
             return
                 (min[0] <= other.max[0]) && (max[0] >= other.min[0]) &&
