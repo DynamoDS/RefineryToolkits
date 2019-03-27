@@ -52,7 +52,7 @@ namespace GenerativeToolkit
         /// <search>building,design,refinery</search>
         [MultiReturn(new[] { "BuildingSolid", "Floors", "NetFloors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "GrossFloorArea", "NetFloorArea", "TotalFacadeArea", })]
         public static Dictionary<string, object> BuildingGenerator(
-            Plane BasePlane = null,
+            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane BasePlane = null,
             string Type = "L",
             double Length = 40,
             double Width = 40,
