@@ -91,8 +91,8 @@
     <Compile Include="Building\BuildingO.cs" />
     <Compile Include="Building\BuildingA.cs" />
     <Compile Include="Building\BuildingU.cs" />
-    <Compile Include="nodeBuilding.cs" />
-    <Compile Include="nodeSite.cs" />
+    <Compile Include="Building.cs" />
+    <Compile Include="Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

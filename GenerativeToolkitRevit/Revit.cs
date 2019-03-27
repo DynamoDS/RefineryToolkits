@@ -79,7 +79,7 @@ namespace GenerativeToolkit
 
                 foreach (var surface in Floors[i])
                 {
-                    var loops = Buildings.GetSurfaceLoops(surface);
+                    var loops = Building.GetSurfaceLoops(surface);
 
                     revitCurves.Clear();
 

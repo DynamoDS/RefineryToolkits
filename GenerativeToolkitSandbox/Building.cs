@@ -11,7 +11,7 @@ namespace GenerativeToolkit
     /// <summary>
     /// Buildings description.
     /// </summary>
-    public static class Buildings
+    public static class Building
     {
         /// <summary>
         /// Typology selection
