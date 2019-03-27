@@ -37,7 +37,6 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             List<GeometryVertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<DSPoint> points = vertices.Select(v => Points.ToPoint(v)).ToList();
-            // TODO: Implement better way of checking if polygon is self intersectingç
 
             Polygon polygon = Polygon.ByPoints(points);
 
