@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using GenerativeToolkit.Graphs.Geometry;
 #endregion
 
-namespace GenerativeToolkit.Graphs
+namespace GenerativeToolkit.Graphs.Graphs
 {
     
     /// <summary>
@@ -21,12 +21,12 @@ namespace GenerativeToolkit.Graphs
         /// <summary>
         /// GUID to verify uniqueness of graph when cloned
         /// </summary>
-        public Guid Id { get; private set; }
+        internal Guid graphID { get; private set; }
 
         /// <summary>
         /// Polygons dictionary with their Id as dictionary key
         /// </summary>
-        internal Dictionary<int, GeometryPolygon> polygons = new Dictionary<int, GeometryPolygon>();
+        internal Dictionary<int, gPolygon> polygons = new Dictionary<int, gPolygon>();
 
         /// <summary>
         /// Polygon's Id counter.
@@ -36,19 +36,19 @@ namespace GenerativeToolkit.Graphs
         /// <summary>
         /// Dictionary with vertex as key and values edges associated with the vertex.
         /// </summary>
-        internal Dictionary<GeometryVertex, List<GeometryEdge>> graph = new Dictionary<GeometryVertex, List<GeometryEdge>>();
+        internal Dictionary<gVertex, List<gEdge>> graph = new Dictionary<gVertex, List<gEdge>>();
 
         /// <summary>
         /// Graph's vertices
         /// </summary>
-        public List<GeometryVertex> vertices { get { return graph.Keys.ToList(); } }
+        public List<gVertex> vertices { get { return graph.Keys.ToList(); } }
 
         /// <summary>
         /// Graph's edges
         /// </summary>
-        public List<GeometryEdge> edges { get; internal set; }
+        public List<gEdge> edges { get; internal set; }
 
-        public List<GeometryPolygon> Polygons
+        public List<gPolygon> Polygons
         {
             get { return polygons.Values.ToList(); }
         }
@@ -58,18 +58,18 @@ namespace GenerativeToolkit.Graphs
         #region Internal Constructors
         public Graph()
         {
-            edges = new List<GeometryEdge>();
-            Id = Guid.NewGuid();
+            edges = new List<gEdge>();
+            graphID = Guid.NewGuid();
         }
 
-        public Graph(List<GeometryPolygon> gPolygonsSet)
+        public Graph(List<gPolygon> gPolygonsSet)
         {
-            edges = new List<GeometryEdge>();
-            Id = Guid.NewGuid();
+            edges = new List<gEdge>();
+            graphID = Guid.NewGuid();
             //Setting up Graph instance by adding vertices, edges and polygons
-            foreach(GeometryPolygon gPolygon in gPolygonsSet)
+            foreach(gPolygon gPolygon in gPolygonsSet)
             {
-                List<GeometryVertex> vertices = gPolygon.vertices;
+                List<gVertex> vertices = gPolygon.vertices;
 
                 // Clear pre-existing edges in the case this is an updating process.
                 gPolygon.edges.Clear();
@@ -97,9 +97,9 @@ namespace GenerativeToolkit.Graphs
                     for (var j = 0; j < vertexCount; j++)
                     {
                         int next_index = (j + 1) % vertexCount;
-                        GeometryVertex vertex = vertices[j];
-                        GeometryVertex next_vertex = vertices[next_index];
-                        GeometryEdge edge = new GeometryEdge(vertex, next_vertex);
+                        gVertex vertex = vertices[j];
+                        gVertex next_vertex = vertices[next_index];
+                        gEdge edge = new gEdge(vertex, next_vertex);
 
                         //If is a valid polygon, add id to vertex and
                         //edge to vertices dictionary
@@ -107,7 +107,7 @@ namespace GenerativeToolkit.Graphs
                         {
                             vertex.polygonId = newId;
                             next_vertex.polygonId = newId;
-                            GeometryPolygon gPol = new GeometryPolygon();
+                            gPolygon gPol = new gPolygon();
                             if (polygons.TryGetValue(newId, out gPol))
                             {
                                 gPol.edges.Add(edge);
@@ -148,9 +148,9 @@ namespace GenerativeToolkit.Graphs
             this.edges.Clear();
             this.graph.Clear();
 
-            foreach(GeometryPolygon polygon in polygons.Values)
+            foreach(gPolygon polygon in polygons.Values)
             {
-                foreach(GeometryEdge edge in polygon.edges)
+                foreach(gEdge edge in polygon.edges)
                 {
                     this.AddEdge(edge);
                 }
@@ -166,7 +166,7 @@ namespace GenerativeToolkit.Graphs
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        public bool Contains(GeometryVertex vertex)
+        public bool Contains(gVertex vertex)
         {
             return graph.ContainsKey(vertex);
         }
@@ -176,25 +176,25 @@ namespace GenerativeToolkit.Graphs
         /// </summary>
         /// <param name="edge"></param>
         /// <returns></returns>
-        public bool Contains(GeometryEdge edge)
+        public bool Contains(gEdge edge)
         {
             return edges.Contains(edge);
         }
 
-        public List<GeometryEdge> GetVertexEdges(GeometryVertex vertex)
+        public List<gEdge> GetVertexEdges(gVertex vertex)
         {
-            List<GeometryEdge> edgesList = new List<GeometryEdge>();
+            List<gEdge> edgesList = new List<gEdge>();
             if(graph.TryGetValue(vertex, out edgesList))
             {
                 return edgesList;
             }else
             {
                 //graph.Add(vertex, new List<gEdge>());
-                return new List<GeometryEdge>();
+                return new List<gEdge>();
             }
         }
 
-        public List<GeometryVertex> GetAdjecentVertices(GeometryVertex v)
+        public List<gVertex> GetAdjecentVertices(gVertex v)
         {
             return graph[v].Select(edge => edge.GetVertexPair(v)).ToList();
         }
@@ -203,17 +203,17 @@ namespace GenerativeToolkit.Graphs
         /// Add edge to the analisys graph
         /// </summary>
         /// <param name="edge">New edge</param>
-        public void AddEdge(GeometryEdge edge)
+        public void AddEdge(gEdge edge)
         {
-            List<GeometryEdge> startEdgesList = new List<GeometryEdge>();
-            List<GeometryEdge> endEdgesList = new List<GeometryEdge>();
+            List<gEdge> startEdgesList = new List<gEdge>();
+            List<gEdge> endEdgesList = new List<gEdge>();
             if (graph.TryGetValue(edge.StartVertex, out startEdgesList))
             {
                 if (!startEdgesList.Contains(edge)) { startEdgesList.Add(edge); }
             }
             else
             {
-                graph.Add(edge.StartVertex, new List<GeometryEdge>() { edge });
+                graph.Add(edge.StartVertex, new List<gEdge>() { edge });
             }
 
             if (graph.TryGetValue(edge.EndVertex, out endEdgesList))
@@ -222,7 +222,7 @@ namespace GenerativeToolkit.Graphs
             }
             else
             {
-                graph.Add(edge.EndVertex, new List<GeometryEdge>() { edge });
+                graph.Add(edge.EndVertex, new List<gEdge>() { edge });
             }
             
             if (!edges.Contains(edge)) { edges.Add(edge); }
@@ -233,21 +233,21 @@ namespace GenerativeToolkit.Graphs
         /// </summary>
         public void BuildPolygons()
         {
-            var computedVertices = new List<GeometryVertex>();
+            var computedVertices = new List<gVertex>();
             
-            foreach(GeometryVertex v in vertices)
+            foreach(gVertex v in vertices)
             {
                 // If already belongs to a polygon or is not a polygon vertex or already computed
                 if( computedVertices.Contains(v) || graph[v].Count > 2) { continue; }
 
                 computedVertices.Add(v);
-                GeometryPolygon polygon = new GeometryPolygon(GetNextId(), false);
+                gPolygon polygon = new gPolygon(GetNextId(), false);
                 
                 polygon.AddVertex(v);
-                foreach(GeometryEdge edge in GetVertexEdges(v))
+                foreach(gEdge edge in GetVertexEdges(v))
                 {
-                    GeometryEdge currentEdge = edge;
-                    GeometryVertex currentVertex = edge.GetVertexPair(v);
+                    gEdge currentEdge = edge;
+                    gVertex currentVertex = edge.GetVertexPair(v);
                     while (!polygon.vertices.Contains(currentVertex) || !computedVertices.Contains(currentVertex))
                     {
                         polygon.AddVertex(currentVertex);
@@ -339,14 +339,14 @@ namespace GenerativeToolkit.Graphs
         {
             Graph newGraph = new Graph()
             {
-                graph = new Dictionary<GeometryVertex, List<GeometryEdge>>(),
-                edges = new List<GeometryEdge>(this.edges),
-                polygons = new Dictionary<int, GeometryPolygon>(this.polygons)
+                graph = new Dictionary<gVertex, List<gEdge>>(),
+                edges = new List<gEdge>(this.edges),
+                polygons = new Dictionary<int, gPolygon>(this.polygons)
             };
 
             foreach(var item in this.graph)
             {
-                newGraph.graph.Add(item.Key, new List<GeometryEdge>(item.Value));
+                newGraph.graph.Add(item.Key, new List<gEdge>(item.Value));
             }
 
             return newGraph;

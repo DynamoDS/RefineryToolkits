@@ -13,33 +13,33 @@ namespace GenerativeToolkit.Graphs.Geometry
     /// <summary>
     /// Representation of Edges on a graph
     /// </summary>
-    public class GeometryEdge : GeometryBase
+    public class gEdge : gBase
     {
         #region Variables
         /// <summary>
         /// StartVertex
         /// </summary>
-        public GeometryVertex StartVertex { get; private set; }
+        public gVertex StartVertex { get; private set; }
 
         /// <summary>
         /// EndVertex
         /// </summary>
-        public GeometryVertex EndVertex { get; private set; }
+        public gVertex EndVertex { get; private set; }
 
 
         public double Length { get; private set; }
 
-        public GeometryVector Direction { get; private set; }
+        public gVector Direction { get; private set; }
 
         #endregion
 
         #region Constructors
-        public GeometryEdge(GeometryVertex start, GeometryVertex end)
+        public gEdge(gVertex start, gVertex end)
         {
             StartVertex = start;
             EndVertex = end;
             Length = StartVertex.DistanceTo(EndVertex);
-            Direction = GeometryVector.ByTwoVertices(StartVertex, EndVertex);
+            Direction = gVector.ByTwoVertices(StartVertex, EndVertex);
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <param name="start">Start vertex</param>
         /// <param name="end">End gVertex</param>
         /// <returns name="edge">edge</returns>
-        public static GeometryEdge ByStartVertexEndVertex(GeometryVertex start, GeometryVertex end)
+        public static gEdge ByStartVertexEndVertex(gVertex start, gVertex end)
         {
-            return new GeometryEdge(start, end);
+            return new gEdge(start, end);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        public bool Contains(GeometryVertex vertex)
+        public bool Contains(gVertex vertex)
         {
             return StartVertex.Equals(vertex) || EndVertex.Equals(vertex);
         }
@@ -81,22 +81,22 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        public GeometryVertex GetVertexPair(GeometryVertex vertex)
+        public gVertex GetVertexPair(gVertex vertex)
         {
             return (StartVertex.Equals(vertex)) ? EndVertex : StartVertex;
         }
 
-        public bool IsCoplanarTo(GeometryEdge edge)
+        public bool IsCoplanarTo(gEdge edge)
         {
             // http://mathworld.wolfram.com/Coplanar.html
-            GeometryVector a = this.Direction;
-            GeometryVector b = edge.Direction;
-            GeometryVector c = GeometryVector.ByTwoVertices(this.StartVertex, edge.StartVertex);
+            gVector a = this.Direction;
+            gVector b = edge.Direction;
+            gVector c = gVector.ByTwoVertices(this.StartVertex, edge.StartVertex);
 
             return c.Dot(a.Cross(b)) == 0;
         }
 
-        public GeometryBase Intersection(GeometryEdge other)
+        public gBase Intersection(gEdge other)
         {
             // http://mathworld.wolfram.com/Line-LineIntersection.html
             if (!this.BoundingBox.Intersects(other.BoundingBox)) { return null; }
@@ -115,7 +115,7 @@ namespace GenerativeToolkit.Graphs.Geometry
                 // Not fully inclusive but overlapping
                 else if (this.StartVertex.OnEdge(other) || this.EndVertex.OnEdge(other))
                 {
-                    GeometryVertex[] vertices = new GeometryVertex[4]
+                    gVertex[] vertices = new gVertex[4]
                     {
                         this.StartVertex,
                         this.EndVertex,
@@ -123,7 +123,7 @@ namespace GenerativeToolkit.Graphs.Geometry
                         other.EndVertex
                     };
                     var sorted = vertices.OrderBy(v => v.Y).ThenBy(v => v.X).ThenBy(v => v.Z).ToList();
-                    return GeometryEdge.ByStartVertexEndVertex(sorted[1], sorted[2]);
+                    return gEdge.ByStartVertexEndVertex(sorted[1], sorted[2]);
                 }
                 // Not intersecting
                 else
@@ -138,7 +138,7 @@ namespace GenerativeToolkit.Graphs.Geometry
 
 
             // No coincident nor same extremes
-            var c = GeometryVector.ByTwoVertices(this.StartVertex, other.StartVertex);
+            var c = gVector.ByTwoVertices(this.StartVertex, other.StartVertex);
             var cxb = c.Cross(b);
             var axb = a.Cross(b);
             var dot = cxb.Dot(axb);
@@ -163,7 +163,7 @@ namespace GenerativeToolkit.Graphs.Geometry
             // s == NaN means they are parallels so never intersect
             if (s < 0 || s > 1 || Double.IsNaN(s)) { return null; }
 
-            GeometryVertex intersection = this.StartVertex.Translate(a.Scale(s));
+            gVertex intersection = this.StartVertex.Translate(a.Scale(s));
 
             if (intersection.Equals(other.StartVertex)){ return other.StartVertex; }
             if (intersection.Equals(other.EndVertex)) { return other.EndVertex; }
@@ -175,7 +175,7 @@ namespace GenerativeToolkit.Graphs.Geometry
             return intersection;
         }
 
-        public bool Intersects(GeometryEdge edge)
+        public bool Intersects(gEdge edge)
         {
             if(this.StartVertex.OnEdge(edge) || this.EndVertex.OnEdge(edge))
             {
@@ -187,12 +187,12 @@ namespace GenerativeToolkit.Graphs.Geometry
             return this.Intersection(edge) != null;
         }
 
-        public double DistanceTo(GeometryVertex vertex)
+        public double DistanceTo(gVertex vertex)
         {
             return vertex.DistanceTo(this);
         }
 
-        public double DistanceTo(GeometryEdge edge)
+        public double DistanceTo(gEdge edge)
         {
             // http://mathworld.wolfram.com/Line-LineDistance.html
             if (this.IsCoplanarTo(edge))
@@ -208,8 +208,8 @@ namespace GenerativeToolkit.Graphs.Geometry
             {
                 var a = this.Direction;
                 var b = edge.Direction;
-                var c = GeometryVector.ByTwoVertices(this.StartVertex, edge.StartVertex);
-                GeometryVector cross = a.Cross(b);
+                var c = gVector.ByTwoVertices(this.StartVertex, edge.StartVertex);
+                gVector cross = a.Cross(b);
                 double numerator = c.Dot(cross);
                 double denominator = cross.Length;
                 return Math.Abs(numerator) / Math.Abs(denominator);
@@ -230,7 +230,7 @@ namespace GenerativeToolkit.Graphs.Geometry
         {
             if (obj == null || GetType() != obj.GetType()) { return false; }
 
-            GeometryEdge e= (GeometryEdge)obj;
+            gEdge e= (gEdge)obj;
             if (StartVertex.Equals(e.StartVertex) && EndVertex.Equals(e.EndVertex)) { return true; }
             if (StartVertex.Equals(e.EndVertex) && EndVertex.Equals(e.StartVertex)) { return true; }
             return false;
@@ -256,9 +256,9 @@ namespace GenerativeToolkit.Graphs.Geometry
             return String.Format("gEdge(StartVertex: {0}, EndVertex: {1})", StartVertex, EndVertex);
         }
 
-        internal override GeometryBoundingBox ComputeBoundingBox()
+        internal override gBoundingBox ComputeBoundingBox()
         {
-            return GeometryBoundingBox.ByMinVertexMaxVertex(StartVertex, EndVertex);
+            return gBoundingBox.ByMinVertexMaxVertex(StartVertex, EndVertex);
         }
 
         #endregion
