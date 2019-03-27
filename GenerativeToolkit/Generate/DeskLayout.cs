@@ -9,8 +9,12 @@ using System.Collections;
 
 namespace GenerativeToolkit.Generate
 {
-    public static class DeskLayout
+    class DeskLayout
     {
+        internal DeskLayout()
+        {
+        }
+
         #region Create
         /// <summary>
         /// Creates a layout of desks on a surface based on desk dimensions

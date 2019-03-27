@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenerativeToolkit.Analyse
+namespace GenerativeToolkit.Graphs
 {
-    static class Isovist
+    public class Class1
     {
     }
 }

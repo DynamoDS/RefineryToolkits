@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GenerativeToolkit.Analyse
 {
-    static class Isovist
+    static class ShortestPath
     {
     }
 }
