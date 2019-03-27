@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.DesignScript.Geometry;
+using DynamoElements = Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.Revit.DB;
 using Revit.Elements;
 using RevitElements = Autodesk.Revit.DB;
 using DynamoRevitElements = Revit.Elements;
+using RevitReferences = Revit.References;
 using Revit.GeometryConversion;
 using RevitServices.Persistence;
 using RevitServices.Transactions;
+using Autodesk.DesignScript.Geometry;
 
 namespace GenerativeToolkit
 {
@@ -31,7 +33,7 @@ namespace GenerativeToolkit
         /// <returns name="FloorElements">Revit floor elements.</returns>
         /// <search>refinery</search>
         public static List<List<DynamoRevitElements.Floor>> CreateRevitFloors(
-            Autodesk.DesignScript.Geometry.Surface[][] Floors,
+            DynamoElements.Surface[][] Floors,
             DynamoRevitElements.FloorType FloorType = null, 
             string LevelPrefix = "Dynamo Level")
         {
@@ -64,12 +66,12 @@ namespace GenerativeToolkit
                 if (revitLevel != null)
                 {
                     // Adjust existing level to correct height.
-                    revitLevel.Elevation = BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm;
+                    revitLevel.Elevation = DynamoElements.BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm;
                 }
                 else
                 {
                     // Create new level.
-                    revitLevel = RevitElements.Level.Create(Document, BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm);
+                    revitLevel = RevitElements.Level.Create(Document, DynamoElements.BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm);
                     revitLevel.Name = levelName;
                 }
 
@@ -121,7 +123,7 @@ namespace GenerativeToolkit
         /// <param name="Category">A category for the mass.</param>
         /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
-        public static DynamoRevitElements.DirectShape CreateRevitMass(Autodesk.DesignScript.Geometry.Solid BuildingSolid, DynamoRevitElements.Category Category)
+        public static DynamoRevitElements.DirectShape CreateRevitMass(DynamoElements.Solid BuildingSolid, DynamoRevitElements.Category Category)
         {
             if (BuildingSolid == null)
             {
