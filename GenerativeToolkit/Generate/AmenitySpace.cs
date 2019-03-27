@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
-    [IsVisibleInDynamoLibrary(false)]
+    //[IsVisibleInDynamoLibrary(false)]
     public static class AmenitySpace
     {
         #region Create
@@ -20,7 +20,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="offset"></param>
         /// <param name="depth"></param>
         /// <search></search>
-        [IsVisibleInDynamoLibrary(true)]
+        //[IsVisibleInDynamoLibrary(true)]
         [MultiReturn(new[] { "amenitySrf", "remainSrf" })]
         public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(Autodesk.DesignScript.Geometry.Surface surface, double offset, double depth)
         {

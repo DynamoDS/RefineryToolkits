@@ -11,7 +11,6 @@ namespace GenerativeToolkit.Generate
 {
     public static class DeskLayout
     {
-
         #region Create
         /// <summary>
         /// Creates a layout of desks on a surface based on desk dimensions
@@ -21,7 +20,6 @@ namespace GenerativeToolkit.Generate
         /// <param name="deskDepth">the depth of the desks in mm</param>
         /// <param name="backToBack">the distance in mm between two desks where the people sat at them are back to back</param>
         /// <search></search>
-        [IsVisibleInDynamoLibrary(true)]
         public static object Create(Autodesk.DesignScript.Geometry.Surface surface, double deskWidth = 1400, double deskDepth = 800, double backToBack = 2200)
         {
             Surface boundingSrf = Autodesk.GenerativeToolkit.Utilities.Surface.BoundingSurface(surface);
