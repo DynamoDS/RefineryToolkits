@@ -129,5 +129,75 @@ namespace GenerativeToolkit
                 {"Heights", heights}
             };
         }
+
+        /// <summary>
+        /// Calculate line of sight distances from a grid of points on a surface.
+        /// </summary>
+        /// <param name="Surface">Surface, such as building's facade, to search from.</param>
+        /// <param name="Context">Objects to calculate distance to.</param>
+        /// <param name="Resolution">Distance between sampling points.</param>
+        /// <param name="MaxDistance">Maximum distance to search.</param>
+        /// <returns name="Points">Sampling points.</returns>
+        /// <returns name="Distances">Distance from each sampling point along surface normal to the closest context geometry.</returns>
+        /// <returns name="Geometry">Colored surfaces mapping view distance.</returns>
+        [MultiReturn(new[] { "Points", "Distances", "Geometry" })]
+        public static Dictionary<string, object> SiteViewDistance(Surface Surface, Geometry[] Context, double Resolution = 3, double MaxDistance = 50)
+        {
+            int uCount = (int)Math.Ceiling(Surface.GetIsoline(0, 0.5).Length / Resolution);
+            int vCount = (int)Math.Ceiling(Surface.GetIsoline(1, 0.5).Length / Resolution);
+
+            var points = new Point[uCount][];
+            var distances = new double[uCount][];
+            var colors = new DSCore.Color[uCount][];
+            
+            Vector normal = null;
+            Point point = null;
+            Geometry[] projected = null;
+
+            for (var i = 0; i < uCount; i++)
+            {
+                points[i] = new Point[vCount];
+                distances[i] = new double[vCount];
+                colors[i] = new DSCore.Color[vCount];
+
+                for (var j = 0; j < vCount; j++)
+                {
+                    normal = Surface.NormalAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
+                    point = Surface.PointAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
+
+                    var distance = Context.Select(c =>
+                    {
+                        projected = point.Project(c, normal);
+
+                        if (projected != null && projected.Length > 0)
+                        {
+                            return projected.Select(p => point.DistanceTo(p)).Min();
+                        }
+                        else
+                        {
+                            return MaxDistance;
+                        }
+                    }).Min();
+
+                    points[i][j] = point;
+                    distances[i][j] = distance;
+
+                    int color = (int)(distance / MaxDistance * 255);
+                    colors[i][j] = DSCore.Color.ByARGB(255, 255, color, 255);
+                }
+            }
+
+            var geometry = Modifiers.GeometryColor.BySurfaceColors(Surface, colors);
+            
+            normal?.Dispose();
+            projected?.ForEach(x => x.Dispose());
+
+            return new Dictionary<string, object>
+            {
+                {"Points", points},
+                {"Distances", distances},
+                {"Geometry",  geometry}
+            };
+        }
     }
 }

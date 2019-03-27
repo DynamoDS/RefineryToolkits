@@ -54,12 +54,20 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DSCoreNodes">
+      <HintPath>..\..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\DSCoreNodes.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DynamoServices, Version=2.1.0.7465, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.1.0.7465\lib\net47\DynamoServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DynamoUnits, Version=2.1.0.7465, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.1.0.7465\lib\net47\DynamoUnits.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GeometryColor">
+      <HintPath>..\..\..\..\..\..\Program Files\Dynamo\Dynamo Core\2\GeometryColor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ProtoGeometry, Version=2.1.0.23964, Culture=neutral, processorArchitecture=MSIL">
