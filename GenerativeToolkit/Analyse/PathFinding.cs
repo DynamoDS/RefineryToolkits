@@ -26,20 +26,17 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <returns name="path">Graph representing the shortest path</returns>
         /// <returns name="length">Length of path</returns>
         [MultiReturn(new[] { "path", "length" })]
-        [IsVisibleInDynamoLibrary(true)]
-        public static Dictionary<string, object> ShortestPath(List<DSPolygon> boundary, List<DSPolygon> internals, DSPoint origin, DSPoint destination)
+        public static Dictionary<string, object> ShortestPath(Visibility visibility, DSPoint origin, DSPoint destination)
         {
-            BaseGraph graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
-            Visibility visGraph = Visibility.ByBaseGraph(graph);
 
-            if (visGraph == null) { throw new ArgumentNullException("visGraph"); }
+            if (visibility == null) { throw new ArgumentNullException("visibility"); }
             if (origin == null) { throw new ArgumentNullException("origin"); }
             if (destination == null) { throw new ArgumentNullException("destination"); }
 
             GeometryVertex gOrigin = GeometryVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
             GeometryVertex gDestination = GeometryVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
 
-            VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
+            VisibilityGraph visibilityGraph = visibility.graph as VisibilityGraph;
 
             BaseGraph baseGraph = new BaseGraph()
             {
@@ -54,11 +51,24 @@ namespace Autodesk.GenerativeToolkit.Analyse
         }
 
         /// <summary>
+        /// Returns a VisibilityGraph which is used as input for ShortestPath
+        /// </summary>
+        /// <param name="boundary"></param>
+        /// <param name="internals"></param>
+        /// <returns name = "visGraph">VisibilityGraph for use in ShortestPath</returns>
+        public static Visibility CreateVisibilityGraph(List<DSPolygon> boundary, List<DSPolygon> internals)
+        {
+            BaseGraph graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
+            Visibility visGraph = Visibility.ByBaseGraph(graph);
+
+            return visGraph;
+        }
+
+        /// <summary>
         /// Returns the input graph as a list of lines
         /// </summary>
         /// <returns name="lines">List of lines representing the graph.</returns>
         [NodeCategory("Query")]
-        [IsVisibleInDynamoLibrary(true)]
         public static List<Line> Lines(BaseGraph path)
         {
             List<Line> lines = new List<Line>();
