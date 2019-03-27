@@ -102,9 +102,6 @@
       <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.1.0.7465\lib\net47\GeometryColor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="GraphicalDynamo">
-      <HintPath>..\packages\GraphicalDynamo.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
       <Private>False</Private>
@@ -164,13 +161,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyse\AdjacencyPreference.cs" />
+    <Compile Include="Analyse\Base.cs" />
     <Compile Include="Analyse\Buzz.cs" />
     <Compile Include="Analyse\Daylight.cs" />
     <Compile Include="Analyse\Isovist.cs" />
     <Compile Include="Analyse\Productivity.cs" />
-    <Compile Include="Analyse\ShortestPath.cs" />
+    <Compile Include="Analyse\PathFinding.cs" />
     <Compile Include="Analyse\SpaceNavigation.cs" />
     <Compile Include="Analyse\ViewsToOutside.cs" />
+    <Compile Include="Analyse\Visibility.cs" />
+    <Compile Include="Analyse\VisiblePoints.cs" />
     <Compile Include="Evaluate\Class1.cs" />
     <Compile Include="Explore\ColorRange.cs" />
     <Compile Include="Generate\AmenitySpace.cs" />
@@ -178,14 +178,12 @@
     <Compile Include="Generate\DeskLayout.cs" />
     <Compile Include="Utilities\GenerativeToolkitGeometry.cs" />
     <Compile Include="Utilities\GenerativeToolkitList.cs" />
-    <Compile Include="xOld\Layouts\BinPacking2D - Copy.cs" />
     <Compile Include="Generate\BinPacking2D.cs" />
-    <Compile Include="xOld\Layouts\ShelfAlgorithms.cs" />
     <Compile Include="Generate\SurfaceDivision2D.cs" />
-    <Compile Include="xOld\Navigation\PathFinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="xOld\Utilities\ColorRange.cs" />
     <Compile Include="Rank\SeededShuffle.cs" />
+    <Compile Include="Utilities\GraphicalGeometry\Curves.cs" />
+    <Compile Include="Utilities\GraphicalGeometry\Points.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -196,8 +194,6 @@
   <ItemGroup>
     <Folder Include="HelperFunctions\" />
     <Folder Include="Integrate\" />
-    <Folder Include="xOld\Relationships\" />
-    <Folder Include="xOld\Visibility\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GenerativeToolkit.Graphs\GenerativeToolkit.Graphs.csproj">
