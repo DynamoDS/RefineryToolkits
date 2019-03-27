@@ -9,7 +9,7 @@ using GenerativeToolkit.Graphs.Extensions;
 using System.Diagnostics;
 #endregion
 
-namespace GenerativeToolkit.Graphs.Graphs
+namespace GenerativeToolkit.Graphs
 {
     /// <summary>
     /// Construction of VisibilityGraph Graph
@@ -28,9 +28,9 @@ namespace GenerativeToolkit.Graphs.Graphs
             baseGraph = new Graph();
         }
 
-        public VisibilityGraph(Graph _baseGraph, bool reducedGraph, bool halfScan = true) : base()
+        public VisibilityGraph(Graph inputGraph, bool reducedGraph, bool halfScan = true) : base()
         {
-            baseGraph = _baseGraph;
+            baseGraph = inputGraph;
 
             List<GeometryEdge> resultEdges = VisibilityAnalysis(baseGraph, baseGraph.vertices, reducedGraph, halfScan);
 

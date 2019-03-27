@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using GenerativeToolkit.Graphs.Geometry;
 #endregion
 
-namespace GenerativeToolkit.Graphs.Graphs
+namespace GenerativeToolkit.Graphs
 {
     
     /// <summary>
@@ -21,7 +21,7 @@ namespace GenerativeToolkit.Graphs.Graphs
         /// <summary>
         /// GUID to verify uniqueness of graph when cloned
         /// </summary>
-        internal Guid graphID { get; private set; }
+        internal Guid Id { get; private set; }
 
         /// <summary>
         /// Polygons dictionary with their Id as dictionary key
@@ -59,13 +59,13 @@ namespace GenerativeToolkit.Graphs.Graphs
         public Graph()
         {
             edges = new List<GeometryEdge>();
-            graphID = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
         public Graph(List<GeometryPolygon> gPolygonsSet)
         {
             edges = new List<GeometryEdge>();
-            graphID = Guid.NewGuid();
+            Id = Guid.NewGuid();
             //Setting up Graph instance by adding vertices, edges and polygons
             foreach(GeometryPolygon gPolygon in gPolygonsSet)
             {
