@@ -10,7 +10,7 @@ using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using GenerativeToolkit.Graphs.Geometry;
 using GenerativeToolkit.Graphs.Extensions;
-using GenerativeToolkit.Graphs.Graphs;
+using GenerativeToolkit.Graphs;
 using Autodesk.GenerativeToolkit.Analyse;
 
 namespace Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry
@@ -24,9 +24,9 @@ namespace Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry
     {
         #region Internal Methods
         [IsVisibleInDynamoLibrary(false)]
-        internal static gEdge ToEdge(this Autodesk.DesignScript.Geometry.Line line)
+        internal static GeometryEdge ToEdge(this Autodesk.DesignScript.Geometry.Line line)
         {
-            return gEdge.ByStartVertexEndVertex(line.StartPoint.ToVertex(), line.EndPoint.ToVertex());
+            return GeometryEdge.ByStartVertexEndVertex(line.StartPoint.ToVertex(), line.EndPoint.ToVertex());
         }
         #endregion
     }
