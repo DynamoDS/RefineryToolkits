@@ -12,12 +12,9 @@ namespace GenerativeToolkit.Graphs.Geometry
     /// <summary>
     /// Representation of vertex points on a graph.
     /// </summary>
-    public class gVertex : gBase, ICloneable, IEquatable<gVertex>
+    public class GeometryVertex : GeometryBase, ICloneable, IEquatable<GeometryVertex>
     {
         #region Internal Properties
-        internal double? thrX;
-        internal double? thrY;
-        internal double? thrZ;
         #endregion
 
         #region Properties
@@ -30,7 +27,7 @@ namespace GenerativeToolkit.Graphs.Geometry
         #endregion
 
         #region Internal/Private Constructors
-        private gVertex(double x, double y, double z = 0, int pId = -1)
+        private GeometryVertex(double x, double y, double z = 0, int pId = -1)
         {
             polygonId = pId;
             X = x.Round();
@@ -38,9 +35,9 @@ namespace GenerativeToolkit.Graphs.Geometry
             Z = z.Round();
         }
 
-        internal static gVertex ByCoordinatesArray(double[] array)
+        internal static GeometryVertex ByCoordinatesArray(double[] array)
         {
-            return new gVertex(array[0], array[1], array[3]);
+            return new GeometryVertex(array[0], array[1], array[3]);
         }
         #endregion
         #region Public Constructors
@@ -51,9 +48,9 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <param name="y"></param>
         /// <param name="z"></param>
         /// <returns></returns>
-        public static gVertex ByCoordinates(double x, double y, double z = 0)
+        public static GeometryVertex ByCoordinates(double x, double y, double z = 0)
         {
-            return new gVertex(x, y, z);
+            return new GeometryVertex(x, y, z);
         }
 
         /// <summary>
@@ -62,26 +59,26 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <returns name="midVertex"></returns>
-        public static gVertex MidVertex ( gVertex v1, gVertex v2)
+        public static GeometryVertex MidVertex ( GeometryVertex v1, GeometryVertex v2)
         {
             double x = (v1.X + v2.X) / 2, y = (v1.Y + v2.Y) / 2, z = (v1.Z + v2.Z) / 2;
-            return new gVertex(x, y, z);
+            return new GeometryVertex(x, y, z);
         }
 
-        public static gVertex Origin()
+        public static GeometryVertex Origin()
         {
-            return new gVertex(0, 0, 0);
+            return new GeometryVertex(0, 0, 0);
         }
         #endregion
                 
-        public static List<gVertex> OrderByRadianAndDistance (List<gVertex> vertices, gVertex centre = null)
+        public static List<GeometryVertex> OrderByRadianAndDistance (List<GeometryVertex> vertices, GeometryVertex centre = null)
         {
-            if(centre == null) { centre = gVertex.MinimumVertex(vertices); }
+            if(centre == null) { centre = GeometryVertex.MinimumVertex(vertices); }
             return vertices.OrderBy(v => RadAngle(centre, v)).ThenBy(v => centre.DistanceTo(v)).ToList();
             
         }
 
-        public static int Orientation(gVertex v1, gVertex p2, gVertex p3, string plane = "xy")
+        public static int Orientation(GeometryVertex v1, GeometryVertex p2, GeometryVertex p3, string plane = "xy")
         {
             // See https://www.geeksforgeeks.org/orientation-3-ordered-points/
             // for details of below formula.
@@ -106,7 +103,7 @@ namespace GenerativeToolkit.Graphs.Geometry
             return (value > 0) ? 1 : -1; //Counter clock or clock wise
         }
 
-        public static double RadAngle(gVertex centre, gVertex vertex)
+        public static double RadAngle(GeometryVertex centre, GeometryVertex vertex)
         {
             //Rad angles http://math.rice.edu/~pcmi/sphere/drg_txt.html
             double dx = vertex.X - centre.X;
@@ -145,7 +142,7 @@ namespace GenerativeToolkit.Graphs.Geometry
             return Math.Atan(dy / dx);
         }
 
-        public static double ArcRadAngle (gVertex centre, gVertex start, gVertex end)
+        public static double ArcRadAngle (GeometryVertex centre, GeometryVertex start, GeometryVertex end)
         {
             double a = Math.Pow((end.X - centre.X), 2) + Math.Pow((end.Y - centre.Y), 2);
             double b = Math.Pow((end.X - start.X), 2) + Math.Pow((end.Y - start.Y), 2);
@@ -153,50 +150,50 @@ namespace GenerativeToolkit.Graphs.Geometry
             return Math.Acos((a + c - b) / (2 * Math.Sqrt(a) * Math.Sqrt(c)));
         }
 
-        internal static gVertex MinimumVertex(List<gVertex> vertices)
+        internal static GeometryVertex MinimumVertex(List<GeometryVertex> vertices)
         {
             return vertices.OrderBy(v => v.Y).ThenBy(v => v.X).ThenBy(v => v.Z).ToList().First();
         }
 
-        public double DistanceTo(gVertex vertex)
+        public double DistanceTo(GeometryVertex vertex)
         {
             return Math.Sqrt(Math.Pow(vertex.X - X, 2) + Math.Pow(vertex.Y - Y, 2) + Math.Pow(vertex.Z - Z, 2));
         }
 
-        public double DistanceTo(gEdge edge)
+        public double DistanceTo(GeometryEdge edge)
         {
             // http://mathworld.wolfram.com/Point-LineDistance3-Dimensional.html
-            gVector v1 = gVector.ByTwoVertices(this, edge.StartVertex);
-            gVector v2 = gVector.ByTwoVertices(this, edge.EndVertex);
-            gVector numerator = v1.Cross(v2);
-            gVector denominator = gVector.ByTwoVertices(edge.EndVertex, edge.StartVertex);
+            GeometryVector v1 = GeometryVector.ByTwoVertices(this, edge.StartVertex);
+            GeometryVector v2 = GeometryVector.ByTwoVertices(this, edge.EndVertex);
+            GeometryVector numerator = v1.Cross(v2);
+            GeometryVector denominator = GeometryVector.ByTwoVertices(edge.EndVertex, edge.StartVertex);
             return numerator.Length / denominator.Length;
         }
         
-        public gVertex Translate(gVector vector)
+        public GeometryVertex Translate(GeometryVector vector)
         {
-            return gVertex.ByCoordinates(this.X + vector.X, this.Y + vector.Y, this.Z + vector.Z);
+            return GeometryVertex.ByCoordinates(this.X + vector.X, this.Y + vector.Y, this.Z + vector.Z);
         }
 
-        public gVertex Translate(gVector vector, double distance)
+        public GeometryVertex Translate(GeometryVector vector, double distance)
         {
-            gVector normalized = vector.Normalized();
-            gVector distVector = normalized * distance;
+            GeometryVector normalized = vector.Normalized();
+            GeometryVector distVector = normalized * distance;
             return this.Translate(distVector);
         }
 
-        public bool OnEdge(gEdge edge)
+        public bool OnEdge(GeometryEdge edge)
         {
             return this.OnEdge(edge.StartVertex, edge.EndVertex);
         }
 
-        public bool OnEdge(gVertex start, gVertex end)
+        public bool OnEdge(GeometryVertex start, GeometryVertex end)
         {
             if(this.Equals(start) || this.Equals(end)) { return true; }
             // https://www.lucidarme.me/check-if-a-point-belongs-on-a-line-segment/
-            gVector startEnd = gVector.ByTwoVertices(start, end);
-            gVector startMid = gVector.ByTwoVertices(start, this);
-            gVector endMid = gVector.ByTwoVertices(this, end);
+            GeometryVector startEnd = GeometryVector.ByTwoVertices(start, end);
+            GeometryVector startMid = GeometryVector.ByTwoVertices(start, this);
+            GeometryVector endMid = GeometryVector.ByTwoVertices(this, end);
             if (!startMid.IsParallelTo(endMid)){ return false; } // Not aligned
             double dotAC = startEnd.Dot(startMid);
             double dotAB = startEnd.Dot(startEnd);
@@ -208,19 +205,19 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="vertices"></param>
         /// <returns>Boolean</returns>
-        public static bool Coplanar(List<gVertex> vertices)
+        public static bool Coplanar(List<GeometryVertex> vertices)
         {
             // https://math.stackexchange.com/questions/1330357/show-that-four-points-are-coplanar
             if (!vertices.Any()) { throw new ArgumentOutOfRangeException("vertices", "Vertices list cannot be empty"); }
             if (vertices.Count <= 3) { return true; }
-            gVector ab = gVector.ByTwoVertices(vertices[0], vertices[1]);
-            gVector ac = gVector.ByTwoVertices(vertices[0], vertices[2]);
-            gVector cross = ab.Cross(ac);
+            GeometryVector ab = GeometryVector.ByTwoVertices(vertices[0], vertices[1]);
+            GeometryVector ac = GeometryVector.ByTwoVertices(vertices[0], vertices[2]);
+            GeometryVector cross = ab.Cross(ac);
 
-            return vertices.Skip(3).All(vtx => gVector.ByTwoVertices(vertices[0], vtx).Dot(cross).AlmostEqualTo(0));
+            return vertices.Skip(3).All(vtx => GeometryVector.ByTwoVertices(vertices[0], vtx).Dot(cross).AlmostEqualTo(0));
         }
 
-        internal static bool OnEdgeProjection(gVertex start, gVertex point, gVertex end, string plane = "xy")
+        internal static bool OnEdgeProjection(GeometryVertex start, GeometryVertex point, GeometryVertex end, string plane = "xy")
         {
             double x = point.X, y = point.Y, z = point.Z;
             double sX = start.X, sY = start.Y, sZ = start.Z;
@@ -249,7 +246,7 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         /// <param name="obj"></param>
         /// <returns>Boolean</returns>
-        public bool Equals(gVertex obj)
+        public bool Equals(GeometryVertex obj)
         {
             if (obj == null) { return false; }
             bool eq = this.X.AlmostEqualTo(obj.X) && this.Y.AlmostEqualTo(obj.Y) && this.Z.AlmostEqualTo(obj.Z);
@@ -294,14 +291,14 @@ namespace GenerativeToolkit.Graphs.Geometry
         /// </summary>
         public object Clone()
         {
-            gVertex newVertex = new gVertex(this.X, this.Y, this.Z, this.polygonId);
+            GeometryVertex newVertex = new GeometryVertex(this.X, this.Y, this.Z, this.polygonId);
 
             return newVertex;
         }
 
-        internal override gBoundingBox ComputeBoundingBox()
+        internal override GeometryBoundingBox ComputeBoundingBox()
         {
-            return gBoundingBox.ByMinVertexMaxVertex(this, this);
+            return GeometryBoundingBox.ByMinVertexMaxVertex(this, this);
         }
 
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DSPolygon = Autodesk.DesignScript.Geometry.Polygon;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using graphs = GenerativeToolkit.Graphs;
+using GenerativeToolkit.Graphs;
 using Dynamo.Graph.Nodes;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
@@ -30,20 +30,20 @@ namespace Autodesk.GenerativeToolkit.Analyse
         public static Dictionary<string, object> ShortestPath(List<DSPolygon> boundary, List<DSPolygon> internals, DSPoint origin, DSPoint destination)
         {
             BaseGraph graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
-            VisibilityGraph visGraph = VisibilityGraph.ByBaseGraph(graph);
+            Visibility visGraph = Visibility.ByBaseGraph(graph);
 
             if (visGraph == null) { throw new ArgumentNullException("visGraph"); }
             if (origin == null) { throw new ArgumentNullException("origin"); }
             if (destination == null) { throw new ArgumentNullException("destination"); }
 
-            gVertex gOrigin = gVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
-            gVertex gDestination = gVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
+            GeometryVertex gOrigin = GeometryVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
+            GeometryVertex gDestination = GeometryVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
 
-            graphs.Graphs.VisibilityGraph visibilityGraph = visGraph.graph as graphs.Graphs.VisibilityGraph;
+            VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
 
             BaseGraph baseGraph = new BaseGraph()
             {
-                graph = graphs.Graphs.VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination)
+                graph = VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination)
             };
 
             return new Dictionary<string, object>()
@@ -62,7 +62,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         public static List<Line> Lines(BaseGraph path)
         {
             List<Line> lines = new List<Line>();
-            foreach (gEdge edge in path.graph.edges)
+            foreach (GeometryEdge edge in path.graph.edges)
             {
                 var start = Points.ToPoint(edge.StartVertex);
                 var end = Points.ToPoint(edge.EndVertex);
