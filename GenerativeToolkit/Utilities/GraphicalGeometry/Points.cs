@@ -24,12 +24,12 @@ namespace Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry
 
         #region Internal Methods
         [IsVisibleInDynamoLibrary(false)]
-        internal static gVertex ToVertex(this DSPoint point)
+        internal static GeometryVertex ToVertex(this DSPoint point)
         {
-            return gVertex.ByCoordinates(point.X, point.Y, point.Z);
+            return GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
         }
 
-        internal static DSPoint ToPoint(this gVertex vertex)
+        internal static DSPoint ToPoint(this GeometryVertex vertex)
         {
             return DSPoint.ByCoordinates(vertex.X, vertex.Y, vertex.Z);
         }
