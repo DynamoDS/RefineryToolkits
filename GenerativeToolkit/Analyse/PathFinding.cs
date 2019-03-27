@@ -36,8 +36,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
             if (origin == null) { throw new ArgumentNullException("origin"); }
             if (destination == null) { throw new ArgumentNullException("destination"); }
 
-            gVertex gOrigin = gVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
-            gVertex gDestination = gVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
+            GeometryVertex gOrigin = GeometryVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
+            GeometryVertex gDestination = GeometryVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
 
             graphs.Graphs.VisibilityGraph visibilityGraph = visGraph.graph as graphs.Graphs.VisibilityGraph;
 
@@ -62,7 +62,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         public static List<Line> Lines(BaseGraph path)
         {
             List<Line> lines = new List<Line>();
-            foreach (gEdge edge in path.graph.edges)
+            foreach (GeometryEdge edge in path.graph.edges)
             {
                 var start = Points.ToPoint(edge.StartVertex);
                 var end = Points.ToPoint(edge.EndVertex);

@@ -33,9 +33,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
             if (baseGraph == null) { throw new ArgumentNullException("graph"); }
             if (point == null) { throw new ArgumentNullException("point"); }
 
-            gVertex origin = gVertex.ByCoordinates(point.X, point.Y, point.Z);
+            GeometryVertex origin = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            List<gVertex> vertices = graphs.VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            List<GeometryVertex> vertices = graphs.VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<DSPoint> points = vertices.Select(v => Points.ToPoint(v)).ToList();
             // TODO: Implement better way of checking if polygon is self intersectingç
 
