@@ -12,9 +12,8 @@ using System.Globalization;
 using GenerativeToolkit.Graphs.Geometry;
 using Dynamo.Graph.Nodes;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
-using GenerativeToolkit.Graphs.Core;
 using System.Drawing;
-using graphs = GenerativeToolkit.Graphs.Graphs;
+using GenerativeToolkit.Graphs;
 #endregion
 
 namespace Autodesk.GenerativeToolkit.Analyse
@@ -26,7 +25,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
     public class BaseGraph : IGraphicItem
     {
         #region Internal Properties
-        internal graphs.Graph graph { get; set; }
+        internal Graph graph { get; set; }
         internal DSCore.Color edgeDefaultColour = DSCore.Color.ByARGB(255, 150, 200, 255);
         internal DSCore.Color vertexDefaultColour = DSCore.Color.ByARGB(255, 75, 125, 180);
 
@@ -42,7 +41,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         [NodeCategory("Query")]
         public static bool IsVisibilityGraph(BaseGraph graph)
         {
-            return graph.GetType() == typeof(graphs.VisibilityGraph);
+            return graph.GetType() == typeof(Visibility);
         }
 
         #endregion
@@ -50,9 +49,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
         #region Internal Constructors
         internal BaseGraph() { }
 
-        internal BaseGraph(List<gPolygon> gPolygons)
+        internal BaseGraph(List<GeometryPolygon> gPolygons)
         {
-            graph = new graphs.Graph(gPolygons);
+            graph = new Graph(gPolygons);
         }
         #endregion
 
@@ -69,18 +68,18 @@ namespace Autodesk.GenerativeToolkit.Analyse
         {
             if (boundaries == null) { throw new NullReferenceException("boundaryPolygons"); }
             if (internals == null) { throw new NullReferenceException("internalPolygons"); }
-            List<gPolygon> input = new List<gPolygon>();
+            List<GeometryPolygon> input = new List<GeometryPolygon>();
             foreach (Polygon pol in boundaries)
             {
-                var vertices = pol.Points.Select(pt => gVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                gPolygon gPol = gPolygon.ByVertices(vertices, true);
+                var vertices = pol.Points.Select(pt => GeometryVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
+                GeometryPolygon gPol = GeometryPolygon.ByVertices(vertices, true);
                 input.Add(gPol);
             }
 
             foreach (Polygon pol in internals)
             {
-                var vertices = pol.Points.Select(pt => gVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                gPolygon gPol = gPolygon.ByVertices(vertices, false);
+                var vertices = pol.Points.Select(pt => GeometryVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
+                GeometryPolygon gPol = GeometryPolygon.ByVertices(vertices, false);
                 input.Add(gPol);
             }
 
@@ -96,11 +95,11 @@ namespace Autodesk.GenerativeToolkit.Analyse
         public static BaseGraph ByPolygons(List<Polygon> polygons)
         {
             if (polygons == null) { throw new NullReferenceException("polygons"); }
-            List<gPolygon> input = new List<gPolygon>();
+            List<GeometryPolygon> input = new List<GeometryPolygon>();
             foreach (Polygon pol in polygons)
             {
-                var vertices = pol.Points.Select(pt => gVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                gPolygon gPol = gPolygon.ByVertices(vertices, false);
+                var vertices = pol.Points.Select(pt => GeometryVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
+                GeometryPolygon gPol = GeometryPolygon.ByVertices(vertices, false);
                 input.Add(gPol);
             }
 
@@ -118,14 +117,14 @@ namespace Autodesk.GenerativeToolkit.Analyse
             if (lines == null) { throw new NullReferenceException("lines"); }
             BaseGraph g = new BaseGraph()
             {
-                graph = new graphs.Graph()
+                graph = new Graph()
             };
 
             foreach (Line line in lines)
             {
-                gVertex start = Points.ToVertex(line.StartPoint);
-                gVertex end = Points.ToVertex(line.EndPoint);
-                g.graph.AddEdge(gEdge.ByStartVertexEndVertex(start, end));
+                GeometryVertex start = Points.ToVertex(line.StartPoint);
+                GeometryVertex end = Points.ToVertex(line.EndPoint);
+                g.graph.AddEdge(GeometryEdge.ByStartVertexEndVertex(start, end));
             }
             return g;
         }
@@ -150,9 +149,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
         [IsVisibleInDynamoLibrary(false)]
         public void Tessellate(IRenderPackage package, TessellationParameters parameters)
         {
-            if (this.GetType() == typeof(VisibilityGraph))
+            if (this.GetType() == typeof(Visibility))
             {
-                VisibilityGraph visGraph = this as VisibilityGraph;
+                Visibility visGraph = this as Visibility;
                 if (visGraph.Factors != null && visGraph.colorRange != null)
                 {
                     visGraph.TessellateVisibilityGraph(package, parameters);
@@ -172,24 +171,24 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
         internal void TesselateBaseGraph(IRenderPackage package, TessellationParameters parameters)
         {
-            foreach (gVertex v in graph.vertices)
+            foreach (GeometryVertex v in graph.vertices)
             {
                 AddColouredVertex(package, v, vertexDefaultColour);
             }
 
-            foreach (gEdge e in graph.edges)
+            foreach (GeometryEdge e in graph.edges)
             {
                 AddColouredEdge(package, e, edgeDefaultColour);
             }
         }
 
-        internal static void AddColouredVertex(IRenderPackage package, gVertex vertex, DSCore.Color color)
+        internal static void AddColouredVertex(IRenderPackage package, GeometryVertex vertex, DSCore.Color color)
         {
             package.AddPointVertex(vertex.X, vertex.Y, vertex.Z);
             package.AddPointVertexColor(color.Red, color.Green, color.Blue, color.Alpha);
         }
 
-        internal static void AddColouredEdge(IRenderPackage package, gEdge edge, DSCore.Color color)
+        internal static void AddColouredEdge(IRenderPackage package, GeometryEdge edge, DSCore.Color color)
         {
             package.AddLineStripVertex(edge.StartVertex.X, edge.StartVertex.Y, edge.StartVertex.Z);
             package.AddLineStripVertex(edge.EndVertex.X, edge.EndVertex.Y, edge.EndVertex.Z);

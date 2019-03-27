@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using graphs = GenerativeToolkit.Graphs.Graphs;
+using GenerativeToolkit.Graphs;
 
 namespace Autodesk.GenerativeToolkit.Analyse
 {
@@ -33,9 +33,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
             if (baseGraph == null) { throw new ArgumentNullException("graph"); }
             if (point == null) { throw new ArgumentNullException("point"); }
 
-            gVertex origin = gVertex.ByCoordinates(point.X, point.Y, point.Z);
+            GeometryVertex origin = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            List<gVertex> vertices = graphs.VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            List<GeometryVertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<DSPoint> points = vertices.Select(v => Points.ToPoint(v)).ToList();
             // TODO: Implement better way of checking if polygon is self intersectingç
 
