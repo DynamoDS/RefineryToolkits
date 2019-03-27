@@ -2,7 +2,7 @@
   "Uuid": "6928daca-3136-459f-8803-2148dba357b6",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "Building Generator - Revit - Imperial",
+  "Name": "Building Generator - Sandbox",
   "ElementResolver": {
     "ResolutionMap": {
       "Point": {
@@ -15,29 +15,9 @@
   "Outputs": [],
   "Nodes": [
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.DesignScript.Geometry.Plane.XY",
-      "Id": "ea6d2575fda7435a82a20b3995988050",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "edcb70e199224b5889b54a9a8d050626",
-          "Name": "Plane",
-          "Description": "Plane",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Creates a plane in the world XY\n\nPlane.XY ( ): Plane"
-    },
-    {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
-      "InputValue": true,
+      "InputValue": false,
       "Id": "1f3615a504394e92b80abf8b3e2efa35",
       "Inputs": [],
       "Outputs": [
@@ -1074,7 +1054,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
-      "InputValue": false,
+      "InputValue": true,
       "Id": "e8ab3607e52f44c1b23bc17f75b0a451",
       "Inputs": [],
       "Outputs": [
@@ -1166,246 +1146,6 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Buildings.SelectBuildingType@int",
-      "Id": "86abbda5d39a4237b99cc4cd8890f344",
-      "Inputs": [
-        {
-          "Id": "b8450b65222b4d249d5995e50b6593a3",
-          "Name": "ShapeIndex",
-          "Description": "Select building type by index (U, L, H, O, D).\n\nint\nDefault value : 0",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "fe2af6daedf74362a83dfbc79e19a75e",
-          "Name": "string",
-          "Description": "string",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Typology selection\n\nBuildings.SelectBuildingType (ShapeIndex: int = 0): string"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Buildings.BuildingGenerator@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,double,double,bool,bool,double,double,double",
-      "Id": "d5d71bd9eccd4daf95135785af968a37",
-      "Inputs": [
-        {
-          "Id": "e95c73c6ec05487cb14e42f24b6b58e8",
-          "Name": "BasePlane",
-          "Description": "The building base plane.\n\nPlane",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "b2c3727f4de04c93a4bfb0c26db0faa3",
-          "Name": "Type",
-          "Description": "Building type (U, L, H, O, or D).\n\nstring\nDefault value : \"L\"",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "ec5e91f655584cc3a0b88fc2b052c7b7",
-          "Name": "Length",
-          "Description": "Overall building length.\n\ndouble\nDefault value : 40",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "8f40108ef02944de82967455ea5a512c",
-          "Name": "Width",
-          "Description": "Overall building width.\n\ndouble\nDefault value : 40",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "32e1c7c3f0f044cb9d198de863b7feea",
-          "Name": "Depth",
-          "Description": "Building depth.\n\ndouble\nDefault value : 6",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "a62e281f6c4d4f47955b30911ef16e74",
-          "Name": "BldgArea",
-          "Description": "Target gross building area.\n\ndouble\nDefault value : 1000",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "b5117dc9ec974f0e8c58df78861cb73f",
-          "Name": "FloorHeight",
-          "Description": "Height of the floor.\n\ndouble\nDefault value : 3",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "8da0a31bb20c4d518aecd1417ea30b98",
-          "Name": "IsCurved",
-          "Description": "Should sides of building be curved or faceted?\n\nbool\nDefault value : false",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "43a1291676f1426aa11a8d1802b3dd59",
-          "Name": "CreateCore",
-          "Description": "Create core volumes and subtractions?\n\nbool\nDefault value : true",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "4fdfb139bb6445d3b8dcdf61a0125ed2",
-          "Name": "HallwayToDepth",
-          "Description": "Core sizing logic: ratio between building depth and width of hallways on either side of core.\n\ndouble\nDefault value : 0.1",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "efd32a998fef40819cdd9e6375a864d7",
-          "Name": "CoreSizeFactorFloors",
-          "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 4",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "9b5bc06de78d4986948a94e52fc5f29f",
-          "Name": "CoreSizeFactorArea",
-          "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 0.1",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "82a80326e0b2485b94c91057e6f329cb",
-          "Name": "BuildingSolid",
-          "Description": "Building volume.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "f6a9d8432a6d4a7b8406d16cf92594af",
-          "Name": "Floors",
-          "Description": "Building floor surfaces.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "f7eb8792c0064b6abadba7008167ad19",
-          "Name": "NetFloors",
-          "Description": "Building floor surfaces with core removed.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "5d6143a4d0b642bc977acef3d9bd0f43",
-          "Name": "FloorElevations",
-          "Description": "Elevation of each floor in building.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "04b705c1ffb8472baafd2d288dadb400",
-          "Name": "Cores",
-          "Description": "Building core volumes.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "da3eac7866294410b32d28b1e848b550",
-          "Name": "TopPlane",
-          "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "5a20abd16929498eb764335308822a23",
-          "Name": "BuildingVolume",
-          "Description": "Volume of Mass.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "0aea3aa84d244c33b7a553e3584b1651",
-          "Name": "GrossFloorArea",
-          "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "af54cff32436453898eb50dfec72880c",
-          "Name": "NetFloorArea",
-          "Description": "Combined area of all floors with core removed.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "6062454e710549f99549b31aff2c131f",
-          "Name": "TotalFacadeArea",
-          "Description": "Combined area of all facades (vertical surfaces).",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Generate a building mass.\n\nBuildings.BuildingGenerator (BasePlane: Plane, Type: string = \"L\", Length: double = 40, Width: double = 40, Depth: double = 6, BldgArea: double = 1000, FloorHeight: double = 3, IsCurved: bool = false, CreateCore: bool = true, HallwayToDepth: double = 0.1, CoreSizeFactorFloors: double = 4, CoreSizeFactorArea: double = 0.1): var[]..[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
       "FunctionSignature": "GenerativeToolkit.Site.SiteMassGenerator@Autodesk.DesignScript.Geometry.Curve,double,double",
       "Id": "717cad4ccd0649509483cbbca941c017",
       "Inputs": [
@@ -1459,123 +1199,6 @@
       ],
       "Replication": "Auto",
       "Description": "Use setback and height to create boundary volume for building mass to fit into.\n\nSite.SiteMassGenerator (SiteOutline: Curve, Setback: double = 0, HeightLimit: double = 100): var[]..[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.DesignScript.Geometry.Curve.Offset@double",
-      "Id": "23a54220ecbb4579806e0a5102005eb3",
-      "Inputs": [
-        {
-          "Id": "f9c25faad51142399493f8d200b752bf",
-          "Name": "curve",
-          "Description": "Autodesk.DesignScript.Geometry.Curve",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "b7c7499acc62406f92da62afd3657d43",
-          "Name": "distance",
-          "Description": "A positive or negative distance to offset\n\ndouble\nDefault value : 1",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "ef2a4e8b992446de95a9a5d23cf2c70d",
-          "Name": "Curve",
-          "Description": "new offsetted curves",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Offset a Curve by a specified amount. Curve must be planar, and, if a BSplineCurve/NurbsCurve, must have degree > 1.\n\nCurve.Offset (distance: double = 1): Curve"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "-x;",
-      "Id": "7c8fe56010164882bd096cfa6e587a41",
-      "Inputs": [
-        {
-          "Id": "6f3085793da047ff9647e40547dc192d",
-          "Name": "x",
-          "Description": "x",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "15a097b672c048238f5c53e69b2aa798",
-          "Name": "",
-          "Description": "Value of expression at line 1",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Buildings.DeceonstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
-      "Id": "7dc3c6e9808b49daae26c28ba510449c",
-      "Inputs": [
-        {
-          "Id": "1f63b544af6a435f8809089e6de3a281",
-          "Name": "Mass",
-          "Description": "Building mass.\n\nTopology",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "9e179981b90847948d00ded23a460563",
-          "Name": "AngleThreshold",
-          "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "77f24220299b41538d03bb8608bb9352",
-          "Name": "VerticalSurfaces",
-          "Description": "Vertical surfaces.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "150768f21dfc4ca3b05563356375491b",
-          "Name": "HorizontalSurfaces",
-          "Description": "Horizontal surfaces.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Deconstruct a building mass into component horizontal and vertical surfaces.\n\nBuildings.DeceonstructFacadeShell (Mass: Topology, AngleThreshold: double = 45): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1694,135 +1317,6 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Buildings.BuildingGeneratorByCurves@Autodesk.DesignScript.Geometry.Curve[],double,double",
-      "Id": "3637774831a545ceb85225354b1581e3",
-      "Inputs": [
-        {
-          "Id": "5841daee48b34c6cb348d17dba84d326",
-          "Name": "EdgeLoops",
-          "Description": "Closed curve boundary of building. All curves after first will be treated as holes.\n\nCurve[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "4f8dbfc4391a4ac48c816c5466b01364",
-          "Name": "BldgArea",
-          "Description": "Target gross building area.\n\ndouble\nDefault value : 1000",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "7325b6e2a5a3439e978637a1f7ed2cdd",
-          "Name": "FloorHeight",
-          "Description": "Height of the floor.\n\ndouble\nDefault value : 3",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "57c608edf6f344fd90ca59e629c299f9",
-          "Name": "BuildingSolid",
-          "Description": "Building volume.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "3e3faf00a2db450a8133ac04a8fda11f",
-          "Name": "Floors",
-          "Description": "Building floor surfaces.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "3fcb9442e5a44817aa711ede2fe39ae4",
-          "Name": "NetFloors",
-          "Description": "Building floor surfaces with core removed.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "762f1facc6e44ec7ac46dcbf3b966882",
-          "Name": "FloorElevations",
-          "Description": "Elevation of each floor in building.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "9c2e5b420b5b4ad0a574706bb60ef8b6",
-          "Name": "Cores",
-          "Description": "Building core volumes.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "2f2a070b2c10403aa5fcaf9799801e4a",
-          "Name": "TopPlane",
-          "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "36d6ffd881f142e29a45c83abb325567",
-          "Name": "BuildingVolume",
-          "Description": "Volume of Mass.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "82fe7dcd48024d48b8836898d11f51f4",
-          "Name": "GrossFloorArea",
-          "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "bee9ad4c3efb465d8dcf3556e7a0a863",
-          "Name": "NetFloorArea",
-          "Description": "Combined area of all floors with core removed.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "b4a4866971c944f9a829d6f61b19bef7",
-          "Name": "TotalFacadeArea",
-          "Description": "Combined area of all facades (vertical surfaces).",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Generate a building mass from base curves.\n\nBuildings.BuildingGeneratorByCurves (EdgeLoops: Curve[], BldgArea: double = 1000, FloorHeight: double = 3): var[]..[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
       "FunctionSignature": "Autodesk.DesignScript.Geometry.Ellipse.ByOriginRadii@Autodesk.DesignScript.Geometry.Point,double,double",
       "Id": "d2bbefb09d6b4f8f86689db1e061ccac",
       "Inputs": [
@@ -1919,14 +1413,23 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
-      "Code": "[30, 15];",
+      "Code": "[30, 15];\n[40, 10];",
       "Id": "75a646c2523a4569b5fab776f5f73864",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e460553016e74084aa092b9bb73c95d1",
+          "Id": "b73737e7a41f4f96a9f3e65a8738d924",
           "Name": "",
           "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "17dc97b829bc4b55ad0941f7020167da",
+          "Name": "",
+          "Description": "Value of expression at line 2",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1937,34 +1440,518 @@
       "Description": "Allows for DesignScript code to be authored directly"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "[40, 10];",
-      "Id": "f3bcb847eeb7476f99f0dcb1434d0474",
-      "Inputs": [],
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GenerativeToolkit.Building.SelectBuildingType@int",
+      "Id": "a16c277e757c4835ad025f87e61753e3",
+      "Inputs": [
+        {
+          "Id": "41dc36c743974a8b9c42c45fa38d214d",
+          "Name": "ShapeIndex",
+          "Description": "Select building type by index (U, L, H, O, D).\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
       "Outputs": [
         {
-          "Id": "8cb8edd102844a25b881b7258de5b5e4",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Id": "88ac9dc1cc8749fab0ca37e3e33281da",
+          "Name": "string",
+          "Description": "string",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         }
       ],
-      "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Replication": "Auto",
+      "Description": "Typology selection\n\nBuilding.SelectBuildingType (ShapeIndex: int = 0): string"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GenerativeToolkit.Building.BuildingGeneratorByCurves@Autodesk.DesignScript.Geometry.Curve[],double,double",
+      "Id": "80b2a73de2a643ce9b6dd6c6cef4ed18",
+      "Inputs": [
+        {
+          "Id": "58e3b11a211c413d931a7bb1a140df36",
+          "Name": "EdgeLoops",
+          "Description": "Closed curve boundary of building. All curves after first will be treated as holes.\n\nCurve[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "50327df214a14529a66587703ca0f908",
+          "Name": "BldgArea",
+          "Description": "Target gross building area.\n\ndouble\nDefault value : 1000",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "58a79a044a424dd28d70ad3264cae520",
+          "Name": "FloorHeight",
+          "Description": "Height of the floor.\n\ndouble\nDefault value : 3",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b27a687984914fcc9fbabf5ec185936b",
+          "Name": "BuildingSolid",
+          "Description": "Building volume.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "93fc30d88dec4b7a92e318a8d5ccd478",
+          "Name": "Floors",
+          "Description": "Building floor surfaces.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b8f83fef996244d9917cad27c17f612c",
+          "Name": "NetFloors",
+          "Description": "Building floor surfaces with core removed.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "87d1f0bc71834959849fe539fdebe93f",
+          "Name": "FloorElevations",
+          "Description": "Elevation of each floor in building.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fa962ccc655f4c8b90392c8037a6ce95",
+          "Name": "Cores",
+          "Description": "Building core volumes.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "008d3f717eb94d6da4165e95210c34ff",
+          "Name": "TopPlane",
+          "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c55bb2403fb34249aca204e82927e146",
+          "Name": "BuildingVolume",
+          "Description": "Volume of Mass.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0f9e59805eec419489ff144f6cbd2c5c",
+          "Name": "GrossFloorArea",
+          "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "55f705b21e1f4f2897ea4e3beadd5c80",
+          "Name": "NetFloorArea",
+          "Description": "Combined area of all floors with core removed.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b0e8470fe4e849f99a5c1908302ce7bb",
+          "Name": "TotalFacadeArea",
+          "Description": "Combined area of all facades (vertical surfaces).",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Generate a building mass from base curves.\n\nBuilding.BuildingGeneratorByCurves (EdgeLoops: Curve[], BldgArea: double = 1000, FloorHeight: double = 3): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GenerativeToolkit.Building.BuildingGenerator@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,double,double,bool,bool,double,double,double",
+      "Id": "5cd295eaee5c40fc8cdb491b80f7c929",
+      "Inputs": [
+        {
+          "Id": "0d3f13c96e404213b1c03dcf524798cc",
+          "Name": "BasePlane",
+          "Description": "The building base plane.\n\nPlane\nDefault value : Autodesk.DesignScript.Geometry.Plane.XY()",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fd992636fc444bca8996c589ecb60a88",
+          "Name": "Type",
+          "Description": "Building type (U, L, H, O, or D).\n\nstring\nDefault value : \"L\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2db21e977d69445b94ee9720877ec90d",
+          "Name": "Length",
+          "Description": "Overall building length.\n\ndouble\nDefault value : 40",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8d15478434ac4b63a823d3ad615a58dd",
+          "Name": "Width",
+          "Description": "Overall building width.\n\ndouble\nDefault value : 40",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b6fd26be0d17448292131fce34f3158e",
+          "Name": "Depth",
+          "Description": "Building depth.\n\ndouble\nDefault value : 6",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "73ccb1e9b3d44d1db528fb2de346c277",
+          "Name": "BldgArea",
+          "Description": "Target gross building area.\n\ndouble\nDefault value : 1000",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4abc2dca4cab446d91746400305c9c1c",
+          "Name": "FloorHeight",
+          "Description": "Height of the floor.\n\ndouble\nDefault value : 3",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "97eb3ccaac574a0790e76c77380c41e2",
+          "Name": "IsCurved",
+          "Description": "Should sides of building be curved or faceted?\n\nbool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a3d0a252abf644beb4aa5556ad085e1f",
+          "Name": "CreateCore",
+          "Description": "Create core volumes and subtractions?\n\nbool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7de3f333b07c427f8ba4b2b15662af7c",
+          "Name": "HallwayToDepth",
+          "Description": "Core sizing logic: ratio between building depth and width of hallways on either side of core.\n\ndouble\nDefault value : 0.1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b80b1f38ac6f49549113bd50860ddea9",
+          "Name": "CoreSizeFactorFloors",
+          "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 4",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "eec09623c16e4ca2932393a24737bda0",
+          "Name": "CoreSizeFactorArea",
+          "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 0.1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "396b34c82c6a4b9bb5768a72541a3656",
+          "Name": "BuildingSolid",
+          "Description": "Building volume.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "953ec598a19e49e49b3c1a861f27ba65",
+          "Name": "Floors",
+          "Description": "Building floor surfaces.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8828d04d15dc409ba1d0e0e0b291131f",
+          "Name": "NetFloors",
+          "Description": "Building floor surfaces with core removed.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5e545a10d50f43ec9b0007174ecc9310",
+          "Name": "FloorElevations",
+          "Description": "Elevation of each floor in building.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "71a9cb3c78bd4faca3d353af49460726",
+          "Name": "Cores",
+          "Description": "Building core volumes.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b58e0190f6244ad1933599fbef1d744e",
+          "Name": "TopPlane",
+          "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3051ab64186c42f29cce7ac2f761703a",
+          "Name": "BuildingVolume",
+          "Description": "Volume of Mass.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a60dbe802a18425e8e27717cfa22ea29",
+          "Name": "GrossFloorArea",
+          "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "51998b7367f34dbd8822bca8de0dbad3",
+          "Name": "NetFloorArea",
+          "Description": "Combined area of all floors with core removed.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3f676b327785418b9c397c1a7b18bdec",
+          "Name": "TotalFacadeArea",
+          "Description": "Combined area of all facades (vertical surfaces).",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Generate a building mass.\n\nBuilding.BuildingGenerator (BasePlane: Plane = Autodesk.DesignScript.Geometry.Plane.XY(), Type: string = \"L\", Length: double = 40, Width: double = 40, Depth: double = 6, BldgArea: double = 1000, FloorHeight: double = 3, IsCurved: bool = false, CreateCore: bool = true, HallwayToDepth: double = 0.1, CoreSizeFactorFloors: double = 4, CoreSizeFactorArea: double = 0.1): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GenerativeToolkit.Building.DeceonstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
+      "Id": "0d088e71f2d24eac9459a2a90b74b917",
+      "Inputs": [
+        {
+          "Id": "515f1e0cd6a14bcf954ed42f8ac10205",
+          "Name": "Mass",
+          "Description": "Building mass.\n\nTopology",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f49a3beabd4840d597ff9987fa2fed83",
+          "Name": "AngleThreshold",
+          "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "02926dfb6f544c16b9dfc8d433c6ea77",
+          "Name": "VerticalSurfaces",
+          "Description": "Vertical surfaces.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f103022f27044475ac2e396f9381e327",
+          "Name": "HorizontalSurfaces",
+          "Description": "Horizontal surfaces.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Deconstruct a building mass into component horizontal and vertical surfaces.\n\nBuilding.DeceonstructFacadeShell (Mass: Topology, AngleThreshold: double = 45): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GenerativeToolkit.Revit.CreateRevitMass@Autodesk.DesignScript.Geometry.Solid,Revit.Elements.Category",
+      "Id": "66b380757a774dba95e7ba9525c522a0",
+      "Inputs": [
+        {
+          "Id": "c25091b8eed346f68d8a536666a25bbd",
+          "Name": "BuildingSolid",
+          "Description": "The building volume.\n\nSolid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0eccd5cac7d64e10b55c9aacc58faffa",
+          "Name": "Category",
+          "Description": "A category for the mass.\n\nCategory",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "43e46108ab9b4728bf455d030e910f51",
+          "Name": "RevitBuilding",
+          "Description": "Revit DirectShape element.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates a Revit mass as a direct shape from building masser\n\nRevit.CreateRevitMass (BuildingSolid: Solid, Category: Category): DirectShape"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GenerativeToolkit.Revit.CreateRevitFloors@Autodesk.DesignScript.Geometry.Surface[][],Revit.Elements.FloorType,string",
+      "Id": "4e3504ef37e14d8d8560d5b03bf8e7a8",
+      "Inputs": [
+        {
+          "Id": "8c74b4677c694d028cd9bd5e9c99b6c0",
+          "Name": "Floors",
+          "Description": "Floor surfaces.\n\nSurface[][]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e639501694c842f6b311f73503469c1a",
+          "Name": "FloorType",
+          "Description": "Type of created Revit floors.\n\nFloorType",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d0f5e67ede04413b9a33511577eee593",
+          "Name": "LevelPrefix",
+          "Description": "Prefix for names of created Revit levels.\n\nstring\nDefault value : \"Dynamo Level\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5615ffba78ec49bf9fd734353cecc450",
+          "Name": "FloorElements",
+          "Description": "Revit floor elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates Revit floors from building floor surfaces.\n\nRevit.CreateRevitFloors (Floors: Surface[][], FloorType: FloorType, LevelPrefix: string = \"Dynamo Level\"): Floor[][]"
     },
     {
       "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
       "SelectedIndex": 276,
       "NodeType": "ExtensionNode",
-      "Id": "a77ca2e964084fd0b5d046093757f5c5",
+      "Id": "edd1a2423d2447e4abbb9ef2ee0a2e3f",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "640458cb145d46feb56e5b6ba68392e5",
+          "Id": "62766d42646c4a78ae72f2355a91ea4b",
           "Name": "Category",
           "Description": "The selected Category.",
           "UsingDefaultValue": false,
@@ -1980,11 +1967,11 @@
       "ConcreteType": "DSRevitNodesUI.FloorTypes, DSRevitNodesUI",
       "SelectedIndex": 5,
       "NodeType": "ExtensionNode",
-      "Id": "9064b4b2a2bd40948db4b234eb47cd23",
+      "Id": "b6f6f58ea2a642b99310e8714f4b122b",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d5a9ffc9f89f4a1a9045cc2dc47d6996",
+          "Id": "c4e49961e6f84990b2b2fe8b99f83841",
           "Name": "Floor Type",
           "Description": "The selected Floor Type",
           "UsingDefaultValue": false,
@@ -1995,130 +1982,38 @@
       ],
       "Replication": "Disabled",
       "Description": "All floor types available in the document."
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Revit.CreateRevitFloors@Autodesk.DesignScript.Geometry.Surface[][],Revit.Elements.FloorType,string",
-      "Id": "0216fe07e76b46339934a11b16095917",
-      "Inputs": [
-        {
-          "Id": "8b2901f24f48416b9e5cfa0113479306",
-          "Name": "Floors",
-          "Description": "Floor surfaces.\n\nSurface[][]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "4d45e32bd8714c64a6c4716526d1aee9",
-          "Name": "FloorType",
-          "Description": "Type of created Revit floors.\n\nFloorType",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "39d9d14d021e47eca441db98ad971e6e",
-          "Name": "LevelPrefix",
-          "Description": "Prefix for names of created Revit levels.\n\nstring\nDefault value : \"Dynamo Level\"",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "395fbba84a4440f4aa104a56d58b4e94",
-          "Name": "FloorElements",
-          "Description": "Revit floor elements.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Creates Revit floors from building floor surfaces.\n\nRevit.CreateRevitFloors (Floors: Surface[][], FloorType: FloorType, LevelPrefix: string = \"Dynamo Level\"): Floor[][]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Revit.CreateRevitMass@Autodesk.DesignScript.Geometry.Solid,Revit.Elements.Category",
-      "Id": "3fe5ef26dda640b699dbfd12c921bc16",
-      "Inputs": [
-        {
-          "Id": "676a5e38c16e4f5caaf5fe5c00f4f5fd",
-          "Name": "BuildingSolid",
-          "Description": "The building volume.\n\nSolid",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "21fcc8eb79ad4c62b7e5640f0aa141e0",
-          "Name": "Category",
-          "Description": "A category for the mass.\n\nCategory",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "f6d0a6b23ea94ef9ba6d4337a9d82afd",
-          "Name": "RevitBuilding",
-          "Description": "Revit DirectShape element.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Creates a Revit mass as a direct shape from building masser\n\nRevit.CreateRevitMass (BuildingSolid: Solid, Category: Category): DirectShape"
     }
   ],
   "Connectors": [
     {
-      "Start": "edcb70e199224b5889b54a9a8d050626",
-      "End": "e95c73c6ec05487cb14e42f24b6b58e8",
-      "Id": "5657c5a7b93d43bab970599118c6bb11"
-    },
-    {
       "Start": "7e2ea95d08a04a9c9f672a9da0b2bdb5",
-      "End": "8da0a31bb20c4d518aecd1417ea30b98",
-      "Id": "a52249567d0446cc89b8792f87cca57a"
+      "End": "97eb3ccaac574a0790e76c77380c41e2",
+      "Id": "4c1b07e7dd1640b985e2296b6cf6f0c9"
     },
     {
       "Start": "47df38c3e1fe41dd8db0a421337cd68b",
-      "End": "8f40108ef02944de82967455ea5a512c",
-      "Id": "12a16f41cdc54469b6557771a4e5bcb9"
+      "End": "8d15478434ac4b63a823d3ad615a58dd",
+      "Id": "c69fcb0cdff143a197adaf9bd3a6d666"
     },
     {
       "Start": "9d17228dc3064221ab4ee286c102fc39",
-      "End": "32e1c7c3f0f044cb9d198de863b7feea",
-      "Id": "b856c3255d9a4f53a592aef7a8c89dbe"
+      "End": "b6fd26be0d17448292131fce34f3158e",
+      "Id": "0ffe00943a0246cb93244d3f2afd03f7"
     },
     {
       "Start": "eeb6b13845e2477387f5ebd1b5ebcead",
-      "End": "ec5e91f655584cc3a0b88fc2b052c7b7",
-      "Id": "7210f9005d6840d69fcf32dd6ef44a71"
+      "End": "2db21e977d69445b94ee9720877ec90d",
+      "Id": "e6ec8b58f26943f8973feb5085f05288"
     },
     {
       "Start": "76767d84a2c04296a67aa3a1502978fb",
-      "End": "a62e281f6c4d4f47955b30911ef16e74",
-      "Id": "a57cd35277194b2686b019dcc1420f4c"
+      "End": "73ccb1e9b3d44d1db528fb2de346c277",
+      "Id": "f257582ce4ff4228a4e4b0f0b8c20d8a"
     },
     {
       "Start": "853fa8d5302b4b19bcd780439beae223",
-      "End": "b5117dc9ec974f0e8c58df78861cb73f",
-      "Id": "d1d0e579c02e4054b5cfd6f0d29416d4"
+      "End": "4abc2dca4cab446d91746400305c9c1c",
+      "Id": "6499fc22fbad43fea0b226b316c3a801"
     },
     {
       "Start": "17d18a847c4c4d409f64ee6c34bc4557",
@@ -2132,11 +2027,6 @@
     },
     {
       "Start": "47d3837a107240bcb96d4c577bff8342",
-      "End": "6f3085793da047ff9647e40547dc192d",
-      "Id": "ef6f42a4116a495e9b5118d30db162b1"
-    },
-    {
-      "Start": "47d3837a107240bcb96d4c577bff8342",
       "End": "1bd0480397b6457c9850664af08d8eb3",
       "Id": "940b55e995cd4e10ab8a2c3df9888388"
     },
@@ -2147,8 +2037,8 @@
     },
     {
       "Start": "c978a9dce48247659757ef8542370061",
-      "End": "9e179981b90847948d00ded23a460563",
-      "Id": "b96aa31d7df246d58b3835ba436ceae0"
+      "End": "f49a3beabd4840d597ff9987fa2fed83",
+      "Id": "80004c51b6c446fb935cbb99fffd9867"
     },
     {
       "Start": "68008b2d093e41e48ae344099559a13a",
@@ -2159,11 +2049,6 @@
       "Start": "1e0bc7e5d0d44976be761d718e3e0032",
       "End": "6d3d1e0b7f854edfbc6f2e31ad50def3",
       "Id": "8273b1130f9a4578910c8afe8f1a82bb"
-    },
-    {
-      "Start": "1e0bc7e5d0d44976be761d718e3e0032",
-      "End": "f9c25faad51142399493f8d200b752bf",
-      "Id": "63f75af83b584bd38248b0623b63e7c2"
     },
     {
       "Start": "7a4f57d102e2460790d4b84b4bd94b3d",
@@ -2232,8 +2117,8 @@
     },
     {
       "Start": "abca754a3a91471b9a5dd686d0f615bc",
-      "End": "b8450b65222b4d249d5995e50b6593a3",
-      "Id": "cbae409c98044f459895674b94c7ebab"
+      "End": "41dc36c743974a8b9c42c45fa38d214d",
+      "Id": "40007e66db9b4883ae181975e2440812"
     },
     {
       "Start": "1729e1f589e34b3c9b6fb08a7d0b2384",
@@ -2242,38 +2127,23 @@
     },
     {
       "Start": "948b37e461054005bb9167b27f581da0",
-      "End": "43a1291676f1426aa11a8d1802b3dd59",
-      "Id": "e79ff03e527846f5857a9f25c952d0cf"
+      "End": "a3d0a252abf644beb4aa5556ad085e1f",
+      "Id": "69aad4962b5342be8689a901ee004101"
     },
     {
       "Start": "5f89441ffae141a5bf2b31923e7bf653",
-      "End": "4fdfb139bb6445d3b8dcdf61a0125ed2",
-      "Id": "71f8e60ce3264af5935b754a23b67912"
+      "End": "7de3f333b07c427f8ba4b2b15662af7c",
+      "Id": "318d25d292204288bc20779fb0771ae5"
     },
     {
       "Start": "b57f13af47524b959004eb4b698f57ad",
-      "End": "efd32a998fef40819cdd9e6375a864d7",
-      "Id": "fbcb1a8d12e34a5dbfca0f3f605439a3"
+      "End": "b80b1f38ac6f49549113bd50860ddea9",
+      "Id": "983c61da8cb64a59a2933416dba8be59"
     },
     {
       "Start": "62de9b7e9e6142f28de1bae6175d9d3c",
-      "End": "9b5bc06de78d4986948a94e52fc5f29f",
-      "Id": "3d2e9d41687545d7a1aa6ad7cd0bcf9b"
-    },
-    {
-      "Start": "fe2af6daedf74362a83dfbc79e19a75e",
-      "End": "b2c3727f4de04c93a4bfb0c26db0faa3",
-      "Id": "894ecf0f3fdf4ee2af8160247fda1402"
-    },
-    {
-      "Start": "82a80326e0b2485b94c91057e6f329cb",
-      "End": "676a5e38c16e4f5caaf5fe5c00f4f5fd",
-      "Id": "edf918f352f24560b844685264dad797"
-    },
-    {
-      "Start": "f6a9d8432a6d4a7b8406d16cf92594af",
-      "End": "8b2901f24f48416b9e5cfa0113479306",
-      "Id": "449d52d7638e4131a3ee1ecde6415778"
+      "End": "eec09623c16e4ca2932393a24737bda0",
+      "Id": "5a70e13f50094b719b8c3584342a1783"
     },
     {
       "Start": "f931f840fbbb414e813b8ece42c71779",
@@ -2284,21 +2154,6 @@
       "Start": "f931f840fbbb414e813b8ece42c71779",
       "End": "11c679b783f7425795dd7c07c57453ce",
       "Id": "9132167c8d4448acb5a1a92239e736d6"
-    },
-    {
-      "Start": "15a097b672c048238f5c53e69b2aa798",
-      "End": "b7c7499acc62406f92da62afd3657d43",
-      "Id": "4b2b3755e06a4cd4816f0e5576ff2d26"
-    },
-    {
-      "Start": "77f24220299b41538d03bb8608bb9352",
-      "End": "eeb4322a8cd24f6e9c985530b8b66cca",
-      "Id": "74a2012d13c54be8add6601d0ef0e79f"
-    },
-    {
-      "Start": "150768f21dfc4ca3b05563356375491b",
-      "End": "a4260e3e67af4ba3be76aace13dae2d7",
-      "Id": "72c4a1d1ed5646e4a9ee0682b83f4fd8"
     },
     {
       "Start": "2addc6a2eb1f45edb37293550275682e",
@@ -2321,64 +2176,89 @@
       "Id": "139070c0c93646ef940deadab8a10397"
     },
     {
-      "Start": "57c608edf6f344fd90ca59e629c299f9",
-      "End": "669597c44a3a4c6bb0bd5ab73765cdd7",
-      "Id": "3ce3f2ae010c425c8d8a3c2ad0789c5c"
-    },
-    {
-      "Start": "57c608edf6f344fd90ca59e629c299f9",
-      "End": "1f63b544af6a435f8809089e6de3a281",
-      "Id": "a23877502a6c4bcf8fb65e640e7851be"
-    },
-    {
-      "Start": "57c608edf6f344fd90ca59e629c299f9",
-      "End": "031d156ec0324ffca4a7caaf3ae464b0",
-      "Id": "3fc5f13c5ce7431fa2b75b9325b17a2b"
-    },
-    {
-      "Start": "3fcb9442e5a44817aa711ede2fe39ae4",
-      "End": "157b83d943854e0ba09f97c40a000115",
-      "Id": "50acd2fda0014461aef4452bb83c0fdf"
-    },
-    {
-      "Start": "9c2e5b420b5b4ad0a574706bb60ef8b6",
-      "End": "93b3a8c1c2e043478df0ec290d2f7707",
-      "Id": "d4cfc8106b0e4149a8185a55348ba672"
-    },
-    {
       "Start": "ff89d9c026e84c41b576ce326daed22a",
-      "End": "5841daee48b34c6cb348d17dba84d326",
-      "Id": "e43459ea343641c1a97372cf68639aa1"
+      "End": "58e3b11a211c413d931a7bb1a140df36",
+      "Id": "600aad0a04764d039d46f4b77af957d7"
     },
     {
       "Start": "b51dc8d7b07d4982b9032f520baa99b4",
-      "End": "4f8dbfc4391a4ac48c816c5466b01364",
-      "Id": "33fd1b3a1c6348b0b30ed2a9a3c66d76"
+      "End": "50327df214a14529a66587703ca0f908",
+      "Id": "367211fd18494ecc999f9c916e9f4073"
     },
     {
       "Start": "0c156f3b1a6a4b3cbd7c4cfa8c22b731",
-      "End": "7325b6e2a5a3439e978637a1f7ed2cdd",
-      "Id": "b1056201b6724461bf91344594d23032"
+      "End": "58a79a044a424dd28d70ad3264cae520",
+      "Id": "a59515e22a0242afb30ee824880d3291"
     },
     {
-      "Start": "e460553016e74084aa092b9bb73c95d1",
+      "Start": "b73737e7a41f4f96a9f3e65a8738d924",
       "End": "d12ac184311842599c366774cab76cbf",
-      "Id": "7d0f778560a84400b7f9e52dda46fe21"
+      "Id": "b1ba9c9290be4e7191e20debb39b9f17"
     },
     {
-      "Start": "8cb8edd102844a25b881b7258de5b5e4",
+      "Start": "17dc97b829bc4b55ad0941f7020167da",
       "End": "6eaf1b61070d446fa91acefa45a1c483",
-      "Id": "61ba3bd4bfff474f8457e4ec509d2335"
+      "Id": "c2ef91574ff643979c3eff44eb4a2987"
     },
     {
-      "Start": "640458cb145d46feb56e5b6ba68392e5",
-      "End": "21fcc8eb79ad4c62b7e5640f0aa141e0",
-      "Id": "901ec66f013b483cb7c2ad7c70ab8c0b"
+      "Start": "88ac9dc1cc8749fab0ca37e3e33281da",
+      "End": "fd992636fc444bca8996c589ecb60a88",
+      "Id": "91b58cc3d39a4c2cbe4b3f96b0429c76"
     },
     {
-      "Start": "d5a9ffc9f89f4a1a9045cc2dc47d6996",
-      "End": "4d45e32bd8714c64a6c4716526d1aee9",
-      "Id": "178b1d4d884a45f1ab768c1df382f1bb"
+      "Start": "396b34c82c6a4b9bb5768a72541a3656",
+      "End": "031d156ec0324ffca4a7caaf3ae464b0",
+      "Id": "299ebac2205c4e5da4ab8923d7b14e1e"
+    },
+    {
+      "Start": "396b34c82c6a4b9bb5768a72541a3656",
+      "End": "669597c44a3a4c6bb0bd5ab73765cdd7",
+      "Id": "61237c55e5694947abc689f00ab26e25"
+    },
+    {
+      "Start": "396b34c82c6a4b9bb5768a72541a3656",
+      "End": "515f1e0cd6a14bcf954ed42f8ac10205",
+      "Id": "82d6f42288b8491480f977aba52d0344"
+    },
+    {
+      "Start": "396b34c82c6a4b9bb5768a72541a3656",
+      "End": "c25091b8eed346f68d8a536666a25bbd",
+      "Id": "eeaf7e3dc9c643ef850df40058aae94c"
+    },
+    {
+      "Start": "8828d04d15dc409ba1d0e0e0b291131f",
+      "End": "157b83d943854e0ba09f97c40a000115",
+      "Id": "27f1b05238574ba0922a6dd5d9bb216f"
+    },
+    {
+      "Start": "8828d04d15dc409ba1d0e0e0b291131f",
+      "End": "8c74b4677c694d028cd9bd5e9c99b6c0",
+      "Id": "c1e23b0271b84c6eb666116b4113875b"
+    },
+    {
+      "Start": "71a9cb3c78bd4faca3d353af49460726",
+      "End": "93b3a8c1c2e043478df0ec290d2f7707",
+      "Id": "402e06d6e7d1486e87f348e1c0b9a400"
+    },
+    {
+      "Start": "02926dfb6f544c16b9dfc8d433c6ea77",
+      "End": "eeb4322a8cd24f6e9c985530b8b66cca",
+      "Id": "46352de215bf4f679929c399391de4fd"
+    },
+    {
+      "Start": "f103022f27044475ac2e396f9381e327",
+      "End": "a4260e3e67af4ba3be76aace13dae2d7",
+      "Id": "5f2eddb57a3a448a870a79a0cb807390"
+    },
+    {
+      "Start": "62766d42646c4a78ae72f2355a91ea4b",
+      "End": "0eccd5cac7d64e10b55c9aacc58faffa",
+      "Id": "81966e212bc448d0b7f4f7f70e969993"
+    },
+    {
+      "Start": "c4e49961e6f84990b2b2fe8b99f83841",
+      "End": "e639501694c842f6b311f73503469c1a",
+      "Id": "8af83c62ff494a7cbba9e537e502d685"
     }
   ],
   "Dependencies": [],
@@ -2394,27 +2274,17 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -135.83684618202031,
-      "EyeY": 135.09255064595857,
-      "EyeZ": 111.17846978353521,
-      "LookX": 90.68465792108023,
-      "LookY": -104.15854840544421,
-      "LookZ": -152.79494346522273,
-      "UpX": 0.15771713486768835,
-      "UpY": 0.95105651629535382,
-      "UpZ": -0.2657382324425428
+      "EyeX": 26.5743879938733,
+      "EyeY": 163.6213204116344,
+      "EyeZ": 99.720278070393192,
+      "LookX": -63.342581592246624,
+      "LookY": -144.9031061016199,
+      "LookZ": -131.94624790446377,
+      "UpX": -0.23146851607780072,
+      "UpY": 0.8449508165989017,
+      "UpZ": -0.48216225857487455
     },
     "NodeViews": [
-      {
-        "ShowGeometry": true,
-        "Name": "Plane.XY",
-        "Id": "ea6d2575fda7435a82a20b3995988050",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 97.047446293140808,
-        "Y": -5.0976569394231319
-      },
       {
         "ShowGeometry": true,
         "Name": "Curved?",
@@ -2422,8 +2292,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 49.914279555213,
-        "Y": 469.35228222718706
+        "X": -61.051046185690154,
+        "Y": 467.7670632880313
       },
       {
         "ShowGeometry": true,
@@ -2432,8 +2302,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -118.0798810242207,
-        "Y": 219.68380168054591
+        "X": -229.04520676512385,
+        "Y": 218.09858274139015
       },
       {
         "ShowGeometry": true,
@@ -2442,8 +2312,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -117.50733507607288,
-        "Y": 283.23865001099637
+        "X": -228.47266081697603,
+        "Y": 281.6534310718406
       },
       {
         "ShowGeometry": true,
@@ -2452,8 +2322,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -118.652426972368,
-        "Y": 157.27629333248638
+        "X": -229.61775271327116,
+        "Y": 155.69107439333061
       },
       {
         "ShowGeometry": true,
@@ -2462,8 +2332,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -119.22497292051514,
-        "Y": 343.92627242851756
+        "X": -230.1902986614183,
+        "Y": 342.3410534893618
       },
       {
         "ShowGeometry": true,
@@ -2472,8 +2342,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -119.22497292051509,
-        "Y": 407.08351416059475
+        "X": -230.19029866141824,
+        "Y": 405.498295221439
       },
       {
         "ShowGeometry": true,
@@ -2482,8 +2352,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -115.22833766875965,
-        "Y": 837.45080957423932
+        "X": -226.1936634096628,
+        "Y": 835.86559063508355
       },
       {
         "ShowGeometry": true,
@@ -2492,8 +2362,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 60.926665129047706,
-        "Y": 1005.8627988175904
+        "X": -50.038660611855448,
+        "Y": 1004.2775798784345
       },
       {
         "ShowGeometry": true,
@@ -2502,8 +2372,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -102.20636399396835,
-        "Y": 1125.8082935883403
+        "X": -213.17168973487151,
+        "Y": 1124.2230746491846
       },
       {
         "ShowGeometry": true,
@@ -2512,8 +2382,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -100.52982068508686,
-        "Y": 1199.8481847206613
+        "X": -211.49514642599001,
+        "Y": 1198.2629657815055
       },
       {
         "ShowGeometry": true,
@@ -2522,8 +2392,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1016.4674624775566,
-        "Y": 224.68009027004939
+        "X": 1128.6347172044354,
+        "Y": -66.567371267610213
       },
       {
         "ShowGeometry": false,
@@ -2532,8 +2402,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 978.570539279106,
-        "Y": 545.15816125959554
+        "X": 1170.3957300802235,
+        "Y": 243.77761237274194
       },
       {
         "ShowGeometry": true,
@@ -2542,8 +2412,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1561.6011050422592,
-        "Y": 610.14721662904128
+        "X": 1753.4262958433767,
+        "Y": 308.76666774218768
       },
       {
         "ShowGeometry": true,
@@ -2552,8 +2422,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1843.5558548786121,
-        "Y": 947.02594909348227
+        "X": 1685.5866947906231,
+        "Y": 786.42631680016245
       },
       {
         "ShowGeometry": true,
@@ -2572,8 +2442,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2996.5622884120194,
-        "Y": 47.587886061716404
+        "X": 2845.3447720468766,
+        "Y": -332.43685682154535
       },
       {
         "ShowGeometry": true,
@@ -2582,8 +2452,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2840.5803288586744,
-        "Y": 78.354034400769422
+        "X": 2689.3628124935317,
+        "Y": -301.67070848249233
       },
       {
         "ShowGeometry": true,
@@ -2592,8 +2462,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3002.6994876009267,
-        "Y": 206.53605441946451
+        "X": 2851.4819712357839,
+        "Y": -173.48868846379725
       },
       {
         "ShowGeometry": true,
@@ -2602,8 +2472,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2843.8379055768796,
-        "Y": 259.74150451587462
+        "X": 2692.6203892117369,
+        "Y": -120.28323836738713
       },
       {
         "ShowGeometry": true,
@@ -2612,8 +2482,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2999.4880516424023,
-        "Y": 582.73823822959446
+        "X": 2848.2705352772596,
+        "Y": 202.71349534633259
       },
       {
         "ShowGeometry": true,
@@ -2622,8 +2492,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2831.581250090172,
-        "Y": 673.499696473883
+        "X": 2680.3637337250293,
+        "Y": 293.47495359062123
       },
       {
         "ShowGeometry": false,
@@ -2632,8 +2502,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2263.1397100701042,
-        "Y": 579.33091425872544
+        "X": 2111.9221937049615,
+        "Y": 199.30617137546369
       },
       {
         "ShowGeometry": true,
@@ -2642,8 +2512,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3016.8642563757217,
-        "Y": 890.3064111553731
+        "X": 2865.6467400105789,
+        "Y": 510.28166827211135
       },
       {
         "ShowGeometry": true,
@@ -2652,8 +2522,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2839.1928927050421,
-        "Y": 984.8234702144498
+        "X": 2687.9753763398994,
+        "Y": 604.798727331188
       },
       {
         "ShowGeometry": true,
@@ -2662,8 +2532,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3015.3835590031526,
-        "Y": 1146.2104624409335
+        "X": 2864.16604263801,
+        "Y": 766.18571955767175
       },
       {
         "ShowGeometry": true,
@@ -2672,8 +2542,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2851.23235826571,
-        "Y": 1246.7364828036707
+        "X": 2700.0148419005673,
+        "Y": 866.71173992040872
       },
       {
         "ShowGeometry": false,
@@ -2682,8 +2552,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2538.4743492126363,
-        "Y": 583.7626224425187
+        "X": 2387.2568328474936,
+        "Y": 203.73787955925695
       },
       {
         "ShowGeometry": false,
@@ -2692,8 +2562,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2784.2249144832549,
-        "Y": 582.921010917619
+        "X": 2633.0073981181122,
+        "Y": 202.89626803435726
       },
       {
         "ShowGeometry": false,
@@ -2702,8 +2572,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2709.8498619245465,
-        "Y": 207.78725579035915
+        "X": 2558.6323455594038,
+        "Y": -172.2374870929026
       },
       {
         "ShowGeometry": false,
@@ -2712,8 +2582,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2550.7090561174246,
-        "Y": 890.97076909216958
+        "X": 2399.4915397522818,
+        "Y": 510.94602620890782
       },
       {
         "ShowGeometry": false,
@@ -2722,8 +2592,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2795.49171692761,
-        "Y": 891.63139789318507
+        "X": 2644.2742005624673,
+        "Y": 511.60665500992332
       },
       {
         "ShowGeometry": false,
@@ -2732,8 +2602,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2548.9900314940428,
-        "Y": 1148.60498498662
+        "X": 2397.7725151289,
+        "Y": 768.58024210335816
       },
       {
         "ShowGeometry": false,
@@ -2742,8 +2612,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2794.7405967646528,
-        "Y": 1147.76337346172
+        "X": 2643.52308039951,
+        "Y": 767.73863057845847
       },
       {
         "ShowGeometry": true,
@@ -2752,8 +2622,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -119.2784751197712,
-        "Y": 79.14750022577573
+        "X": -230.24380086067436,
+        "Y": 77.562281286619964
       },
       {
         "ShowGeometry": true,
@@ -2762,8 +2632,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3007.241272307625,
-        "Y": 391.95611452270117
+        "X": 2856.0237559424822,
+        "Y": 11.931371639439419
       },
       {
         "ShowGeometry": true,
@@ -2772,8 +2642,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2848.3479127108949,
-        "Y": 445.16156461911118
+        "X": 2697.1303963457522,
+        "Y": 65.136821735849423
       },
       {
         "ShowGeometry": true,
@@ -2782,8 +2652,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 51.1389930565407,
-        "Y": 533.95276762560638
+        "X": -59.826332684362455,
+        "Y": 532.36754868645062
       },
       {
         "ShowGeometry": true,
@@ -2792,8 +2662,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -107.54906719831013,
-        "Y": 604.10248997495489
+        "X": -218.51439293921328,
+        "Y": 602.51727103579913
       },
       {
         "ShowGeometry": true,
@@ -2802,8 +2672,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -108.72272401227025,
-        "Y": 672.564028004099
+        "X": -219.6880497531734,
+        "Y": 670.978809064943
       },
       {
         "ShowGeometry": true,
@@ -2812,28 +2682,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -106.5047723756594,
-        "Y": 742.21437730067134
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Buildings.SelectBuildingType",
-        "Id": "86abbda5d39a4237b99cc4cd8890f344",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 204.8854432822701,
-        "Y": 78.7139010491361
-      },
-      {
-        "ShowGeometry": false,
-        "Name": "Buildings.BuildingGenerator",
-        "Id": "d5d71bd9eccd4daf95135785af968a37",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 478.8024055823663,
-        "Y": 51.6125761572539
+        "X": -217.47009811656255,
+        "Y": 740.62915836151558
       },
       {
         "ShowGeometry": false,
@@ -2842,38 +2692,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 606.70897269408624,
-        "Y": 1124.1807887195612
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Curve.Offset",
-        "Id": "23a54220ecbb4579806e0a5102005eb3",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 559.27791607085726,
-        "Y": 725.30920536650751
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Code Block",
-        "Id": "7c8fe56010164882bd096cfa6e587a41",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 382.0,
-        "Y": 664.0
-      },
-      {
-        "ShowGeometry": false,
-        "Name": "Buildings.DeceonstructFacadeShell",
-        "Id": "7dc3c6e9808b49daae26c28ba510449c",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1370.8986000113464,
-        "Y": 178.72882205812988
+        "X": 1038.6324955280302,
+        "Y": 875.844624718983
       },
       {
         "ShowGeometry": false,
@@ -2882,8 +2702,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1244.8814538092654,
-        "Y": 546.19866823518919
+        "X": 1436.7066446103829,
+        "Y": 244.81811934833559
       },
       {
         "ShowGeometry": false,
@@ -2892,18 +2712,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1339.1538227237995,
-        "Y": 825.1679231863601
-      },
-      {
-        "ShowGeometry": false,
-        "Name": "Buildings.BuildingGeneratorByCurves",
-        "Id": "3637774831a545ceb85225354b1581e3",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 481.44051895365817,
-        "Y": -383.18389757780039
+        "X": 1325.8769289577169,
+        "Y": 709.19119772907277
       },
       {
         "ShowGeometry": true,
@@ -2912,8 +2722,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -39.718801157552889,
-        "Y": -399.901603874895
+        "X": -134.95260357171458,
+        "Y": -403.33759026425565
       },
       {
         "ShowGeometry": true,
@@ -2922,8 +2732,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -113.92810528291307,
-        "Y": -235.54615829127459
+        "X": -224.89343102381622,
+        "Y": -237.13137723043036
       },
       {
         "ShowGeometry": true,
@@ -2932,8 +2742,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -115.99707899561938,
-        "Y": -169.28545599013802
+        "X": -226.96240473652253,
+        "Y": -170.87067492929378
       },
       {
         "ShowGeometry": true,
@@ -2942,63 +2752,200 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -215.2538411291722,
-        "Y": -434.68947253823228
+        "X": -298.27921468998051,
+        "Y": -368.28747450582387
       },
       {
         "ShowGeometry": true,
-        "Name": "Code Block",
-        "Id": "f3bcb847eeb7476f99f0dcb1434d0474",
+        "Name": "Building.SelectBuildingType",
+        "Id": "a16c277e757c4835ad025f87e61753e3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -213.90181271690608,
-        "Y": -344.00779553295871
+        "X": 210.08256801598463,
+        "Y": 78.525088588209542
       },
       {
-        "ShowGeometry": true,
-        "Name": "Categories",
-        "Id": "a77ca2e964084fd0b5d046093757f5c5",
+        "ShowGeometry": false,
+        "Name": "Building.BuildingGeneratorByCurves",
+        "Id": "80b2a73de2a643ce9b6dd6c6cef4ed18",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1197.4547924431397,
-        "Y": -266.34957559754082
+        "X": 497.54114669373865,
+        "Y": -399.17541356880668
       },
       {
-        "ShowGeometry": true,
-        "Name": "Floor Types",
-        "Id": "9064b4b2a2bd40948db4b234eb47cd23",
+        "ShowGeometry": false,
+        "Name": "Building.BuildingGenerator",
+        "Id": "5cd295eaee5c40fc8cdb491b80f7c929",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1057.6000001424097,
-        "Y": -474.04460731793421
+        "X": 481.99769908361532,
+        "Y": 208.96776852467434
       },
       {
-        "ShowGeometry": true,
-        "Name": "Revit.CreateRevitFloors",
-        "Id": "0216fe07e76b46339934a11b16095917",
+        "ShowGeometry": false,
+        "Name": "Building.DeceonstructFacadeShell",
+        "Id": "0d088e71f2d24eac9459a2a90b74b917",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1418.5324001946285,
-        "Y": -477.91501836967575
+        "X": 1462.220920878061,
+        "Y": -117.96444610538634
       },
       {
         "ShowGeometry": true,
         "Name": "Revit.CreateRevitMass",
-        "Id": "3fe5ef26dda640b699dbfd12c921bc16",
+        "Id": "66b380757a774dba95e7ba9525c522a0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1416.2945299526084,
-        "Y": -300.00433412910309
+        "X": 1382.3668515891477,
+        "Y": -510.64952278572008
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Revit.CreateRevitFloors",
+        "Id": "4e3504ef37e14d8d8560d5b03bf8e7a8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1384.6047218311678,
+        "Y": -688.560207026293
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Categories",
+        "Id": "edd1a2423d2447e4abbb9ef2ee0a2e3f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1163.5271140796776,
+        "Y": -476.9947642541581
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Floor Types",
+        "Id": "b6f6f58ea2a642b99310e8714f4b122b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1023.6723217789477,
+        "Y": -684.68979597455109
       }
     ],
-    "Annotations": [],
-    "X": 141.47473462728306,
-    "Y": 439.28964821277452,
-    "Zoom": 0.26950161367525305
+    "Annotations": [
+      {
+        "Id": "e70563de50594e28aaef463da4035cb2",
+        "Title": "Display",
+        "Nodes": [
+          "00c8ecda4e5b47bca43181247680cc1a",
+          "53f3bc6234e34804beabeec4752f1723",
+          "5ba17d0f09bd44cfbe0dd55fa692c917",
+          "b1d0ab592b384566ac02c8f6f2fbf711",
+          "e76394bba8c9414585f5003b2f826d81",
+          "15d501a97bf040a08f21065b35b85ad6",
+          "8e464bfbf63b41e0aee3e440885ce5a5",
+          "d52d0dcb95a841e788c25a24275514d7",
+          "3f4e6f1efab04c52b61161ad7c283b31",
+          "93e40b1b605b4103946f9bb477b22258",
+          "b0f23b6e2f6c47d9a03c1726bed40381",
+          "01f5a7c874e04437814e3cbe5440aa46",
+          "0b9b3cdd4be14ddc8cc366276d4cea7d",
+          "48b99828b87e45fc982c1bc24fedf792",
+          "ae8cfa54c39f48aa9bbdf9ad5e696f9c",
+          "46b4e23d01724d6197493cb992691a44",
+          "152abb729c1e470b814493f5ff3aee94",
+          "1a3325fbd5d5498b8f44d914df3a9cb1",
+          "eaf82f8ee0634777afdbaa03d2d7934b",
+          "98f04b11961346738c8cd1dc0ee81894"
+        ],
+        "Left": 2101.9221937049615,
+        "Top": -385.77019015487866,
+        "Width": 1043.7245463056174,
+        "Height": 1345.4819300752874,
+        "FontSize": 36.0,
+        "InitialTop": -332.43685682154535,
+        "InitialHeight": 1344.148596741954,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "0fb303abdb0b413893f2d6d8db5d5f38",
+        "Title": "Site",
+        "Nodes": [
+          "6e0f89d6e08d4292890a3a738f827cf6",
+          "717cad4ccd0649509483cbbca941c017",
+          "6035873c63464945b742cf5b38cb1243"
+        ],
+        "Left": 1028.6324955280302,
+        "Top": 655.8578643957394,
+        "Width": 828.28753259592634,
+        "Height": 364.98676032324363,
+        "FontSize": 36.0,
+        "InitialTop": 709.19119772907277,
+        "InitialHeight": 311.65342698991026,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "6b86c647c59d47af83e55a8528ecdb5e",
+        "Title": "Revit",
+        "Nodes": [
+          "66b380757a774dba95e7ba9525c522a0",
+          "4e3504ef37e14d8d8560d5b03bf8e7a8",
+          "edd1a2423d2447e4abbb9ef2ee0a2e3f",
+          "b6f6f58ea2a642b99310e8714f4b122b"
+        ],
+        "Left": 1013.6723217789477,
+        "Top": -741.8935403596264,
+        "Width": 652.93240005222015,
+        "Height": 357.8987761054683,
+        "FontSize": 36.0,
+        "InitialTop": -688.560207026293,
+        "InitialHeight": 334.56544277213493,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "38a33e7bc88e49f2a33a711766ce2791",
+        "Title": "Input",
+        "Nodes": [
+          "1f3615a504394e92b80abf8b3e2efa35",
+          "f8124ce2a95143d98a0a422bcd5b06c3",
+          "ccf0989fbb9340908c606be34ad757d1",
+          "19a1a63827824bea9da42ea7e9166328",
+          "a051f164c890406c8d3192fc8b0ce469",
+          "d15c56fd41e14e959637d6937cb655df",
+          "1c71f559f665416a98eab89eab13ad78",
+          "b5df15f2f4d740cd96ce16e83bd954b1",
+          "8358ef33c93f48fe89060e8a7f6a03d3",
+          "2fffeae7262d4feeb218dfe047fa659d",
+          "fa3903bce8dc4b9195d4c44edfef4bc0",
+          "e8ab3607e52f44c1b23bc17f75b0a451",
+          "f0d86438db844c1995873b789d942c97",
+          "5b82dbb5658a429e9511965602897776",
+          "b70f98c1c50748ee9f87c312a12e3ef2",
+          "d2bbefb09d6b4f8f86689db1e061ccac",
+          "aeaa01964cf947b0b0ae7e3acaf6fad8",
+          "c7d60a9c08b94a5597abfcfb998f4caf",
+          "75a646c2523a4569b5fab776f5f73864"
+        ],
+        "Left": -308.27921468998051,
+        "Top": -456.67092359758897,
+        "Width": 413.32661111826593,
+        "Height": 1722.6005560457613,
+        "FontSize": 36.0,
+        "InitialTop": -403.33759026425565,
+        "InitialHeight": 1699.2672227124278,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 172.93281799033764,
+    "Y": 408.08643577664549,
+    "Zoom": 0.45117208840239331
   }
 }

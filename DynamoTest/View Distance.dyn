@@ -1080,54 +1080,6 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Buildings.DeceonstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
-      "Id": "198d7b9b292742668e50ac13bb736df1",
-      "Inputs": [
-        {
-          "Id": "8b945cdb99c940b3a862412e037b5095",
-          "Name": "Mass",
-          "Description": "Building mass.\n\nTopology",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "d6ab486cf6b34d2db3a808d56effba9d",
-          "Name": "AngleThreshold",
-          "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "e664b5c4b93f4e96aafbcf1fc8d15571",
-          "Name": "VerticalSurfaces",
-          "Description": "Vertical surfaces.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "48e862d0b568413eb771821a5ac0a9f8",
-          "Name": "HorizontalSurfaces",
-          "Description": "Horizontal surfaces.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Deconstruct a building mass into component horizontal and vertical surfaces.\n\nBuildings.DeceonstructFacadeShell (Mass: Topology, AngleThreshold: double = 45): var[]..[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
       "FunctionSignature": "GenerativeToolkit.Site.SiteViewDistance@Autodesk.DesignScript.Geometry.Surface,Autodesk.DesignScript.Geometry.Geometry[],double,double",
       "Id": "1b3ed381b53249a2b9b6a85f43320e63",
       "Inputs": [
@@ -1627,6 +1579,54 @@
       ],
       "Replication": "Auto",
       "Description": "Returns what is passed in, doing nothing.\n\nObject.Identity (obj: var): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GenerativeToolkit.Building.DeceonstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
+      "Id": "0c3c5f9e0ab84c2bb247837c2cb128ed",
+      "Inputs": [
+        {
+          "Id": "b2ba3e102ad84d40aeffc075e3ed90c0",
+          "Name": "Mass",
+          "Description": "Building mass.\n\nTopology",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6aea023e7d84411ea72bca13c1131f2d",
+          "Name": "AngleThreshold",
+          "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "50b53e4554224902aef116c3382f9fa1",
+          "Name": "VerticalSurfaces",
+          "Description": "Vertical surfaces.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2025060651034110b43a496459bd4fce",
+          "Name": "HorizontalSurfaces",
+          "Description": "Horizontal surfaces.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Deconstruct a building mass into component horizontal and vertical surfaces.\n\nBuilding.DeceonstructFacadeShell (Mass: Topology, AngleThreshold: double = 45): var[]..[]"
     }
   ],
   "Connectors": [
@@ -1862,8 +1862,8 @@
     },
     {
       "Start": "318a62bacdb646b7ad2579e6a8176bb8",
-      "End": "8b945cdb99c940b3a862412e037b5095",
-      "Id": "d22248e605584fa39e802cd0290ee898"
+      "End": "b2ba3e102ad84d40aeffc075e3ed90c0",
+      "Id": "e7ee5f61d16b4b6dbc8455f6f1434b85"
     },
     {
       "Start": "f78bf99d74c6463496fc9bf6262bf87c",
@@ -1874,21 +1874,6 @@
       "Start": "89e0203d242d418bb894d1d8a4f0659c",
       "End": "d064226131fc46f6b77d72a37b69e63e",
       "Id": "5e13c0dbce60412abab3d3680d291153"
-    },
-    {
-      "Start": "e664b5c4b93f4e96aafbcf1fc8d15571",
-      "End": "0dccdfba7e6e4b689815fd3222144a56",
-      "Id": "e176254715a0417eba10fae62484722d"
-    },
-    {
-      "Start": "e664b5c4b93f4e96aafbcf1fc8d15571",
-      "End": "58d5303ab4ff4248a0e4649616af34a3",
-      "Id": "b838e818842c4cb0bef70637e5bf498b"
-    },
-    {
-      "Start": "48e862d0b568413eb771821a5ac0a9f8",
-      "End": "1e8d0db8ba0b47d7bf053b123fac1ee9",
-      "Id": "cd4fa803393445889b1e9105de1ae8a4"
     },
     {
       "Start": "db21c6c856a540de976938a8bc4fae27",
@@ -1954,6 +1939,21 @@
       "Start": "6845e2860e1b435a96eeb7b5e9b8273b",
       "End": "b5bca2ee678f4c458c251c30ded57880",
       "Id": "089531ebf48f4bafaccb9a6ec6252ace"
+    },
+    {
+      "Start": "50b53e4554224902aef116c3382f9fa1",
+      "End": "0dccdfba7e6e4b689815fd3222144a56",
+      "Id": "8e2bfaa9770c4c4e812b5c31842c173f"
+    },
+    {
+      "Start": "50b53e4554224902aef116c3382f9fa1",
+      "End": "58d5303ab4ff4248a0e4649616af34a3",
+      "Id": "c810ffd296fd4e2bbc8422a8de7c69d6"
+    },
+    {
+      "Start": "2025060651034110b43a496459bd4fce",
+      "End": "1e8d0db8ba0b47d7bf053b123fac1ee9",
+      "Id": "12ee3803e73d4f1d9529b21737b462e8"
     }
   ],
   "Dependencies": [],
@@ -1981,434 +1981,434 @@
     },
     "NodeViews": [
       {
+        "ShowGeometry": false,
+        "Name": "Cuboid.ByLengths",
         "Id": "413e2dde5ada4e50a1d423bcc89c0628",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Cuboid.ByLengths",
-        "ShowGeometry": false,
         "Excluded": false,
         "X": 867.32015323369774,
         "Y": 532.46256605233521
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RandomList",
         "Id": "727390b7b0cf43a8ab88c95edf36dd2d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RandomList",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 188.11370808198922,
         "Y": 301.5240724527136
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RemapRange",
         "Id": "e7e5e26ff9f74ec69c02b867f39afe50",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RemapRange",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 583.82427039691527,
         "Y": 134.71013953597532
       },
       {
+        "ShowGeometry": true,
+        "Name": "Context count",
         "Id": "e21545ac8f2a48eca1688ee390bbf05e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Context count",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -682.93215731748319,
         "Y": 503.85145028473005
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RandomList",
         "Id": "87025390ada3490e9dbcb6401d8af8d7",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RandomList",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 181.44704141532247,
         "Y": 390.85740578604697
       },
       {
+        "ShowGeometry": true,
+        "Name": "Context radius",
         "Id": "7294a65ef5f04fd6960f5c9f3961a149",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Context radius",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -682.93215731748319,
         "Y": 397.11889169470157
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "55bea7db70f24b2eae961435cda3c54d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 318.57827515565464,
         "Y": 196.34388569726372
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RemapRange",
         "Id": "2a82721c578a40cdacda4e2e701f92db",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RemapRange",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 573.82427039691538,
         "Y": 277.88025188936894
       },
       {
+        "ShowGeometry": true,
+        "Name": "Building size",
         "Id": "62926e270c5f4a75828679306062b6a9",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Building size",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -682.93215731748319,
         "Y": 717.316567464787
       },
       {
+        "ShowGeometry": true,
+        "Name": "Building variation",
         "Id": "be332530cdf8493080f2293bfc170e34",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Building variation",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -682.93215731748319,
         "Y": 824.04912605481547
       },
       {
+        "ShowGeometry": true,
+        "Name": "+",
         "Id": "bb60cb263e424b7190a44325a493cb9f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "+",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -83.3428458600099,
         "Y": 900.28657037061942
       },
       {
+        "ShowGeometry": true,
+        "Name": "-",
         "Id": "e0de91bc76f5433eb7eede634ffccca0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "-",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -79.583898559320232,
         "Y": 721.7963853963787
       },
       {
+        "ShowGeometry": true,
+        "Name": "/",
         "Id": "f8aecfbdac544bcb831ad361012c2baf",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "/",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 221.37494274703158,
         "Y": 784.77724198591829
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "8b90368bdefd421c99a18164d9fe473c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 96.927319109666541,
         "Y": 830.88110262880184
       },
       {
+        "ShowGeometry": true,
+        "Name": "/",
         "Id": "53224d06717741dfa29ba868da2a001b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "/",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 218.96288147359371,
         "Y": 897.68331016509421
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RandomList",
         "Id": "341b333975da4913959c18ca33f6098f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RandomList",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 181.75894977914436,
         "Y": 487.20706927382304
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RandomList",
         "Id": "b57f759c10674728a5875af6d9a2a930",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RandomList",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 179.31063508005059,
         "Y": 576.04639570141785
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RandomList",
         "Id": "34e2818ae2cb47b0955c856d59c8ea61",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RandomList",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 181.84164626059396,
         "Y": 664.88572212901261
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RemapRange",
         "Id": "8e1bfe3e50fa48cfb7b7311c70b7f414",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RemapRange",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 572.00052327461447,
         "Y": 416.678230076239
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RemapRange",
         "Id": "4d4f1a0bb74a4be4929dfddfb1199c32",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RemapRange",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 573.5376749794633,
         "Y": 554.68766885722766
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.RemapRange",
         "Id": "581861b550ef47099242c69257707526",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.RemapRange",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 571.67115848262677,
         "Y": 690.5825016970299
       },
       {
+        "ShowGeometry": true,
+        "Name": "/",
         "Id": "74f6c73badbe4889a0d93834c518c236",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "/",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 948.748265323125,
         "Y": 705.94967753265166
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "fc8181028a834e268979318e4545a586",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 826.52518338185973,
         "Y": 754.102554739737
       },
       {
+        "ShowGeometry": true,
+        "Name": "Proximity",
         "Id": "60714de5f9c545a2895f2305338f0c3d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Proximity",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -682.93215731748319,
         "Y": 610.58400887475852
       },
       {
+        "ShowGeometry": false,
+        "Name": "Cuboid.ByLengths",
         "Id": "609493d4e923452dbbf5adf033a90280",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Cuboid.ByLengths",
-        "ShowGeometry": false,
         "Excluded": false,
         "X": -14.163195771609139,
         "Y": 1179.973696298711
       },
       {
+        "ShowGeometry": true,
+        "Name": "Building size",
         "Id": "f6f0df92da9143ceafa04b328a2aecd2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Building size",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -682.93215731748319,
         "Y": 930.78168464484384
       },
       {
+        "ShowGeometry": true,
+        "Name": "Building size",
         "Id": "c9e116c00f504bc7b4f04f404389c77a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Building size",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -682.93215731748319,
         "Y": 1037.5142432348723
       },
       {
+        "ShowGeometry": true,
+        "Name": "Building size",
         "Id": "fd0de7a977ed41d0860bc8b9c274300c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Building size",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -682.93215731748319,
         "Y": 1144.2468018249008
       },
       {
+        "ShowGeometry": false,
+        "Name": "Geometry.Translate",
         "Id": "0a47612581f74d27b47793252b490d7e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Geometry.Translate",
-        "ShowGeometry": false,
         "Excluded": false,
         "X": 275.39710256423916,
         "Y": 1179.7241878460375
       },
       {
+        "ShowGeometry": true,
+        "Name": "/",
         "Id": "9fb4610219a34ba0932c60fc0c46c258",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "/",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 19.086139992276003,
         "Y": 1321.211605965342
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "8453b33e5e1844ee91a54ab7df0cd76c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -85.185179288325116,
         "Y": 1382.3296450940159
       },
       {
-        "Id": "198d7b9b292742668e50ac13bb736df1",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Name": "Buildings.DeceonstructFacadeShell",
-        "ShowGeometry": false,
-        "Excluded": false,
-        "X": 563.859147891582,
-        "Y": 1180.714807251584
-      },
-      {
+        "ShowGeometry": true,
+        "Name": "Site.SiteViewDistance",
         "Id": "1b3ed381b53249a2b9b6a85f43320e63",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Site.SiteViewDistance",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 1987.2507622876315,
         "Y": 937.83350922751413
       },
       {
+        "ShowGeometry": true,
+        "Name": "Resolution",
         "Id": "d493cb7f532d46f7bb5cda412c1d1b27",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Resolution",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -686.88254839366073,
         "Y": 1246.2495236393695
       },
       {
+        "ShowGeometry": true,
+        "Name": "Color.ByARGB",
         "Id": "975234a85df74ec0b9a7d269f7c436de",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Color.ByARGB",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 2893.1849195970117,
         "Y": 826.17031000274824
       },
       {
+        "ShowGeometry": true,
+        "Name": "Vector.ByCoordinates",
         "Id": "ad5d08a5f4fb457190b9fc16ae5438ff",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Vector.ByCoordinates",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 848.64664204498013,
         "Y": 240.03409634800681
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "998dd1181455495b9b2d1a99dd67c8c7",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 1044.051245117216,
         "Y": 252.33420264063375
       },
       {
+        "ShowGeometry": false,
+        "Name": "Geometry.Translate",
         "Id": "fd835d4431664ef8a65c445fa8ad9fab",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Geometry.Translate",
-        "ShowGeometry": false,
         "Excluded": false,
         "X": 1254.5142727386287,
         "Y": 528.19824937617136
       },
       {
+        "ShowGeometry": true,
+        "Name": "Geometry.Translate",
         "Id": "7abddb7ef79b43ccaf7a092cd7261073",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Geometry.Translate",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 1543.7980852413671,
         "Y": 525.78205835144308
       },
       {
+        "ShowGeometry": true,
+        "Name": "Math.MapTo",
         "Id": "d3d8d69f978b46dca262fc26fd809191",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Math.MapTo",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 2596.6877668213428,
         "Y": 877.33704500913223
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "9bf7a5afa3d2492d8af89996d7fbd1db",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 2469.6665234892166,
         "Y": 967.11277688147482
       },
       {
+        "ShowGeometry": false,
+        "Name": "GeometryColor.BySurfaceColors",
         "Id": "7cc72e8cd58c42afb2c2878de3e52933",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "GeometryColor.BySurfaceColors",
-        "ShowGeometry": false,
         "Excluded": false,
         "X": 3119.6947970906576,
         "Y": 994.6513860001487
       },
       {
+        "ShowGeometry": true,
+        "Name": "Object.Identity",
         "Id": "5399a04fccd94ac5b4a26b9eb9450209",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Object.Identity",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 950.854370282156,
         "Y": 1257.4954569386457
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Building.DeceonstructFacadeShell",
+        "Id": "0c3c5f9e0ab84c2bb247837c2cb128ed",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 576.36768089894053,
+        "Y": 1179.4731035582117
       }
     ],
     "Annotations": [
@@ -2432,7 +2432,7 @@
         "Height": 970.13063194466793,
         "FontSize": 36.0,
         "InitialTop": 397.11889169470157,
-        "InitialHeight": 844.79457679686584,
+        "InitialHeight": 994.13063194466793,
         "TextblockHeight": 43.333333333333336,
         "Background": "#FFE8F7AD"
       },
@@ -2444,16 +2444,16 @@
           "0a47612581f74d27b47793252b490d7e",
           "9fb4610219a34ba0932c60fc0c46c258",
           "8453b33e5e1844ee91a54ab7df0cd76c",
-          "198d7b9b292742668e50ac13bb736df1",
-          "5399a04fccd94ac5b4a26b9eb9450209"
+          "5399a04fccd94ac5b4a26b9eb9450209",
+          "0c3c5f9e0ab84c2bb247837c2cb128ed"
         ],
         "Left": -95.185179288325116,
-        "Top": 1126.3908545127042,
+        "Top": 1126.1397702248785,
         "Width": 1238.0395495704811,
-        "Height": 348.93879058131165,
+        "Height": 349.18987486913738,
         "FontSize": 36.0,
-        "InitialTop": 1179.7241878460375,
-        "InitialHeight": 325.60545724797839,
+        "InitialTop": 1179.4731035582117,
+        "InitialHeight": 347.60545724797839,
         "TextblockHeight": 43.333333333333336,
         "Background": "#FFFFB8D8"
       },
@@ -2491,7 +2491,7 @@
         "Height": 937.90976416797741,
         "FontSize": 36.0,
         "InitialTop": 134.71013953597532,
-        "InitialHeight": 819.17096309282658,
+        "InitialHeight": 910.576430834644,
         "TextblockHeight": 43.333333333333336,
         "Background": "#FFFFB8D8"
       },
@@ -2510,13 +2510,13 @@
         "Height": 340.81440933073384,
         "FontSize": 36.0,
         "InitialTop": 826.17031000274824,
-        "InitialHeight": 317.48107599740047,
+        "InitialHeight": 313.48107599740047,
         "TextblockHeight": 43.333333333333336,
         "Background": "#FFA4E1FF"
       }
     ],
-    "X": 323.62468256614511,
-    "Y": 96.737719920171855,
-    "Zoom": 0.42496893794511692
+    "X": 274.87474613607435,
+    "Y": 68.734218382667677,
+    "Zoom": 0.39870371723568793
   }
 }
