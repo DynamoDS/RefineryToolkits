@@ -139,8 +139,8 @@ namespace GenerativeToolkit
         /// <param name="MaxDistance">Maximum distance to search.</param>
         /// <returns name="Points">Sampling points.</returns>
         /// <returns name="Distances">Distance from each sampling point along surface normal to the closest context geometry.</returns>
-        /// <returns name="Geometry">Colored surfaces mapping view distance.</returns>
-        [MultiReturn(new[] { "Points", "Distances", "Geometry" })]
+        /// <returns name="GeometryColor">Colored surfaces mapping view distance.</returns>
+        [MultiReturn(new[] { "Points", "Distances", "GeometryColor" })]
         public static Dictionary<string, object> SiteViewDistance(Surface Surface, Geometry[] Context, double Resolution = 3, double MaxDistance = 50)
         {
             int uCount = (int)Math.Ceiling(Surface.GetIsoline(0, 0.5).Length / Resolution);
@@ -196,7 +196,7 @@ namespace GenerativeToolkit
             {
                 {"Points", points},
                 {"Distances", distances},
-                {"Geometry",  geometry}
+                {"GeometryColor",  geometry}
             };
         }
     }
