@@ -20,8 +20,6 @@ namespace GenerativeToolkit
     /// </summary>
     public static class Revit
     {
-        private const double footToMm = 12 * 25.4;
-
         internal static Document Document => DocumentManager.Instance.CurrentDBDocument;
 
         /// <summary>
@@ -44,6 +42,8 @@ namespace GenerativeToolkit
                 throw new ArgumentOutOfRangeException(nameof(FloorType));
             }
 
+            DisplayUnitType unitType = Document.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits;
+            
             var FloorElements = new List<List<DynamoRevitElements.Floor>>();
             var collector = new FilteredElementCollector(Document);
 
@@ -66,12 +66,16 @@ namespace GenerativeToolkit
                 if (revitLevel != null)
                 {
                     // Adjust existing level to correct height.
-                    revitLevel.Elevation = DynamoElements.BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm;
+                    revitLevel.Elevation = UnitUtils.ConvertToInternalUnits(
+                        BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z,
+                        unitType);
                 }
                 else
                 {
                     // Create new level.
-                    revitLevel = RevitElements.Level.Create(Document, DynamoElements.BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z / footToMm);
+                    revitLevel = RevitElements.Level.Create(Document, UnitUtils.ConvertToInternalUnits(
+                        BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z,
+                        unitType));
                     revitLevel.Name = levelName;
                 }
 
