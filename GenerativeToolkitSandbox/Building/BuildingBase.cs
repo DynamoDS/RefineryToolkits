@@ -41,20 +41,6 @@ namespace GenerativeToolkit
         public double GrossFloorArea => FloorArea * FloorCount;
         public double NetFloorArea => (FloorArea - CoreArea) * FloorCount;
 
-        public Dictionary<string, object> Output => new Dictionary<string, object>
-        {
-            {"BuildingSolid", Mass},
-            {"Floors", Floors},
-            {"NetFloors", NetFloors},
-            {"FloorElevations", FloorElevations},
-            {"Cores", Cores},
-            {"TopPlane", TopPlane},
-            {"BuildingVolume", TotalVolume},
-            {"GrossFloorArea", GrossFloorArea},
-            {"NetFloorArea", NetFloorArea},
-            {"TotalFacadeArea", FacadeArea},
-        };
-
         public BuildingBase()
         {
         }

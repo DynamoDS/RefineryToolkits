@@ -107,7 +107,19 @@ namespace GenerativeToolkit
 
             building.CreateBuilding(BasePlane, BldgArea, FloorHeight, Width, Length, Depth, IsCurved, CreateCore, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
 
-            return building.Output;
+            return new Dictionary<string, object>
+            {
+                {"BuildingSolid", building.Mass},
+                {"Floors", building.Floors},
+                {"NetFloors", building.NetFloors},
+                {"FloorElevations", building.FloorElevations},
+                {"Cores", building.Cores},
+                {"TopPlane", building.TopPlane},
+                {"BuildingVolume", building.TotalVolume},
+                {"GrossFloorArea", building.GrossFloorArea},
+                {"NetFloorArea", building.NetFloorArea},
+                {"TotalFacadeArea", building.FacadeArea},
+            };
         }
 
         /// <summary>
@@ -233,7 +245,16 @@ namespace GenerativeToolkit
 
             var building = new BuildingFromCurves(EdgeLoops[0], EdgeLoops.Skip(1).ToList(), BldgArea, FloorHeight);
 
-            return building.Output;
+            return new Dictionary<string, object>
+            {
+                {"BuildingSolid", building.Mass},
+                {"Floors", building.Floors},
+                {"FloorElevations", building.FloorElevations},
+                {"TopPlane", building.TopPlane},
+                {"BuildingVolume", building.TotalVolume},
+                {"GrossFloorArea", building.GrossFloorArea},
+                {"TotalFacadeArea", building.FacadeArea},
+            };
         }
     }
 }
