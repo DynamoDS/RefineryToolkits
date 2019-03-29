@@ -27,7 +27,7 @@ namespace GenerativeToolkit
             Curve siteOffset = null;
 
             if (SiteOutline == null) { throw new ArgumentNullException(nameof(SiteOutline)); }
-            if (Setback <= 0) { throw new ArgumentOutOfRangeException(nameof(Setback), $"{nameof(Setback)} must be greater than 0."); }
+            if (Setback < 0) { throw new ArgumentOutOfRangeException(nameof(Setback), $"{nameof(Setback)} must be greater than or equal to 0."); }
             if (HeightLimit <= 0) { throw new ArgumentOutOfRangeException(nameof(HeightLimit), $"{nameof(HeightLimit)} must be greater than 0."); }
             
             var inset1 = SiteOutline.Offset(Setback);
