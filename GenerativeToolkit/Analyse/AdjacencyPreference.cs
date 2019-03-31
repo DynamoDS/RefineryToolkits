@@ -2,27 +2,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class AdjacencyPreference
     {
+        //Todo if points form convex quadrilateral the geometric median is the crossing point of the diagonals of the quadrilateral
+        //Radon Point
         public static Point CommonPointByPoints(List<Point> points)
         {
-            List<Point> testPoints = new List<Point>
+            if (points.Count == 3)
             {
-                Point.ByCoordinates(-1.0,0.0),
-                Point.ByCoordinates(0.0,1.0),
-                Point.ByCoordinates(1.0,0.0),
-                Point.ByCoordinates(0.0,-1.0)
-            };
+                if (VertexAtAngle(points[0], points[1], points[2]) != null)
+                {
+                    return VertexAtAngle(points[0], points[1], points[2]);
+                }
+                else
+                {
+                    return FermatPoint(points);
+                }
+                
+            }
 
-            int n = points.Count;
-            Point commonPoint = GeometricMedian(testPoints, points, n);
+            else
+            {
+                List<Point> testPoints = new List<Point>
+                {
+                    Point.ByCoordinates(-1.0,0.0),
+                    Point.ByCoordinates(0.0,1.0),
+                    Point.ByCoordinates(1.0,0.0),
+                    Point.ByCoordinates(0.0,-1.0)
+                };
 
-            return commonPoint;
+                int n = points.Count;
+                Point commonPoint = GeometricMedian(testPoints, points, n);
+
+                return commonPoint;
+            }
+            
         }
 
         private static double DistanceSum(Point point, List<Point> points, int n)
@@ -88,7 +105,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
             // Lowest Limit till which we are going 
             // to run the main while loop 
             // Lower the Limit higher the accuracy 
-            double lowerLimit = 0.01;
+            double lowerLimit = 0.001;
             // Test loop for approximation starts here 
             while (testDistance > lowerLimit)
             {
@@ -130,5 +147,81 @@ namespace Autodesk.GenerativeToolkit.Analyse
             }
             return Point.ByCoordinates(currentX, currentY);
         }
+
+        // if points are triangle with angel > 120, return vertex at that angle
+        private static Point VertexAtAngle(Point A, Point B, Point C)
+        {
+            // Square of lengths be a2, b2, c2 
+            double a2 = LengthSquare(B, C);
+            double b2 = LengthSquare(A, C);
+            double c2 = LengthSquare(A, B);
+
+            // lenght of sides be a, b, c 
+            double a = Math.Sqrt(a2);
+            double b = Math.Sqrt(b2);
+            double c = Math.Sqrt(c2);
+
+            // From Cosine law 
+            double alpha = Math.Acos((b2 + c2 - a2) / (2 * b * c));
+            double betta = Math.Acos((a2 + c2 - b2) / (2 * a * c));
+            double gamma = Math.Acos((a2 + b2 - c2) / (2 * a * b));
+
+            // Converting to degree 
+            alpha = Math.Ceiling(alpha * 180 / Math.PI);
+            betta = Math.Ceiling(betta * 180 / Math.PI);
+            gamma = Math.Ceiling(gamma * 180 / Math.PI);
+            
+
+            if(alpha >= 120)
+            {
+                return A;
+            }
+            if(betta >= 120)
+            {
+                return B;
+            }
+            if(gamma >= 120)
+            {
+                return C;
+            }
+
+            return null;
+        }
+
+        // returns square of distance b/w two points 
+        private static double LengthSquare(Point pt1, Point pt2)
+        {
+            double xDiff = pt1.X - pt2.X;
+            double yDiff = pt1.Y - pt2.Y;
+            return xDiff * xDiff + yDiff * yDiff;
+        }
+
+        private static Point FermatPoint(List<Point> points)
+        {
+            List<Point> sortedPoints = points.OrderBy(pt => pt.Y).Reverse().ToList();
+
+            Vector vectorAB = Vector.ByTwoPoints(sortedPoints[0], sortedPoints[1]).Rotate(Vector.ZAxis(), 90);
+            Vector vectorAC = Vector.ByTwoPoints(sortedPoints[2], sortedPoints[0]).Rotate(Vector.ZAxis(), 90);
+          
+            Point midpointAB = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[1].X) / 2, (sortedPoints[0].Y + sortedPoints[1].Y) / 2);
+            Point midpointAC = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[2].X) / 2, (sortedPoints[0].Y + sortedPoints[2].Y) / 2);
+
+            double sideABLength = Math.Sqrt(Math.Pow((sortedPoints[0].X - sortedPoints[1].X), 2) + Math.Pow((sortedPoints[0].Y - sortedPoints[1].Y), 2));
+            double sideACLength = Math.Sqrt(Math.Pow((sortedPoints[0].X - sortedPoints[2].X), 2) + Math.Pow((sortedPoints[0].Y - sortedPoints[2].Y), 2));
+
+            double equilateralLengthAB = (sideABLength * Math.Sqrt(3)) / 2;
+            double equilateralLengthAC = (sideACLength * Math.Sqrt(3)) / 2;
+
+            Point equilateralTopPointAB = midpointAB.Translate(vectorAB, equilateralLengthAB) as Point;
+            Point equilateralTopPointAC = midpointAC.Translate(vectorAC, equilateralLengthAC) as Point;
+
+            Line lineABC = Line.ByStartPointEndPoint(equilateralTopPointAB, sortedPoints[2]);
+            Line lineACB = Line.ByStartPointEndPoint(equilateralTopPointAC, sortedPoints[1]);
+
+            Point fermatPt = lineABC.Intersect(lineACB)[0] as Point;
+
+            return fermatPt;
+        }
+
     }
 }
