@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MIConvexHull;
+using Autodesk.DesignScript.Runtime;
 
 namespace Autodesk.GenerativeToolkit.Analyse
 {
@@ -22,6 +24,27 @@ namespace Autodesk.GenerativeToolkit.Analyse
                     return FermatPoint(points);
                 }
                 
+            }
+
+            else if(points.Count == 4)
+            {
+                List<Point> convexHull = ConvexHull(points);
+                if (convexHull.Count == 3)
+                {
+                    return points.Where(p => !convexHull.Any(p2 => p2.X == p.X)).First();
+                }
+                else
+                {
+                    Line lineAC = Line.ByStartPointEndPoint(convexHull[0], convexHull[2]);
+                    Line lineBD = Line.ByStartPointEndPoint(convexHull[1], convexHull[3]);
+
+                    Point point = lineAC.Intersect(lineBD).First() as Point;
+                    lineAC.Dispose();
+                    lineBD.Dispose();
+
+                    return point;
+                }
+
             }
 
             else
@@ -196,6 +219,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
             return xDiff * xDiff + yDiff * yDiff;
         }
 
+        // returns the common point of a triangle with angles < 120
         private static Point FermatPoint(List<Point> points)
         {
             List<Point> sortedPoints = points.OrderBy(pt => pt.Y).Reverse().ToList();
@@ -223,5 +247,35 @@ namespace Autodesk.GenerativeToolkit.Analyse
             return fermatPt;
         }
 
+        public static List<Point> ConvexHull(List<Point> points)
+        {
+            var verticies = new Vertex[points.Count];
+            for (int i = 0; i < points.Count; i++)
+            {
+                verticies[i] = new Vertex(points[i].X, points[i].Y);
+            }
+
+            var convexHull = MIConvexHull.ConvexHull.Create(verticies).Result.Points.ToList();
+
+            List<Point> convexHullPoints = new List<Point>();
+            foreach (Vertex vertex in convexHull)
+            {
+                convexHullPoints.Add(Point.ByCoordinates(vertex.Position[0], vertex.Position[1]));
+            }
+
+            return convexHullPoints;
+        }
+
+
+    }
+    [IsVisibleInDynamoLibrary(false)]
+    public class Vertex : IVertex
+    {
+        public Vertex(double x, double y)
+        {
+            Position = new double[2] { x, y };
+        }
+
+        public double[] Position { get; set; }
     }
 }
