@@ -9,10 +9,16 @@ namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class AdjacencyPreference
     {
-        //Todo if points form convex quadrilateral the geometric median is the crossing point of the diagonals of the quadrilateral
-        //Radon Point
-        public static Point CommonPointByPoints(List<Point> points)
+        /// <summary>
+        /// Returns the geometric median point of a list of points.
+        /// The geometric median is the point minimizing the sum of distances to the sample points
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public static Point GeometricMedian(List<Point> points)
         {
+            // If 3 points return either the vertex at the angle >= 120
+            // or the Fermat point
             if (points.Count == 3)
             {
                 if (VertexAtAngle(points[0], points[1], points[2]) != null)
@@ -26,6 +32,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
                 
             }
 
+            // Else If 4 points return wither the point inside the convex hull
+            // or the crossing point of the diagonals of the quadrilateral
             else if(points.Count == 4)
             {
                 List<Point> convexHull = ConvexHull(points);
@@ -47,6 +55,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             }
 
+            // Else return the point that minimizes the distance to the sample points
+            // https://www.geeksforgeeks.org/geometric-median/
             else
             {
                 List<Point> testPoints = new List<Point>
@@ -58,27 +68,15 @@ namespace Autodesk.GenerativeToolkit.Analyse
                 };
 
                 int n = points.Count;
-                Point commonPoint = GeometricMedian(testPoints, points, n);
+                Point commonPoint = CommonPointByPoints(testPoints, points, n);
 
                 return commonPoint;
             }
             
         }
 
-        private static double DistanceSum(Point point, List<Point> points, int n)
-        {
-            double sum = 0;
-            for (int i = 0; i < n; i++)
-            {
-                double distx = Math.Abs(points[i].X - point.X);
-                double disty = Math.Abs(points[i].Y - point.Y);
-                sum += Math.Sqrt((distx * distx) + (disty * disty));
-            }
-            // Return the sum of Euclidean Distances 
-            return sum;
-        }
-
-        private static Point GeometricMedian(List<Point> testPoints, List<Point> points, int n)
+        // returns the geometric median of a list of points > 4
+        private static Point CommonPointByPoints(List<Point> testPoints, List<Point> points, int n)
         {
             double currentX = 0;
             double currentY = 0;
@@ -171,6 +169,20 @@ namespace Autodesk.GenerativeToolkit.Analyse
             return Point.ByCoordinates(currentX, currentY);
         }
 
+        // Return the sum of Euclidean Distances 
+        private static double DistanceSum(Point point, List<Point> points, int n)
+        {
+            double sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                double distx = Math.Abs(points[i].X - point.X);
+                double disty = Math.Abs(points[i].Y - point.Y);
+                sum += Math.Sqrt((distx * distx) + (disty * disty));
+            }
+
+            return sum;
+        }
+
         // if points are triangle with angel > 120, return vertex at that angle
         private static Point VertexAtAngle(Point A, Point B, Point C)
         {
@@ -247,7 +259,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
             return fermatPt;
         }
 
-        public static List<Point> ConvexHull(List<Point> points)
+        // returns the Convex Hull of a list of points
+        private static List<Point> ConvexHull(List<Point> points)
         {
             var verticies = new Vertex[points.Count];
             for (int i = 0; i < points.Count; i++)
