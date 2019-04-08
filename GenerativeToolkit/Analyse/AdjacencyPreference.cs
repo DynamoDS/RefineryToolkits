@@ -278,9 +278,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             return convexHullPoints;
         }
-
-
     }
+
     [IsVisibleInDynamoLibrary(false)]
     public class Vertex : IVertex
     {
