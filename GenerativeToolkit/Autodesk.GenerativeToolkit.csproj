@@ -207,9 +207,6 @@
       <Name>GenerativeToolkit.Graphs</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="MIConvexHull.xml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <!--Defining folders to copy-->

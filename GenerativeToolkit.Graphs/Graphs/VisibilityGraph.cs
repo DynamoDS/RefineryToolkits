@@ -48,7 +48,7 @@ namespace GenerativeToolkit.Graphs
         {
             GeometryVertex o = origin;
             if(baseGraph.Contains(origin)) { o = baseGraph.vertices[baseGraph.vertices.IndexOf(origin)]; }
-            var visibleVertices = VisibilityGraph.VisibleVertices(o, baseGraph, null, null, null, false, false, true);
+            var visibleVertices = VisibleVertices(o, baseGraph, null, null, null, false, false, true);
             
             return visibleVertices;
 

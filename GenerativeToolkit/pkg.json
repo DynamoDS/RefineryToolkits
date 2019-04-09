@@ -15,7 +15,6 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "Autodesk.GenerativeToolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "PlacementMethod, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+    "Autodesk.GenerativeToolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
   ]
 }
