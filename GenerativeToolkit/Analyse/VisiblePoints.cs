@@ -1,18 +1,26 @@
-﻿using Autodesk.DesignScript.Geometry;
+﻿#region namespaces
+using Autodesk.DesignScript.Geometry;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GenerativeToolkit.Graphs;
+#endregion
 
 namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class VisiblePoints
     {
-        public static double VisibleFromOrigin(Point origin, List<Point> points, List<Polygon> boundary, List<Polygon> obstacles)
+        /// <summary>
+        /// Calculates the visible points out of a list of sample points from a given origin.
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="points"></param>
+        /// <param name="boundary"></param>
+        /// <param name="obstacles"></param>
+        /// <returns>precentages of the amount of visible points</returns>
+        public static double FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, List<Polygon> obstacles)
         {
             Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
             GeometryPolygon gPol = GeometryPolygon.ByVertices(isovist.Points.Select(p => GeometryVertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());

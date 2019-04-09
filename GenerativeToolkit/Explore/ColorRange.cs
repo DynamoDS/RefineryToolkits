@@ -1,17 +1,21 @@
-﻿using Autodesk.DesignScript.Runtime;
+﻿#region namespaces
+using Autodesk.DesignScript.Runtime;
 using DSCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#endregion
 
 namespace Autodesk.GenerativeToolkit.Explore
 {
-    [IsVisibleInDynamoLibrary(false)]
-    public static class ColorRange
+    public static class Colors
     {
-        [IsVisibleInDynamoLibrary(true)]
+        /// <summary>
+        /// Creates a given amount of distinct colors which can be used in a color range
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="correctionFactor"></param>
+        /// <returns>distinct colors</returns>
         public static List<Color> ContrastyColorRange(int amount, double correctionFactor)
         {
             if (amount > 19)

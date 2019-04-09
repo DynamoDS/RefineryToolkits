@@ -1,16 +1,14 @@
-﻿using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Runtime;
-using Autodesk.GenerativeToolkit.Analyse;
+﻿#region namespaces
+using Autodesk.DesignScript.Geometry;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using Dynamo.Graph.Nodes;
 using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
 using GenerativeToolkit.Graphs;
+#endregion
 
 namespace Autodesk.GenerativeToolkit.Analyse
 {
@@ -26,7 +24,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="point">Origin point</param>
         /// <returns name="isovist">Surface representing the isovist area</returns>
         [NodeCategory("Actions")]
-        public static Surface IsovistFromPoint(List<Polygon> boundary, List<Polygon> internals, DSPoint point)
+        public static Surface FromPoint(List<Polygon> boundary, List<Polygon> internals, DSPoint point)
         {
             BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary,internals);
 

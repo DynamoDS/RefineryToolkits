@@ -10,7 +10,6 @@ using DSLine = Autodesk.DesignScript.Geometry.Line;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using GenerativeToolkit.Graphs.Geometry;
-using GenerativeToolkit.Graphs.Extensions;
 
 namespace Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry
 {

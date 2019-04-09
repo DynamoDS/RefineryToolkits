@@ -1,10 +1,12 @@
-﻿using Autodesk.DesignScript.Geometry;
+﻿#region namespaces
+using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+#endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
@@ -39,7 +41,7 @@ namespace Autodesk.GenerativeToolkit.Generate
 
         #region Public Methods
         [IsVisibleInDynamoLibrary(true)]
-        public static List<Rectangle> MaxPack(List<Rectangle> rects, Rectangle bin, string placementMethod)
+        public static List<Rectangle> Pack(List<Rectangle> rects, Rectangle bin, string placementMethod)
         {
             freeRectangles = new List<FreeRectangle>();
             placedRectangles = new List<Rectangle>();
@@ -62,10 +64,9 @@ namespace Autodesk.GenerativeToolkit.Generate
 
         #region Placement Methods
         [IsVisibleInDynamoLibrary(true)]
-        public static string BSSF()
-        {
-            return "BSSF";
-        }
+        public static string BSSF =>  "BSSF";
+
+
         [IsVisibleInDynamoLibrary(true)]
         public static string BLSF()
         {

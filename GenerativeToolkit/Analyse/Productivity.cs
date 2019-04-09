@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenerativeToolkit.Analyse
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     static class Productivity
     {

@@ -1,17 +1,17 @@
-﻿using Autodesk.DesignScript.Runtime;
+﻿#region namespaces
+using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#endregion
 
 namespace Autodesk.GenerativeToolkit.Rank
 {
     [IsVisibleInDynamoLibrary(false)]
-    public class SeededShuffle
+    public class ListShuffle
     {
         [IsVisibleInDynamoLibrary(true)]
-        public static IList SeddedShuffle(IList list, int seed)
+        public static IList SeededShuffle(IList list, int seed)
         {
             var rng = new Random(seed);
             return list.Cast<object>().OrderBy(_ => rng.Next()).ToList();

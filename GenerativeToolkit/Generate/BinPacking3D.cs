@@ -1,16 +1,15 @@
-﻿using System;
+﻿#region namespaces
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using CromulentBisgetti.ContainerPacking.Algorithms;
 using CromulentBisgetti.ContainerPacking.Entities;
+#endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
-    [IsVisibleInDynamoLibrary(false)]
     public static class BinPacking3D
     {
         [IsVisibleInDynamoLibrary(true)]
