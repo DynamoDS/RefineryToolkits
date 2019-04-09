@@ -1,7 +1,7 @@
-﻿using Autodesk.DesignScript.Runtime;
+﻿#region namespaces
+using Autodesk.DesignScript.Runtime;
 using DSCore;
 using System;
-#region namespaces
 using System.Collections.Generic;
 using System.Linq;
 #endregion
