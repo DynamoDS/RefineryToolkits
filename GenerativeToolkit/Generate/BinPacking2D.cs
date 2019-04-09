@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 #endregion
 
-namespace Generate
+namespace Autodesk.GenerativeToolkit.Generate
 {
     [IsVisibleInDynamoLibrary(false)]
     public class BinPacking2D
@@ -64,10 +64,9 @@ namespace Generate
 
         #region Placement Methods
         [IsVisibleInDynamoLibrary(true)]
-        public static string BSSF()
-        {
-            return "BSSF";
-        }
+        public static string BSSF =>  "BSSF";
+
+
         [IsVisibleInDynamoLibrary(true)]
         public static string BLSF()
         {

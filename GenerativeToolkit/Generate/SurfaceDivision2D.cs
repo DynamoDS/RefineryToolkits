@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 #endregion
 
-namespace Generate
+namespace Autodesk.GenerativeToolkit.Generate
 {
     [IsVisibleInDynamoLibrary(false)]
     public class SurfaceDivision2D

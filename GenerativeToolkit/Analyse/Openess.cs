@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autodesk.DesignScript.Runtime;
 
-namespace Analyse
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     [IsVisibleInDynamoLibrary(false)]
     public class Openess

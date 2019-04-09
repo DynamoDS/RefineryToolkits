@@ -12,7 +12,7 @@ using Autodesk.DesignScript.Geometry;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 #endregion
 
-namespace Analyse
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class PathFinding
     {

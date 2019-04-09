@@ -10,7 +10,7 @@ using DSPoint = Autodesk.DesignScript.Geometry.Point;
 using GenerativeToolkit.Graphs;
 #endregion
 
-namespace Analyse
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class Isovist
     {

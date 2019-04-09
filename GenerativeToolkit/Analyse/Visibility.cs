@@ -13,7 +13,7 @@ using GenerativeToolkit.Graphs.Extensions;
 using GenerativeToolkit.Graphs;
 #endregion
 
-namespace Analyse
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     /// <summary>
     /// Representation of a Graph.

@@ -5,7 +5,7 @@ using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 #endregion
 
-namespace Generate
+namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class AmenitySpace
     {

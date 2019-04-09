@@ -1,14 +1,14 @@
-﻿using Autodesk.DesignScript.Geometry;
+﻿#region namespaces
+using Autodesk.DesignScript.Geometry;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using GenerativeToolkit.Graphs.Geometry;
-#region namespaces
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using GenerativeToolkit.Graphs;
 #endregion
 
-namespace Analyse
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class VisiblePoints
     {

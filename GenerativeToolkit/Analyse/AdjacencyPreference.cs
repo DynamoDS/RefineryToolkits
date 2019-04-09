@@ -7,7 +7,7 @@ using MIConvexHull;
 using Autodesk.DesignScript.Runtime;
 #endregion
 
-namespace Analyse
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class AdjacencyPreference
     {

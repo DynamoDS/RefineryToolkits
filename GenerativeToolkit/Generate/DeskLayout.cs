@@ -5,7 +5,7 @@ using System.Linq;
 using Autodesk.DesignScript.Geometry;
 #endregion
 
-namespace Generate
+namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class DeskLayout
     {

@@ -5,7 +5,7 @@ using System.Collections;
 using System.Linq;
 #endregion
 
-namespace Rank
+namespace Autodesk.GenerativeToolkit.Rank
 {
     [IsVisibleInDynamoLibrary(false)]
     public class ListShuffle

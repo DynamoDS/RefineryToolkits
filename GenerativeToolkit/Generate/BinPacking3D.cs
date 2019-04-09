@@ -8,7 +8,7 @@ using CromulentBisgetti.ContainerPacking.Algorithms;
 using CromulentBisgetti.ContainerPacking.Entities;
 #endregion
 
-namespace Generate
+namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class BinPacking3D
     {

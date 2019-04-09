@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 #endregion
 
-namespace Explore
+namespace Autodesk.GenerativeToolkit.Explore
 {
     public static class Colors
     {

@@ -3,7 +3,7 @@ using Autodesk.DesignScript.Geometry;
 using System.Collections.Generic;
 #endregion
 
-namespace Analyse
+namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class ViewsToOutside
     {
