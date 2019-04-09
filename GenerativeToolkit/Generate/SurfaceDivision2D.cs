@@ -1,14 +1,12 @@
-﻿using Autodesk.DesignScript.Geometry;
+﻿#region namespaces
+using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
-using DSCore;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#endregion
 
-namespace Autodesk.GenerativeToolkit.Generate
+namespace Generate
 {
     [IsVisibleInDynamoLibrary(false)]
     public class SurfaceDivision2D

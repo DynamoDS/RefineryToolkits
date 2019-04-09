@@ -1,13 +1,11 @@
-﻿using System;
+﻿#region namespaces
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSCore;
-using DSCore.Properties;
 using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Runtime;
-using System.Collections;
+#endregion
 
-namespace GenerativeToolkit.Generate
+namespace Generate
 {
     public static class DeskLayout
     {
@@ -22,12 +20,12 @@ namespace GenerativeToolkit.Generate
         /// <search></search>
         public static object Create(Autodesk.DesignScript.Geometry.Surface surface, double deskWidth = 1400, double deskDepth = 800, double backToBack = 2200)
         {
-            Surface boundingSrf = Autodesk.GenerativeToolkit.Utilities.Surface.BoundingSurface(surface);
+            Surface boundingSrf = Utilities.Surface.BoundingSurface(surface);
             List<Curve> perimCrvs = boundingSrf.PerimeterCurves().ToList();
 
             Curve max;
             List<Curve> others;
-            Dictionary<string, dynamic> dict = Autodesk.GenerativeToolkit.Utilities.Curve.MaximumLength(perimCrvs);
+            Dictionary<string, dynamic> dict = Utilities.Curve.MaximumLength(perimCrvs);
             if (dict["maxCrv"].Count < 1)
             {
                 max = dict["otherCrvs"][0] as Curve;
@@ -47,7 +45,7 @@ namespace GenerativeToolkit.Generate
             foreach (Curve crv in others)
             {
                 List<bool> subList = new List<bool>();
-                if (Autodesk.GenerativeToolkit.Utilities.Point.CompareCoincidental(comPt, crv.StartPoint))
+                if (Utilities.Point.CompareCoincidental(comPt, crv.StartPoint))
                 {
                     subList.Add(true);
                 }
@@ -55,7 +53,7 @@ namespace GenerativeToolkit.Generate
                 {
                     subList.Add(false);
                 }
-                if (Autodesk.GenerativeToolkit.Utilities.Point.CompareCoincidental(comPt, crv.EndPoint))
+                if (Utilities.Point.CompareCoincidental(comPt, crv.EndPoint))
                 {
                     subList.Add(true);
                 }
@@ -117,7 +115,7 @@ namespace GenerativeToolkit.Generate
             var flatLst = repeatLst.SelectMany(i => i).ToList();
             flatLst.Insert(0, halfb2b + halfDeskDepth);
 
-            List<double> partials = Autodesk.GenerativeToolkit.Utilities.List.RunningTotals(flatLst);
+            List<double> partials = Utilities.List.RunningTotals(flatLst);
 
             List<bool> mask3 = new List<bool>();
             foreach (double p in partials)
@@ -146,7 +144,7 @@ namespace GenerativeToolkit.Generate
             var offsetNumFlat = offsetNums.SelectMany(i => i).ToList();
             offsetNumFlat.Insert(0, halfDeskWidth);
 
-            List<double> partialsOffsets = Autodesk.GenerativeToolkit.Utilities.List.RunningTotals(offsetNumFlat);
+            List<double> partialsOffsets = Utilities.List.RunningTotals(offsetNumFlat);
 
             List<bool> mask4 = new List<bool>();
             foreach (double p in partialsOffsets)

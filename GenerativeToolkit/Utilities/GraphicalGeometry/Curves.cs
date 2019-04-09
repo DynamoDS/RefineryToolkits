@@ -11,7 +11,7 @@ using Autodesk.DesignScript.Runtime;
 using GenerativeToolkit.Graphs.Geometry;
 using GenerativeToolkit.Graphs.Extensions;
 using GenerativeToolkit.Graphs;
-using Autodesk.GenerativeToolkit.Analyse;
+using Analyse;
 
 namespace Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry
 {

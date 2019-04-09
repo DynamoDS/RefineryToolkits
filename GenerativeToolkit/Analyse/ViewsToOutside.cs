@@ -1,17 +1,24 @@
-﻿using Autodesk.DesignScript.Geometry;
-using System;
+﻿#region namespaces
+using Autodesk.DesignScript.Geometry;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#endregion
 
-namespace Autodesk.GenerativeToolkit.Analyse
+namespace Analyse
 {
     public static class ViewsToOutside
     {
+        /// <summary>
+        /// 2d representation of the view to outside from any given point.
+        /// Uses isovist to calculate the view to outside on a 360 degree ratio.
+        /// </summary>
+        /// <param name="boundary"></param>
+        /// <param name="internals"></param>
+        /// <param name="viewSegments"></param>
+        /// <param name="origin"></param>
+        /// <returns>precentage of 360 view that is to the outside</returns>
         public static double ByLineSegments(List<Polygon> boundary, List<Polygon> internals, List<Line> viewSegments, Point origin)
         {
-            Surface isovist = Isovist.IsovistFromPoint(boundary, internals, origin);
+            Surface isovist = Isovist.FromPoint(boundary, internals, origin);
 
             double outsideViewAngles = 0;
             foreach (Line segment in viewSegments)

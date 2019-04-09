@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Interfaces;
@@ -11,13 +9,11 @@ using Autodesk.DesignScript.Runtime;
 using System.Globalization;
 using Dynamo.Graph.Nodes;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
-using System.Drawing;
-using GenerativeToolkit.Graphs.Geometry;
 using GenerativeToolkit.Graphs.Extensions;
 using GenerativeToolkit.Graphs;
 #endregion
 
-namespace Autodesk.GenerativeToolkit.Analyse
+namespace Analyse
 {
     /// <summary>
     /// Representation of a Graph.

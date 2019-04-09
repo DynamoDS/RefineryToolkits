@@ -1,11 +1,13 @@
-﻿using Autodesk.DesignScript.Geometry;
+﻿#region namespaces
+using Autodesk.DesignScript.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using MIConvexHull;
 using Autodesk.DesignScript.Runtime;
+#endregion
 
-namespace Autodesk.GenerativeToolkit.Analyse
+namespace Analyse
 {
     public static class AdjacencyPreference
     {

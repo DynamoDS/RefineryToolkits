@@ -6,7 +6,7 @@ using DSCore.Properties;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 
-namespace Autodesk.GenerativeToolkit.Utilities
+namespace Utilities
 {
     public class Curve
     {
