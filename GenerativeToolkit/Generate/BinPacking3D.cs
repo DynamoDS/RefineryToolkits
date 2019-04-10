@@ -10,72 +10,70 @@ using CromulentBisgetti.ContainerPacking.Entities;
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
-    [IsVisibleInDynamoLibrary(false)]
     public static class BinPacking3D
     {
-        [IsVisibleInDynamoLibrary(true)]
-        public static Container Bin(double length, double width, double height, int ID)
-        {
-            decimal dlength = Convert.ToDecimal(length);
-            decimal dwidth = Convert.ToDecimal(width);
-            decimal dheight = Convert.ToDecimal(height);
-
-            Container container = new Container(ID, dlength, dwidth, dheight);
-            return container;
-        }
-
-        [IsVisibleInDynamoLibrary(true)]
-        public static Item Item(double length, double width, double height, int ID, int amount)
-        {
-            decimal dlength = Convert.ToDecimal(length);
-            decimal dwidth = Convert.ToDecimal(width);
-            decimal dheight = Convert.ToDecimal(height);
-
-           Item item = new Item(ID, dlength, dwidth, dheight, amount);
-            return item;
-        }
-
-        [IsVisibleInDynamoLibrary(true)]
         [MultiReturn(new[] { "packedItems", "remainItems" })]
-        public static Dictionary<string, List<Item>> Pack(Container bin, List<Item> items)
+        public static Dictionary<string, List<Cuboid>> Pack(Cuboid bin, List<Cuboid> items)
         {
-            List<Container> containers = new List<Container>{ bin };
+            decimal length = Convert.ToDecimal(bin.Length);
+            decimal width = Convert.ToDecimal(bin.Width);
+            decimal height = Convert.ToDecimal(bin.Height);
+            List<Container> container = new List<Container> { new Container(1, length, width, height) };
+
+            List<Item> itemsToPack = ItemsFromCuboids(items);
+
             List<int> algorithm = new List<int> { 1 };
 
-            ContainerPackingResult packingResult = CromulentBisgetti.ContainerPacking.PackingService.Pack(containers, items, algorithm).FirstOrDefault();
+            ContainerPackingResult packingResult = CromulentBisgetti.ContainerPacking.PackingService.Pack(container, itemsToPack, algorithm).FirstOrDefault();
             AlgorithmPackingResult algorithmPackingResult = packingResult.AlgorithmPackingResults.FirstOrDefault();
 
             List<Item> packedItems = algorithmPackingResult.PackedItems;
-            List<Item> unpackedItems = algorithmPackingResult.UnpackedItems;
+            List<Cuboid> packedCuboids = CuboidsFromItems(packedItems);
 
-            Dictionary<string, List<Item>> newOutput;
-            newOutput = new Dictionary<string, List<Item>>
+            List<Item> unpackedItems = algorithmPackingResult.UnpackedItems;
+            List<Cuboid> unpackedCuboids = CuboidsFromItems(unpackedItems);
+
+            Dictionary<string, List<Cuboid>> newOutput;
+            newOutput = new Dictionary<string, List<Cuboid>>
             {
-                {"packedItems",packedItems},
-                {"remainItems",unpackedItems}
+                {"packedItems",packedCuboids},
+                {"remainItems",unpackedCuboids}
             };
 
             return newOutput;
         }
 
-        [IsVisibleInDynamoLibrary(true)]
-        public static List<Geometry> GeometryByItems(List<Item> items)
+        private static List<Item> ItemsFromCuboids(List<Cuboid> cuboids)
         {
-            List<Geometry> geometry = new List<Geometry>();
+            List<Item> items = new List<Item>();
+            for (int i = 0; i < cuboids.Count; i++)
+            {
+                decimal length = Convert.ToDecimal(cuboids[i].Length);
+                decimal width = Convert.ToDecimal(cuboids[i].Width);
+                decimal height = Convert.ToDecimal(cuboids[i].Height);
+
+                Item item = new Item(i, length, width, height, 1);
+                items.Add(item);
+            }
+            return items;
+
+        }
+        private static List<Cuboid> CuboidsFromItems(List<Item> items)
+        {
+            List<Cuboid> cuboids = new List<Cuboid>();
 
             foreach (Item item in items)
             {
-                Point lowPoint = Point.ByCoordinates(Convert.ToDouble(item.CoordX), Convert.ToDouble(item.CoordZ), Convert.ToDouble(item.CoordY) );
+                Point lowPoint = Point.ByCoordinates(Convert.ToDouble(item.CoordX), Convert.ToDouble(item.CoordZ), Convert.ToDouble(item.CoordY));
                 Point highPoint = lowPoint.Add(Vector.ByCoordinates(Convert.ToDouble(item.PackDimX), Convert.ToDouble(item.PackDimZ), Convert.ToDouble(item.PackDimY)));
                 Cuboid cuboid = Cuboid.ByCorners(lowPoint, highPoint);
-                geometry.Add(cuboid);
+                cuboids.Add(cuboid);
 
                 //Dispose redundant Geometry
                 lowPoint.Dispose();
                 highPoint.Dispose();
             }
-
-            return geometry;
+            return cuboids;
         }
     }
 }
