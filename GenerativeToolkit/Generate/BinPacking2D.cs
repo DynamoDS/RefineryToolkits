@@ -10,15 +10,9 @@ using System.Threading.Tasks;
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
-    [IsVisibleInDynamoLibrary(false)]
-    public class BinPacking2D
+    public static class BinPacking2D
     {
-        internal BinPacking2D()
-        {
-
-        }
-
-        internal class FreeRectangle
+        private class FreeRectangle
         {
             public double width;
             public double height;
@@ -40,7 +34,13 @@ namespace Autodesk.GenerativeToolkit.Generate
         #endregion
 
         #region Public Methods
-        [IsVisibleInDynamoLibrary(true)]
+        /// <summary>
+        /// Packs a sample list of Rectangles in a bin Rectangle
+        /// </summary>
+        /// <param name="rects"> list of Rectangles to Pack</param>
+        /// <param name="bin"> Rectangle to pack into</param>
+        /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
+        /// <returns>List of packed rectangles</returns>
         public static List<Rectangle> Pack(List<Rectangle> rects, Rectangle bin, string placementMethod)
         {
             freeRectangles = new List<FreeRectangle>();
@@ -63,20 +63,20 @@ namespace Autodesk.GenerativeToolkit.Generate
         }
 
         #region Placement Methods
-        [IsVisibleInDynamoLibrary(true)]
+        /// <summary>
+        /// Packs next rectangle into the free area where the length of the longer leftover side is minimized. 
+        /// </summary>
         public static string BSSF =>  "BSSF";
 
+        /// <summary>
+        /// Packs next rectangle into the free area where the length of the shorter leftover side is minimized.  
+        /// </summary>
+        public static string BLSF => "BLSF";
 
-        [IsVisibleInDynamoLibrary(true)]
-        public static string BLSF()
-        {
-            return "BLSF";
-        }
-        [IsVisibleInDynamoLibrary(true)]
-        public static string BAF()
-        {
-            return "BAF";
-        }
+        /// <summary>
+        /// Picks the free area that is smallest in area to place the next rectangle into.
+        /// </summary>
+        public static string BAF => "BAF";
 
         #endregion
 
@@ -84,7 +84,7 @@ namespace Autodesk.GenerativeToolkit.Generate
 
         #region Private Methods
 
-        ////------ Find best freerectangle and place next rectangle ------////
+        #region Find best freerectangle and place next rectangle
 
         private static void PlaceItem(Rectangle item, string placementMethod)
         {
@@ -221,9 +221,10 @@ namespace Autodesk.GenerativeToolkit.Generate
         {
             return Rectangle.ByWidthLength(item.Height, item.Width);
         }
+        #endregion
 
-        ////------ Scoring Methods ------////
-        
+        #region Scoring Methods
+
         // Best Short Side Fits
         private static double BSSF_Score(FreeRectangle f, Rectangle item)
         {
@@ -267,8 +268,9 @@ namespace Autodesk.GenerativeToolkit.Generate
             double rectArea = item.Width * item.Height;
             return freeFArea - rectArea;
         }
+        #endregion
 
-        ////------ Split Free area ------//// 
+        #region Split Free area
 
         private static void SplitFreeRectangle(FreeRectangle fRect, Rectangle item)
         {
@@ -301,8 +303,9 @@ namespace Autodesk.GenerativeToolkit.Generate
                 });
             }
         }
+        #endregion
 
-        ////------ Rectangle Boundary points ------////
+        #region Rectangle Boundary points
 
         private static List<double> RectBounds(Rectangle rect)
         {
@@ -312,9 +315,10 @@ namespace Autodesk.GenerativeToolkit.Generate
             double TopRightY = rect.StartPoint.Y + rect.Height;
             return new List<double> { BottomLeftX, BottomLeftY, TopRightX, TopRightY };
         }
+        #endregion
 
-        ////------ Remove overlaps and redundant rectangles ------////
-  
+        #region Remove overlaps and redundant rectangles
+
         private static void RemoveOverlaps(List<double> itemBounds)
         {
             List<FreeRectangle> freeRects = new List<FreeRectangle>();
@@ -487,6 +491,7 @@ namespace Autodesk.GenerativeToolkit.Generate
                 }
             }
         }
+        #endregion
 
         #endregion
     }

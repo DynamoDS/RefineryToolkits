@@ -28,6 +28,7 @@
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files\Dynamo\Dynamo Core\2\DynamoSandbox.exe</StartProgram>
+    <DocumentationFile>bin\Debug\Autodesk.GenerativeToolkit.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -214,11 +215,13 @@
     <ItemGroup>
       <SourceDlls Include="$(TargetDir)*.dll" />
       <SourcePdbs Include="$(TargetDir)*.pdb" />
+      <SourceXmls Include="$(TargetDir)*.xml" />
       <SourcePkg Include="$(ProjectDir)pkg.json" />
     </ItemGroup>
     <!--Copying to Build Folder-->
     <Copy SourceFiles="@(SourceDlls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourcePdbs)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
+    <Copy SourceFiles="@(SourceXmls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourcePkg)" DestinationFolder="$(TargetDir)$(ProjectName)" />
     <ItemGroup>
       <SourcePackage Include="$(TargetDir)\$(ProjectName)\**\*" />
