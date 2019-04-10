@@ -15,8 +15,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// Returns the geometric median point of a list of points.
         /// The geometric median is the point minimizing the sum of distances to the sample points
         /// </summary>
-        /// <param name="points"></param>
-        /// <returns></returns>
+        /// <param name="points">List of sample points</param>
+        /// <returns>Point that minimizes the distance to all other points</returns>
         public static Point GeometricMedian(List<Point> points)
         {
             // If 3 points return either the vertex at the angle >= 120

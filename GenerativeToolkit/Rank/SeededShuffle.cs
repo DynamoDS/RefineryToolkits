@@ -7,10 +7,15 @@ using System.Linq;
 
 namespace Autodesk.GenerativeToolkit.Rank
 {
-    [IsVisibleInDynamoLibrary(false)]
-    public class ListShuffle
+
+    public static class ListShuffle
     {
-        [IsVisibleInDynamoLibrary(true)]
+        /// <summary>
+        /// Shuffles a list, randomizing the order of its items based on the seed.
+        /// </summary>
+        /// <param name="list">List to shuffle</param>
+        /// <param name="seed">Seed</param>
+        /// <returns>randomized list</returns>
         public static IList SeededShuffle(IList list, int seed)
         {
             var rng = new Random(seed);
