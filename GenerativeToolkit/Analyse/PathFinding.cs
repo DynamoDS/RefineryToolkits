@@ -26,17 +26,17 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <returns name="path">Graph representing the shortest path</returns>
         /// <returns name="length">Length of path</returns>
         [MultiReturn(new[] { "path", "length" })]
-        public static Dictionary<string, object> ShortestPath(Visibility visibility, DSPoint origin, DSPoint destination)
+        public static Dictionary<string, object> ShortestPath(Visibility visGraph, DSPoint origin, DSPoint destination)
         {
 
-            if (visibility == null) { throw new ArgumentNullException("visibility"); }
+            if (visGraph == null) { throw new ArgumentNullException("visibility"); }
             if (origin == null) { throw new ArgumentNullException("origin"); }
             if (destination == null) { throw new ArgumentNullException("destination"); }
 
             GeometryVertex gOrigin = GeometryVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
             GeometryVertex gDestination = GeometryVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
 
-            VisibilityGraph visibilityGraph = visibility.graph as VisibilityGraph;
+            VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
 
             BaseGraph baseGraph = new BaseGraph()
             {

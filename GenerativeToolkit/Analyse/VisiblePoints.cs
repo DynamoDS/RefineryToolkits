@@ -15,10 +15,10 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <summary>
         /// Calculates the visible points out of a list of sample points from a given origin.
         /// </summary>
-        /// <param name="origin"></param>
-        /// <param name="points"></param>
-        /// <param name="boundary"></param>
-        /// <param name="obstacles"></param>
+        /// <param name="origin">Origin point to measure from</param>
+        /// <param name="points">Sample points</param>
+        /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
+        /// <param name="obstacles">List of Polygons representing internal obstructions</param>
         /// <returns>precentages of the amount of visible points</returns>
         public static double FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, List<Polygon> obstacles)
         {

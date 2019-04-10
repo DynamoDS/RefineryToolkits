@@ -13,8 +13,8 @@ namespace Autodesk.GenerativeToolkit.Explore
         /// <summary>
         /// Creates a given amount of distinct colors which can be used in a color range
         /// </summary>
-        /// <param name="amount"></param>
-        /// <param name="correctionFactor"></param>
+        /// <param name="amount">Number of colors (max. 19)</param>
+        /// <param name="correctionFactor">Correction factor from 0-1</param>
         /// <returns>distinct colors</returns>
         public static List<Color> ContrastyColorRange(int amount, double correctionFactor)
         {

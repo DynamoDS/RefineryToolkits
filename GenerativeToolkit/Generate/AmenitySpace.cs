@@ -13,8 +13,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <summary>
         /// Creates an amentiy space on a given surface, returning both the amenity space and the remaining space within the original surface
         /// </summary>
-        /// <param name="surface"></param>
-        /// <param name="offset"></param>
+        /// <param name="surface">Surface to create Amenity Spaces on</param>
+        /// <param name="offset">How much to offset to surface perimeter with</param>
         /// <param name="depth"></param>
         /// <search></search>
         [MultiReturn(new[] { "amenitySrf", "remainSrf" })]
