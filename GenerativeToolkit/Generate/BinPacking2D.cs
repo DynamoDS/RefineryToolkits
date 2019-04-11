@@ -64,16 +64,19 @@ namespace Autodesk.GenerativeToolkit.Generate
 
         #region Placement Methods
         /// <summary>
+        /// Best Short Side Fits:
         /// Packs next rectangle into the free area where the length of the longer leftover side is minimized. 
         /// </summary>
         public static string BSSF =>  "BSSF";
 
         /// <summary>
+        /// Best Long Side Fits:
         /// Packs next rectangle into the free area where the length of the shorter leftover side is minimized.  
         /// </summary>
         public static string BLSF => "BLSF";
 
         /// <summary>
+        /// Best Area Fits:
         /// Picks the free area that is smallest in area to place the next rectangle into.
         /// </summary>
         public static string BAF => "BAF";

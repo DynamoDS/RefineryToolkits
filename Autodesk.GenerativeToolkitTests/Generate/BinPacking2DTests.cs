@@ -11,7 +11,7 @@ namespace Generate.Tests
     [TestFixture()]
     public class BinPacking2DTests
     {
-        [Test()]
+        [Test]
         public void PackTest()
         {
             Assert.Fail();
@@ -26,6 +26,7 @@ namespace Generate.Tests
         [Test()]
         public void BAFTest()
         {
+            
             Assert.Fail();
         }
     }

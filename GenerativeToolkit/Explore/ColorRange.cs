@@ -15,14 +15,15 @@ namespace Autodesk.GenerativeToolkit.Explore
         /// </summary>
         /// <param name="amount"></param>
         /// <param name="correctionFactor"></param>
+        /// <param name="seed"></param>
         /// <returns>distinct colors</returns>
-        public static List<Color> ContrastyColorRange(int amount, double correctionFactor)
+        public static List<Color> ContrastyColorRange(int seed, int amount, double correctionFactor)
         {
             if (amount > 19)
             {
                 throw new Exception("Maximum number of colours supported right now is 19");
             }
-            Random rnd = new Random();
+            Random rnd = new Random(seed);
             List<int> indexRanges = Enumerable.Range(0, amount).ToList();
             List<int> shuffledIndexes = indexRanges.OrderBy(x => rnd.Next()).ToList();
 
