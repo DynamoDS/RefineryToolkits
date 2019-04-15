@@ -13,21 +13,22 @@ namespace Autodesk.GenerativeToolkit.Explore
         /// <summary>
         /// Creates a given amount of distinct colors which can be used in a color range
         /// </summary>
-        /// <param name="amount">Number of colors (max. 19)</param>
-        /// <param name="correctionFactor">Correction factor from 0-1</param>
+        /// <param name="amount"></param>
+        /// <param name="correctionFactor"></param>
+        /// <param name="seed"></param>
         /// <returns>distinct colors</returns>
-        public static List<Color> ContrastyColorRange(int amount, double correctionFactor)
+        public static List<Color> ContrastyColorRange(int seed, int amount, double correctionFactor)
         {
             if (amount > 19)
             {
                 throw new Exception("Maximum number of colours supported right now is 19");
             }
-            Random rnd = new Random();
-            List<int> indexRanges = Enumerable.Range(0, amount).ToList();
+            Random rnd = new Random(seed);
+            List<int> indexRanges = Enumerable.Range(0, 19).ToList();
             List<int> shuffledIndexes = indexRanges.OrderBy(x => rnd.Next()).ToList();
 
             List<Color> colors = new List<Color>();
-            foreach (int i in shuffledIndexes)
+            foreach (int i in shuffledIndexes.GetRange(0,amount))
             {
                 Color color = ColorPalette[i];
                 int red;

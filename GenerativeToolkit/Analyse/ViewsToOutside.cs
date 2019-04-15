@@ -15,17 +15,17 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="viewSegments">Line segments representing the views to outside</param>
         /// <param name="origin">Origin point to measure from</param>
         /// <returns>precentage of 360 view that is to the outside</returns>
-        public static double ByLineSegments(List<Polygon> boundary, List<Polygon> internals, List<Line> viewSegments, Point origin)
+        public static double ByLineSegments(List<Polygon> boundary, List<Polygon> internals, List<Curve> viewSegments, Point origin)
         {
             Surface isovist = Isovist.FromPoint(boundary, internals, origin);
 
             double outsideViewAngles = 0;
-            foreach (Line segment in viewSegments)
+            foreach (Curve segment in viewSegments)
             {
                 Geometry[] intersectSegment = isovist.Intersect(segment);
                 if (intersectSegment != null)
                 {
-                    foreach (Line seg in intersectSegment)
+                    foreach (Curve seg in intersectSegment)
                     {
                         Vector vec1 = Vector.ByTwoPoints(origin, seg.StartPoint);
                         Vector vec2 = Vector.ByTwoPoints(origin, seg.EndPoint);
