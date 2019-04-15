@@ -1,12 +1,11 @@
 ﻿using NUnit.Framework;
-using Generate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generate.Tests
+namespace Autodesk.GenerativeToolkit.Generate.Tests
 {
     [TestFixture()]
     public class BinPacking2DTests
@@ -17,17 +16,25 @@ namespace Generate.Tests
             Assert.Fail();
         }
 
-        [Test()]
-        public void BLSFTest()
+        [Test]
+        public void PlacementPropertyBLSFTest()
         {
-            Assert.Fail();
+            string blsf = BinPacking2D.BLSF;
+            Assert.True(blsf == "BLSF");
         }
 
-        [Test()]
-        public void BAFTest()
+        [Test]
+        public void PlacementPropertyBSSFTest()
         {
-            
-            Assert.Fail();
+            string bssf = BinPacking2D.BSSF;
+            Assert.True(bssf == "BSSF");
+        }
+
+        [Test]
+        public void PlacementPropertyBAFTest()
+        {
+            string baf = BinPacking2D.BAF;
+            Assert.True(baf == "BAF");
         }
     }
 }
