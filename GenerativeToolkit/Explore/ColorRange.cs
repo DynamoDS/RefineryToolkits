@@ -24,11 +24,11 @@ namespace Autodesk.GenerativeToolkit.Explore
                 throw new Exception("Maximum number of colours supported right now is 19");
             }
             Random rnd = new Random(seed);
-            List<int> indexRanges = Enumerable.Range(0, amount).ToList();
+            List<int> indexRanges = Enumerable.Range(0, 19).ToList();
             List<int> shuffledIndexes = indexRanges.OrderBy(x => rnd.Next()).ToList();
 
             List<Color> colors = new List<Color>();
-            foreach (int i in shuffledIndexes)
+            foreach (int i in shuffledIndexes.GetRange(0,amount))
             {
                 Color color = ColorPalette[i];
                 int red;

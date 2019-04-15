@@ -8,13 +8,12 @@ namespace Autodesk.GenerativeToolkit.Analyse
     public static class ViewsToOutside
     {
         /// <summary>
-        /// 2d representation of the view to outside from any given point.
-        /// Uses isovist to calculate the view to outside on a 360 degree ratio.
+        /// calculates the view to outside from a given point based on a 360 degree ratio.
         /// </summary>
-        /// <param name="boundary"></param>
-        /// <param name="internals"></param>
-        /// <param name="viewSegments"></param>
-        /// <param name="origin"></param>
+        /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
+        /// <param name="internals">List of Polygons representing internal obstructions</param>
+        /// <param name="viewSegments">Line segments representing the views to outside</param>
+        /// <param name="origin">Origin point to measure from</param>
         /// <returns>precentage of 360 view that is to the outside</returns>
         public static double ByLineSegments(List<Polygon> boundary, List<Polygon> internals, List<Line> viewSegments, Point origin)
         {

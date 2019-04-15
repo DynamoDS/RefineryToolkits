@@ -12,6 +12,13 @@ namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class BinPacking3D
     {
+        /// <summary>
+        /// Packs a sample list of Cuboids in a bin Cuboid
+        /// </summary>
+        /// <param name="bin">Cuboid to pack sample Cuboids into</param>
+        /// <param name="items">List of Cuboids to pack</param>
+        /// <returns name="packedItems">Packed Cuboids</returns>
+        /// <returns name="remainItems">Cubiods that didn't get packed</returns>
         [MultiReturn(new[] { "packedItems", "remainItems" })]
         public static Dictionary<string, List<Cuboid>> Pack(Cuboid bin, List<Cuboid> items)
         {

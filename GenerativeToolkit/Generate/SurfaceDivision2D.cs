@@ -8,10 +8,15 @@ using System.Linq;
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
-    [IsVisibleInDynamoLibrary(false)]
-    public class SurfaceDivision2D
+    public static class SurfaceDivision2D
     {
-        [IsVisibleInDynamoLibrary(true)]
+        /// <summary>
+        /// Divides surface based on U and V parameters
+        /// </summary>
+        /// <param name="surface">Surface to divide</param>
+        /// <param name="U">U parameter</param>
+        /// <param name="V">V parameter</param>
+        /// <returns>List of individual surfaces</returns>
         public static List<Autodesk.DesignScript.Geometry.Geometry> DivideSurface(Surface surface, List<double> U, List<double> V)
         {
             List<IDisposable> disposables = new List<IDisposable>();

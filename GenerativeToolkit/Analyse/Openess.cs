@@ -8,11 +8,18 @@ using Autodesk.DesignScript.Runtime;
 
 namespace Autodesk.GenerativeToolkit.Analyse
 {
-    [IsVisibleInDynamoLibrary(false)]
-    public class Openess
+    public static class Openess
     {
         #region Public Methods
-        [IsVisibleInDynamoLibrary(true)]
+        /// <summary>
+        /// gives a openess score based on how enclosed a object is. 
+        /// </summary>
+        /// <param name="origin">Origin point of object to check</param>
+        /// <param name="obstacles">List of Polygons representing obstacles that might enclose the object to check</param>
+        /// <param name="objectWidth">Widt of the object to check</param>
+        /// <param name="objectLength">Length of the object to check</param>
+        /// <param name="rotation">Rotation of the object to check</param>
+        /// <returns>Score from 0-1, 1 being totally enclosed and 0 being totally open</returns>
         public static double FromPoint(Point origin, List<Polygon> obstacles, double objectWidth, double objectLength, double rotation)
         {
             

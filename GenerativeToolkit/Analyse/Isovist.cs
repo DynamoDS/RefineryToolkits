@@ -20,7 +20,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// Returns a surface representing the Isovist area visible from 
         /// the given point.
         /// </summary>
-        /// <param name="baseGraph">Base Graph</param>
+        /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
+        /// <param name="internals">List of Polygons representing internal obstructions</param>
         /// <param name="point">Origin point</param>
         /// <returns name="isovist">Surface representing the isovist area</returns>
         [NodeCategory("Actions")]
