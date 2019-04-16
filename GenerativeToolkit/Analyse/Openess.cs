@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.DesignScript.Runtime;
+using GTUtil = Autodesk.GenerativeToolkit.Utilities;
 
 namespace Autodesk.GenerativeToolkit.Analyse
 {
@@ -12,39 +13,47 @@ namespace Autodesk.GenerativeToolkit.Analyse
     {
         #region Public Methods
         /// <summary>
-        /// gives a openess score based on how enclosed a object is. 
+        /// gives a openess score from 0-1 based on how enclosed a Surface is. 
         /// </summary>
-        /// <param name="origin">Origin point of object to check</param>
+        /// <param name="surface">Surface of object to check</param>
+        /// <param name="tolerance">Takes into account objects that are a given distance away</param>
+        /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
         /// <param name="obstacles">List of Polygons representing obstacles that might enclose the object to check</param>
-        /// <param name="objectWidth">Widt of the object to check</param>
-        /// <param name="objectLength">Length of the object to check</param>
-        /// <param name="rotation">Rotation of the object to check</param>
         /// <returns>Score from 0-1, 1 being totally enclosed and 0 being totally open</returns>
-        public static double FromPoint(Point origin, List<Polygon> obstacles, double objectWidth, double objectLength, double rotation)
+        public static double FromSurface(Surface surface, [DefaultArgument("0.0")] double tolerance, [DefaultArgument("[]")] List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> obstacles)
         {
-            
-            List<Autodesk.DesignScript.Geometry.Line> intersectionLines = IntersectionLine(origin, objectWidth, objectLength, rotation);
-            double openessScore = OpenessScore(intersectionLines, obstacles);
-            intersectionLines.ForEach(line => line.Dispose());
+            List<Curve> perimeterCrvs = GTUtil.Surface.OffsetPerimeterCurves(surface, tolerance)["outsetCrvs"].ToList();
+            List<Polygon> intersectionPolygons = new List<Polygon>();
+            intersectionPolygons.AddRange(boundary);
+            intersectionPolygons.AddRange(obstacles);
+
+            double perimeterLength = surface.Perimeter;
+            double openessScore = 0;
+            foreach (Curve crv in perimeterCrvs)
+            {
+                foreach (Polygon poly in intersectionPolygons)
+                {
+                    if (crv.DoesIntersect(poly))
+                    {
+                        try
+                        {
+                            List<Curve> intersections = crv.Intersect(poly).Cast<Curve>().ToList();
+                            intersections.ForEach(c => openessScore += c.Length / perimeterLength);
+                        }
+                        catch (System.InvalidCastException)
+                        {
+                            continue;
+                        }
+                        
+                    }
+                }
+            }
 
             return openessScore;
         }
         #endregion
 
         #region Private Methods
-        private static List<Autodesk.DesignScript.Geometry.Line> IntersectionLine(Point origin, double width, double length, double rotation)
-        {
-            Vector x = Vector.XAxis().Rotate(Vector.ZAxis(), -rotation);
-            Vector y = Vector.YAxis().Rotate(Vector.ZAxis(), -rotation);
-
-            Autodesk.DesignScript.Geometry.Line rightLine = Autodesk.DesignScript.Geometry.Line.ByStartPointDirectionLength(origin, x, width/2);
-            Autodesk.DesignScript.Geometry.Line topLine = Autodesk.DesignScript.Geometry.Line.ByStartPointDirectionLength(origin, y, length / 2);
-            Autodesk.DesignScript.Geometry.Line leftLine = Autodesk.DesignScript.Geometry.Line.ByStartPointDirectionLength(origin, x, -width / 2);
-            Autodesk.DesignScript.Geometry.Line bottomLine = Autodesk.DesignScript.Geometry.Line.ByStartPointDirectionLength(origin, y, -length / 2);
-
-            List<Autodesk.DesignScript.Geometry.Line> lines = new List<Autodesk.DesignScript.Geometry.Line> { rightLine, topLine, leftLine, bottomLine };
-            return lines;
-        }
 
         private static double OpenessScore(List<Autodesk.DesignScript.Geometry.Line> lines, List<Polygon> polygons)
         {

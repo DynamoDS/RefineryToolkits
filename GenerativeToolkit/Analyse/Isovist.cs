@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
 using GenerativeToolkit.Graphs;
+using Autodesk.DesignScript.Runtime;
 #endregion
 
 namespace Autodesk.GenerativeToolkit.Analyse
@@ -25,7 +26,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="point">Origin point</param>
         /// <returns name="isovist">Surface representing the isovist area</returns>
         [NodeCategory("Actions")]
-        public static Surface FromPoint(List<Polygon> boundary, List<Polygon> internals, DSPoint point)
+        public static Surface FromPoint(List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> internals, DSPoint point)
         {
             BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary,internals);
 

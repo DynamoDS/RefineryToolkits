@@ -16,7 +16,7 @@ namespace Autodesk.GenerativeToolkit.Rank
         /// <param name="list">List to shuffle</param>
         /// <param name="seed">Seed</param>
         /// <returns>randomized list</returns>
-        public static IList SeededShuffle(IList list, int seed)
+        public static IList SeededShuffle(IList list, int seed = 1)
         {
             var rng = new Random(seed);
             return list.Cast<object>().OrderBy(_ => rng.Next()).ToList();
