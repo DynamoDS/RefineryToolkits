@@ -41,7 +41,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="bin"> Rectangle to pack into</param>
         /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
         /// <returns>List of packed rectangles</returns>
-        public static List<Rectangle> Pack(List<Rectangle> rects, Rectangle bin, string placementMethod)
+        public static List<Rectangle> Pack(List<Rectangle> rects, Rectangle bin, string placementMethod = "BSSF")
         {
             freeRectangles = new List<FreeRectangle>();
             placedRectangles = new List<Rectangle>();

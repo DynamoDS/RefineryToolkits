@@ -19,8 +19,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="items">List of Cuboids to pack</param>
         /// <returns name="packedItems">Packed Cuboids</returns>
         /// <returns name="remainItems">Cubiods that didn't get packed</returns>
-        [MultiReturn(new[] { "packedItems", "remainItems" })]
-        public static Dictionary<string, List<Cuboid>> Pack(Cuboid bin, List<Cuboid> items)
+        [MultiReturn(new[] { "packedItems", "remainItems", "packedIndices" })]
+        public static Dictionary<string, object> Pack(Cuboid bin, List<Cuboid> items)
         {
             decimal length = Convert.ToDecimal(bin.Length);
             decimal width = Convert.ToDecimal(bin.Width);
@@ -28,6 +28,9 @@ namespace Autodesk.GenerativeToolkit.Generate
             List<Container> container = new List<Container> { new Container(1, length, width, height) };
 
             List<Item> itemsToPack = ItemsFromCuboids(items);
+
+            //Dictionary to map Item Id with Cuboid index
+            Dictionary<int, int> idDict = IdFromItem(itemsToPack).Zip(Enumerable.Range(0, itemsToPack.Count), (k, v) => new { Key = k, Value = v }).ToDictionary(x => x.Key, x => x.Value);
 
             List<int> algorithm = new List<int> { 1 };
 
@@ -40,11 +43,16 @@ namespace Autodesk.GenerativeToolkit.Generate
             List<Item> unpackedItems = algorithmPackingResult.UnpackedItems;
             List<Cuboid> unpackedCuboids = CuboidsFromItems(unpackedItems);
 
-            Dictionary<string, List<Cuboid>> newOutput;
-            newOutput = new Dictionary<string, List<Cuboid>>
+            List<int> packedIndices = IdFromItem(packedItems).Where(idDict.ContainsKey)
+                     .Select(x => idDict[x])
+                     .ToList();
+
+            Dictionary<string, object> newOutput;
+            newOutput = new Dictionary<string, object>
             {
                 {"packedItems",packedCuboids},
-                {"remainItems",unpackedCuboids}
+                {"remainItems",unpackedCuboids},
+                {"packedIndices", packedIndices}
             };
 
             return newOutput;
@@ -65,6 +73,17 @@ namespace Autodesk.GenerativeToolkit.Generate
             return items;
 
         }
+
+        private static List<int> IdFromItem(List<Item> items)
+        {
+            List<int> ids = new List<int>();
+            foreach (Item item in items)
+            {
+                ids.Add(item.ID);
+            }
+            return ids;
+        }
+
         private static List<Cuboid> CuboidsFromItems(List<Item> items)
         {
             List<Cuboid> cuboids = new List<Cuboid>();

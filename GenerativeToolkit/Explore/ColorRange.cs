@@ -13,11 +13,11 @@ namespace Autodesk.GenerativeToolkit.Explore
         /// <summary>
         /// Creates a given amount of distinct colors which can be used in a color range
         /// </summary>
-        /// <param name="amount"></param>
-        /// <param name="correctionFactor"></param>
-        /// <param name="seed"></param>
+        /// <param name="amount">Number of colors (max. 19)</param>
+        /// <param name="brightness">Correction factor from 0-1</param>
+        /// <param name="seed">Seed</param>
         /// <returns>distinct colors</returns>
-        public static List<Color> ContrastyColorRange(int seed, int amount, double correctionFactor)
+        public static List<Color> ContrastyColorRange(int amount = 19, double brightness = 0, int seed = 1)
         {
             if (amount > 19)
             {
@@ -35,17 +35,17 @@ namespace Autodesk.GenerativeToolkit.Explore
                 int green;
                 int blue;
 
-                if (correctionFactor <= 0)
+                if (brightness <= 0)
                 {
-                    red = Convert.ToInt32(color.Red * (1 + correctionFactor));
-                    green = Convert.ToInt32(color.Green * (1 + correctionFactor));
-                    blue = Convert.ToInt32(color.Blue * (1 + correctionFactor));
+                    red = Convert.ToInt32(color.Red * (1 + brightness));
+                    green = Convert.ToInt32(color.Green * (1 + brightness));
+                    blue = Convert.ToInt32(color.Blue * (1 + brightness));
                 }
                 else
                 {
-                    red = Convert.ToInt32((255 - color.Red) * correctionFactor + color.Red);
-                    green = Convert.ToInt32((255 - color.Green) * correctionFactor + color.Green);
-                    blue = Convert.ToInt32((255 - color.Blue) * correctionFactor + color.Blue);
+                    red = Convert.ToInt32((255 - color.Red) * brightness + color.Red);
+                    green = Convert.ToInt32((255 - color.Green) * brightness + color.Green);
+                    blue = Convert.ToInt32((255 - color.Blue) * brightness + color.Blue);
                 }
                 colors.Add(Color.ByARGB(r: red, g: green, b: blue));            
             }

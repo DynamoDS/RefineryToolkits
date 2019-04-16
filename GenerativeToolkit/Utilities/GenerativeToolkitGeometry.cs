@@ -287,35 +287,46 @@ namespace Autodesk.GenerativeToolkit.Utilities
                 outOffset = offset;
             }
 
-            List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>(){(plyCrv.Offset(inOffset))};
-            List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>(){(plyCrv.Offset(outOffset))};
-
-            Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(inOffsetCrv);
-            Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(outOffsetCrv);
-
-            List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrvList = inOffsetPolyCrv.Curves().ToList();
-            List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrvList = outOffsetPolyCrv.Curves().ToList();
-
-            List<Autodesk.DesignScript.Geometry.Point> inPts = new List<Autodesk.DesignScript.Geometry.Point>();
-            List<Autodesk.DesignScript.Geometry.Point> outPts = new List<Autodesk.DesignScript.Geometry.Point>();
-
-            foreach (Autodesk.DesignScript.Geometry.Curve c in inOffsetCrvList)
+            Autodesk.DesignScript.Geometry.Curve[] inPerimCrvs;
+            try
             {
-                inPts.Add(c.StartPoint);
+                List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>() { (plyCrv.Offset(inOffset)) };
+                Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(inOffsetCrv);
+                List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrvList = inOffsetPolyCrv.Curves().ToList();
+                List<Autodesk.DesignScript.Geometry.Point> inPts = new List<Autodesk.DesignScript.Geometry.Point>();
+                foreach (Autodesk.DesignScript.Geometry.Curve c in inOffsetCrvList)
+                {
+                    inPts.Add(c.StartPoint);
+                }
+                Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv2 = PolyCurve.ByPoints(inPts, true);
+                Autodesk.DesignScript.Geometry.Surface inOffsetSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(inOffsetPolyCrv2);
+                inPerimCrvs = inOffsetSrf.PerimeterCurves();
             }
-            foreach (Autodesk.DesignScript.Geometry.Curve c in outOffsetCrvList)
+            catch (Exception)
             {
-                outPts.Add(c.StartPoint);
+                inPerimCrvs = null;
             }
 
-            Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv2 = PolyCurve.ByPoints(inPts,true);
-            Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv2 = PolyCurve.ByPoints(outPts,true);
-
-            Autodesk.DesignScript.Geometry.Surface inOffsetSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(inOffsetPolyCrv2);
-            Autodesk.DesignScript.Geometry.Surface outOffsetSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(outOffsetPolyCrv2);
-
-            Autodesk.DesignScript.Geometry.Curve[] inPerimCrvs = inOffsetSrf.PerimeterCurves();
-            Autodesk.DesignScript.Geometry.Curve[] outPerimCrvs = outOffsetSrf.PerimeterCurves();
+            Autodesk.DesignScript.Geometry.Curve[] outPerimCrvs;
+            try
+            {
+                List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>() { (plyCrv.Offset(outOffset)) };
+                Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(outOffsetCrv);
+                List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrvList = outOffsetPolyCrv.Curves().ToList();
+                List<Autodesk.DesignScript.Geometry.Point> outPts = new List<Autodesk.DesignScript.Geometry.Point>();
+                foreach (Autodesk.DesignScript.Geometry.Curve c in outOffsetCrvList)
+                {
+                    outPts.Add(c.StartPoint);
+                }
+                Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv2 = PolyCurve.ByPoints(outPts, true);
+                Autodesk.DesignScript.Geometry.Surface outOffsetSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(outOffsetPolyCrv2);
+                outPerimCrvs = outOffsetSrf.PerimeterCurves();
+            }
+            catch (Exception)
+            {
+                outPerimCrvs = null;
+            }
+            
 
             Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]> newOutput;
             newOutput = new Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]>
@@ -325,12 +336,12 @@ namespace Autodesk.GenerativeToolkit.Utilities
             };
 
             //Dispose all redundant geometry
-            inOffsetSrf.Dispose();
+            /*inOffsetSrf.Dispose();
             outOffsetSrf.Dispose();
             inOffsetPolyCrv.Dispose();
             outOffsetPolyCrv.Dispose();
             inOffsetPolyCrv2.Dispose();
-            outOffsetPolyCrv2.Dispose();
+            outOffsetPolyCrv2.Dispose();*/
 
             plyCrv.Dispose();
             foreach (Autodesk.DesignScript.Geometry.Curve c in srfPerimCrvs)

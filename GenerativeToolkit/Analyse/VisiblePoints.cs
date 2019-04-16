@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GenerativeToolkit.Graphs;
+using Autodesk.DesignScript.Runtime;
 #endregion
 
 namespace Autodesk.GenerativeToolkit.Analyse
@@ -14,13 +15,14 @@ namespace Autodesk.GenerativeToolkit.Analyse
     {
         /// <summary>
         /// Calculates the visible points out of a list of sample points from a given origin.
+        /// Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.
         /// </summary>
         /// <param name="origin">Origin point to measure from</param>
         /// <param name="points">Sample points</param>
         /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
         /// <param name="obstacles">List of Polygons representing internal obstructions</param>
         /// <returns>precentages of the amount of visible points</returns>
-        public static double FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, List<Polygon> obstacles)
+        public static double FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> obstacles)
         {
             Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
             GeometryPolygon gPol = GeometryPolygon.ByVertices(isovist.Points.Select(p => GeometryVertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
