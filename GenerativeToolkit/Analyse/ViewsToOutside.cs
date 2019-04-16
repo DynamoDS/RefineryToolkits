@@ -23,12 +23,12 @@ namespace Autodesk.GenerativeToolkit.Analyse
             Surface isovist = Isovist.FromPoint(boundary, internals, origin);         
 
             double outsideViewAngles = 0;
-            foreach (Line segment in viewSegments)
+            foreach (Curve segment in viewSegments)
             {
                 Geometry[] intersectSegment = isovist.Intersect(segment);
                 if (intersectSegment != null)
                 {
-                    foreach (Line seg in intersectSegment)
+                    foreach (Curve seg in intersectSegment)
                     {
                         Vector vec1 = Vector.ByTwoPoints(origin, seg.StartPoint);
                         Vector vec2 = Vector.ByTwoPoints(origin, seg.EndPoint);
