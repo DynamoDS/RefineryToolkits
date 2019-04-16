@@ -8,6 +8,7 @@ using Autodesk.DesignScript.Runtime;
 
 namespace Autodesk.GenerativeToolkit.Utilities
 {
+    [IsVisibleInDynamoLibrary(false)]
     public class List
     {
         internal List()

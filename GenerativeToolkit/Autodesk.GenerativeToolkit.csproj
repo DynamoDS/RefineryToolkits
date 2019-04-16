@@ -200,7 +200,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HelperFunctions\" />
     <Folder Include="Integrate\" />
   </ItemGroup>
   <ItemGroup>

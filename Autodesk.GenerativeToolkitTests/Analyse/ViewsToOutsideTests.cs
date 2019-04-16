@@ -17,7 +17,7 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
         public void ViewToOutside360()
         {
             Rectangle boundaryRect = Rectangle.ByWidthLength(20, 20);
-            List<Curve> lines = boundaryRect.Explode().Cast<Curve>().ToList();
+            List<Line> lines = boundaryRect.Explode().Cast<Line>().ToList();
             
             List<Point> stPoints = new List<Point>();
             List<Point> endPoints = new List<Point>();
@@ -30,7 +30,7 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
             List<Polygon> boundaryPoly = new List<Polygon> { Polygon.ByPoints(stPoints) };
 
-            double viewScore = ViewsToOutside.ByLineSegments(boundaryPoly, boundaryPoly, lines, origin);
+            double viewScore = ViewsToOutside.ByLineSegments(lines,origin,boundaryPoly,null);
 
             Assert.AreEqual(1.0,viewScore);
         }

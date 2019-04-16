@@ -26,8 +26,9 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
             Polygon obstacle =  Polygon.ByPoints(polyPoints);
             Point origin = Point.ByCoordinates(6, 5);
+            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
-            double openessScore = Openess.FromPoint(origin, new List<Polygon> { obstacle }, 10, 10, 0);
+            double openessScore = Openess.FromSurface(surface,0,new List<Polygon> { }, new List<Polygon> { obstacle });
 
             Assert.AreEqual(0.25, openessScore);
 
@@ -49,8 +50,9 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
             Polygon obstacle = Polygon.ByPoints(polyPoints);
             Point origin = Point.ByCoordinates(-6, 5);
+            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
-            double openessScore = Openess.FromPoint(origin, new List<Polygon> { obstacle }, 10, 10, 0);
+            double openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
 
             Assert.AreEqual(0.25, openessScore);
 
@@ -72,9 +74,9 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
             Polygon obstacle = Polygon.ByPoints(polyPoints);
             Point origin = Point.ByCoordinates(0, 15);
+            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
-            double openessScore = Openess.FromPoint(origin, new List<Polygon> { obstacle }, 10, 10, 0);
-
+            double openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
             Assert.AreEqual(0.25, openessScore);
 
             polyPoints.ForEach(pt => pt.Dispose());
@@ -95,9 +97,9 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
             Polygon obstacle = Polygon.ByPoints(polyPoints);
             Point origin = Point.ByCoordinates(0, -5);
+            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
-            double openessScore = Openess.FromPoint(origin, new List<Polygon> { obstacle }, 10, 10, 0);
-
+            double openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
             Assert.AreEqual(0.25, openessScore);
 
             polyPoints.ForEach(pt => pt.Dispose());
@@ -127,8 +129,9 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             new List<List<Point>> { leftObstaclePoints, rightObstaclePoints }.ForEach(lst => obstaclePolygons.Add(Polygon.ByPoints(lst)));
 
             Point origin = Point.ByCoordinates(6, 5);
-            double openessScore = Openess.FromPoint(origin, obstaclePolygons, 10, 10, 0);
+            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
+            double openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, obstaclePolygons);
             Assert.AreEqual(0.50, openessScore);
 
             leftObstaclePoints.ForEach(pt => pt.Dispose());

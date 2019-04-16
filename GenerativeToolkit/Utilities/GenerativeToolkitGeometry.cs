@@ -8,6 +8,7 @@ using Autodesk.DesignScript.Runtime;
 
 namespace Autodesk.GenerativeToolkit.Utilities
 {
+    [IsVisibleInDynamoLibrary(false)]
     public class Curve
     {
         internal Curve()
@@ -148,7 +149,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         #endregion
 
     }
-
+    [IsVisibleInDynamoLibrary(false)]
     public class Line
     {
 
@@ -190,7 +191,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         #endregion
 
     }
-
+    [IsVisibleInDynamoLibrary(false)]
     public class Surface
     {
         internal Surface()
@@ -474,7 +475,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         }
         #endregion
     }
-
+    [IsVisibleInDynamoLibrary(false)]
     public class Point
     {
         internal Point()
@@ -606,7 +607,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         #endregion
 
     }
-
+    [IsVisibleInDynamoLibrary(false)]
     public class Vector
     {
         internal Vector()
