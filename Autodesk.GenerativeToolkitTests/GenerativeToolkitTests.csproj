@@ -121,6 +121,8 @@
     <Compile Include="Analyse\OpenessTests.cs" />
     <Compile Include="Analyse\PathFindingTests.cs" />
     <Compile Include="Analyse\ViewsToOutsideTests.cs" />
+    <Compile Include="Analyse\VisiblePointsTests.cs" />
+    <Compile Include="Explore\ColorsTests.cs" />
     <Compile Include="Generate\BinPacking2DTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

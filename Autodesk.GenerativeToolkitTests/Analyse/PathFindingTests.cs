@@ -50,7 +50,7 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
             Dictionary<string, object> shortestPath = PathFinding.ShortestPath(visibilityGraph, originPoint, destination);
 
-            //Assert.AreEqual(35.22, Math.Round(length.GetValueOrDefault()));
+            //Assert.AreEqual(35.22, Math.Round(shortestPath["length"]. .GetValueOrDefault()));
         }
 
         [Test]
