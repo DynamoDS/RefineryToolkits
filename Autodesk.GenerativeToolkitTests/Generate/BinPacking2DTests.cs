@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Autodesk.GenerativeToolkit.Generate.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class BinPacking2DTests
     {
         [Test]

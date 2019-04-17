@@ -10,10 +10,10 @@ using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.GenerativeToolkit.Analyse.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class VisiblePointsTests : GeometricTestBase
     {
-        [Test()]
+        [Test]
         public void FromOriginTest()
         {
             Polygon boundary = Rectangle.ByWidthLength(50, 50) as Polygon;

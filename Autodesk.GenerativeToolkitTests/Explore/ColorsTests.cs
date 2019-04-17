@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Autodesk.GenerativeToolkit.Explore.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class ColorsTests
     {
-        [Test()]
+        [Test]
         public void ContrastyColorRangeTest()
         {
             Assert.Fail();
