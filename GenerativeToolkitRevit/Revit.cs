@@ -10,6 +10,7 @@ using Revit.GeometryConversion;
 using RevitServices.Persistence;
 using RevitServices.Transactions;
 using Autodesk.DesignScript.Geometry;
+using Dynamo.Graph.Nodes;
 
 namespace GenerativeToolkit
 {
@@ -28,6 +29,7 @@ namespace GenerativeToolkit
         /// <param name="levelPrefixStr">Prefix for names of created Revit levels.</param>
         /// <returns name="floorElementList">Revit floor elements.</returns>
         /// <search>refinery</search>
+        [NodeCategory("Create")]
         public static List<List<DynamoRevitElements.Floor>> CreateRevitFloors(
             DynamoElements.Surface[][] srfList,
             DynamoRevitElements.FloorType floorType = null, 
@@ -125,6 +127,7 @@ namespace GenerativeToolkit
         /// <param name="Category">A category for the mass.</param>
         /// <returns name="RevitBuilding">Revit DirectShape element.</returns>
         /// <search>refinery</search>
+        [NodeCategory("Create")]
         public static DynamoRevitElements.DirectShape CreateRevitMass(DynamoElements.Solid BuildingSolid, DynamoRevitElements.Category Category)
         {
             if (BuildingSolid == null)

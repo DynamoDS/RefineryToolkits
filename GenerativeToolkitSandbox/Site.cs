@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
+using Dynamo.Graph.Nodes;
 
 namespace GenerativeToolkit
 {
@@ -20,6 +21,7 @@ namespace GenerativeToolkit
         /// <returns name="siteSolid">Allowable volume for building mass.</returns>
         /// <returns name="siteOffset">Allowable footprint for building mass.</returns>
         /// <search>site,design,refactory</search>
+        [NodeCategory("Create")]
         [MultiReturn(new[] { "siteSolid", "siteOffset" })]
         public static Dictionary<string, object> SiteVolumeGenerator(Curve siteOutline, double setback = 0, double heightLimit = 100)
         {
@@ -69,6 +71,7 @@ namespace GenerativeToolkit
         /// <returns name="intersects">Does the building mass intersect with the site boundary?</returns>
         /// <returns name="percentOutside">Percent of building volume that is outside the site boundary.</returns>
         /// <search>site,design,refinery</search>
+        [NodeCategory("Query")]
         [MultiReturn(new[] { "buildingInside", "buildingOutside", "intersects", "percentOutside" })]
         public static Dictionary<string, object> SiteClashTest(Solid buildingSolid, Solid siteSolid)
         {
@@ -105,6 +108,7 @@ namespace GenerativeToolkit
         /// <returns name="boundingBoxList">Bounding box for each element.</returns>
         /// <returns name="heightList">Height of each element.</returns>
         /// <search>refinery</search>
+        [NodeCategory("Query")]
         [MultiReturn(new[] { "solidList", "boundingBoxList", "heightList" })]
         public static Dictionary<string, object> SiteContext(PolySurface revitSite)
         {
@@ -140,6 +144,7 @@ namespace GenerativeToolkit
         /// <returns name="pointList">Sampling points.</returns>
         /// <returns name="distanceList">Distance from each sampling point along surface normal to the closest context geometry.</returns>
         /// <returns name="geometryColor">Colored surfaces mapping view distance.</returns>
+        [NodeCategory("Query")]
         [MultiReturn(new[] { "pointList", "distanceList", "geometryColor" })]
         public static Dictionary<string, object> SiteViewDistance(
             Surface surface, Geometry[] contextGeomList,

@@ -4,6 +4,8 @@ using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 
+using Dynamo.Graph.Nodes;
+
 namespace GenerativeToolkit
 {
     internal enum ShapeType { U, L, H, O, D }
@@ -93,6 +95,7 @@ namespace GenerativeToolkit
         /// <returns name="netFloorArea">Combined area of all floors with core removed.</returns>
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
+        [NodeCategory("Create")]
         [MultiReturn(new[] { "buildingSolid", "floorSrfList", "netFloorSrfList", "floorElevationList", "coreSolidList", "topPlane", "buildingVolume", "grossFloorArea", "netFloorArea", "totalFacadeArea", })]
         public static Dictionary<string, object> ByTypeArea(
             [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane basePlane = null,
@@ -161,6 +164,7 @@ namespace GenerativeToolkit
         /// <returns name="netFloorArea">Combined area of all floors with core removed.</returns>
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
+        [NodeCategory("Create")]
         [MultiReturn(new[] { "buildingSolid", "floorSrfList", "netFloorSrfList", "floorElevationList", "coreSolidList", "topPlane", "buildingVolume", "grossFloorArea", "netFloorArea", "totalFacadeArea", })]
         public static Dictionary<string, object> ByTypeFloors(
             [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane basePlane = null,
@@ -211,6 +215,7 @@ namespace GenerativeToolkit
         /// <returns name="verticalSrfList">Vertical surfaces.</returns>
         /// <returns name="horizontalSrfList">Horizontal surfaces.</returns>
         /// <search>building,design,refinery</search>
+        [NodeCategory("Query")]
         [MultiReturn(new[] { "verticalSrfList", "horizontalSrfList" })]
         public static Dictionary<string, object> DeceonstructFacadeShell(Topology solid, double angleThreshold = 45)
         {
@@ -313,6 +318,7 @@ namespace GenerativeToolkit
         /// <returns name="grossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
+        [NodeCategory("Create")]
         [MultiReturn(new[] { "buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea", })]
         public static Dictionary<string, object> ByOutlineArea(
             List<Curve> edgeLoopCrvList,
@@ -351,6 +357,7 @@ namespace GenerativeToolkit
         /// <returns name="grossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
+        [NodeCategory("Create")]
         [MultiReturn(new[] { "buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea", })]
         public static Dictionary<string, object> ByOutlineFloors(
             List<Curve> edgeLoopCrvList,
