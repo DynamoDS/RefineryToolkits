@@ -135,14 +135,23 @@ namespace GenerativeToolkit
         /// </summary>
         /// <param name="Surface">Surface, such as building's facade, to search from.</param>
         /// <param name="Context">Objects to calculate distance to.</param>
+        /// <param name="StartColor">Color of start of preview color band.</param>
+        /// <param name="EndColor">Color of end of preview color band.</param>
         /// <param name="Resolution">Distance between sampling points.</param>
         /// <param name="MaxDistance">Maximum distance to search.</param>
         /// <returns name="Points">Sampling points.</returns>
         /// <returns name="Distances">Distance from each sampling point along surface normal to the closest context geometry.</returns>
         /// <returns name="GeometryColor">Colored surfaces mapping view distance.</returns>
         [MultiReturn(new[] { "Points", "Distances", "GeometryColor" })]
-        public static Dictionary<string, object> SiteViewDistance(Surface Surface, Geometry[] Context, double Resolution = 3, double MaxDistance = 50)
+        public static Dictionary<string, object> SiteViewDistance(
+            Surface Surface, Geometry[] Context,
+            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 255, 255);")]DSCore.Color StartColor,
+            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 0, 115);")]DSCore.Color EndColor,
+            double Resolution = 3, double MaxDistance = 50)
         {
+            if (Resolution <= 0) { throw new ArgumentNullException(nameof(Resolution)); }
+            if (MaxDistance <= 0) { throw new ArgumentNullException(nameof(MaxDistance)); }
+
             int uCount = (int)Math.Ceiling(Surface.GetIsoline(0, 0.5).Length / Resolution);
             int vCount = (int)Math.Ceiling(Surface.GetIsoline(1, 0.5).Length / Resolution);
 
@@ -153,6 +162,9 @@ namespace GenerativeToolkit
             Vector normal = null;
             Point point = null;
             Geometry[] projected = null;
+
+            // Collide with self as well as all of the context.
+            var allBuildings = Context.Append(Surface);
 
             for (var i = 0; i < uCount; i++)
             {
@@ -165,7 +177,8 @@ namespace GenerativeToolkit
                     normal = Surface.NormalAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
                     point = Surface.PointAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
 
-                    var distance = Context.Select(c =>
+                    // Find the distance to the closest building, maxing out at MaxDistance.
+                    var distance = allBuildings.Select(c =>
                     {
                         projected = point.Project(c, normal);
 
@@ -177,13 +190,12 @@ namespace GenerativeToolkit
                         {
                             return MaxDistance;
                         }
-                    }).Min();
+                    }).Append(MaxDistance).Min();
 
                     points[i][j] = point;
                     distances[i][j] = distance;
 
-                    int color = (int)(distance / MaxDistance * 255);
-                    colors[i][j] = DSCore.Color.ByARGB(255, 255, color, 255);
+                    colors[i][j] = DSCore.Color.Lerp(StartColor, EndColor, distance / MaxDistance);
                 }
             }
 
