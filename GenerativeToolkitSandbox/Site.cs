@@ -178,7 +178,7 @@ namespace GenerativeToolkit
                 for (var j = 0; j < vCount; j++)
                 {
                     normal = surface.NormalAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
-                    point = surface.PointAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
+                    point = surface.PointAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount).Add(normal.Scale(0.001));
 
                     // Find the distance to the closest building, maxing out at MaxDistance.
                     var distance = allBuildings.Select(c =>
@@ -187,7 +187,9 @@ namespace GenerativeToolkit
 
                         if (projected != null && projected.Length > 0)
                         {
-                            return projected.Select(p => point.DistanceTo(p)).Min();
+                            return projected
+                                .Select(p => point.DistanceTo(p))
+                                .Min();
                         }
                         else
                         {
