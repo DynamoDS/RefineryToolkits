@@ -322,7 +322,7 @@ namespace GenerativeToolkit
         [MultiReturn(new[] { "buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea", })]
         public static Dictionary<string, object> ByOutlineArea(
             List<Curve> edgeLoopCrvList,
-            double buildingArea = 1000,
+            double buildingArea = 10000,
             double floorHeight = 3)
         {
             if (edgeLoopCrvList == null || edgeLoopCrvList.Count == 0) { throw new ArgumentNullException(nameof(edgeLoopCrvList)); }

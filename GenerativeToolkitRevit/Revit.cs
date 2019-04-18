@@ -32,7 +32,7 @@ namespace GenerativeToolkit
         [NodeCategory("Create")]
         public static List<List<DynamoRevitElements.Floor>> CreateRevitFloors(
             DynamoElements.Surface[][] srfList,
-            DynamoRevitElements.FloorType floorType = null, 
+            DynamoRevitElements.FloorType floorType, 
             string levelPrefixStr = "Dynamo Level")
         {
             if (srfList == null) { throw new ArgumentNullException(nameof(srfList)); }
