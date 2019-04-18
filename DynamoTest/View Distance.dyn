@@ -1078,81 +1078,6 @@
       "Description": "Allows for DesignScript code to be authored directly"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Site.SiteViewDistance@Autodesk.DesignScript.Geometry.Surface,Autodesk.DesignScript.Geometry.Geometry[],double,double",
-      "Id": "1b3ed381b53249a2b9b6a85f43320e63",
-      "Inputs": [
-        {
-          "Id": "0dccdfba7e6e4b689815fd3222144a56",
-          "Name": "Surface",
-          "Description": "Surface, such as building's facade, to search from.\n\nSurface",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "63be450fa55b4b968a7052ea79f0963c",
-          "Name": "Context",
-          "Description": "Objects to calculate distance to.\n\nGeometry[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "0f5a18249bb64a278ff52ab77fca380c",
-          "Name": "Resolution",
-          "Description": "Distance between sampling points.\n\ndouble\nDefault value : 3",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "96846a955c844610b6fb8d36e9fdfe80",
-          "Name": "MaxDistance",
-          "Description": "Maximum distance to search.\n\ndouble\nDefault value : 50",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "c88828625b6740179f9a5900c0bfc005",
-          "Name": "Points",
-          "Description": "Sampling points.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "db21c6c856a540de976938a8bc4fae27",
-          "Name": "Distances",
-          "Description": "Distance from each sampling point along surface normal to the closest context geometry.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "726b2f3579244f12921ac193c3d1f840",
-          "Name": "Geometry",
-          "Description": "Colored surfaces mapping view distance.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Calculate line of sight distances from a grid of points on a surface.\n\nSite.SiteViewDistance (Surface: Surface, Context: Geometry[], Resolution: double = 3, MaxDistance: double = 50): var[]..[]"
-    },
-    {
       "ConcreteType": "CoreNodeModels.Input.IntegerSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Integer",
@@ -1583,21 +1508,114 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.DeceonstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
-      "Id": "0c3c5f9e0ab84c2bb247837c2cb128ed",
+      "FunctionSignature": "GenerativeToolkit.Site.ViewDistance@Autodesk.DesignScript.Geometry.Surface,Autodesk.DesignScript.Geometry.Geometry[],DSCore.Color,DSCore.Color,double,double",
+      "Id": "48417bd2f0d049cb8bf41028fb4dd0c1",
       "Inputs": [
         {
-          "Id": "b2ba3e102ad84d40aeffc075e3ed90c0",
-          "Name": "Mass",
-          "Description": "Building mass.\n\nTopology",
+          "Id": "cb73014def784d0dad303a2002c96faa",
+          "Name": "surface",
+          "Description": "Surface, such as building's facade, to search from.\n\nSurface",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "6aea023e7d84411ea72bca13c1131f2d",
-          "Name": "AngleThreshold",
+          "Id": "9fd8af3cc2df4db084838952d12e0d86",
+          "Name": "contextGeomList",
+          "Description": "Geometry to calculate distance to.\n\nGeometry[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "359fde30bfda4c9d92e0674fdc2fc800",
+          "Name": "startColor",
+          "Description": "Color of start of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 255, 255)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1e0db66b475845359a9cc676a1a32184",
+          "Name": "endColor",
+          "Description": "Color of end of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 0, 115)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "658c348efe2143c287ffb2d0a3f4fedd",
+          "Name": "resolution",
+          "Description": "Distance between sampling points.\n\ndouble\nDefault value : 3",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fc9350c581c449ce89d112ee87ac6b3d",
+          "Name": "maxDistance",
+          "Description": "Maximum distance to search.\n\ndouble\nDefault value : 50",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f7eaeafa86b0442f81d1495c39b48846",
+          "Name": "pointList",
+          "Description": "Sampling points.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7a816271bdcc47ef87d48391d3fe7675",
+          "Name": "distanceList",
+          "Description": "Distance from each sampling point along surface normal to the closest context geometry.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6c36e55fb063421c8b14f23929814fb2",
+          "Name": "geometryColor",
+          "Description": "Colored surfaces mapping view distance.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Calculates line of sight distances from a grid of points on a surface.\n\nSite.ViewDistance (surface: Surface, contextGeomList: Geometry[], startColor: Color = DSCore.Color.ByARGB(255, 255, 255, 255), endColor: Color = DSCore.Color.ByARGB(255, 255, 0, 115), resolution: double = 3, maxDistance: double = 50): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GenerativeToolkit.Building.DeconstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
+      "Id": "fc3e14ba5bb848bea50d30c62f54567d",
+      "Inputs": [
+        {
+          "Id": "743a665dc60a48459b2e14a3ec7fe1b4",
+          "Name": "solid",
+          "Description": "Building solid.\n\nTopology",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c9a7db520c0346468a32c103f9726629",
+          "Name": "angleThreshold",
           "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45",
           "UsingDefaultValue": true,
           "Level": 2,
@@ -1607,8 +1625,8 @@
       ],
       "Outputs": [
         {
-          "Id": "50b53e4554224902aef116c3382f9fa1",
-          "Name": "VerticalSurfaces",
+          "Id": "36d9b5e67a0f4e57ab54a38357fa9258",
+          "Name": "verticalSrfList",
           "Description": "Vertical surfaces.",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -1616,8 +1634,8 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2025060651034110b43a496459bd4fce",
-          "Name": "HorizontalSurfaces",
+          "Id": "7694978a07644be7b90007e8097388b6",
+          "Name": "horizontalSrfList",
           "Description": "Horizontal surfaces.",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -1626,7 +1644,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Deconstruct a building mass into component horizontal and vertical surfaces.\n\nBuilding.DeceonstructFacadeShell (Mass: Topology, AngleThreshold: double = 45): var[]..[]"
+      "Description": "Deconstructs a building solid into component horizontal and vertical surfaces.\n\nBuilding.DeconstructFacadeShell (solid: Topology, angleThreshold: double = 45): var[]..[]"
     }
   ],
   "Connectors": [
@@ -1692,13 +1710,13 @@
     },
     {
       "Start": "75367696125e42c9a491a2043d3fe107",
-      "End": "96846a955c844610b6fb8d36e9fdfe80",
-      "Id": "384f0d77598e49bcabf84a58f1ad66df"
+      "End": "d434a393f6ae4ecf8779c8680fb3723d",
+      "Id": "eb5b2503e54a46809ca745a3951561fb"
     },
     {
       "Start": "75367696125e42c9a491a2043d3fe107",
-      "End": "d434a393f6ae4ecf8779c8680fb3723d",
-      "Id": "eb5b2503e54a46809ca745a3951561fb"
+      "End": "fc9350c581c449ce89d112ee87ac6b3d",
+      "Id": "6a71342cb34c462594ed6c9b261dec73"
     },
     {
       "Start": "834bf73ca30a4beb91786603526422d2",
@@ -1862,8 +1880,8 @@
     },
     {
       "Start": "318a62bacdb646b7ad2579e6a8176bb8",
-      "End": "b2ba3e102ad84d40aeffc075e3ed90c0",
-      "Id": "e7ee5f61d16b4b6dbc8455f6f1434b85"
+      "End": "743a665dc60a48459b2e14a3ec7fe1b4",
+      "Id": "1b805f7670fc41cfbc2de66a039d87c3"
     },
     {
       "Start": "f78bf99d74c6463496fc9bf6262bf87c",
@@ -1876,14 +1894,9 @@
       "Id": "5e13c0dbce60412abab3d3680d291153"
     },
     {
-      "Start": "db21c6c856a540de976938a8bc4fae27",
-      "End": "9ec0aacc77e74c2098298aa726b89eac",
-      "Id": "0ac1a8d3fc4240e8b1f2d5bc65d820c6"
-    },
-    {
       "Start": "e0670f39879d4833af6cef3b42f53049",
-      "End": "0f5a18249bb64a278ff52ab77fca380c",
-      "Id": "156811e090ad42ccbff14ac4472a3934"
+      "End": "658c348efe2143c287ffb2d0a3f4fedd",
+      "Id": "7140455b4d1e42ada9613beb58c60321"
     },
     {
       "Start": "a4da75d3b46247b6bb72ca19228c875e",
@@ -1907,8 +1920,8 @@
     },
     {
       "Start": "0604bbd5e14b480592d319e9d2c84da9",
-      "End": "63be450fa55b4b968a7052ea79f0963c",
-      "Id": "9297a0c9f0b34c42b4a348f20b43ea57"
+      "End": "9fd8af3cc2df4db084838952d12e0d86",
+      "Id": "835a0412ba82443b96439036708e80a6"
     },
     {
       "Start": "cc0f303a092d42f59b344e6d8727a311",
@@ -1941,19 +1954,24 @@
       "Id": "089531ebf48f4bafaccb9a6ec6252ace"
     },
     {
-      "Start": "50b53e4554224902aef116c3382f9fa1",
-      "End": "0dccdfba7e6e4b689815fd3222144a56",
-      "Id": "8e2bfaa9770c4c4e812b5c31842c173f"
+      "Start": "7a816271bdcc47ef87d48391d3fe7675",
+      "End": "9ec0aacc77e74c2098298aa726b89eac",
+      "Id": "0dd094099d54485b813ba56e844968ff"
     },
     {
-      "Start": "50b53e4554224902aef116c3382f9fa1",
+      "Start": "36d9b5e67a0f4e57ab54a38357fa9258",
       "End": "58d5303ab4ff4248a0e4649616af34a3",
-      "Id": "c810ffd296fd4e2bbc8422a8de7c69d6"
+      "Id": "837c11618eb346d4b1220975c210eec8"
     },
     {
-      "Start": "2025060651034110b43a496459bd4fce",
+      "Start": "36d9b5e67a0f4e57ab54a38357fa9258",
+      "End": "cb73014def784d0dad303a2002c96faa",
+      "Id": "9a9ecfe3829f46168f30a031f367c467"
+    },
+    {
+      "Start": "7694978a07644be7b90007e8097388b6",
       "End": "1e8d0db8ba0b47d7bf053b123fac1ee9",
-      "Id": "12ee3803e73d4f1d9529b21737b462e8"
+      "Id": "77e0a73b60a743488fb4858839eb6dc0"
     }
   ],
   "Dependencies": [],
@@ -1969,15 +1987,15 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -89.576541209184356,
-      "EyeY": 171.22895486301096,
-      "EyeZ": -251.71789072203694,
-      "LookX": 87.400106534169581,
-      "LookY": -131.38687205817146,
-      "LookZ": 212.99090598301689,
-      "UpX": 0.11310262282919308,
-      "UpY": 0.95458763224797216,
-      "UpZ": 0.27562701077517548
+      "EyeX": 225.1671343207544,
+      "EyeY": 160.37535173616095,
+      "EyeZ": -102.39053412072582,
+      "LookX": -227.34356899576917,
+      "LookY": -120.53326893132146,
+      "LookZ": 63.663549381705764,
+      "UpX": -0.24381579006834628,
+      "UpY": 0.96741521946310982,
+      "UpZ": 0.068276303832218457
     },
     "NodeViews": [
       {
@@ -2292,16 +2310,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Site.SiteViewDistance",
-        "Id": "1b3ed381b53249a2b9b6a85f43320e63",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1987.2507622876315,
-        "Y": 937.83350922751413
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Resolution",
         "Id": "d493cb7f532d46f7bb5cda412c1d1b27",
         "IsSetAsInput": false,
@@ -2401,14 +2409,24 @@
         "Y": 1257.4954569386457
       },
       {
-        "ShowGeometry": false,
-        "Name": "Building.DeceonstructFacadeShell",
-        "Id": "0c3c5f9e0ab84c2bb247837c2cb128ed",
+        "ShowGeometry": true,
+        "Name": "Site.ViewDistance",
+        "Id": "48417bd2f0d049cb8bf41028fb4dd0c1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 576.36768089894053,
-        "Y": 1179.4731035582117
+        "X": 1966.9616549770235,
+        "Y": 892.32164824392726
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Building.DeconstructFacadeShell",
+        "Id": "fc3e14ba5bb848bea50d30c62f54567d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 578.24236976073007,
+        "Y": 1181.8843928209412
       }
     ],
     "Annotations": [
@@ -2444,16 +2462,15 @@
           "0a47612581f74d27b47793252b490d7e",
           "9fb4610219a34ba0932c60fc0c46c258",
           "8453b33e5e1844ee91a54ab7df0cd76c",
-          "5399a04fccd94ac5b4a26b9eb9450209",
-          "0c3c5f9e0ab84c2bb247837c2cb128ed"
+          "5399a04fccd94ac5b4a26b9eb9450209"
         ],
         "Left": -95.185179288325116,
-        "Top": 1126.1397702248785,
+        "Top": 1126.3908545127042,
         "Width": 1238.0395495704811,
-        "Height": 349.18987486913738,
+        "Height": 348.93879058131165,
         "FontSize": 36.0,
-        "InitialTop": 1179.4731035582117,
-        "InitialHeight": 347.60545724797839,
+        "InitialTop": 1179.7241878460375,
+        "InitialHeight": 347.85654153580413,
         "TextblockHeight": 43.333333333333336,
         "Background": "#FFFFB8D8"
       },
@@ -2515,8 +2532,8 @@
         "Background": "#FFA4E1FF"
       }
     ],
-    "X": 274.87474613607435,
-    "Y": 68.734218382667677,
-    "Zoom": 0.39870371723568793
+    "X": -1085.9708301216253,
+    "Y": -341.94692600055447,
+    "Zoom": 0.84565493535498182
   }
 }
