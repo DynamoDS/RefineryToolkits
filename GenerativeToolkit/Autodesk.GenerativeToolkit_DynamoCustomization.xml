@@ -1,0 +1,29 @@
+﻿<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>Autodesk.GenerativeToolkit</name>
+  </assembly>
+  <namespaces>
+    <namespace name="Autodesk.GenerativeToolkit.Analyse">
+      <category>GenerativeToolkit.Analyse</category>
+    </namespace>
+    <namespace name="Autodesk.GenerativeToolkit.Evaluate">
+      <category>GenerativeToolkit.Evaluate</category>
+    </namespace>
+    <namespace name="Autodesk.GenerativeToolkit.Explore">
+      <category>GenerativeToolkit.Explore</category>
+    </namespace>
+    <namespace name="Autodesk.GenerativeToolkit.Generate">
+      <category>GenerativeToolkit.Generate</category>
+    </namespace>
+    <namespace name="Autodesk.GenerativeToolkit.Integrate">
+      <category>GenerativeToolkit.Integrate</category>
+    </namespace>
+    <namespace name="Autodesk.GenerativeToolkit.Rank">
+      <category>GenerativeToolkit.Rank</category>
+    </namespace>
+    <namespace name="Autodesk.GenerativeToolkit.Utilities">
+      <category>GenerativeToolkit.Utilities</category>
+    </namespace>
+  </namespaces>
+</doc>
