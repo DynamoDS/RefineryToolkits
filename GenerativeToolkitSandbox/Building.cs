@@ -14,10 +14,10 @@ namespace GenerativeToolkit
     public static class Building
     {
         /// <summary>
-        /// Typology selection
+        /// Use an integer index to select a building type letter from the list of possible options ("U", "L", "H", "O", or "D").
         /// </summary>
-        /// <param name="ShapeIndex">Select building type by index (U, L, H, O, D).</param>
-        /// <returns></returns>
+        /// <param name="ShapeIndex">Index of building type to select from list of possible types.</param>
+        /// <returns name="BuildingType">Name of building type. One of "U", "L", "H", "O", or "D".</returns>
         /// <search>building,design,refinery</search>
         public static string SelectBuildingType(int ShapeIndex = 0)
         {
