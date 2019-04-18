@@ -12,26 +12,26 @@ namespace GenerativeToolkit
     public static class Site
     {
         /// <summary>
-        /// Use setback and height to create boundary volume for building mass to fit into.
+        /// Use setback and height to create boundary volume for building solid to fit into.
         /// </summary>
-        /// <param name="SiteOutline">Site boundary, from Revit.</param>
-        /// <param name="Setback">Site setback distance.</param>
-        /// <param name="HeightLimit">Maximum building height.</param>
-        /// <returns name="SiteMass">Allowable volume for building mass.</returns>
-        /// <returns name="SiteOffset">Allowable footprint for building mass.</returns>
+        /// <param name="siteOutline">Site boundary, from Revit.</param>
+        /// <param name="setback">Site setback distance.</param>
+        /// <param name="heightLimit">Maximum building height.</param>
+        /// <returns name="siteSolid">Allowable volume for building mass.</returns>
+        /// <returns name="siteOffset">Allowable footprint for building mass.</returns>
         /// <search>site,design,refactory</search>
-        [MultiReturn(new[] { "SiteMass", "SiteOffset" })]
-        public static Dictionary<string, object> SiteMassGenerator(Curve SiteOutline, double Setback = 0, double HeightLimit = 100)
+        [MultiReturn(new[] { "siteSolid", "siteOffset" })]
+        public static Dictionary<string, object> SiteVolumeGenerator(Curve siteOutline, double setback = 0, double heightLimit = 100)
         {
-            Solid siteMass = null;
-            Curve siteOffset = null;
+            Solid siteMass;
+            Curve siteOffset;
 
-            if (SiteOutline == null) { throw new ArgumentNullException(nameof(SiteOutline)); }
-            if (Setback < 0) { throw new ArgumentOutOfRangeException(nameof(Setback), $"{nameof(Setback)} must be greater than or equal to 0."); }
-            if (HeightLimit <= 0) { throw new ArgumentOutOfRangeException(nameof(HeightLimit), $"{nameof(HeightLimit)} must be greater than 0."); }
+            if (siteOutline == null) { throw new ArgumentNullException(nameof(siteOutline)); }
+            if (setback < 0) { throw new ArgumentOutOfRangeException(nameof(setback), $"{nameof(setback)} must be greater than or equal to 0."); }
+            if (heightLimit <= 0) { throw new ArgumentOutOfRangeException(nameof(heightLimit), $"{nameof(heightLimit)} must be greater than 0."); }
             
-            var inset1 = SiteOutline.Offset(Setback);
-            var inset2 = SiteOutline.Offset(-Setback);
+            var inset1 = siteOutline.Offset(setback);
+            var inset2 = siteOutline.Offset(-setback);
 
             if (inset1.Length < inset2.Length)
             {
@@ -47,113 +47,111 @@ namespace GenerativeToolkit
             // Ensure that the mass is always extruded upwards.
             if (siteOffset.Normal.AngleWithVector(Vector.ZAxis()) > 90)
             {
-                HeightLimit = -HeightLimit;
+                heightLimit = -heightLimit;
             }
 
-            siteMass = siteOffset.ExtrudeAsSolid(HeightLimit);
+            siteMass = siteOffset.ExtrudeAsSolid(heightLimit);
 
             return new Dictionary<string, object>
             {
-                {"SiteMass", siteMass},
-                {"SiteOffset", siteOffset }
+                {"siteSolid", siteMass},
+                {"siteOffset", siteOffset }
             };
         }
 
         /// <summary>
         /// Test site boundary against building mass.
         /// </summary>
-        /// <param name="BuildingMass">Building mass from the generator</param>
-        /// <param name="SiteMass">Site boundary volume.</param>
-        /// <returns name="BuildingInside">Volume of building inside of site boundary.</returns>
-        /// <returns name="BuildingOutside">Volume of building outside of site boundary.</returns>
-        /// <returns name="DoesIntersect">Does the building mass intersect with the site boundary?</returns>
-        /// <returns name="Percent">Percent of building volume that is outside the site boundary.</returns>
+        /// <param name="buildingSolid">Building solid from the generator.</param>
+        /// <param name="siteSolid">Site boundary volume.</param>
+        /// <returns name="buildingInside">Volume of building inside of site boundary.</returns>
+        /// <returns name="buildingOutside">Volume of building outside of site boundary.</returns>
+        /// <returns name="intersects">Does the building mass intersect with the site boundary?</returns>
+        /// <returns name="percentOutside">Percent of building volume that is outside the site boundary.</returns>
         /// <search>site,design,refinery</search>
-        [MultiReturn(new[] { "BuildingInside", "BuildingOutside", "DoesIntersect", "Percent" })]
-        public static Dictionary<string, object> SiteClashTest(Solid BuildingMass, Solid SiteMass)
+        [MultiReturn(new[] { "buildingInside", "buildingOutside", "intersects", "percentOutside" })]
+        public static Dictionary<string, object> SiteClashTest(Solid buildingSolid, Solid siteSolid)
         {
-            Solid insideVolume = null;
-            Solid outsideVolume = null;
-            bool doesIntersect = false;
-            double percent = 0;
+            bool intersects = false;
+            double percentOutside = 0;
 
-            if (BuildingMass == null) { throw new ArgumentNullException(nameof(BuildingMass)); }
-            if (SiteMass == null) { throw new ArgumentNullException(nameof(SiteMass)); }
+            if (buildingSolid == null) { throw new ArgumentNullException(nameof(buildingSolid)); }
+            if (siteSolid == null) { throw new ArgumentNullException(nameof(siteSolid)); }
 
-            outsideVolume = BuildingMass.Difference(SiteMass);
-            insideVolume = BuildingMass.Difference(outsideVolume);
+            Solid outsideVolume = buildingSolid.Difference(siteSolid);
+            Solid insideVolume = buildingSolid.Difference(outsideVolume);
 
             if (outsideVolume != null)
             {
-                doesIntersect = true;
+                intersects = true;
 
-                percent = outsideVolume.Volume / BuildingMass.Volume;
+                percentOutside = outsideVolume.Volume / buildingSolid.Volume;
             }
 
             return new Dictionary<string, object>
             {
-                {"BuildingInside", insideVolume},
-                {"BuildingOutside", outsideVolume},
-                {"DoesIntersect", doesIntersect},
-                {"Percent", percent}
+                {"buildingInside", insideVolume},
+                {"buildingOutside", outsideVolume},
+                {"intersects", intersects},
+                {"percentOutside", percentOutside}
             };
         }
 
         /// <summary>
         /// Get site components from Revit element.
         /// </summary>
-        /// <param name="RevitSite">Referenced site element (usually a selected mass).</param>
-        /// <returns name="Elements">Individual solids in site geometry.</returns>
-        /// <returns name="BoundingBoxes">Bounding box for each element.</returns>
-        /// <returns name="Heights">Height of each element.</returns>
+        /// <param name="revitSite">Referenced site element (usually a selected mass).</param>
+        /// <returns name="solidList">Individual solids in site geometry.</returns>
+        /// <returns name="boundingBoxList">Bounding box for each element.</returns>
+        /// <returns name="heightList">Height of each element.</returns>
         /// <search>refinery</search>
-        [MultiReturn(new[] { "Elements", "BoundingBoxes", "Heights" })]
-        public static Dictionary<string, object> SiteContext(PolySurface RevitSite)
+        [MultiReturn(new[] { "solidList", "boundingBoxList", "heightList" })]
+        public static Dictionary<string, object> SiteContext(PolySurface revitSite)
         {
-            Solid[] elements = null;
-            List<BoundingBox> boundingBoxes = null;
-            List<double> heights = null;
+            Solid[] solidList = null;
+            List<BoundingBox> boundingBoxList = null;
+            List<double> heightList = null;
 
-            if (RevitSite == null) { throw new ArgumentNullException(nameof(RevitSite)); }
+            if (revitSite == null) { throw new ArgumentNullException(nameof(revitSite)); }
 
-            elements = RevitSite.ExtractSolids();
+            solidList = revitSite.ExtractSolids();
 
-            boundingBoxes = elements.Select(e => e.BoundingBox).ToList();
+            boundingBoxList = solidList.Select(e => e.BoundingBox).ToList();
 
-            heights = boundingBoxes.Select(b => b.MaxPoint.Z - b.MinPoint.Z).ToList();
+            heightList = boundingBoxList.Select(b => b.MaxPoint.Z - b.MinPoint.Z).ToList();
 
             return new Dictionary<string, object>
             {
-                {"Elements", elements},
-                {"BoundingBoxes", boundingBoxes},
-                {"Heights", heights}
+                {"solidList", solidList},
+                {"boundingBoxList", boundingBoxList},
+                {"heightList", heightList}
             };
         }
 
         /// <summary>
         /// Calculate line of sight distances from a grid of points on a surface.
         /// </summary>
-        /// <param name="Surface">Surface, such as building's facade, to search from.</param>
-        /// <param name="Context">Objects to calculate distance to.</param>
-        /// <param name="StartColor">Color of start of preview color band.</param>
-        /// <param name="EndColor">Color of end of preview color band.</param>
-        /// <param name="Resolution">Distance between sampling points.</param>
-        /// <param name="MaxDistance">Maximum distance to search.</param>
-        /// <returns name="Points">Sampling points.</returns>
-        /// <returns name="Distances">Distance from each sampling point along surface normal to the closest context geometry.</returns>
-        /// <returns name="GeometryColor">Colored surfaces mapping view distance.</returns>
-        [MultiReturn(new[] { "Points", "Distances", "GeometryColor" })]
+        /// <param name="surface">Surface, such as building's facade, to search from.</param>
+        /// <param name="contextGeomList">Geometry to calculate distance to.</param>
+        /// <param name="startColor">Color of start of preview color range.</param>
+        /// <param name="endColor">Color of end of preview color range.</param>
+        /// <param name="resolution">Distance between sampling points.</param>
+        /// <param name="maxDistance">Maximum distance to search.</param>
+        /// <returns name="pointList">Sampling points.</returns>
+        /// <returns name="distanceList">Distance from each sampling point along surface normal to the closest context geometry.</returns>
+        /// <returns name="geometryColor">Colored surfaces mapping view distance.</returns>
+        [MultiReturn(new[] { "pointList", "distanceList", "geometryColor" })]
         public static Dictionary<string, object> SiteViewDistance(
-            Surface Surface, Geometry[] Context,
-            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 255, 255);")]DSCore.Color StartColor,
-            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 0, 115);")]DSCore.Color EndColor,
-            double Resolution = 3, double MaxDistance = 50)
+            Surface surface, Geometry[] contextGeomList,
+            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 255, 255);")]DSCore.Color startColor,
+            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 0, 115);")]DSCore.Color endColor,
+            double resolution = 3, double maxDistance = 50)
         {
-            if (Resolution <= 0) { throw new ArgumentNullException(nameof(Resolution)); }
-            if (MaxDistance <= 0) { throw new ArgumentNullException(nameof(MaxDistance)); }
+            if (resolution <= 0) { throw new ArgumentNullException(nameof(resolution)); }
+            if (maxDistance <= 0) { throw new ArgumentNullException(nameof(maxDistance)); }
 
-            int uCount = (int)Math.Ceiling(Surface.GetIsoline(0, 0.5).Length / Resolution);
-            int vCount = (int)Math.Ceiling(Surface.GetIsoline(1, 0.5).Length / Resolution);
+            int uCount = (int)Math.Ceiling(surface.GetIsoline(0, 0.5).Length / resolution);
+            int vCount = (int)Math.Ceiling(surface.GetIsoline(1, 0.5).Length / resolution);
 
             var points = new Point[uCount][];
             var distances = new double[uCount][];
@@ -164,7 +162,7 @@ namespace GenerativeToolkit
             Geometry[] projected = null;
 
             // Collide with self as well as all of the context.
-            var allBuildings = Context.Append(Surface);
+            var allBuildings = contextGeomList.Append(surface);
 
             for (var i = 0; i < uCount; i++)
             {
@@ -174,8 +172,8 @@ namespace GenerativeToolkit
 
                 for (var j = 0; j < vCount; j++)
                 {
-                    normal = Surface.NormalAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
-                    point = Surface.PointAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
+                    normal = surface.NormalAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
+                    point = surface.PointAtParameter((i + 0.5) / uCount, (j + 0.5) / vCount);
 
                     // Find the distance to the closest building, maxing out at MaxDistance.
                     var distance = allBuildings.Select(c =>
@@ -188,27 +186,27 @@ namespace GenerativeToolkit
                         }
                         else
                         {
-                            return MaxDistance;
+                            return maxDistance;
                         }
-                    }).Append(MaxDistance).Min();
+                    }).Append(maxDistance).Min();
 
                     points[i][j] = point;
                     distances[i][j] = distance;
 
-                    colors[i][j] = DSCore.Color.Lerp(StartColor, EndColor, distance / MaxDistance);
+                    colors[i][j] = DSCore.Color.Lerp(startColor, endColor, distance / maxDistance);
                 }
             }
 
-            var geometry = Modifiers.GeometryColor.BySurfaceColors(Surface, colors);
+            var geometry = Modifiers.GeometryColor.BySurfaceColors(surface, colors);
             
             normal?.Dispose();
             projected?.ForEach(x => x.Dispose());
 
             return new Dictionary<string, object>
             {
-                {"Points", points},
-                {"Distances", distances},
-                {"GeometryColor",  geometry}
+                {"pointList", points},
+                {"distanceList", distances},
+                {"geometryColor",  geometry}
             };
         }
     }

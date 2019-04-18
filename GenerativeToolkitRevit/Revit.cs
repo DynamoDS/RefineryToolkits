@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using DynamoElements = Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Runtime;
 using Autodesk.Revit.DB;
 using Revit.Elements;
 using RevitElements = Autodesk.Revit.DB;
 using DynamoRevitElements = Revit.Elements;
-using RevitReferences = Revit.References;
 using Revit.GeometryConversion;
 using RevitServices.Persistence;
 using RevitServices.Transactions;
@@ -25,21 +23,21 @@ namespace GenerativeToolkit
         /// <summary>
         /// Creates Revit floors from building floor surfaces.
         /// </summary>
-        /// <param name="Floors">Floor surfaces.</param>
-        /// <param name="FloorType">Type of created Revit floors.</param>
-        /// <param name="LevelPrefix">Prefix for names of created Revit levels.</param>
-        /// <returns name="FloorElements">Revit floor elements.</returns>
+        /// <param name="srfList">Floor surfaces.</param>
+        /// <param name="floorType">Type of created Revit floors.</param>
+        /// <param name="levelPrefixStr">Prefix for names of created Revit levels.</param>
+        /// <returns name="floorElementList">Revit floor elements.</returns>
         /// <search>refinery</search>
         public static List<List<DynamoRevitElements.Floor>> CreateRevitFloors(
-            DynamoElements.Surface[][] Floors,
-            DynamoRevitElements.FloorType FloorType = null, 
-            string LevelPrefix = "Dynamo Level")
+            DynamoElements.Surface[][] srfList,
+            DynamoRevitElements.FloorType floorType = null, 
+            string levelPrefixStr = "Dynamo Level")
         {
-            if (Floors == null) { throw new ArgumentNullException(nameof(Floors)); }
+            if (srfList == null) { throw new ArgumentNullException(nameof(srfList)); }
             
-            if (!(FloorType.InternalElement is RevitElements.FloorType floorType))
+            if (!(floorType.InternalElement is RevitElements.FloorType revitFloorType))
             {
-                throw new ArgumentOutOfRangeException(nameof(FloorType));
+                throw new ArgumentOutOfRangeException(nameof(floorType));
             }
 
             DisplayUnitType unitType = Document.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits;
@@ -53,35 +51,35 @@ namespace GenerativeToolkit
 
             TransactionManager.Instance.EnsureInTransaction(Document);
 
-            for (var i = 0; i < Floors.Length; i++)
+            for (var i = 0; i < srfList.Length; i++)
             {
 
-                if (Floors[i] == null) { throw new ArgumentNullException(nameof(Floors)); }
+                if (srfList[i] == null) { throw new ArgumentNullException(nameof(srfList)); }
 
                 FloorElements.Add(new List<DynamoRevitElements.Floor>());
                 
-                string levelName = $"{LevelPrefix} {i + 1}";
+                string levelName = $"{levelPrefixStr} {i + 1}";
                 var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
 
                 if (revitLevel != null)
                 {
                     // Adjust existing level to correct height.
                     revitLevel.Elevation = UnitUtils.ConvertToInternalUnits(
-                        BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z,
+                        BoundingBox.ByGeometry(srfList[i]).MaxPoint.Z,
                         unitType);
                 }
                 else
                 {
                     // Create new level.
                     revitLevel = RevitElements.Level.Create(Document, UnitUtils.ConvertToInternalUnits(
-                        BoundingBox.ByGeometry(Floors[i]).MaxPoint.Z,
+                        BoundingBox.ByGeometry(srfList[i]).MaxPoint.Z,
                         unitType));
                     revitLevel.Name = levelName;
                 }
 
                 var revitCurves = new CurveArray();
 
-                foreach (var surface in Floors[i])
+                foreach (var surface in srfList[i])
                 {
                     var loops = Building.GetSurfaceLoops(surface);
 
@@ -89,7 +87,7 @@ namespace GenerativeToolkit
 
                     loops[0].Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
                     
-                    var revitFloor = Document.Create.NewFloor(revitCurves, floorType, revitLevel, true);
+                    var revitFloor = Document.Create.NewFloor(revitCurves, revitFloorType, revitLevel, true);
 
                     FloorElements.Last().Add(revitFloor.ToDSType(false) as DynamoRevitElements.Floor);
 

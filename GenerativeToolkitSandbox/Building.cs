@@ -14,16 +14,9 @@ namespace GenerativeToolkit
     public static class Building
     {
         /// <summary>
-        /// Use an integer index to select a building type letter from the list of possible options ("U", "L", "H", "O", or "D").
+        /// Initialize a building object.
         /// </summary>
-        /// <param name="ShapeIndex">Index of building type to select from list of possible types.</param>
-        /// <returns name="BuildingType">Name of building type. One of "U", "L", "H", "O", or "D".</returns>
-        /// <search>building,design,refinery</search>
-        public static string SelectBuildingType(int ShapeIndex = 0)
-        {
-            return Enum.GetName(typeof(ShapeType), ShapeIndex % Enum.GetValues(typeof(ShapeType)).Length);
-        }
-
+        /// <returns></returns>
         private static BuildingBase InitializeBuilding(string shape)
         {
             BuildingBase building;
@@ -64,165 +57,176 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
+        /// Use an integer index to select a building type letter from the list of possible options ("U", "L", "H", "O", or "D").
+        /// </summary>
+        /// <param name="shapeIndex">Index of building type to select from list of possible types.</param>
+        /// <returns name="buildingTypeStr">Name of building type. One of "U", "L", "H", "O", or "D".</returns>
+        /// <search>building,design,refinery</search>
+        public static string SelectBuildingType(int shapeIndex = 0)
+        {
+            return Enum.GetName(typeof(ShapeType), shapeIndex % Enum.GetValues(typeof(ShapeType)).Length);
+        }
+
+        /// <summary>
         /// Generate a building mass by shape type and target gross area.
         /// </summary>
-        /// <param name="Type">Building type (U, L, H, O, or D).</param>
-        /// <param name="BasePlane">The building base plane.</param>
-        /// <param name="Length">Overall building length.</param>
-        /// <param name="Width">Overall building width.</param>
-        /// <param name="Depth">Building depth.</param>
-        /// <param name="BldgArea">Target gross building area.</param>
-        /// <param name="FloorHeight">Height of the floor.</param>
-        /// <param name="IsCurved">Should sides of building be curved or faceted?</param>
-        /// <param name="CreateCore">Create core volumes and subtractions?</param>
-        /// <param name="HallwayToDepth">Core sizing logic: ratio between building depth and width of hallways on either side of core.</param>
-        /// <param name="CoreSizeFactorFloors">Core sizing logic: Add <code>(# of floors) * CoreSizeFactorFloors</code> area to core footprint.</param>
-        /// <param name="CoreSizeFactorArea">Core sizing logic: Add <code>(single floor area) * CoreSizeFactorArea</code> area to core footprint.</param>
-        /// <returns name="BuildingSolid">Building volume.</returns>
-        /// <returns name="Floors">Building floor surfaces.</returns>
-        /// <returns name="NetFloors">Building floor surfaces with core removed.</returns>
-        /// <returns name="FloorElevations">Elevation of each floor in building.</returns>
-        /// <returns name="Cores">Building core volumes.</returns>
-        /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
-        /// <returns name="BuildingVolume">Volume of Mass.</returns>
-        /// <returns name="GrossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
-        /// <returns name="NetFloorArea">Combined area of all floors with core removed.</returns>
-        /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
+        /// <param name="typeStr">Building type name ("U", "L", "H", "O", or "D").</param>
+        /// <param name="basePlane">The building base plane.</param>
+        /// <param name="length">Overall building length.</param>
+        /// <param name="width">Overall building width.</param>
+        /// <param name="depth">Building depth.</param>
+        /// <param name="buildingArea">Target gross building area.</param>
+        /// <param name="floorHeight">Height of the floors.</param>
+        /// <param name="curvedBool">Should sides of building be curved or faceted?</param>
+        /// <param name="createCoreBool">Create core volumes and subtractions?</param>
+        /// <param name="hallwayToDepth">Core sizing logic: ratio between building depth and width of hallways on either side of core.</param>
+        /// <param name="coreSizeFactorFloors">Core sizing logic: Add <code>(# of floors) * coreSizeFactorFloors</code> area to core footprint.</param>
+        /// <param name="coreSizeFactorArea">Core sizing logic: Add <code>(single floor area) * coreSizeFactorArea</code> area to core footprint.</param>
+        /// <returns name="buildingSolid">Building volume.</returns>
+        /// <returns name="floorSrfList">Building floor surfaces.</returns>
+        /// <returns name="netFloorSrfList">Building floor surfaces with core removed.</returns>
+        /// <returns name="floorElevationList">Elevation of each floor in building.</returns>
+        /// <returns name="coreSolidList">Building core volumes.</returns>
+        /// <returns name="topPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
+        /// <returns name="buildingVolume">Volume of entire building solid.</returns>
+        /// <returns name="grossFloorArea">Combined area of all floors. Will be greater than or equal to input buildingArea.</returns>
+        /// <returns name="netFloorArea">Combined area of all floors with core removed.</returns>
+        /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "BuildingSolid", "Floors", "NetFloors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "GrossFloorArea", "NetFloorArea", "TotalFacadeArea", })]
-        public static Dictionary<string, object> BuildingByTypeAndArea(
-            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane BasePlane = null,
-            string Type = "L",
-            double Length = 50,
-            double Width = 40,
-            double Depth = 25,
-            double BldgArea = 10000,
-            double FloorHeight = 9,
-            bool IsCurved = false,
-            bool CreateCore = true,
-            double HallwayToDepth = 0.1,
-            double CoreSizeFactorFloors = 4,
-            double CoreSizeFactorArea = 0.1)
+        [MultiReturn(new[] { "buildingSolid", "floorSrfList", "netFloorSrfList", "floorElevationList", "coreSolidList", "topPlane", "buildingVolume", "grossFloorArea", "netFloorArea", "totalFacadeArea", })]
+        public static Dictionary<string, object> ByTypeArea(
+            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane basePlane = null,
+            string typeStr = "L",
+            double length = 50,
+            double width = 40,
+            double depth = 25,
+            double buildingArea = 10000,
+            double floorHeight = 9,
+            bool curvedBool = false,
+            bool createCoreBool = true,
+            double hallwayToDepth = 0.1,
+            double coreSizeFactorFloors = 4,
+            double coreSizeFactorArea = 0.1)
         {
-            if (Length <= 0) { throw new ArgumentOutOfRangeException(nameof(Length)); }
-            if (Width <= 0) { throw new ArgumentOutOfRangeException(nameof(Width)); }
-            if (Depth <= 0) { throw new ArgumentOutOfRangeException(nameof(Depth)); }
-            if (BldgArea <= 0) { throw new ArgumentOutOfRangeException(nameof(BldgArea)); }
-            if (FloorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(FloorHeight)); }
+            if (length <= 0) { throw new ArgumentOutOfRangeException(nameof(length)); }
+            if (width <= 0) { throw new ArgumentOutOfRangeException(nameof(width)); }
+            if (depth <= 0) { throw new ArgumentOutOfRangeException(nameof(depth)); }
+            if (buildingArea <= 0) { throw new ArgumentOutOfRangeException(nameof(buildingArea)); }
+            if (floorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(floorHeight)); }
 
-            var building = InitializeBuilding(Type);
+            var building = InitializeBuilding(typeStr);
 
-            building.CreateBuilding(BasePlane, FloorHeight, 
-                BldgArea, floorCount: null, 
-                Width, Length, Depth, IsCurved, CreateCore, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
+            building.CreateBuilding(basePlane, floorHeight, 
+                buildingArea, floorCount: null, 
+                width, length, depth, curvedBool, createCoreBool, hallwayToDepth, coreSizeFactorFloors, coreSizeFactorArea);
 
             return new Dictionary<string, object>
             {
-                {"BuildingSolid", building.Mass},
-                {"Floors", building.Floors},
-                {"NetFloors", building.NetFloors},
-                {"FloorElevations", building.FloorElevations},
-                {"Cores", building.Cores},
-                {"TopPlane", building.TopPlane},
-                {"BuildingVolume", building.TotalVolume},
-                {"GrossFloorArea", building.GrossFloorArea},
-                {"NetFloorArea", building.NetFloorArea},
-                {"TotalFacadeArea", building.FacadeArea},
+                {"buildingSolid", building.Mass},
+                {"floorSrfList", building.Floors},
+                {"netFloorSrfList", building.NetFloors},
+                {"floorElevationList", building.FloorElevations},
+                {"coreSolidList", building.Cores},
+                {"topPlane", building.TopPlane},
+                {"buildingVolume", building.TotalVolume},
+                {"grossFloorArea", building.GrossFloorArea},
+                {"netFloorArea", building.NetFloorArea},
+                {"totalFacadeArea", building.FacadeArea},
             };
         }
 
         /// <summary>
         /// Generate a building mass by shape type and number of floors.
         /// </summary>
-        /// <param name="Type">Building type (U, L, H, O, or D).</param>
-        /// <param name="BasePlane">The building base plane.</param>
-        /// <param name="Length">Overall building length.</param>
-        /// <param name="Width">Overall building width.</param>
-        /// <param name="Depth">Building depth.</param>
-        /// <param name="FloorCount">Number of building floors.</param>
-        /// <param name="FloorHeight">Height of the floor.</param>
-        /// <param name="IsCurved">Should sides of building be curved or faceted?</param>
-        /// <param name="CreateCore">Create core volumes and subtractions?</param>
-        /// <param name="HallwayToDepth">Core sizing logic: ratio between building depth and width of hallways on either side of core.</param>
-        /// <param name="CoreSizeFactorFloors">Core sizing logic: Add <code>(# of floors) * CoreSizeFactorFloors</code> area to core footprint.</param>
-        /// <param name="CoreSizeFactorArea">Core sizing logic: Add <code>(single floor area) * CoreSizeFactorArea</code> area to core footprint.</param>
-        /// <returns name="BuildingSolid">Building volume.</returns>
-        /// <returns name="Floors">Building floor surfaces.</returns>
-        /// <returns name="NetFloors">Building floor surfaces with core removed.</returns>
-        /// <returns name="FloorElevations">Elevation of each floor in building.</returns>
-        /// <returns name="Cores">Building core volumes.</returns>
-        /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
-        /// <returns name="BuildingVolume">Volume of Mass.</returns>
-        /// <returns name="GrossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
-        /// <returns name="NetFloorArea">Combined area of all floors with core removed.</returns>
-        /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
+        /// <param name="typeStr">Building type (U, L, H, O, or D).</param>
+        /// <param name="basePlane">The building base plane.</param>
+        /// <param name="length">Overall building length.</param>
+        /// <param name="width">Overall building width.</param>
+        /// <param name="depth">Building depth.</param>
+        /// <param name="floorCount">Number of building floors.</param>
+        /// <param name="floorHeight">Height of the floors.</param>
+        /// <param name="curvedBool">Should sides of building be curved or faceted?</param>
+        /// <param name="createCoreBool">Create core volumes and subtractions?</param>
+        /// <param name="hallwayToDepth">Core sizing logic: ratio between building depth and width of hallways on either side of core.</param>
+        /// <param name="coreSizeFactorFloors">Core sizing logic: Add <code>(# of floors) * CoreSizeFactorFloors</code> area to core footprint.</param>
+        /// <param name="coreSizeFactorArea">Core sizing logic: Add <code>(single floor area) * CoreSizeFactorArea</code> area to core footprint.</param>
+        /// <returns name="buildingSolid">Building volume.</returns>
+        /// <returns name="floorSrfList">Building floor surfaces.</returns>
+        /// <returns name="netFloorSrfList">Building floor surfaces with core removed.</returns>
+        /// <returns name="floorElevationList">Elevation of each floor in building.</returns>
+        /// <returns name="coreSolidList">Building core volumes.</returns>
+        /// <returns name="topPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
+        /// <returns name="buildingVolume">Volume of Mass.</returns>
+        /// <returns name="grossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="netFloorArea">Combined area of all floors with core removed.</returns>
+        /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "BuildingSolid", "Floors", "NetFloors", "FloorElevations", "Cores", "TopPlane", "BuildingVolume", "GrossFloorArea", "NetFloorArea", "TotalFacadeArea", })]
-        public static Dictionary<string, object> BuildingByTypeAndFloors(
-            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane BasePlane = null,
-            string Type = "L",
-            double Length = 50,
-            double Width = 40,
-            double Depth = 25,
-            int FloorCount = 10,
-            double FloorHeight = 9,
-            bool IsCurved = false,
-            bool CreateCore = true,
-            double HallwayToDepth = 0.1,
-            double CoreSizeFactorFloors = 4,
-            double CoreSizeFactorArea = 0.1)
+        [MultiReturn(new[] { "buildingSolid", "floorSrfList", "netFloorSrfList", "floorElevationList", "coreSolidList", "topPlane", "buildingVolume", "grossFloorArea", "netFloorArea", "totalFacadeArea", })]
+        public static Dictionary<string, object> ByTypeFloors(
+            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane basePlane = null,
+            string typeStr = "L",
+            double length = 50,
+            double width = 40,
+            double depth = 25,
+            int floorCount = 10,
+            double floorHeight = 9,
+            bool curvedBool = false,
+            bool createCoreBool = true,
+            double hallwayToDepth = 0.1,
+            double coreSizeFactorFloors = 4,
+            double coreSizeFactorArea = 0.1)
         {
-            if (Length <= 0) { throw new ArgumentOutOfRangeException(nameof(Length)); }
-            if (Width <= 0) { throw new ArgumentOutOfRangeException(nameof(Width)); }
-            if (Depth <= 0) { throw new ArgumentOutOfRangeException(nameof(Depth)); }
-            if (FloorCount <= 0) { throw new ArgumentOutOfRangeException(nameof(FloorCount)); }
-            if (FloorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(FloorHeight)); }
+            if (length <= 0) { throw new ArgumentOutOfRangeException(nameof(length)); }
+            if (width <= 0) { throw new ArgumentOutOfRangeException(nameof(width)); }
+            if (depth <= 0) { throw new ArgumentOutOfRangeException(nameof(depth)); }
+            if (floorCount <= 0) { throw new ArgumentOutOfRangeException(nameof(floorCount)); }
+            if (floorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(floorHeight)); }
 
-            var building = InitializeBuilding(Type);
+            var building = InitializeBuilding(typeStr);
 
-            building.CreateBuilding(BasePlane, FloorHeight, 
-                targetBuildingArea: null, floorCount: FloorCount, 
-                Width, Length, Depth, IsCurved, CreateCore, HallwayToDepth, CoreSizeFactorFloors, CoreSizeFactorArea);
+            building.CreateBuilding(basePlane, floorHeight, 
+                targetBuildingArea: null, floorCount: floorCount, 
+                width, length, depth, curvedBool, createCoreBool, hallwayToDepth, coreSizeFactorFloors, coreSizeFactorArea);
 
             return new Dictionary<string, object>
             {
-                {"BuildingSolid", building.Mass},
-                {"Floors", building.Floors},
-                {"NetFloors", building.NetFloors},
-                {"FloorElevations", building.FloorElevations},
-                {"Cores", building.Cores},
-                {"TopPlane", building.TopPlane},
-                {"BuildingVolume", building.TotalVolume},
-                {"GrossFloorArea", building.GrossFloorArea},
-                {"NetFloorArea", building.NetFloorArea},
-                {"TotalFacadeArea", building.FacadeArea},
+                {"buildingSolid", building.Mass},
+                {"floorSrfList", building.Floors},
+                {"netFloorSrfList", building.NetFloors},
+                {"floorElevationList", building.FloorElevations},
+                {"coreSolidList", building.Cores},
+                {"topPlane", building.TopPlane},
+                {"buildingVolume", building.TotalVolume},
+                {"grossFloorArea", building.GrossFloorArea},
+                {"netFloorArea", building.NetFloorArea},
+                {"totalFacadeArea", building.FacadeArea},
             };
         }
 
         /// <summary>
         /// Deconstruct a building mass into component horizontal and vertical surfaces.
         /// </summary>
-        /// <param name="Solid">Building solid.</param>
-        /// <param name="AngleThreshold">Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).</param>
-        /// <returns name="VerticalSurfaces">Vertical surfaces.</returns>
-        /// <returns name="HorizontalSurfaces">Horizontal surfaces.</returns>
+        /// <param name="solid">Building solid.</param>
+        /// <param name="angleThreshold">Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).</param>
+        /// <returns name="verticalSrfList">Vertical surfaces.</returns>
+        /// <returns name="horizontalSrfList">Horizontal surfaces.</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "VerticalSurfaces", "HorizontalSurfaces" })]
-        public static Dictionary<string, object> DeceonstructFacadeShell(Topology Solid, double AngleThreshold = 45)
+        [MultiReturn(new[] { "verticalSrfList", "horizontalSrfList" })]
+        public static Dictionary<string, object> DeceonstructFacadeShell(Topology solid, double angleThreshold = 45)
         {
             List<Surface> horizontal = new List<Surface>();
             List<Surface> vertical = new List<Surface>();
 
-            if (Solid == null) { throw new ArgumentNullException(nameof(Solid)); }
-            if (AngleThreshold < 0 || AngleThreshold > 90)
+            if (solid == null) { throw new ArgumentNullException(nameof(solid)); }
+            if (angleThreshold < 0 || angleThreshold > 90)
             {
-                throw new ArgumentOutOfRangeException(nameof(AngleThreshold), "AngleThreshold must be between 0 and 90.");
+                throw new ArgumentOutOfRangeException(nameof(angleThreshold), $"{nameof(angleThreshold)} must be between 0 and 90.");
             }
 
-            foreach (var surface in Solid.Faces.Select(f => f.SurfaceGeometry()))
+            foreach (var surface in solid.Faces.Select(f => f.SurfaceGeometry()))
             {
                 var angle = surface.NormalAtParameter(0.5, 0.5).AngleWithVector(Vector.ZAxis());
-                if (angle < AngleThreshold || angle > 180 - AngleThreshold)
+                if (angle < angleThreshold || angle > 180 - angleThreshold)
                 {
                     horizontal.Add(surface);
                 }
@@ -234,22 +238,22 @@ namespace GenerativeToolkit
 
             return new Dictionary<string, object>
             {
-                {"VerticalSurfaces", vertical},
-                {"HorizontalSurfaces", horizontal}
+                {"verticalSrfList", vertical},
+                {"horizontalSrfList", horizontal}
             };
         }
 
         /// <summary>
         /// Get list of closed polycurve edges of surface. First list item is outside boundary.
         /// </summary>
-        /// <param name="Surface">The surface.</param>
-        /// <returns name="Edges">Edges of surface.</returns>
+        /// <param name="surface">The surface.</param>
+        /// <returns name="edgeCrvList">Edges of surface.</returns>
         /// <exception cref="ArgumentNullException">Surface</exception>
-        public static PolyCurve[] GetSurfaceLoops(Surface Surface)
+        public static PolyCurve[] GetSurfaceLoops(Surface surface)
         {
-            if (Surface == null) { throw new ArgumentNullException(nameof(Surface)); }
+            if (surface == null) { throw new ArgumentNullException(nameof(surface)); }
 
-            var curves = Surface.PerimeterCurves();
+            var curves = surface.PerimeterCurves();
 
             var loops = new List<PolyCurve>();
 
@@ -298,76 +302,76 @@ namespace GenerativeToolkit
         /// <summary>
         /// Generate a building mass from base curves and target gross area.
         /// </summary>
-        /// <param name="EdgeLoops">Closed curve boundary of building. All curves after first will be treated as holes.</param>
-        /// <param name="BldgArea">Target gross building area.</param>
-        /// <param name="FloorHeight">Height of the floor.</param>
-        /// <returns name="BuildingSolid">Building volume.</returns>
-        /// <returns name="Floors">Building floor surfaces.</returns>
-        /// <returns name="FloorElevations">Elevation of each floor in building.</returns>
-        /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
-        /// <returns name="BuildingVolume">Volume of Mass.</returns>
-        /// <returns name="GrossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
-        /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
+        /// <param name="edgeLoopCrvList">Closed curve boundaries of building. All curves after first will be treated as holes.</param>
+        /// <param name="buildingArea">Target gross building area.</param>
+        /// <param name="floorHeight">Height of the floors.</param>
+        /// <returns name="buildingSolid">Building volume.</returns>
+        /// <returns name="floorSrfList">Building floor surfaces.</returns>
+        /// <returns name="floorElevationList">Elevation of each floor in building.</returns>
+        /// <returns name="topPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
+        /// <returns name="buildingVolume">Volume of Mass.</returns>
+        /// <returns name="grossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "BuildingSolid", "Floors", "FloorElevations", "TopPlane", "BuildingVolume", "GrossFloorArea", "TotalFacadeArea", })]
-        public static Dictionary<string, object> BuildingByOutlineAndArea(
-            List<Curve> EdgeLoops,
-            double BldgArea = 1000,
-            double FloorHeight = 3)
+        [MultiReturn(new[] { "buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea", })]
+        public static Dictionary<string, object> ByOutlineArea(
+            List<Curve> edgeLoopCrvList,
+            double buildingArea = 1000,
+            double floorHeight = 3)
         {
-            if (EdgeLoops == null || EdgeLoops.Count == 0) { throw new ArgumentNullException(nameof(EdgeLoops)); }
-            if (BldgArea <= 0) { throw new ArgumentOutOfRangeException(nameof(BldgArea)); }
-            if (FloorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(FloorHeight)); }
+            if (edgeLoopCrvList == null || edgeLoopCrvList.Count == 0) { throw new ArgumentNullException(nameof(edgeLoopCrvList)); }
+            if (buildingArea <= 0) { throw new ArgumentOutOfRangeException(nameof(buildingArea)); }
+            if (floorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(floorHeight)); }
 
-            var building = new BuildingFromCurves(EdgeLoops[0], EdgeLoops.Skip(1).ToList(), FloorHeight, BldgArea, floorCount: null);
+            var building = new BuildingFromCurves(edgeLoopCrvList[0], edgeLoopCrvList.Skip(1).ToList(), floorHeight, buildingArea, floorCount: null);
 
             return new Dictionary<string, object>
             {
-                {"BuildingSolid", building.Mass},
-                {"Floors", building.Floors},
-                {"FloorElevations", building.FloorElevations},
-                {"TopPlane", building.TopPlane},
-                {"BuildingVolume", building.TotalVolume},
-                {"GrossFloorArea", building.GrossFloorArea},
-                {"TotalFacadeArea", building.FacadeArea},
+                {"buildingSolid", building.Mass},
+                {"floorSrfList", building.Floors},
+                {"floorElevationList", building.FloorElevations},
+                {"topPlane", building.TopPlane},
+                {"buildingVolume", building.TotalVolume},
+                {"grossFloorArea", building.GrossFloorArea},
+                {"totalFacadeArea", building.FacadeArea},
             };
         }
 
         /// <summary>
         /// Generate a building mass from base curves and number of floors.
         /// </summary>
-        /// <param name="EdgeLoops">Closed curve boundary of building. All curves after first will be treated as holes.</param>
-        /// <param name="FloorCount">Target gross building area.</param>
-        /// <param name="FloorHeight">Height of the floor.</param>
-        /// <returns name="BuildingSolid">Building volume.</returns>
-        /// <returns name="Floors">Building floor surfaces.</returns>
-        /// <returns name="FloorElevations">Elevation of each floor in building.</returns>
-        /// <returns name="TopPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
-        /// <returns name="BuildingVolume">Volume of Mass.</returns>
-        /// <returns name="GrossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
-        /// <returns name="TotalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
+        /// <param name="edgeLoopCrvList">Closed curve boundaries of building. All curves after first will be treated as holes.</param>
+        /// <param name="floorCount">Target gross building area.</param>
+        /// <param name="floorHeight">Height of the floors.</param>
+        /// <returns name="buildingSolid">Building volume.</returns>
+        /// <returns name="floorSrfList">Building floor surfaces.</returns>
+        /// <returns name="floorElevationList">Elevation of each floor in building.</returns>
+        /// <returns name="topPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
+        /// <returns name="buildingVolume">Volume of Mass.</returns>
+        /// <returns name="grossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
+        /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
-        [MultiReturn(new[] { "BuildingSolid", "Floors", "FloorElevations", "TopPlane", "BuildingVolume", "GrossFloorArea", "TotalFacadeArea", })]
-        public static Dictionary<string, object> BuildingByOutlineAndFloors(
-            List<Curve> EdgeLoops,
-            int FloorCount = 10,
-            double FloorHeight = 3)
+        [MultiReturn(new[] { "buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea", })]
+        public static Dictionary<string, object> ByOutlineFloors(
+            List<Curve> edgeLoopCrvList,
+            int floorCount = 10,
+            double floorHeight = 3)
         {
-            if (EdgeLoops == null || EdgeLoops.Count == 0) { throw new ArgumentNullException(nameof(EdgeLoops)); }
-            if (FloorCount <= 0) { throw new ArgumentOutOfRangeException(nameof(FloorCount)); }
-            if (FloorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(FloorHeight)); }
+            if (edgeLoopCrvList == null || edgeLoopCrvList.Count == 0) { throw new ArgumentNullException(nameof(edgeLoopCrvList)); }
+            if (floorCount <= 0) { throw new ArgumentOutOfRangeException(nameof(floorCount)); }
+            if (floorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(floorHeight)); }
 
-            var building = new BuildingFromCurves(EdgeLoops[0], EdgeLoops.Skip(1).ToList(), FloorHeight, targetBuildingArea: null, FloorCount);
+            var building = new BuildingFromCurves(edgeLoopCrvList[0], edgeLoopCrvList.Skip(1).ToList(), floorHeight, targetBuildingArea: null, floorCount);
 
             return new Dictionary<string, object>
             {
-                {"BuildingSolid", building.Mass},
-                {"Floors", building.Floors},
-                {"FloorElevations", building.FloorElevations},
-                {"TopPlane", building.TopPlane},
-                {"BuildingVolume", building.TotalVolume},
-                {"GrossFloorArea", building.GrossFloorArea},
-                {"TotalFacadeArea", building.FacadeArea},
+                {"buildingSolid", building.Mass},
+                {"floorSrfList", building.Floors},
+                {"floorElevationList", building.FloorElevations},
+                {"topPlane", building.TopPlane},
+                {"buildingVolume", building.TotalVolume},
+                {"grossFloorArea", building.GrossFloorArea},
+                {"totalFacadeArea", building.FacadeArea},
             };
         }
     }
