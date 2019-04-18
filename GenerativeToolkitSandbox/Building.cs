@@ -16,7 +16,7 @@ namespace GenerativeToolkit
     public static class Building
     {
         /// <summary>
-        /// Initialize a building object.
+        /// Initializes a building object.
         /// </summary>
         /// <returns></returns>
         private static BuildingBase InitializeBuilding(string shape)
@@ -59,7 +59,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Use an integer index to select a building type letter from the list of possible options ("U", "L", "H", "O", or "D").
+        /// Uses an integer index to select a building type letter from the list of possible options ("U", "L", "H", "O", or "D").
         /// </summary>
         /// <param name="shapeIndex">Index of building type to select from list of possible types.</param>
         /// <returns name="buildingTypeStr">Name of building type. One of "U", "L", "H", "O", or "D".</returns>
@@ -70,7 +70,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Generate a building mass by shape type and target gross area.
+        /// Generates a building solid by shape type and target gross area.
         /// </summary>
         /// <param name="typeStr">Building type name ("U", "L", "H", "O", or "D").</param>
         /// <param name="basePlane">The building base plane.</param>
@@ -139,7 +139,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Generate a building mass by shape type and number of floors.
+        /// Generates a building solid by shape type and number of floors.
         /// </summary>
         /// <param name="typeStr">Building type (U, L, H, O, or D).</param>
         /// <param name="basePlane">The building base plane.</param>
@@ -159,7 +159,7 @@ namespace GenerativeToolkit
         /// <returns name="floorElevationList">Elevation of each floor in building.</returns>
         /// <returns name="coreSolidList">Building core volumes.</returns>
         /// <returns name="topPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
-        /// <returns name="buildingVolume">Volume of Mass.</returns>
+        /// <returns name="buildingVolume">Volume of entire building solid.</returns>
         /// <returns name="grossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
         /// <returns name="netFloorArea">Combined area of all floors with core removed.</returns>
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
@@ -208,7 +208,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Deconstruct a building mass into component horizontal and vertical surfaces.
+        /// Deconstructs a building solid into component horizontal and vertical surfaces.
         /// </summary>
         /// <param name="solid">Building solid.</param>
         /// <param name="angleThreshold">Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).</param>
@@ -217,7 +217,7 @@ namespace GenerativeToolkit
         /// <search>building,design,refinery</search>
         [NodeCategory("Query")]
         [MultiReturn(new[] { "verticalSrfList", "horizontalSrfList" })]
-        public static Dictionary<string, object> DeceonstructFacadeShell(Topology solid, double angleThreshold = 45)
+        public static Dictionary<string, object> DeconstructFacadeShell(Topology solid, double angleThreshold = 45)
         {
             List<Surface> horizontal = new List<Surface>();
             List<Surface> vertical = new List<Surface>();
@@ -249,7 +249,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Get list of closed polycurve edges of surface. First list item is outside boundary.
+        /// Gets a list of closed polycurve edges of surface. First list item is outside boundary.
         /// </summary>
         /// <param name="surface">The surface.</param>
         /// <returns name="edgeCrvList">Edges of surface.</returns>
@@ -305,7 +305,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Generate a building mass from base curves and target gross area.
+        /// Generates a building solid from base curves and target gross area.
         /// </summary>
         /// <param name="edgeLoopCrvList">Closed curve boundaries of building. All curves after first will be treated as holes.</param>
         /// <param name="buildingArea">Target gross building area.</param>
@@ -314,7 +314,7 @@ namespace GenerativeToolkit
         /// <returns name="floorSrfList">Building floor surfaces.</returns>
         /// <returns name="floorElevationList">Elevation of each floor in building.</returns>
         /// <returns name="topPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
-        /// <returns name="buildingVolume">Volume of Mass.</returns>
+        /// <returns name="buildingVolume">Volume of entire building solid.</returns>
         /// <returns name="grossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
@@ -344,7 +344,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Generate a building mass from base curves and number of floors.
+        /// Generates a building solid from base curves and number of floors.
         /// </summary>
         /// <param name="edgeLoopCrvList">Closed curve boundaries of building. All curves after first will be treated as holes.</param>
         /// <param name="floorCount">Target gross building area.</param>
@@ -353,7 +353,7 @@ namespace GenerativeToolkit
         /// <returns name="floorSrfList">Building floor surfaces.</returns>
         /// <returns name="floorElevationList">Elevation of each floor in building.</returns>
         /// <returns name="topPlane">A plane at the top of the building volume. Use this for additional volumes to create a stacked building.</returns>
-        /// <returns name="buildingVolume">Volume of Mass.</returns>
+        /// <returns name="buildingVolume">Volume of entire building solid.</returns>
         /// <returns name="grossFloorArea">Combined area of all floors. Will be at least equal to BldgArea.</returns>
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>

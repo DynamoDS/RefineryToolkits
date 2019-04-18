@@ -121,7 +121,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Creates a Revit mass as a direct shape from building masser
+        /// Creates a Revit mass as a direct shape.
         /// </summary>
         /// <param name="BuildingSolid">The building volume.</param>
         /// <param name="Category">A category for the mass.</param>

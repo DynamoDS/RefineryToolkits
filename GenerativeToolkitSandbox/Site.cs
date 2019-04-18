@@ -13,7 +13,7 @@ namespace GenerativeToolkit
     public static class Site
     {
         /// <summary>
-        /// Use setback and height to create boundary volume for building solid to fit into.
+        /// Uses setback and height to create boundary volume for building solid to fit into.
         /// </summary>
         /// <param name="siteOutline">Site boundary, from Revit.</param>
         /// <param name="setback">Site setback distance.</param>
@@ -23,7 +23,7 @@ namespace GenerativeToolkit
         /// <search>site,design,refactory</search>
         [NodeCategory("Create")]
         [MultiReturn(new[] { "siteSolid", "siteOffset" })]
-        public static Dictionary<string, object> SiteVolumeGenerator(Curve siteOutline, double setback = 0, double heightLimit = 100)
+        public static Dictionary<string, object> VolumeByOutlineSetback(Curve siteOutline, double setback = 0, double heightLimit = 100)
         {
             Solid siteMass;
             Curve siteOffset;
@@ -62,7 +62,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Test site boundary against building mass.
+        /// Tests site boundary against building mass.
         /// </summary>
         /// <param name="buildingSolid">Building solid from the generator.</param>
         /// <param name="siteSolid">Site boundary volume.</param>
@@ -73,7 +73,7 @@ namespace GenerativeToolkit
         /// <search>site,design,refinery</search>
         [NodeCategory("Query")]
         [MultiReturn(new[] { "buildingInside", "buildingOutside", "intersects", "percentOutside" })]
-        public static Dictionary<string, object> SiteClashTest(Solid buildingSolid, Solid siteSolid)
+        public static Dictionary<string, object> ClashTest(Solid buildingSolid, Solid siteSolid)
         {
             bool intersects = false;
             double percentOutside = 0;
@@ -101,24 +101,24 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Get site components from Revit element.
+        /// Gets site components from polysurface (e.g. Revit mass).
         /// </summary>
-        /// <param name="revitSite">Referenced site element (usually a selected mass).</param>
+        /// <param name="polysurface">Referenced site element.</param>
         /// <returns name="solidList">Individual solids in site geometry.</returns>
         /// <returns name="boundingBoxList">Bounding box for each element.</returns>
         /// <returns name="heightList">Height of each element.</returns>
         /// <search>refinery</search>
         [NodeCategory("Query")]
         [MultiReturn(new[] { "solidList", "boundingBoxList", "heightList" })]
-        public static Dictionary<string, object> SiteContext(PolySurface revitSite)
+        public static Dictionary<string, object> ContextByElement(PolySurface polysurface)
         {
             Solid[] solidList = null;
             List<BoundingBox> boundingBoxList = null;
             List<double> heightList = null;
 
-            if (revitSite == null) { throw new ArgumentNullException(nameof(revitSite)); }
+            if (polysurface == null) { throw new ArgumentNullException(nameof(polysurface)); }
 
-            solidList = revitSite.ExtractSolids();
+            solidList = polysurface.ExtractSolids();
 
             boundingBoxList = solidList.Select(e => e.BoundingBox).ToList();
 
@@ -133,7 +133,7 @@ namespace GenerativeToolkit
         }
 
         /// <summary>
-        /// Calculate line of sight distances from a grid of points on a surface.
+        /// Calculates line of sight distances from a grid of points on a surface.
         /// </summary>
         /// <param name="surface">Surface, such as building's facade, to search from.</param>
         /// <param name="contextGeomList">Geometry to calculate distance to.</param>
@@ -146,10 +146,10 @@ namespace GenerativeToolkit
         /// <returns name="geometryColor">Colored surfaces mapping view distance.</returns>
         [NodeCategory("Query")]
         [MultiReturn(new[] { "pointList", "distanceList", "geometryColor" })]
-        public static Dictionary<string, object> SiteViewDistance(
+        public static Dictionary<string, object> ViewDistance(
             Surface surface, Geometry[] contextGeomList,
-            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 255, 255);")]DSCore.Color startColor,
-            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 0, 115);")]DSCore.Color endColor,
+            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 0, 115);")]DSCore.Color startColor,
+            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 255, 255);")]DSCore.Color endColor,
             double resolution = 3, double maxDistance = 50)
         {
             if (resolution <= 0) { throw new ArgumentNullException(nameof(resolution)); }
