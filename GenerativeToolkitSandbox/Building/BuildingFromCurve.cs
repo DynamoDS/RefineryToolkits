@@ -10,7 +10,7 @@ namespace GenerativeToolkit
         private readonly Curve boundary;
         private readonly List<Curve> holes;
 
-        public BuildingFromCurves(Curve boundary, List<Curve> holes, double targetBuildingArea, double floorHeight)
+        public BuildingFromCurves(Curve boundary, List<Curve> holes, double floorHeight, double? targetBuildingArea = null, int? floorCount = null)
         {
             BoundingBox bounds = boundary.BoundingBox;
 
@@ -25,7 +25,7 @@ namespace GenerativeToolkit
             this.boundary = (Curve)boundary.Translate(locationReset);
             this.holes = holes.Select(h => h.Translate(locationReset)).Cast<Curve>().ToList();
 
-            CreateBuilding(basePlane, targetBuildingArea, floorHeight, diagonal.X, diagonal.Y);
+            CreateBuilding(basePlane, floorHeight, targetBuildingArea, floorCount, diagonal.X, diagonal.Y);
 
             diagonal.Dispose();
             center.Dispose();

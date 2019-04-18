@@ -46,7 +46,8 @@ namespace GenerativeToolkit
         }
 
         public void CreateBuilding(
-            Plane basePlane, double targetBuildingArea, double floorHeight,
+            Plane basePlane, double floorHeight, 
+            double? targetBuildingArea = null, int? floorCount = null,
             double width = 0, double length = 0, double depth = 0,
             bool isCurved = false, bool createCores = false,
             double hallwayToDepth = 0, double coreSizeFactorFloors = 0, double coreSizeFactorArea = 0)
@@ -74,7 +75,18 @@ namespace GenerativeToolkit
 
             FloorArea = baseSurface.Area;
 
-            FloorCount = (int)Math.Ceiling(targetBuildingArea / FloorArea);
+            if (floorCount != null)
+            {
+                FloorCount = (int)floorCount;
+            }
+            else if (targetBuildingArea != null)
+            {
+                FloorCount = (int)Math.Ceiling((double)targetBuildingArea / FloorArea);
+            }
+            else
+            {
+                throw new ArgumentException($"Either {nameof(floorCount)} or {nameof(targetBuildingArea)} is required.");
+            }
 
             Mass = baseSurface.Thicken(FloorCount * FloorHeight, both_sides: false);
 
