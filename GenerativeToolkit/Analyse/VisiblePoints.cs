@@ -22,11 +22,13 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
         /// <param name="obstacles">List of Polygons representing internal obstructions</param>
         /// <returns>precentages of the amount of visible points</returns>
-        public static double FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> obstacles)
+        [MultiReturn(new[] { "score", "visiblePoints" })]
+        public static Dictionary<string, object> FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> obstacles)
         {
             Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
             GeometryPolygon gPol = GeometryPolygon.ByVertices(isovist.Points.Select(p => GeometryVertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
 
+            List<Point> visPoints = new List<Point>();
             double totalPoints = points.Count;
             double visibilityAmount = 0;
  
@@ -37,11 +39,16 @@ namespace Autodesk.GenerativeToolkit.Analyse
                 if (gPol.ContainsVertex(vertex))
                 {
                     ++visibilityAmount;
-                    //point.Dispose();
+                    visPoints.Add(point);
                 }
             }
             isovist.Dispose();
-            return (1/totalPoints) * visibilityAmount;
+
+            return new Dictionary<string, object>()
+            {
+                {"score", (1/totalPoints) * visibilityAmount},
+                {"visiblePoints", visPoints }
+            };
         }
 
         private static Polygon IsovistPolygon(List<Polygon> boundary, List<Polygon> obstacles, Point point)

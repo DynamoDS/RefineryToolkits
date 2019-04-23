@@ -18,10 +18,12 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="viewSegments">Line segments representing the views to outside</param>
         /// <param name="origin">Origin point to measure from</param>
         /// <returns>precentage of 360 view that is to the outside</returns>
-        public static double ByLineSegments(List<Curve> viewSegments, Point origin, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> internals)
+        [MultiReturn(new[] { "score", "segments" })]
+        public static Dictionary<string, object> ByLineSegments(List<Curve> viewSegments, Point origin, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> internals)
         {
-            Surface isovist = Isovist.FromPoint(boundary, internals, origin);         
+            Surface isovist = Isovist.FromPoint(boundary, internals, origin);
 
+            List<Curve> lines = new List<Curve>();
             double outsideViewAngles = 0;
             foreach (Curve segment in viewSegments)
             {
@@ -30,12 +32,12 @@ namespace Autodesk.GenerativeToolkit.Analyse
                 {
                     foreach (Curve seg in intersectSegment)
                     {
+                        lines.Add(seg);
                         Vector vec1 = Vector.ByTwoPoints(origin, seg.StartPoint);
                         Vector vec2 = Vector.ByTwoPoints(origin, seg.EndPoint);
                         outsideViewAngles += vec1.AngleWithVector(vec2);
                         vec1.Dispose();
                         vec2.Dispose();
-                        seg.Dispose();
                     }
                 }
                 else
@@ -45,7 +47,12 @@ namespace Autodesk.GenerativeToolkit.Analyse
             }
             isovist.Dispose();
             double score = outsideViewAngles / 360;
-            return score;
+
+            return new Dictionary<string, object>()
+            {
+                {"score", score },
+                {"segments", lines }
+            };
         }      
     }
 }
