@@ -47,22 +47,18 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             new List<List<Point>> { internal1Points, internal2Points }.ForEach(lst => internalPolygons.Add(Polygon.ByPoints(lst)));
 
             Visibility visibilityGraph = PathFinding.CreateVisibilityGraph(new List<Polygon> { boundary }, internalPolygons);
+            Assert.IsTrue(!visibilityGraph.Equals(null));
 
-            Dictionary<string, object> shortestPath = PathFinding.ShortestPath(visibilityGraph, originPoint, destination);
+            var result = PathFinding.ShortestPath(visibilityGraph, originPoint, destination);
 
-            //Assert.AreEqual(35.22, Math.Round(shortestPath["length"]. .GetValueOrDefault()));
-        }
+            Assert.IsTrue(result.Keys.Contains("path"));
+            Assert.IsTrue(result.Keys.Contains("length"));
 
-        [Test]
-        public void CreateVisibilityGraphTest()
-        {
-            Assert.Fail();
-        }
+            var length = (double)result["length"];
 
-        [Test]
-        public void LinesTest()
-        {
-            Assert.Fail();
+            Assert.AreEqual(35.225, Math.Round(length,3));
+            var lines = PathFinding.Lines((BaseGraph)result["path"]);
+            Assert.AreEqual(5, lines.Count());
         }
     }
 }

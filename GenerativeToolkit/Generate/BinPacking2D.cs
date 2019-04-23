@@ -29,7 +29,9 @@ namespace Autodesk.GenerativeToolkit.Generate
         #region Private Variables
 
         private static List<FreeRectangle> freeRectangles;
-        private static List<Rectangle> placedRectangles;
+        private static List<Rectangle> packedRectangles;
+        private static List<Rectangle> remainRectangles;
+        private static List<int> packedIndices;
 
         #endregion
 
@@ -41,10 +43,13 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="bin"> Rectangle to pack into</param>
         /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
         /// <returns>List of packed rectangles</returns>
-        public static List<Rectangle> Pack(List<Rectangle> rects, Rectangle bin, string placementMethod = "BSSF")
+        [MultiReturn(new[] { "packedRectangles", "remainRectangles", "packedIndices" })]
+        public static Dictionary<string, object> Pack(List<Rectangle> rects, Rectangle bin, string placementMethod = "BSSF")
         {
             freeRectangles = new List<FreeRectangle>();
-            placedRectangles = new List<Rectangle>();
+            packedRectangles = new List<Rectangle>();
+            remainRectangles = new List<Rectangle>();
+            packedIndices = new List<int>();
 
             // Initialize freeRectangles
             freeRectangles.Add(new FreeRectangle
@@ -55,11 +60,21 @@ namespace Autodesk.GenerativeToolkit.Generate
                 yPos = bin.StartPoint.Y
             });
 
+            int idx = 0;
             foreach (var rect in rects)
             {
-                PlaceItem(rect, placementMethod);
+                PlaceItem(rect, placementMethod,idx);
+                idx++;
             }
-            return placedRectangles;
+
+            Dictionary<string, object> newOutput;
+            newOutput = new Dictionary<string, object>
+            {
+                {"packedRectangles",packedRectangles},
+                {"remainRectangles",remainRectangles},
+                {"packedIndices", packedIndices}
+            };
+            return newOutput;
         }
 
         #region Placement Methods
@@ -89,7 +104,7 @@ namespace Autodesk.GenerativeToolkit.Generate
 
         #region Find best freerectangle and place next rectangle
 
-        private static void PlaceItem(Rectangle item, string placementMethod)
+        private static void PlaceItem(Rectangle item, string placementMethod, int idx)
         {
             FreeRectangle f = BestFreeRect(item, placementMethod);
 
@@ -102,8 +117,9 @@ namespace Autodesk.GenerativeToolkit.Generate
                 CoordinateSystem newCS = CoordinateSystem.ByOrigin(f.xPos, f.yPos);
                 CoordinateSystem originCS = CoordinateSystem.ByOrigin(item.StartPoint.X - item.Width, item.StartPoint.Y);
                 Rectangle placedRect = (Rectangle)item.Transform(originCS, newCS);
-                placedRectangles.Add(placedRect);
+                packedRectangles.Add(placedRect);
                 SplitFreeRectangle(f, placedRect);
+                packedIndices.Add(idx);
                 freeRectangles.Remove(f);
 
                 List<double> itemBounds = RectBounds(placedRect);
@@ -112,6 +128,10 @@ namespace Autodesk.GenerativeToolkit.Generate
                 // Dispose Dynamo geometry
                 newCS.Dispose();
                 originCS.Dispose();
+            }
+            else
+            {
+                remainRectangles.Add(item);
             }
         }
 

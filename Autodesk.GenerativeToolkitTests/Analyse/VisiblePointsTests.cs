@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Autodesk.GenerativeToolkit.Analyse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +35,7 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
             var visiblePointsScore = (double)result["score"];
 
-            //Assert.AreEqual(0.57, Math.Round(visiblePointsScore,2));
+            Assert.AreEqual(0.57, Math.Round(visiblePointsScore,2));
         }
     }
 }
