@@ -30,7 +30,7 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
             List<Polygon> boundaryPoly = new List<Polygon> { Polygon.ByPoints(stPoints) };
 
-            double viewScore = ViewsToOutside.ByLineSegments(lines,origin,boundaryPoly,new List<Polygon> { });
+            object viewScore = ViewsToOutside.ByLineSegments(lines,origin,boundaryPoly,new List<Polygon> { })["score"];
 
             Assert.AreEqual(1.0,viewScore);
         }
