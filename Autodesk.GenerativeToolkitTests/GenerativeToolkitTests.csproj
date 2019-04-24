@@ -41,6 +41,7 @@
   <ItemGroup>
     <Reference Include="Analysis, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.0.4565\lib\net47\Analysis.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="DesignScriptBuiltin, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DesignScriptBuiltin.dll</HintPath>
@@ -48,6 +49,7 @@
     </Reference>
     <Reference Include="DSCoreNodes, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.0.4565\lib\net47\DSCoreNodes.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="DSIronPython, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DSIronPython.dll</HintPath>
@@ -95,6 +97,7 @@
     </Reference>
     <Reference Include="GeometryColor, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.0.4565\lib\net47\GeometryColor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
