@@ -23,7 +23,11 @@ namespace GenerativeToolkit
         {
             BuildingBase building;
 
-            if (Enum.TryParse(shape, out ShapeType shapeType))
+            if (shape == "A")
+            {
+                building = new BuildingA();
+            }
+            else if (Enum.TryParse(shape, out ShapeType shapeType))
             {
                 switch (shapeType)
                 {
@@ -45,10 +49,6 @@ namespace GenerativeToolkit
                     default:
                         throw new NotImplementedException();
                 }
-            }
-            else if (shape == "A")
-            {
-                building = new BuildingA();
             }
             else
             {
