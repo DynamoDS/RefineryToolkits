@@ -29,10 +29,10 @@ namespace GenerativeToolkit
                 return default;
             }
 
-            var boundary = PolyCurve.ByPoints(new[]
+            var points = new[]
             {
                 Point.ByCoordinates(DepthX, 0),
-                Point.ByCoordinates((Width* 0.999) - DepthX - (Depth / Math.Tan(angle)), Depth),
+                Point.ByCoordinates((Width * 0.999) - DepthX - (Depth / Math.Tan(angle)), Depth),
                 Point.ByCoordinates(DepthX + (Depth / Math.Tan(angle)), Depth),
                 Point.ByCoordinates(Width / 2, Length - (DepthX* Math.Tan(angle) / 2)),
                 Point.ByCoordinates(Width - DepthX, 0),
@@ -40,7 +40,11 @@ namespace GenerativeToolkit
                 Point.ByCoordinates((Width + DepthX) / 2, Length),
                 Point.ByCoordinates((Width - DepthX) / 2, Length),
                 Point.ByCoordinates(Depth / Math.Tan(angle), Depth)
-            }, connectLastToFirst: true);
+            };
+
+            var boundary = PolyCurve.ByPoints(points, connectLastToFirst: true);
+
+            points.ForEach(p => p.Dispose());
 
             return (boundary, default);
         }

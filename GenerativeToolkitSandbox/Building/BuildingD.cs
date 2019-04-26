@@ -35,31 +35,47 @@ namespace GenerativeToolkit
                 Length - (UsesDepth ? Depth : 0),
                 Width / 2);
 
-            Plane arcCenter = Plane.ByOriginNormal(
-                Point.ByCoordinates(Width / 2, arcHeight),
-                Vector.ZAxis());
+            Point[] points;
 
             if (IsCurved)
             {
+                Plane arcCenter = null;
+
+                using (var point = Point.ByCoordinates(Width / 2, arcHeight))
+                using (var zAxis = Vector.ZAxis())
+                {
+                    arcCenter = Plane.ByOriginNormal(point, zAxis);
+                }
+
                 boundaryCurves.Add(EllipseArc.ByPlaneRadiiAngles(arcCenter, Width / 2, arcHeight, 180, 180));
 
                 if (arcHeight < Length)
                 {
+                    points = new[]
+                    {
+                        Point.ByCoordinates(Width, arcHeight),
+                        Point.ByCoordinates(Width, Length),
+                        Point.ByCoordinates(0, Length),
+                        Point.ByCoordinates(0, arcHeight)
+                    };
+
                     // Outside of D has a square back.
-                    boundaryCurves.Add(PolyCurve.ByPoints(new[]
-                        {
-                            Point.ByCoordinates(Width, arcHeight),
-                            Point.ByCoordinates(Width, Length),
-                            Point.ByCoordinates(0, Length),
-                            Point.ByCoordinates(0, arcHeight)
-                        }));
+                    boundaryCurves.Add(PolyCurve.ByPoints(points));
+                    
+                    points.ForEach(p => p.Dispose());
                 }
                 else
                 {
-                    // Outside of D is half an ellipse (or circle).
-                    boundaryCurves.Add(Line.ByStartPointEndPoint(
+                    points = new[]
+                    {
                         Point.ByCoordinates(Width, Length),
-                        Point.ByCoordinates(0, Length)));
+                        Point.ByCoordinates(0, Length)
+                    };
+
+                    // Outside of D is half an ellipse (or circle).
+                    boundaryCurves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
+
+                    points.ForEach(p => p.Dispose());
                 }
 
                 if (UsesDepth)
@@ -71,25 +87,37 @@ namespace GenerativeToolkit
 
                     if (arcHeight < Length - Depth)
                     {
-                        curves.Add(PolyCurve.ByPoints(new[]
+                        points = new[]
                         {
                             Point.ByCoordinates(Depth, arcHeight),
                             Point.ByCoordinates(Depth, Length - Depth),
                             Point.ByCoordinates(Width - Depth, Length - Depth),
                             Point.ByCoordinates(Width - Depth, arcHeight)
-                        }));
+                        };
+
+                        curves.Add(PolyCurve.ByPoints(points));
+
+                        points.ForEach(p => p.Dispose());
                     }
                     else
                     {
-                        curves.Add(Line.ByStartPointEndPoint(
+                        points = new[]
+                        {
                             Point.ByCoordinates(Depth, arcHeight),
-                            Point.ByCoordinates(Width - Depth, arcHeight)));
+                            Point.ByCoordinates(Width - Depth, arcHeight)
+                        };
+
+                        curves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
+
+                        points.ForEach(p => p.Dispose());
                     }
 
                     holes.Add(PolyCurve.ByJoinedCurves(curves));
 
                     curves.ForEach(x => x.Dispose());
                 }
+
+                arcCenter.Dispose();
             }
             else
             {
@@ -98,16 +126,19 @@ namespace GenerativeToolkit
                 double baseWidth = Width * Math.Tan(Math.PI / 8);
                 double sideWidth = baseWidth * arcHeight / (2 * Width);
 
-                boundaryCurves.Add(PolyCurve.ByPoints(new[]
-                    {
-                        Point.ByCoordinates(Width, Length),
-                        Point.ByCoordinates(0, Length),
-                        Point.ByCoordinates(0, arcHeight - sideWidth),
-                        Point.ByCoordinates((Width - baseWidth) / 2, 0),
-                        Point.ByCoordinates((Width + baseWidth) / 2, 0),
-                        Point.ByCoordinates(Width, arcHeight - sideWidth)
-                    }, 
-                    connectLastToFirst: true));
+                points = new[]
+                {
+                    Point.ByCoordinates(Width, Length),
+                    Point.ByCoordinates(0, Length),
+                    Point.ByCoordinates(0, arcHeight - sideWidth),
+                    Point.ByCoordinates((Width - baseWidth) / 2, 0),
+                    Point.ByCoordinates((Width + baseWidth) / 2, 0),
+                    Point.ByCoordinates(Width, arcHeight - sideWidth)
+                };
+
+                boundaryCurves.Add(PolyCurve.ByPoints(points, connectLastToFirst: true));
+
+                points.ForEach(p => p.Dispose());
                 
                 if (UsesDepth)
                 {
@@ -115,17 +146,20 @@ namespace GenerativeToolkit
                     double offsetBaseWidth = baseWidth - (2 * Depth / Math.Tan((Math.PI - angleA) / 2));
                     double offsetSideWidth = sideWidth - (Depth / Math.Tan((angleA / 2) + (Math.PI / 4)));
 
-                    holes.Add(PolyCurve.ByPoints(new []
-                        {
-                            Point.ByCoordinates(Width - Depth, Length - Depth),
-                            Point.ByCoordinates(Width - Depth, arcHeight - offsetSideWidth),
-                            Point.ByCoordinates((Width + offsetBaseWidth) / 2, Depth),
-                            Point.ByCoordinates((Width - offsetBaseWidth) / 2, Depth),
-                            Point.ByCoordinates(Depth, arcHeight - offsetSideWidth),
-                            Point.ByCoordinates(Depth, Length - Depth)
+                    points = new[]
+                    {
+                        Point.ByCoordinates(Width - Depth, Length - Depth),
+                        Point.ByCoordinates(Width - Depth, arcHeight - offsetSideWidth),
+                        Point.ByCoordinates((Width + offsetBaseWidth) / 2, Depth),
+                        Point.ByCoordinates((Width - offsetBaseWidth) / 2, Depth),
+                        Point.ByCoordinates(Depth, arcHeight - offsetSideWidth),
+                        Point.ByCoordinates(Depth, Length - Depth)
 
-                        },
-                        connectLastToFirst: true));
+                    };
+
+                    holes.Add(PolyCurve.ByPoints(points, connectLastToFirst: true));
+
+                    points.ForEach(p => p.Dispose());
                 }
 
             }
@@ -143,13 +177,15 @@ namespace GenerativeToolkit
 
                 double coreHeight = Depth * (1 - (2 * hallwayToDepth));
 
-                return new List<Curve>
+                using (var point = Point.ByCoordinates(Width / 2, Length - (Depth / 2)))
+                using (var zAxis = Vector.ZAxis())
+                using (var plane = Plane.ByOriginNormal(point, zAxis))
                 {
-                    Rectangle.ByWidthLength(
-                        Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length - (Depth / 2)), Vector.ZAxis()),
-                        CoreArea / coreHeight,
-                        coreHeight)
-                };
+                    return new List<Curve>
+                    {
+                        Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
+                    };
+                }
             }
             else
             {

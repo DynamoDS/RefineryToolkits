@@ -7,24 +7,19 @@ namespace GenerativeToolkit
 {
     internal class BuildingO : BuildingBase
     {
-        private Plane centerPlane;
-
         public BuildingO()
         {
             Type = ShapeType.O;
-        }
-
-        protected override void Setup()
-        {
-            centerPlane = Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis());
         }
 
         public override void Dispose()
         {
             base.Dispose();
 
-            centerPlane.Dispose();
+            BaseCenter.Dispose();
         }
+
+        protected override void Setup() { }
 
         protected override (Curve boundary, List<Curve> holes) CreateBaseCurves()
         {
@@ -49,11 +44,11 @@ namespace GenerativeToolkit
             {
                 // Faceted O (box with courtyard)
                 
-                boundary = Rectangle.ByWidthLength(centerPlane, Width, Length);
+                boundary = Rectangle.ByWidthLength(BaseCenter, Width, Length);
 
                 if (UsesDepth)
                 {
-                    holes.Add(Rectangle.ByWidthLength(centerPlane, Width - (2 * Depth), Length - (2 * Depth)));
+                    holes.Add(Rectangle.ByWidthLength(BaseCenter, Width - (2 * Depth), Length - (2 * Depth)));
                 }
             }
 
@@ -68,13 +63,15 @@ namespace GenerativeToolkit
 
                 double coreHeight = Depth * (1 - (2 * hallwayToDepth));
 
-                return new List<Curve>
+                using (var point = Point.ByCoordinates(Width / 2, Depth / 2))
+                using (var zAxis = Vector.ZAxis())
+                using (var plane = Plane.ByOriginNormal(point, zAxis))
                 {
-                    Rectangle.ByWidthLength(
-                        Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Depth / 2), Vector.ZAxis()),
-                        CoreArea / coreHeight,
-                        coreHeight)
-                };
+                    return new List<Curve>
+                    {
+                        Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
+                    };
+                }
             }
             else
             {

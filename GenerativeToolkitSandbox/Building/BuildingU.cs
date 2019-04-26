@@ -21,6 +21,8 @@ namespace GenerativeToolkit
         {
             Curve boundary = null;
 
+            Point[] points;
+
             if (IsCurved)
             {
                 var holes = new List<Curve>();
@@ -39,21 +41,30 @@ namespace GenerativeToolkit
                         if (arcHeight < Length)
                         {
                             // Top of U has straight parts.
+                            points = new[]
+                            {
+                                Point.ByCoordinates(Width, arcHeight),
+                                Point.ByCoordinates(Width, Length),
+                                Point.ByCoordinates(Width - Depth, Length),
+                                Point.ByCoordinates(Width - Depth, arcHeight)
+                            };
 
-                            boundaryCurves.Add(PolyCurve.ByPoints(new[]
-                                {
-                                    Point.ByCoordinates(Width, arcHeight),
-                                    Point.ByCoordinates(Width, Length),
-                                    Point.ByCoordinates(Width - Depth, Length),
-                                    Point.ByCoordinates(Width - Depth, arcHeight)
-                                }));
+                            boundaryCurves.Add(PolyCurve.ByPoints(points));
+
+                            points.ForEach(p => p.Dispose());
                         }
                         else
                         {
-                            // Top of U has no straight parts.
-                            boundaryCurves.Add(Line.ByStartPointEndPoint(
+                            points = new[]
+                            {
                                 Point.ByCoordinates(Width, Length),
-                                Point.ByCoordinates(Width - Depth, Length)));
+                                Point.ByCoordinates(Width - Depth, Length)
+                            };
+
+                            // Top of U has no straight parts.
+                            boundaryCurves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
+
+                            points.ForEach(p => p.Dispose());
                         }
 
                         boundaryCurves.Add(EllipseArc.ByPlaneRadiiAngles(arcCenter, (Width / 2) - Depth, arcHeight - Depth, 0, -180));
@@ -61,20 +72,32 @@ namespace GenerativeToolkit
                         if (arcHeight < Length)
                         {
                             // Top of U has straight parts.
-                            boundaryCurves.Add(PolyCurve.ByPoints(new[]
-                                {
-                            Point.ByCoordinates(Depth, arcHeight),
-                            Point.ByCoordinates(Depth, Length),
-                            Point.ByCoordinates(0, Length),
-                            Point.ByCoordinates(0, arcHeight)
-                        }));
+
+                            points = new[]
+                            {
+                                Point.ByCoordinates(Depth, arcHeight),
+                                Point.ByCoordinates(Depth, Length),
+                                Point.ByCoordinates(0, Length),
+                                Point.ByCoordinates(0, arcHeight)
+                            };
+                            
+                            boundaryCurves.Add(PolyCurve.ByPoints(points));
+
+                            points.ForEach(p => p.Dispose());
                         }
                         else
                         {
                             // Top of U has no straight parts.
-                            boundaryCurves.Add(Line.ByStartPointEndPoint(
+
+                            points = new[]
+                            {
                                 Point.ByCoordinates(Depth, Length),
-                                Point.ByCoordinates(0, Length)));
+                                Point.ByCoordinates(0, Length)
+                            };
+
+                            boundaryCurves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
+
+                            points.ForEach(p => p.Dispose());
                         }
                     }
                     else
@@ -83,19 +106,29 @@ namespace GenerativeToolkit
 
                         if (arcHeight < Length)
                         {
-                            boundaryCurves.Add(PolyCurve.ByPoints(new[]
-                            {
+                            points = new[]
+                                {
                                 Point.ByCoordinates(Width, arcHeight),
                                 Point.ByCoordinates(Width, Length),
                                 Point.ByCoordinates(0, Length),
                                 Point.ByCoordinates(0, arcHeight)
-                            }));
+                            };
+
+                            boundaryCurves.Add(PolyCurve.ByPoints(points));
+
+                            points.ForEach(p => p.Dispose());
                         }
                         else
                         {
-                            boundaryCurves.Add(Line.ByStartPointEndPoint(
+                            points = new[]
+                            {
                                 Point.ByCoordinates(Width, Length),
-                                Point.ByCoordinates(0, Length)));
+                                Point.ByCoordinates(0, Length)
+                            };
+
+                            boundaryCurves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
+
+                            points.ForEach(p => p.Dispose());
                         }
                     }
                 }
@@ -108,7 +141,7 @@ namespace GenerativeToolkit
 
                 if (UsesDepth)
                 {
-                    boundary = PolyCurve.ByPoints(new[]
+                    points = new[]
                     {
                         Point.ByCoordinates(0, 0),
                         Point.ByCoordinates(Width, 0),
@@ -118,18 +151,27 @@ namespace GenerativeToolkit
                         Point.ByCoordinates(Depth, Depth),
                         Point.ByCoordinates(Depth, Length),
                         Point.ByCoordinates(0, Length)
-                    }, connectLastToFirst: true);
+                    };
+
+                    boundary = PolyCurve.ByPoints(points, connectLastToFirst: true);
+
+                    points.ForEach(p => p.Dispose());
                 }
                 else
                 {
                     // Solid straight U (rectangle)
-                    boundary = PolyCurve.ByPoints(new[]
+
+                    points = new[]
                     {
                         Point.ByCoordinates(0, 0),
                         Point.ByCoordinates(Width, 0),
                         Point.ByCoordinates(Width, Length),
                         Point.ByCoordinates(0, Length)
-                    }, connectLastToFirst: true);
+                    };
+
+                    boundary = PolyCurve.ByPoints(points, connectLastToFirst: true);
+
+                    points.ForEach(p => p.Dispose());
                 }
             }
 
@@ -142,13 +184,15 @@ namespace GenerativeToolkit
             {
                 var coreHeight = Depth * (1 - (2 * hallwayToDepth));
 
-                return new List<Curve>
+                using (var point = Point.ByCoordinates(Width / 2, Depth / 2))
+                using (var zAxis = Vector.ZAxis())
+                using (var plane = Plane.ByOriginNormal(point, zAxis))
                 {
-                    Rectangle.ByWidthLength(
-                        Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Depth / 2), Vector.ZAxis()),
-                        CoreArea / coreHeight,
-                        coreHeight)
-                };
+                    return new List<Curve>
+                    {
+                        Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
+                    };
+                }
             }
             else
             {

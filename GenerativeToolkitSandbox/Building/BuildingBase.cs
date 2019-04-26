@@ -41,6 +41,8 @@ namespace GenerativeToolkit
         public double GrossFloorArea => FloorArea * FloorCount;
         public double NetFloorArea => (FloorArea - CoreArea) * FloorCount;
 
+        protected Plane BaseCenter;
+
         public BuildingBase()
         {
         }
@@ -62,6 +64,12 @@ namespace GenerativeToolkit
             this.coreSizeFactorFloors = coreSizeFactorFloors;
             this.coreSizeFactorArea = coreSizeFactorArea;
 
+            using (var point = Point.ByCoordinates(Width / 2, Length / 2))
+            using (var zAxis = Vector.ZAxis())
+            {
+                BaseCenter = Plane.ByOriginNormal(point, zAxis);
+            }
+
             Setup();
 
             Surface baseSurface = MakeBaseSurface();
@@ -69,9 +77,7 @@ namespace GenerativeToolkit
             if (baseSurface == null) { throw new ArgumentException("Could not create building shape."); }
 
             // Surface is constructed with lower left corner at (0,0). Move and rotate to given base plane.
-            baseSurface = (Surface)baseSurface.Transform(
-                CoordinateSystem.ByOrigin(width / 2, length / 2), 
-                BasePlane.ToCoordinateSystem());
+            baseSurface = TransformFromOrigin(baseSurface);
 
             FloorArea = baseSurface.Area;
 
@@ -96,11 +102,17 @@ namespace GenerativeToolkit
 
             for (int i = 0; i < FloorCount; i++)
             {
-                Floors.Add(new[] { (Surface)baseSurface.Translate(Vector.ByCoordinates(0, 0, i * FloorHeight)) });
-                FloorElevations.Add(BasePlane.Origin.Z + (i * FloorHeight));
+                using (var offsetVector = Vector.ByCoordinates(0, 0, i * FloorHeight))
+                {
+                    Floors.Add(new[] { (Surface)baseSurface.Translate(offsetVector) });
+                    FloorElevations.Add(BasePlane.Origin.Z + (i * FloorHeight));
+                }
             }
 
-            TopPlane = (Plane)BasePlane.Translate(Vector.ByCoordinates(0, 0, FloorCount * FloorHeight));
+            using (var offsetVector = Vector.ByCoordinates(0, 0, FloorCount * FloorHeight))
+            {
+                TopPlane = (Plane)BasePlane.Translate(offsetVector);
+            }
 
             baseSurface.Dispose();
 
@@ -108,19 +120,23 @@ namespace GenerativeToolkit
             {
                 var coreBases = MakeCoreSurface();
 
-                if (coreBases == null || coreBases.Count == 0) { return; }
-
-                foreach (var coreBase in coreBases){
-                    var core = coreBase.Thicken(FloorCount * FloorHeight, both_sides: false);
-
-                    Cores.Add((Solid)core.Transform(
-                        CoordinateSystem.ByOrigin(width / 2, length / 2), 
-                        BasePlane.ToCoordinateSystem()));
-
-                    coreBase.Dispose();
-                    core.Dispose();
+                if (coreBases == null || coreBases.Count == 0)
+                {
+                    NetFloors = Floors;
+                    return;
                 }
 
+                // Transform all cores from origin.
+                foreach (var coreBase in coreBases){
+                    using (var core = coreBase.Thicken(FloorCount * FloorHeight, both_sides: false))
+                    {
+                        Cores.Add(TransformFromOrigin(core));
+                    }
+
+                    coreBase.Dispose();
+                }
+
+                // Cut cores out of floors.
                 NetFloors = new List<Surface[]>();
 
                 foreach (var floor in Floors)
@@ -138,6 +154,20 @@ namespace GenerativeToolkit
             }
         }
 
+        /// <summary>
+        /// Geometry is constructed with lower left corner at (0,0). Move and rotate into place.
+        /// </summary>
+        private TGeometryType TransformFromOrigin<TGeometryType>(TGeometryType geometry)
+            where TGeometryType : Geometry
+        {
+            using (var baseSystem = CoordinateSystem.ByOrigin(Width / 2, Length / 2))
+            using (var targetSystem = BasePlane.ToCoordinateSystem())
+            {
+                // Surface is constructed with lower left corner at (0,0). Move and rotate to given base plane.
+                return (TGeometryType)geometry.Transform(baseSystem, targetSystem);
+            }
+        }
+
         protected abstract void Setup();
         protected abstract (Curve boundary, List<Curve> holes) CreateBaseCurves();
 
@@ -150,7 +180,7 @@ namespace GenerativeToolkit
             return new List<Curve>
             {
                 Rectangle.ByWidthLength(
-                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
+                    BaseCenter,
                     Width * Math.Sqrt(CoreArea / FloorArea),
                     Length * Math.Sqrt(CoreArea / FloorArea))
             };
@@ -228,11 +258,25 @@ namespace GenerativeToolkit
             return baseSurfaces;
         }
 
+        /// <summary>
+        /// Dispose of members which aren't exported by the building creation nodes.
+        /// </summary>
+        public virtual void DisposeNonExports()
+        {
+            BaseCenter.Dispose();
+        }
+
+        public void DisposeCores()
+        {
+            Cores.ForEach(x => x.Dispose());
+        }
+
         public virtual void Dispose()
         {
+            DisposeNonExports();
+            DisposeCores();
+
             Mass.Dispose();
-            Cores.ForEach(x => x.Dispose());
-            BasePlane.Dispose();
             TopPlane.Dispose();
             Floors.ForEach(x => x.ForEach(y => y.Dispose()));
             NetFloors.ForEach(x => x.ForEach(y => y.Dispose()));

@@ -123,6 +123,8 @@ namespace GenerativeToolkit
                 buildingArea, floorCount: null, 
                 width, length, depth, curvedBool, createCoreBool, hallwayToDepth, coreSizeFactorFloors, coreSizeFactorArea);
 
+            building.DisposeNonExports();
+
             return new Dictionary<string, object>
             {
                 {"buildingSolid", building.Mass},
@@ -192,6 +194,8 @@ namespace GenerativeToolkit
                 targetBuildingArea: null, floorCount: floorCount, 
                 width, length, depth, curvedBool, createCoreBool, hallwayToDepth, coreSizeFactorFloors, coreSizeFactorArea);
 
+            building.DisposeNonExports();
+
             return new Dictionary<string, object>
             {
                 {"buildingSolid", building.Mass},
@@ -230,14 +234,18 @@ namespace GenerativeToolkit
 
             foreach (var surface in solid.Faces.Select(f => f.SurfaceGeometry()))
             {
-                var angle = surface.NormalAtParameter(0.5, 0.5).AngleWithVector(Vector.ZAxis());
-                if (angle < angleThreshold || angle > 180 - angleThreshold)
+                using (var zAxis = Vector.ZAxis())
+                using (var surfaceNormal = surface.NormalAtParameter(0.5, 0.5))
                 {
-                    horizontal.Add(surface);
-                }
-                else
-                {
-                    vertical.Add(surface);
+                    var angle = surfaceNormal.AngleWithVector(zAxis);
+                    if (angle < angleThreshold || angle > 180 - angleThreshold)
+                    {
+                        horizontal.Add(surface);
+                    }
+                    else
+                    {
+                        vertical.Add(surface);
+                    }
                 }
             }
 
@@ -301,7 +309,13 @@ namespace GenerativeToolkit
 
             if (loops.Any(loop => !loop.IsClosed)) { throw new ArgumentException("Created non-closed polycurve."); }
 
-            return loops.OrderByDescending(c => Surface.ByPatch(c).Area).ToArray();
+            return loops.OrderByDescending(c =>
+            {
+                using (var s = Surface.ByPatch(c))
+                {
+                    return s.Area;
+                }
+            }).ToArray();
         }
 
         /// <summary>
@@ -330,6 +344,9 @@ namespace GenerativeToolkit
             if (floorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(floorHeight)); }
 
             var building = new BuildingFromCurves(edgeLoopCrvList[0], edgeLoopCrvList.Skip(1).ToList(), floorHeight, buildingArea, floorCount: null);
+
+            building.DisposeNonExports();
+            building.DisposeCores();
 
             return new Dictionary<string, object>
             {
@@ -369,6 +386,9 @@ namespace GenerativeToolkit
             if (floorHeight <= 0) { throw new ArgumentOutOfRangeException(nameof(floorHeight)); }
 
             var building = new BuildingFromCurves(edgeLoopCrvList[0], edgeLoopCrvList.Skip(1).ToList(), floorHeight, targetBuildingArea: null, floorCount);
+
+            building.DisposeNonExports();
+            building.DisposeCores();
 
             return new Dictionary<string, object>
             {

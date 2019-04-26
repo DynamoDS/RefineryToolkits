@@ -14,22 +14,21 @@ namespace GenerativeToolkit
         {
             BoundingBox bounds = boundary.BoundingBox;
 
-            Vector diagonal = bounds.MaxPoint.AsVector().Subtract(bounds.MinPoint.AsVector());
+            using (var v1 = bounds.MaxPoint.AsVector())
+            using (var v2 = bounds.MinPoint.AsVector())
+            using (var diagonal = v1.Subtract(v2))
+            using (var scaledDiagonal = diagonal.Scale(0.5))
+            using (Point center = bounds.MinPoint.Add(scaledDiagonal))
+            using (var zAxis = Vector.ZAxis())
+            using (Plane basePlane = Plane.ByOriginNormal(center, zAxis))
+            using (var v3 = bounds.MinPoint.AsVector())
+            using (Vector locationReset = v3.Scale(-1))
+            {
+                this.boundary = (Curve)boundary.Translate(locationReset);
+                this.holes = holes.Select(h => h.Translate(locationReset)).Cast<Curve>().ToList();
 
-            Point center = bounds.MinPoint.Add(diagonal.Scale(0.5));
-
-            Plane basePlane = Plane.ByOriginNormal(center, Vector.ZAxis());
-
-            Vector locationReset = bounds.MinPoint.AsVector().Scale(-1);
-
-            this.boundary = (Curve)boundary.Translate(locationReset);
-            this.holes = holes.Select(h => h.Translate(locationReset)).Cast<Curve>().ToList();
-
-            CreateBuilding(basePlane, floorHeight, targetBuildingArea, floorCount, diagonal.X, diagonal.Y);
-
-            diagonal.Dispose();
-            center.Dispose();
-            locationReset.Dispose();
+                CreateBuilding(basePlane, floorHeight, targetBuildingArea, floorCount, diagonal.X, diagonal.Y);
+            }
         }
 
         protected override (Curve boundary, List<Curve> holes) CreateBaseCurves()
@@ -41,12 +40,17 @@ namespace GenerativeToolkit
         {
         }
 
-        public override void Dispose()
+        public override void DisposeNonExports()
         {
-            base.Dispose();
+            base.DisposeNonExports();
 
             boundary.Dispose();
             holes.ForEach(x => x.Dispose());
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
         }
     }
 }

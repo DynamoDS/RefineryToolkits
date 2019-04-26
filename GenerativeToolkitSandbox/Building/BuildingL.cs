@@ -23,7 +23,7 @@ namespace GenerativeToolkit
 
             if (UsesDepth)
             {
-                boundary = PolyCurve.ByPoints(new[]
+                var points = new[]
                 {
                     Point.ByCoordinates(0, 0),
                     Point.ByCoordinates(Width, 0),
@@ -31,16 +31,17 @@ namespace GenerativeToolkit
                     Point.ByCoordinates(Depth, Depth),
                     Point.ByCoordinates(Depth, Length),
                     Point.ByCoordinates(0, Length)
-                }, connectLastToFirst: true);
+                };
+
+                boundary = PolyCurve.ByPoints(points, connectLastToFirst: true);
+
+                points.ForEach(p => p.Dispose());
             }
             else
             {
                 // L is too chunky - make a box.
 
-                boundary = Rectangle.ByWidthLength(
-                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
-                    Width,
-                    Length);
+                boundary = Rectangle.ByWidthLength(BaseCenter, Width, Length);
             }
 
             return (boundary, default);
@@ -54,13 +55,15 @@ namespace GenerativeToolkit
 
                 double coreHeight = Depth * (1 - (2 * hallwayToDepth));
 
-                return new List<Curve>
+                using (var point = Point.ByCoordinates(Width / 2, Depth / 2))
+                using (var zAxis = Vector.ZAxis())
+                using (var plane = Plane.ByOriginNormal(point, zAxis))
                 {
-                    Rectangle.ByWidthLength(
-                        Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Depth / 2), Vector.ZAxis()),
-                        CoreArea / coreHeight,
-                        coreHeight)
-                };
+                    return new List<Curve>
+                    {
+                        Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
+                    };
+                }
             }
             else
             {

@@ -59,23 +59,26 @@ namespace GenerativeToolkit
                 if (srfList[i] == null) { throw new ArgumentNullException(nameof(srfList)); }
 
                 FloorElements.Add(new List<DynamoRevitElements.Floor>());
-                
+
                 string levelName = $"{levelPrefixStr} {i + 1}";
                 var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
+
+                double elevation;
+
+                using (var floorBounds = BoundingBox.ByGeometry(srfList[i]))
+                {
+                    elevation = UnitUtils.ConvertToInternalUnits(floorBounds.MaxPoint.Z, unitType);
+                }
 
                 if (revitLevel != null)
                 {
                     // Adjust existing level to correct height.
-                    revitLevel.Elevation = UnitUtils.ConvertToInternalUnits(
-                        BoundingBox.ByGeometry(srfList[i]).MaxPoint.Z,
-                        unitType);
+                    revitLevel.Elevation = elevation;
                 }
                 else
                 {
                     // Create new level.
-                    revitLevel = RevitElements.Level.Create(Document, UnitUtils.ConvertToInternalUnits(
-                        BoundingBox.ByGeometry(srfList[i]).MaxPoint.Z,
-                        unitType));
+                    revitLevel = RevitElements.Level.Create(Document, elevation);
                     revitLevel.Name = levelName;
                 }
 

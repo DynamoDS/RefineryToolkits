@@ -46,10 +46,13 @@ namespace GenerativeToolkit
                 inset1.Dispose();
             }
 
-            // Ensure that the mass is always extruded upwards.
-            if (siteOffset.Normal.AngleWithVector(Vector.ZAxis()) > 90)
+            using (var zAxis = Vector.ZAxis())
             {
-                heightLimit = -heightLimit;
+                // Ensure that the mass is always extruded upwards.
+                if (siteOffset.Normal.AngleWithVector(zAxis) > 90)
+                {
+                    heightLimit = -heightLimit;
+                }
             }
 
             siteMass = siteOffset.ExtrudeAsSolid(heightLimit);

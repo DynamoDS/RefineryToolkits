@@ -23,7 +23,7 @@ namespace GenerativeToolkit
             
             if (UsesDepth)
             {
-                boundary = PolyCurve.ByPoints(new[]
+                var points = new[]
                 {
                     Point.ByCoordinates(0, 0),
                     Point.ByCoordinates(Depth, 0),
@@ -37,16 +37,16 @@ namespace GenerativeToolkit
                     Point.ByCoordinates(Depth, (Length + Depth) / 2),
                     Point.ByCoordinates(Depth, Length),
                     Point.ByCoordinates(0, Length)
-                }, connectLastToFirst: true);
+                };
+
+                boundary = PolyCurve.ByPoints(points, connectLastToFirst: true);
+
+                points.ForEach(p => p.Dispose());
             }
             else
             {
                 // H is too chunky - make a box.
-
-                boundary = Rectangle.ByWidthLength(
-                    Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
-                    Width,
-                    Length);
+                boundary = Rectangle.ByWidthLength(BaseCenter, Width, Length);
             }
 
             return (boundary, default);
@@ -62,10 +62,7 @@ namespace GenerativeToolkit
 
                 return new List<Curve>
                 {
-                    Rectangle.ByWidthLength(
-                        Plane.ByOriginNormal(Point.ByCoordinates(Width / 2, Length / 2), Vector.ZAxis()),
-                        CoreArea / coreHeight,
-                        coreHeight)
+                    Rectangle.ByWidthLength(BaseCenter, CoreArea / coreHeight, coreHeight)
                 };
             }
             else
