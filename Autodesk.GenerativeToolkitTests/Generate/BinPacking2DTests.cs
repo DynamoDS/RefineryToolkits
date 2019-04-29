@@ -44,21 +44,21 @@ namespace Autodesk.GenerativeToolkit.Generate.Tests
         [Test]
         public void PlacementPropertyBLSFTest()
         {
-            string blsf = BinPacking2D.BLSF;
+            string blsf = BinPacking2D.BestLongSideFits;
             Assert.True(blsf == "BLSF");
         }
 
         [Test]
         public void PlacementPropertyBSSFTest()
         {
-            string bssf = BinPacking2D.BSSF;
+            string bssf = BinPacking2D.BestShortSideFits;
             Assert.True(bssf == "BSSF");
         }
 
         [Test]
         public void PlacementPropertyBAFTest()
         {
-            string baf = BinPacking2D.BAF;
+            string baf = BinPacking2D.BestAreaFits;
             Assert.True(baf == "BAF");
         }
     }
