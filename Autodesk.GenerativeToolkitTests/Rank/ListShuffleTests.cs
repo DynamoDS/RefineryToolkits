@@ -11,6 +11,8 @@ namespace Autodesk.GenerativeToolkit.Rank.Tests
     [TestFixture()]
     public class ListShuffleTests
     {
+        // Checks if the input lists values are suffled in a different way
+        // when seed changes
         [Test()]
         public void SeededShuffleTest()
         {

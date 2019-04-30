@@ -16,7 +16,8 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
         // Geometric median of an Obtuse Triangle is the vertex at the angle > 120 degrees
         [Test]
         public void GeometricMedianOnObtuseTriangleTest()
-        {           
+        { 
+            // Create sample points that makes a Obtuse triangle
             List<Point> samplePoints = new List<Point>
             {
                 Point.ByCoordinates(0,0),
@@ -25,11 +26,14 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
                 Point.ByCoordinates(5,0)
             };
 
+            // Get the geometric median point
             Point vertexOnObtuseAngle = AdjacencyPreference.GeometricMedian(samplePoints);
 
+            // Check if both X and Y of the geometric median is the same as X and Y of the vertex at angle > 120 in the obtuse triangle.
             Assert.AreEqual(samplePoints[2].X, vertexOnObtuseAngle.X);
             Assert.AreEqual(samplePoints[2].Y, vertexOnObtuseAngle.Y);
 
+            // Dispose unused geometry
             samplePoints.ForEach(p => p.Dispose());
             vertexOnObtuseAngle.Dispose();
 
@@ -40,6 +44,7 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
         [Test]
         public void FermatPointTest()
         {
+            // Create sample points that makes a Acute triangle
             List<Point> samplePoints = new List<Point>
             {
                 Point.ByCoordinates(5,5),
@@ -47,18 +52,25 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
                 Point.ByCoordinates(8,3)
             };
 
+            // Get the geometric median of the Acute triangles sample points
+            // Also known as the Fermat Point
             Point fermatPoint = AdjacencyPreference.GeometricMedian(samplePoints);
 
+            // Create vectors from the fermat point to two arbitrary points in the sample points list.
             List<Vector> vectors = new List<Vector>
             {
                 Vector.ByTwoPoints(fermatPoint, samplePoints[0]),
                 Vector.ByTwoPoints(fermatPoint, samplePoints[1]),
             };
 
+            // Getting the angle between the two vectors just created.
+            // This angle should always be 120 degrees in a Acute triangle.
             double testAngle = vectors[0].AngleWithVector(vectors[1]);
 
+            // Checking if the angle is equal to 120 degrees.
             Assert.AreEqual(120.0, Math.Round(testAngle,1));
 
+            // Dispose unused geometry
             samplePoints.ForEach(p => p.Dispose());
             fermatPoint.Dispose();
             vectors.ForEach(p => p.Dispose());
@@ -69,6 +81,7 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
         [Test]
         public void ConcaveQuadrilateralTest()
         {
+            // Create sample points that makes a Concave Quadrilateral
             List<Point> samplePoints = new List<Point>
             {
                 //Point inside triangle formed by remaining 3 points
@@ -79,11 +92,16 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
                 Point.ByCoordinates(6,9)
             };
 
+            // Get the geometric median of the Concave Quadrilateral sample points
+            // which is the point inside the triangle formed by remaining 3 points
             Point geometricMedianPoint = AdjacencyPreference.GeometricMedian(samplePoints);
 
+            // Check if both X and Y of the geometric median is the same as X and Y of the 
+            // point inside the triangle formed by the remaining points (samplePoints[0]).
             Assert.AreEqual(samplePoints[0].X, geometricMedianPoint.X);
             Assert.AreEqual(samplePoints[0].Y, geometricMedianPoint.Y);
 
+            // Dispose unused geometry.
             samplePoints.ForEach(p => p.Dispose());
             geometricMedianPoint.Dispose();
         }

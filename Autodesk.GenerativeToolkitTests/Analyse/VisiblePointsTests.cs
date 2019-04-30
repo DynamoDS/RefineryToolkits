@@ -12,6 +12,8 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
     [TestFixture]
     public class VisiblePointsTests : GeometricTestBase
     {
+        // Check if VisiblePoints returns the right score of visible points in a layout
+        // with one obstacle and a grid of 
         [Test]
         public void FromOriginTest()
         {

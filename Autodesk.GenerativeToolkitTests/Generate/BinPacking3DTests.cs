@@ -30,17 +30,21 @@ namespace Autodesk.GenerativeToolkit.Generate.Tests
                 Cuboid.ByLengths(250, 200, 300)
             };
 
+            // Check if the result is a dictionary that contains the keys
+            // "packedItems", "remainItems" and "packedIndices"
             var result = BinPacking3D.Pack(bin, items);
             Assert.IsTrue(result.Keys.Contains("packedItems"));
             Assert.IsTrue(result.Keys.Contains("remainItems"));
             Assert.IsTrue(result.Keys.Contains("packedIndices"));
 
+            // Checks if the right amount of items has been packed
             var packeditems = (List<Cuboid>)result["packedItems"];
             Assert.AreEqual(5, packeditems.Count);
 
             var remainItems = (List<Cuboid>)result["remainItems"];
             Assert.AreEqual(4, remainItems.Count);
 
+            // Checks that the right items has been packed
             var packedIndices = (List<int>)result["packedIndices"];
             Assert.AreEqual(packedIndices, new List<int> { 3, 7, 6, 8, 1 });
         }
