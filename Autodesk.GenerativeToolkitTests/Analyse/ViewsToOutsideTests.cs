@@ -13,26 +13,24 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
     [TestFixture]
     public class ViewsToOutsideTests : GeometricTestBase
     {
+        private List<Curve> lines;
+        private Point origin;
+        private List<Polygon> boundaryPoly;
+
+        [SetUp]
+        public void BeforeTest()
+        {
+            boundaryPoly = new List<Polygon> { Rectangle.ByWidthLength(20, 20) as Polygon };
+            lines = boundaryPoly[0].Explode().Cast<Curve>().ToList();
+            origin = Point.ByCoordinates(0, 0);
+        }
+
         /// <summary>
-        /// Checks if views to outside returns the right value in a layout with no obstacles
+        /// Check views to outside dictionary output is correct
         /// </summary>
         [Test]
-        public void ViewToOutside360()
-        {
-            // Create boundary polygon with no obstacles
-            Rectangle boundaryRect = Rectangle.ByWidthLength(20, 20);
-            List<Curve> lines = boundaryRect.Explode().Cast<Curve>().ToList();            
-            List<Point> stPoints = new List<Point>();
-            List<Point> endPoints = new List<Point>();
-            foreach (Curve line in lines)
-            {
-                stPoints.Add(line.StartPoint);
-                endPoints.Add(line.EndPoint);
-            }
-            List<Polygon> boundaryPoly = new List<Polygon> { Polygon.ByPoints(stPoints) };
-
-            // Create origin point 
-            Point origin = Point.ByCoordinates(0, 0);
+        public void ViewsToOutsideDicionaryOutputTest()
+        {       
 
             // Result of ViewsToOutside.ByLineSegments
             var result = ViewsToOutside.ByLineSegments(lines,origin,boundaryPoly,new List<Polygon> { });
@@ -40,12 +38,39 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             // Check if output of node is a Dictionary that contains both the
             // "score" and "segments" key
             Assert.IsTrue(result.Keys.Contains("score"));
-            Assert.IsTrue(result.Keys.Contains("segments"));
+            Assert.IsTrue(result.Keys.Contains("segments"));      
+        }
+
+        /// <summary>
+        /// Checks if the output score is correct in a layout with no obstacles blocking the views
+        /// </summary>
+        [Test]
+        public void CheckIfOutputScoreIsCorrectWithNoObstrutions()
+        {
+            // Result of ViewsToOutside.ByLineSegments
+            var result = ViewsToOutside.ByLineSegments(lines, origin, boundaryPoly, new List<Polygon> { });
 
             // Check if the score output is 1.0
             // as there are no obstacles blocking the views to outside
             var viewScore = (double)result["score"];
-            Assert.AreEqual(1.0,viewScore);
+            Assert.AreEqual(1.0, viewScore);
         }
+
+        /// <summary>
+        /// Checks that internal obstacels in the layout are detected
+        /// </summary>
+        [Test]
+        public void CheckIfViewsToOutsideDetectsObstaclesInLayout()
+        {
+            Polygon internalPoly = Rectangle.ByWidthLength(5, 5) as Polygon;
+            Point newOrigin = origin.Translate(10) as Point;
+            // Result of ViewsToOutside.ByLineSegments
+            var result = ViewsToOutside.ByLineSegments(lines, newOrigin, boundaryPoly, new List<Polygon> { internalPoly });
+
+            var viewScore = (double)result["score"];
+            Assert.AreNotEqual(1.0, viewScore);
+        }
+
+            
     }
 }

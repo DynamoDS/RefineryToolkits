@@ -84,7 +84,9 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             origin.Dispose();
         }
 
-        // Check if the openess score detects a obstacle on the bottom
+        /// <summary>
+        /// Check if the openess score detects a obstacle on the bottom
+        /// </summary>
         [Test]
         public void BottomObstacleTest()
         {

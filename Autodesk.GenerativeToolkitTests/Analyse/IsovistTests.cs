@@ -62,6 +62,10 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             Assert.False(isovist.DoesIntersect(internals.Center()));
         }
 
+        /// <summary>
+        /// Checks if the isovist node throws an exception if the origin point is inside
+        /// one of the internal polygons.
+        /// </summary>
         [Test]
         public void IsovistFromPointReturnsExceptionIfOriginPointIsInsideInternalPolygonTest()
         {
