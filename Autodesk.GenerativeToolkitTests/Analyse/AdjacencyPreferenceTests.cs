@@ -13,9 +13,11 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
     [TestFixture]
     public class AdjacencyPreferenceTests : GeometricTestBase
     {
-        // Geometric median of an Obtuse Triangle is the vertex at the angle > 120 degrees
+        /// <summary>
+        /// Geometric median of an Obtuse Triangle is the vertex at the angle > 120 degrees
+        /// </summary>
         [Test]
-        public void GeometricMedianOnObtuseTriangleTest()
+        public void GeometricMedianReturnVertexAtAngleEqualToOrAbove120OnObtuseTriangleTest()
         { 
             // Create sample points that makes a Obtuse triangle
             List<Point> samplePoints = new List<Point>
@@ -39,10 +41,13 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
 
         }
 
-        // Geometric median of an Acute Triangle is the point inside the triangle
-        // which subtends an angle of 120° to each three pairs of triangle vertices
+
+        /// <summary>
+        /// Geometric median of an Acute Triangle is the point inside the triangle
+        /// which subtends an angle of 120° to each three pairs of triangle vertices
+        /// </summary>
         [Test]
-        public void FermatPointTest()
+        public void GeometricMedianReturnsFermatPointOnAcuteTriangleTest()
         {
             // Create sample points that makes a Acute triangle
             List<Point> samplePoints = new List<Point>
@@ -76,10 +81,12 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             vectors.ForEach(p => p.Dispose());
         }
 
-        // Geometric median of an Concave Quadrilateral is the point
-        // inside the triangle formed by remaining 3 points
+        /// <summary>
+        /// Geometric median of an Concave Quadrilateral is the point
+        /// inside the triangle formed by remaining 3 points
+        /// </summary>
         [Test]
-        public void ConcaveQuadrilateralTest()
+        public void GeometricMedianReturnsThePointInsideTriangleFormedByRemainingPointsOnConcaveQuadrilateralTest()
         {
             // Create sample points that makes a Concave Quadrilateral
             List<Point> samplePoints = new List<Point>

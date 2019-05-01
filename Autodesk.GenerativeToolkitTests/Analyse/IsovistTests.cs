@@ -13,19 +13,23 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
     [TestFixture]
     public class IsovistTests : GeometricTestBase
     {
-        // Checks if the area returned by the Isovist.FromPoint is correct
-        [Test]
-        public void IsovistFromPointTestSurfaceAreaIsCorrect()
-        {
-            // Create layout with no obstructions
-            Polygon layoutPolygon = Polygon.ByPoints(new List<Point>
-            {
-                Point.ByCoordinates(0,0),
-                Point.ByCoordinates(10,0),
-                Point.ByCoordinates(10,10),
-                Point.ByCoordinates(0,10)
-            });
+        private static Polygon layoutPolygon;
 
+        /// <summary>
+        /// Setup Geometry to be used across tests
+        /// </summary>
+        [SetUp]
+        public void BeforeTest()
+        {
+            layoutPolygon = Rectangle.ByWidthLength(10, 10) as Polygon;
+        }
+
+        /// <summary>
+        /// Checks if the area returned by the Isovist.FromPoint is correct
+        /// </summary>
+        [Test]
+        public void IsovistFromPointReturnsCorrectSurfaceAreaTest()
+        {          
             // Create origin point
             Point originPoint = layoutPolygon.Center();
 
@@ -37,29 +41,17 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             Assert.AreEqual(isovist.Area, Surface.ByPatch(layoutPolygon).Area);
         }
 
-        // Checks if the Isovist.FromPoint are detecting the obstacles of the layout
+        /// <summary>
+        /// Checks if the Isovist.FromPoint are detecting if there are obstacles of the layout
+        /// </summary>
         [Test]
-        public void IsovistObstructionsWorks()
+        public void IsovistFromPointDetectsObstructionsInLayoutTest()
         {
-            // Create layout with obstructions
-            Polygon layoutPolygon = Polygon.ByPoints(new List<Point>
-            {
-                Point.ByCoordinates(0,0),
-                Point.ByCoordinates(10,0),
-                Point.ByCoordinates(10,10),
-                Point.ByCoordinates(0,10)
-            });
-
-            Polygon internals = Polygon.ByPoints(new List<Point>
-            {
-                Point.ByCoordinates(2.5,0),
-                Point.ByCoordinates(7.5,0),
-                Point.ByCoordinates(7.5,5),
-                Point.ByCoordinates(2.5,5)
-            });
+            // Create obstruction
+            Polygon internals = Rectangle.ByWidthLength(5, 5) as Polygon;
 
             // Create origin point
-            Point originPoint = layoutPolygon.Center();
+            Point originPoint = Point.ByCoordinates(3,3);
 
             // Create isovist form the origin point
             Surface isovist = Isovist.FromPoint(new List<Polygon> { layoutPolygon }, new List<Polygon> { internals }, originPoint);
@@ -68,6 +60,19 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             // and that the isovist does not intersect the midpoint of the obstacle.
             Assert.AreNotEqual(Surface.ByPatch(layoutPolygon).Area, isovist.Area);
             Assert.False(isovist.DoesIntersect(internals.Center()));
+        }
+
+        [Test]
+        public void IsovistFromPointReturnsExceptionIfOriginPointIsInsideInternalPolygonTest()
+        {
+            // Create obstruction
+            Polygon internals = Rectangle.ByWidthLength(5, 5) as Polygon;
+
+            // Create origin point
+            Point originPoint = Point.ByCoordinates(0, 0);
+
+            Assert.Throws<ApplicationException>(() => Isovist.FromPoint(new List<Polygon> { layoutPolygon }, new List<Polygon> { internals }, originPoint));
+
         }
     }
 }

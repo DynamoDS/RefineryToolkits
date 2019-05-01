@@ -13,7 +13,9 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
     [TestFixture]
     public class ViewsToOutsideTests : GeometricTestBase
     {
-        // Checks if views to outside returns the right value in a layout with no obstacles
+        /// <summary>
+        /// Checks if views to outside returns the right value in a layout with no obstacles
+        /// </summary>
         [Test]
         public void ViewToOutside360()
         {

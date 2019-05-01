@@ -13,22 +13,22 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
     [TestFixture]
     public class OpenessTests : GeometricTestBase
     {
-        // Check if the openess score detects a obstacle on the left
+        private static Polygon obstacle;
+
+        [SetUp]
+        public void BeforeTest()
+        {
+            obstacle = Rectangle.ByWidthLength(10, 10) as Polygon;
+        }
+
+        /// <summary>
+        /// Check if the openess score detects a obstacle on the left
+        /// </summary>
         [Test]
         public void LeftObstacleTest()
         {
-            // Create obstacle
-            List<Point> polyPoints = new List<Point>()
-            {
-                Point.ByCoordinates(-1,0),
-                Point.ByCoordinates(-1,10),
-                Point.ByCoordinates(1,10),
-                Point.ByCoordinates(1,0)
-            };
-            Polygon obstacle =  Polygon.ByPoints(polyPoints);
-
             // Create a rectangle object with 4 equal sides to check openess score
-            Point origin = Point.ByCoordinates(6, 5);
+            Point origin = Point.ByCoordinates(-10, 0);
             Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
             // Calculate openess score
@@ -38,27 +38,18 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             Assert.AreEqual(0.25, openessScore);
 
             // Dispose unused geometry
-            polyPoints.ForEach(pt => pt.Dispose());
             obstacle.Dispose();
             origin.Dispose();
         }
 
-        // Check if the openess score detects a obstacle on the right
+        /// <summary>
+        /// Check if the openess score detects a obstacle on the right
+        /// </summary>
         [Test]
         public void RightObstacleTest()
         {
-            // Create obstacle
-            List<Point> polyPoints = new List<Point>()
-            {
-                Point.ByCoordinates(-1,0),
-                Point.ByCoordinates(-1,10),
-                Point.ByCoordinates(1,10),
-                Point.ByCoordinates(1,0)
-            };
-            Polygon obstacle = Polygon.ByPoints(polyPoints);
-
             // Create a rectangle object with 4 equal sides to check openess score
-            Point origin = Point.ByCoordinates(-6, 5);
+            Point origin = Point.ByCoordinates(10, 0);
             Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
             // Calculate openess score
@@ -68,28 +59,19 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             Assert.AreEqual(0.25, openessScore);
 
             // Dispose unused geometry
-            polyPoints.ForEach(pt => pt.Dispose());
             obstacle.Dispose();
             origin.Dispose();
         }
 
-        // Check if the openess score detects a obstacle on the top
+        /// <summary>
+        /// Check if the openess score detects a obstacle on the top
+        /// </summary>
         [Test]
         public void TopObstacleTest()
         {
-            // Create obstacle
-            List<Point> polyPoints = new List<Point>()
-            {
-                Point.ByCoordinates(-1,0),
-                Point.ByCoordinates(-1,10),
-                Point.ByCoordinates(1,10),
-                Point.ByCoordinates(1,0)
-            };
-            Polygon obstacle = Polygon.ByPoints(polyPoints);
-
             // Create a rectangle object with 4 equal sides to check openess score
-            Point origin = Point.ByCoordinates(0, 11);
-            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 2, 2));
+            Point origin = Point.ByCoordinates(0, 10);
+            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
             // Calculate openess score
             double openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
@@ -98,7 +80,6 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             Assert.AreEqual(0.25, openessScore);
 
             // Dispose unused geometry
-            polyPoints.ForEach(pt => pt.Dispose());
             obstacle.Dispose();
             origin.Dispose();
         }
@@ -107,19 +88,9 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
         [Test]
         public void BottomObstacleTest()
         {
-            // Create obstacle
-            List<Point> polyPoints = new List<Point>()
-            {
-                Point.ByCoordinates(-1,0),
-                Point.ByCoordinates(-1,10),
-                Point.ByCoordinates(1,10),
-                Point.ByCoordinates(1,0)
-            };
-            Polygon obstacle = Polygon.ByPoints(polyPoints);
-
             // Create a rectangle object with 4 equal sides to check openess score
-            Point origin = Point.ByCoordinates(0, -1);
-            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 2, 2));
+            Point origin = Point.ByCoordinates(0, -10);
+            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
             // Calculate openess score
             double openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
@@ -128,36 +99,24 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             Assert.AreEqual(0.25, openessScore);
             
             // Dispose unused geometry
-            polyPoints.ForEach(pt => pt.Dispose());
             obstacle.Dispose();
             origin.Dispose();
         }
 
-        // Check if the openess score detects a obstacle on the left and right
+        /// <summary>
+        /// Check if the openess score detects a obstacle on the left and right
+        /// </summary>
         [Test]
         public void ObstacleOnBothSides()
         {
-            // Create obstacles
-            List<Point> leftObstaclePoints = new List<Point>()
+            List<Polygon> obstaclePolygons = new List<Polygon>()
             {
-                Point.ByCoordinates(-1,0),
-                Point.ByCoordinates(-1,10),
-                Point.ByCoordinates(1,10),
-                Point.ByCoordinates(1,0)
+                obstacle.Translate(-10) as Polygon,
+                obstacle.Translate(10) as Polygon
             };
-            List<Point> rightObstaclePoints = new List<Point>()
-            {
-                Point.ByCoordinates(11,0),
-                Point.ByCoordinates(11,10),
-                Point.ByCoordinates(13,10),
-                Point.ByCoordinates(13,0)
-            };
-            List<Polygon> obstaclePolygons = new List<Polygon>();
-            new List<List<Point>> { leftObstaclePoints, rightObstaclePoints }.ForEach(lst => obstaclePolygons.Add(Polygon.ByPoints(lst)));
 
             // Create a rectangle object with 4 equal sides to check openess score
-            Point origin = Point.ByCoordinates(6, 5);
-            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
+            Surface surface = Surface.ByPatch(Rectangle.ByWidthLength(10, 10));
 
             // Calculate openess score
             double openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, obstaclePolygons);
@@ -166,10 +125,7 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
             Assert.AreEqual(0.50, openessScore);
 
             // Dispose unused geometry
-            leftObstaclePoints.ForEach(pt => pt.Dispose());
-            rightObstaclePoints.ForEach(pt => pt.Dispose());
             obstaclePolygons.ForEach(poly => poly.Dispose());
-            origin.Dispose();
         }
     }
 }

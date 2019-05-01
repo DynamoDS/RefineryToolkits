@@ -13,61 +13,67 @@ namespace Autodesk.GenerativeToolkit.Analyse.Tests
     [TestFixture]
     public class PathFindingTests : GeometricTestBase
     {
-        // Checks if shortest path returns the right value
-        // and its helper functions works
-        [Test]
-        public void ShortestPathTest()
+        private Polygon boundary;
+        private Polygon internalPolygon;
+        private Point originPoint;
+        private Point destination;
+        private Visibility visibilityGraph;
+        private Dictionary<string, object> result;
+
+        [SetUp]
+        public void BeforeTest()
         {
-            // Create layout with a boundary and two internal obstacles
-            List<Point> boundaryPoints = new List<Point>
-            {
-                Point.ByCoordinates(25,-25),
-                Point.ByCoordinates(25,25),
-                Point.ByCoordinates(-25,25),
-                Point.ByCoordinates(-25,-25)
-            };
-            List<Point> internal1Points = new List<Point>
-            {
-                Point.ByCoordinates(-1,0),
-                Point.ByCoordinates(-1,10),
-                Point.ByCoordinates(1,10),
-                Point.ByCoordinates(1,0)
-            };
-            List<Point> internal2Points = new List<Point>
-            {
-                Point.ByCoordinates(11,0),
-                Point.ByCoordinates(11,10),
-                Point.ByCoordinates(13,10),
-                Point.ByCoordinates(13,0)
-            };
-            Polygon boundary = Polygon.ByPoints(boundaryPoints);
-            List<Polygon> internalPolygons = new List<Polygon>();
-            new List<List<Point>> { internal1Points, internal2Points }.ForEach(lst => internalPolygons.Add(Polygon.ByPoints(lst)));
-
+            boundary = Rectangle.ByWidthLength(50, 50) as Polygon;
+            internalPolygon = Rectangle.ByWidthLength(5, 25) as Polygon;
             // Create origin and desitination point
-            Point originPoint = Point.ByCoordinates(-12, 5);
-            Point destination = Point.ByCoordinates(17, 3);
+            originPoint = Point.ByCoordinates(-10, 5);
+            destination = Point.ByCoordinates(20, 3);
+        }
 
+        /// <summary>
+        /// Checks if shortest path can create a new VisibilityGraph
+        /// </summary>
+        [Test]
+        public void ShortestPathCanCreateVisibilityGraphTest()
+        {           
             // Create visibility graph used to calculate the shortest path
-            Visibility visibilityGraph = PathFinding.CreateVisibilityGraph(new List<Polygon> { boundary }, internalPolygons);
-            
+            visibilityGraph = PathFinding.CreateVisibilityGraph(new List<Polygon> { boundary }, new List<Polygon> { internalPolygon });           
             // Check if the visibility graph is created properly
             Assert.IsTrue(!visibilityGraph.Equals(null));
+        }
 
+        /// <summary>
+        /// Check shortest path dictionary output is correct
+        /// </summary>
+        [Test]
+        public void ShortestPathDicionaryOutputTest()
+        {
             // Create shortest path
-            var result = PathFinding.ShortestPath(visibilityGraph, originPoint, destination);
+            result = PathFinding.ShortestPath(visibilityGraph, originPoint, destination);
 
             // Check if the result of the Shortest path is a dictionary containing the keys "path" and "length"
             Assert.IsTrue(result.Keys.Contains("path"));
             Assert.IsTrue(result.Keys.Contains("length"));
+        }
 
-            // Check if the length of the path is correct
+        /// <summary>
+        /// Check if the length of the path is correct
+        /// </summary>
+        [Test]
+        public void ShortestPathLengthTest()
+        {
             var length = (double)result["length"];
-            Assert.AreEqual(35.225, Math.Round(length,3));
+            Assert.AreEqual(35.519, Math.Round(length, 3));
+        }
 
-            // Check if the PathFinding.Lines returns the correct amount of lines
+        /// <summary>
+        /// Check if the PathFinding.Lines returns the correct amount of lines
+        /// </summary>
+        [Test]
+        public void ShortestPathDynamoLinesFormPathTest()
+        {
             var lines = PathFinding.Lines((BaseGraph)result["path"]);
-            Assert.AreEqual(5, lines.Count());
+            Assert.AreEqual(3, lines.Count());
         }
     }
 }
