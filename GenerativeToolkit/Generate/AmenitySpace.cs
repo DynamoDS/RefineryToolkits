@@ -57,7 +57,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             Vector vec = Utilities.Vector.ByTwoCurves(max2, max);
 
             Autodesk.DesignScript.Geometry.Curve transLine = max.Translate(vec, depth) as Curve;
-            Line extendLine = Utilities.Line.ExtendAtBothEnds(transLine, 5000);
+            Line extendLine = Utilities.Line.ExtendAtBothEnds(transLine, 1);
 
 
             List<Curve> crvList = new List<Curve>() { max, extendLine };
@@ -74,7 +74,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             List<Curve> extendCurves = new List<Curve>();
             foreach (Curve crv in intersectingCurves)
             {
-                var l = Utilities.Line.ExtendAtBothEnds(crv, 5000);
+                var l = Utilities.Line.ExtendAtBothEnds(crv, 1);
                 extendCurves.Add(l);
             }
 
