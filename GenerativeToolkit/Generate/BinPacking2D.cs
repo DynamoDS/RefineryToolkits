@@ -12,6 +12,10 @@ namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class BinPacking2D
     {
+        private const string output1 = "packedRectangles";
+        private const string output2 = "packedIndices";
+        private const string output3 = "remainRectangles"; 
+
         private class FreeRectangle
         {
             public double width;
@@ -43,7 +47,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="bin"> Rectangle to pack into</param>
         /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
         /// <returns>List of packed rectangles</returns>
-        [MultiReturn(new[] { "packedRectangles", "remainRectangles", "packedIndices" })]
+        [MultiReturn(new[] { output1, output2, output3 })]
         public static Dictionary<string, object> Pack(List<Rectangle> rects, Rectangle bin, string placementMethod = "BSSF")
         {
             freeRectangles = new List<FreeRectangle>();
@@ -70,9 +74,9 @@ namespace Autodesk.GenerativeToolkit.Generate
             Dictionary<string, object> newOutput;
             newOutput = new Dictionary<string, object>
             {
-                {"packedRectangles",packedRectangles},
-                {"remainRectangles",remainRectangles},
-                {"packedIndices", packedIndices}
+                {output1,packedRectangles},
+                {output2,packedIndices},
+                {output3,remainRectangles}
             };
             return newOutput;
         }

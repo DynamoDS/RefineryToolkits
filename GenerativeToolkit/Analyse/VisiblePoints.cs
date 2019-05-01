@@ -13,6 +13,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class VisiblePoints
     {
+        private const string output1 = "score";
+        private const string output2 = "visiblePoints";
+
         /// <summary>
         /// Calculates the visible points out of a list of sample points from a given origin.
         /// Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.
@@ -22,7 +25,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
         /// <param name="obstacles">List of Polygons representing internal obstructions</param>
         /// <returns>precentages of the amount of visible points</returns>
-        [MultiReturn(new[] { "score", "visiblePoints" })]
+        [MultiReturn(new[] { output1, output2 })]
         public static Dictionary<string, object> FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> obstacles)
         {
             Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
@@ -46,8 +49,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             return new Dictionary<string, object>()
             {
-                {"score", (1/totalPoints) * visibilityAmount},
-                {"visiblePoints", visPoints }
+                {output1, (1/totalPoints) * visibilityAmount},
+                {output2, visPoints }
             };
         }
 

@@ -16,6 +16,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class PathFinding
     {
+        private const string output1 = "path";
+        private const string output2 = "length";
+
         /// <summary>
         /// Returns a graph representing the shortest path 
         /// between two points on a given Visibility Graph.
@@ -25,7 +28,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="destination">Destination point</param>
         /// <returns name="path">Graph representing the shortest path</returns>
         /// <returns name="length">Length of path</returns>
-        [MultiReturn(new[] { "path", "length" })]
+        [MultiReturn(new[] { output1, output2 })]
         public static Dictionary<string, object> ShortestPath(Visibility visGraph, DSPoint origin, DSPoint destination)
         {
 
@@ -45,8 +48,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             return new Dictionary<string, object>()
             {
-                {"path", baseGraph },
-                {"length", baseGraph.graph.edges.Select(e => e.Length).Sum() }
+                {output1, baseGraph },
+                {output2, baseGraph.graph.edges.Select(e => e.Length).Sum() }
             };
         }
 

@@ -9,6 +9,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
 {
     public static class ViewsToOutside
     {
+        private const string output1 = "score";
+        private const string output2 = "segments";
+
         /// <summary>
         /// Calculates the view to outside from a given point based on a 360 degree ratio.
         /// Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.
@@ -18,7 +21,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="viewSegments">Line segments representing the views to outside</param>
         /// <param name="origin">Origin point to measure from</param>
         /// <returns>precentage of 360 view that is to the outside</returns>
-        [MultiReturn(new[] { "score", "segments" })]
+        [MultiReturn(new[] { output1, output2 })]
         public static Dictionary<string, object> ByLineSegments(List<Curve> viewSegments, Point origin, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> internals)
         {
             Surface isovist = Isovist.FromPoint(boundary, internals, origin);
@@ -50,8 +53,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             return new Dictionary<string, object>()
             {
-                {"score", score },
-                {"segments", lines }
+                {output1, score },
+                {output2, lines }
             };
         }      
     }

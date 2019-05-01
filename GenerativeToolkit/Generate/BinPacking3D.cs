@@ -12,6 +12,10 @@ namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class BinPacking3D
     {
+        private const string output1 = "packedItems";
+        private const string output2 = "packedIndices";
+        private const string output3 = "remainItems";
+
         /// <summary>
         /// Packs a sample list of Cuboids in a bin Cuboid
         /// </summary>
@@ -19,7 +23,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="items">List of Cuboids to pack</param>
         /// <returns name="packedItems">Packed Cuboids</returns>
         /// <returns name="remainItems">Cubiods that didn't get packed</returns>
-        [MultiReturn(new[] { "packedItems", "remainItems", "packedIndices" })]
+        [MultiReturn(new[] { output1, output2, output3 })]
         public static Dictionary<string, object> Pack(Cuboid bin, List<Cuboid> items)
         {
             decimal length = Convert.ToDecimal(bin.Length);
@@ -50,9 +54,9 @@ namespace Autodesk.GenerativeToolkit.Generate
             Dictionary<string, object> newOutput;
             newOutput = new Dictionary<string, object>
             {
-                {"packedItems",packedCuboids},
-                {"remainItems",unpackedCuboids},
-                {"packedIndices", packedIndices}
+                {output1,packedCuboids},
+                {output2,packedIndices},
+                {output3,unpackedCuboids}
             };
 
             return newOutput;

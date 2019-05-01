@@ -9,6 +9,9 @@ namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class AmenitySpace
     {
+        private const string output1 = "amenitySrf";
+        private const string output2 = "remainSrf";
+
         #region Create
         /// <summary>
         /// Creates an amentiy space on a given surface, returning both the amenity space and the remaining space within the original surface
@@ -17,7 +20,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="offset">How much to offset to surface perimeter with</param>
         /// <param name="depth"></param>
         /// <search></search>
-        [MultiReturn(new[] { "amenitySrf", "remainSrf" })]
+        [MultiReturn(new[] { output1, output2 })]
         public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(Autodesk.DesignScript.Geometry.Surface surface, double offset, double depth)
         {
             List<Curve> inCrvs = Utilities.Surface.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
@@ -87,8 +90,8 @@ namespace Autodesk.GenerativeToolkit.Generate
             Dictionary<string, Autodesk.DesignScript.Geometry.Surface> newOutput;
             newOutput = new Dictionary<string, Autodesk.DesignScript.Geometry.Surface>
             {
-                {"amenitySrf",amenitySurf},
-                {"remainSrf",remainSurf}
+                {output1,amenitySurf},
+                {output2,remainSurf}
             };
 
             //Dispose redundant geometry
