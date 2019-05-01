@@ -172,6 +172,7 @@
     <Compile Include="Generate\BinPacking3DTests.cs" />
     <Compile Include="Generate\DeskLayoutTests.cs" />
     <Compile Include="Generate\SurfaceDivision2DTests.cs" />
+    <Compile Include="Mock\MockGeometry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rank\ListShuffleTests.cs" />
   </ItemGroup>

@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace Autodesk.GenerativeToolkit.Generate.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class SurfaceDivision2DTests
     {
-        [Test()]
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
         public void DivideSurfaceTest()
         {
             Assert.Fail();
