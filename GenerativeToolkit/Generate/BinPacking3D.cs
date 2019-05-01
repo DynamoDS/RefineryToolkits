@@ -22,6 +22,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="bin">Cuboid to pack sample Cuboids into</param>
         /// <param name="items">List of Cuboids to pack</param>
         /// <returns name="packedItems">Packed Cuboids</returns>
+        /// <returns name="packedIndices">Indices of packed items</returns>
         /// <returns name="remainItems">Cubiods that didn't get packed</returns>
         [MultiReturn(new[] { output1, output2, output3 })]
         public static Dictionary<string, object> Pack(Cuboid bin, List<Cuboid> items)
