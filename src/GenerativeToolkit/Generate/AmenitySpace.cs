@@ -20,10 +20,12 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="depth"></param>
         /// <search></search>
         [MultiReturn(new[] { amenitySurface, remainingSurface })]
-        public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(Autodesk.DesignScript.Geometry.Surface surface, double offset, double depth)
+        public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(Autodesk.DesignScript.Geometry.Surface surface, 
+            double offset, 
+            double depth)
         {
             List<Curve> inCrvs = Utilities.Surface.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
-            Autodesk.DesignScript.Geometry.Surface inSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
+            Surface inSrf = Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
 
             Curve max;
             List<Curve> others;
@@ -58,12 +60,12 @@ namespace Autodesk.GenerativeToolkit.Generate
 
             Vector vec = Utilities.Vector.ByTwoCurves(max2, max);
 
-            Autodesk.DesignScript.Geometry.Curve transLine = max.Translate(vec, depth) as Curve;
+            Curve transLine = max.Translate(vec, depth) as Curve;
             Line extendLine = Utilities.Line.ExtendAtBothEnds(transLine, 1);
 
 
             List<Curve> crvList = new List<Curve>() { max, extendLine };
-            Autodesk.DesignScript.Geometry.Surface loftSrf = Autodesk.DesignScript.Geometry.Surface.ByLoft(crvList);
+            Surface loftSrf = Surface.ByLoft(crvList);
 
             List<bool> boolLst = new List<bool>();
             foreach (var crv in others)
@@ -80,14 +82,14 @@ namespace Autodesk.GenerativeToolkit.Generate
                 extendCurves.Add(l);
             }
 
-            List<Autodesk.DesignScript.Geometry.Surface> split = Utilities.Surface.SplitPlanarSurfaceByMultipleCurves(loftSrf, extendCurves).OfType<Autodesk.DesignScript.Geometry.Surface>().ToList();
+            List<Surface> split = Utilities.Surface.SplitPlanarSurfaceByMultipleCurves(loftSrf, extendCurves).OfType<Surface>().ToList();
 
-            Autodesk.DesignScript.Geometry.Surface amenitySurf = Utilities.Surface.MaximumArea(split)["maxSrf"] as Autodesk.DesignScript.Geometry.Surface;
+            Surface amenitySurf = Utilities.Surface.MaximumArea(split)["maxSrf"] as Surface;
 
-            Autodesk.DesignScript.Geometry.Surface remainSurf = inSrf.Split(amenitySurf)[0] as Autodesk.DesignScript.Geometry.Surface;
+            Surface remainSurf = inSrf.Split(amenitySurf)[0] as Surface;
 
-            Dictionary<string, Autodesk.DesignScript.Geometry.Surface> newOutput;
-            newOutput = new Dictionary<string, Autodesk.DesignScript.Geometry.Surface>
+            Dictionary<string, Surface> newOutput;
+            newOutput = new Dictionary<string, Surface>
             {
                 {amenitySurface,amenitySurf},
                 {remainingSurface,remainSurf}
