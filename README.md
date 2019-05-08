@@ -118,17 +118,6 @@ If you prefer to install one of the more experimental/work-in-progress builds, y
     - `%appdata%\Dynamo\Dynamo Revit\2\packages` for Dynamo for Revit, replacing `2` with your version of Dynamo
 - start Dynamo, the package should now be listed as `GenerativeToolkit` in the library.
 
-### Still can't see the package in Dynamo ?
-
-This issue should be fixed now the package is distributed through the package manager, I definitely recommending getting it that way. However, in case you still have issues, see instructions below :
-
-As [reported](https://github.com/radumg/DynaWeb/issues/10) by users, Windows sometimes blocks `.dll` files for security reasons. To resolve this, you'll have to go through the steps below for each assembly (`.dll` file) in the package :
-  1. Right-click on `.dll` file and select properties
-  2. Tick the `Unblock` checkbox at the bottom, in the Security section.
-  3. Launch Dynamo again, the package should now load.
-
-![image](https://user-images.githubusercontent.com/15014799/29770289-3c13172a-8be6-11e7-983e-6fb3c71ad136.png)
-
 
 ## Prerequisites
 
