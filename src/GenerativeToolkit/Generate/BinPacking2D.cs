@@ -404,7 +404,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             {
                 if (RectangleOverlaps(rect, itemBounds))
                 {
-                    List<double> overlapBound = Overlap_Bound(rect, itemBounds);
+                    List<double> overlapBound = OverlapBound(rect, itemBounds);
                     List<FreeRectangle> newRects = ClipOverlap(rect, overlapBound);
                     freeRects.AddRange(newRects);
                 }
@@ -453,7 +453,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="f1"></param>
         /// <param name="rectBounds"></param>
         /// <returns></returns>
-        private static List<double> Overlap_Bound(FreeRectangle f1, 
+        private static List<double> OverlapBound(FreeRectangle f1, 
             List<double> rectBounds)
         {
             // return bottom left x,y and top left x,y
