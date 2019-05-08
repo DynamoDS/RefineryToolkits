@@ -9,11 +9,8 @@ using Autodesk.DesignScript.Runtime;
 namespace Autodesk.GenerativeToolkit.Utilities
 {
     [IsVisibleInDynamoLibrary(false)]
-    public class List
+    internal static class List
     {
-        internal List()
-        {
-        }
 
         #region RunningTotals
         /// <summary>
@@ -21,7 +18,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// </summary>
         /// <param name="numbers"></param>
         /// <search></search>
-        public static List<double> RunningTotals(List<double> numbers)
+        public static List<double> RunningTotals(this List<double> numbers)
         {
             double count = 0;
             List<double> runningTotals = new List<double>();

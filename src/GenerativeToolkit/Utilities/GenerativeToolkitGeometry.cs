@@ -9,11 +9,8 @@ using Autodesk.DesignScript.Runtime;
 namespace Autodesk.GenerativeToolkit.Utilities
 {
     [IsVisibleInDynamoLibrary(false)]
-    public class Curve
+    internal static class Curve
     {
-        internal Curve()
-        {
-        }
 
         #region FindMatchingVectorCurves
         /// <summary>
@@ -22,7 +19,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="curve"></param>
         /// <param name="curves"></param>
         /// <search></search>
-        public static List<Autodesk.DesignScript.Geometry.Curve> FindMatchingVectorCurves(Autodesk.DesignScript.Geometry.Curve curve, List<Autodesk.DesignScript.Geometry.Curve> curves)
+        public static List<Autodesk.DesignScript.Geometry.Curve> FindMatchingVectorCurves(this Autodesk.DesignScript.Geometry.Curve curve, List<Autodesk.DesignScript.Geometry.Curve> curves)
         {
             Autodesk.DesignScript.Geometry.Point stPt1 = curve.StartPoint;
             Autodesk.DesignScript.Geometry.Point endPt1 = curve.EndPoint;
@@ -97,7 +94,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="curves"></param>
         /// <search></search>
         [MultiReturn(new[] { "maxCrv", "otherCrvs" })]
-        public static Dictionary<string, dynamic> MaximumLength(List<Autodesk.DesignScript.Geometry.Curve> curves)
+        public static Dictionary<string, dynamic> MaximumLength(this List<Autodesk.DesignScript.Geometry.Curve> curves)
         {
 
             List<double> lengths = new List<double>();
@@ -150,12 +147,8 @@ namespace Autodesk.GenerativeToolkit.Utilities
 
     }
     [IsVisibleInDynamoLibrary(false)]
-    public class Line
+    internal static class Line
     {
-
-        internal Line()
-        {
-        }
 
         #region ExtendAtBothEnds
         /// <summary>
@@ -164,7 +157,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="line"></param>
         /// <param name="distance"></param>
         /// <search></search>
-        public static Autodesk.DesignScript.Geometry.Line ExtendAtBothEnds(Autodesk.DesignScript.Geometry.Curve line, double distance)
+        public static Autodesk.DesignScript.Geometry.Line ExtendAtBothEnds(this Autodesk.DesignScript.Geometry.Curve line, double distance)
         {
             Autodesk.DesignScript.Geometry.Point stPt = line.StartPoint;
             Autodesk.DesignScript.Geometry.Point endPt = line.EndPoint;
@@ -192,11 +185,8 @@ namespace Autodesk.GenerativeToolkit.Utilities
 
     }
     [IsVisibleInDynamoLibrary(false)]
-    public class Surface
+    internal static class Surface
     {
-        internal Surface()
-        {
-        }
 
         #region BoundingSurface
         /// <summary>
@@ -204,7 +194,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// </summary>
         /// <param name="surface"></param>
         /// <search></search>
-        public static Autodesk.DesignScript.Geometry.Surface BoundingSurface(Autodesk.DesignScript.Geometry.Surface surface)
+        public static Autodesk.DesignScript.Geometry.Surface BoundingSurface(this Autodesk.DesignScript.Geometry.Surface surface)
         {
             BoundingBox bb = surface.BoundingBox;
             Cuboid c = bb.ToCuboid();
@@ -224,7 +214,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="surfaces"></param>
         /// <search></search>
         [MultiReturn(new[] { "maxSrf", "otherSrfs" })]
-        public static Dictionary<string, dynamic> MaximumArea(List<Autodesk.DesignScript.Geometry.Surface> surfaces)
+        public static Dictionary<string, dynamic> MaximumArea(this List<Autodesk.DesignScript.Geometry.Surface> surfaces)
         {
             List<double> areas = new List<double>();
             for (int i = 0; i < surfaces.Count; i++)
@@ -268,7 +258,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="offset"></param>
         /// <search></search>
         [MultiReturn(new[] { "insetCrvs", "outsetCrvs" })]
-        public static Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]> OffsetPerimeterCurves(Autodesk.DesignScript.Geometry.Surface surface, double offset)
+        public static Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]> OffsetPerimeterCurves(this Autodesk.DesignScript.Geometry.Surface surface, double offset)
         {
             List<Autodesk.DesignScript.Geometry.Curve> srfPerimCrvs = surface.PerimeterCurves().ToList();
 
@@ -363,7 +353,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="surfaces"></param>
         /// <search>geometry,base,planar,surface,surfaces,bottom</search>
         [MultiReturn(new[] { "baseSurfaces", "otherSurfaces" })]
-        public static Dictionary<string, object> PlanarBase(List<Autodesk.DesignScript.Geometry.Surface> surfaces)
+        public static Dictionary<string, object> PlanarBase(this List<Autodesk.DesignScript.Geometry.Surface> surfaces)
         {
             List<double> zValues = new List<double>();
             foreach (var srf in surfaces)
@@ -406,7 +396,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="surfaces"></param>
         /// <search>geometry,top,planar,surface,surfaces,ceiling</search>
         [MultiReturn(new[] { "topSurfaces", "otherSurfaces" })]
-        public static Dictionary<string, object> PlanarTop(List<Autodesk.DesignScript.Geometry.Surface> surfaces)
+        public static Dictionary<string, object> PlanarTop(this List<Autodesk.DesignScript.Geometry.Surface> surfaces)
         {
             List<double> zValues = new List<double>();
             foreach (var srf in surfaces)
@@ -449,7 +439,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="srf"></param>
         /// <param name="crvs"></param>
         /// <search></search>
-        public static Autodesk.DesignScript.Geometry.Geometry[] SplitPlanarSurfaceByMultipleCurves(Autodesk.DesignScript.Geometry.Surface srf, List<Autodesk.DesignScript.Geometry.Curve> crvs)
+        public static Autodesk.DesignScript.Geometry.Geometry[] SplitPlanarSurfaceByMultipleCurves(this Autodesk.DesignScript.Geometry.Surface srf, List<Autodesk.DesignScript.Geometry.Curve> crvs)
         {
             Autodesk.DesignScript.Geometry.Vector vec = srf.NormalAtParameter(0.5, 0.5);
 
@@ -477,11 +467,8 @@ namespace Autodesk.GenerativeToolkit.Utilities
         #endregion
     }
     [IsVisibleInDynamoLibrary(false)]
-    public class Point
+    internal static class Point
     {
-        internal Point()
-        {
-        }
 
         #region CompareCoincidental
         /// <summary>
@@ -491,7 +478,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="point2"></param>
         /// <param name="tolerance">number of decimal places to round to</param>
         /// <search></search>
-        public static bool CompareCoincidental(Autodesk.DesignScript.Geometry.Point point1, Autodesk.DesignScript.Geometry.Point point2, double tolerance = 8)
+        public static bool CompareCoincidental(this Autodesk.DesignScript.Geometry.Point point1, Autodesk.DesignScript.Geometry.Point point2, double tolerance = 8)
         {
             double pt1X = System.Math.Round(point1.X,8);
             double pt1Y = System.Math.Round(point1.Y, 8);
@@ -525,7 +512,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="length"></param>
         /// <param name="param"></param>
         /// <search></search>
-        public static dynamic MoveAlongCurve(Autodesk.DesignScript.Geometry.Point point, Autodesk.DesignScript.Geometry.PolyCurve polycurve, double length, double param)
+        public static dynamic MoveAlongCurve(this Autodesk.DesignScript.Geometry.Point point, Autodesk.DesignScript.Geometry.PolyCurve polycurve, double length, double param)
         {
             if (length > polycurve.Length)
             {
@@ -568,7 +555,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="polycurve"></param>
         /// <param name="percentage"></param>
         /// <search></search>
-        public static dynamic RandomlyMoveAlongCurve(Autodesk.DesignScript.Geometry.Point point, Autodesk.DesignScript.Geometry.PolyCurve polycurve, double percentage)
+        public static dynamic RandomlyMoveAlongCurve(this Autodesk.DesignScript.Geometry.Point point, Autodesk.DesignScript.Geometry.PolyCurve polycurve, double percentage)
         {
             if (percentage > 100 || percentage < 0)
             {
@@ -609,11 +596,8 @@ namespace Autodesk.GenerativeToolkit.Utilities
 
     }
     [IsVisibleInDynamoLibrary(false)]
-    public class Vector
+    internal static class Vector
     {
-        internal Vector()
-        {
-        }
 
         #region ByTwoCurves
         /// <summary>
@@ -622,7 +606,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <param name="crv1"></param>
         /// <param name="crv2"></param>
         /// <search></search>
-        public static Autodesk.DesignScript.Geometry.Vector ByTwoCurves(Autodesk.DesignScript.Geometry.Curve crv1, Autodesk.DesignScript.Geometry.Curve crv2)
+        public static Autodesk.DesignScript.Geometry.Vector ByTwoCurves(this Autodesk.DesignScript.Geometry.Curve crv1, Autodesk.DesignScript.Geometry.Curve crv2)
         {
             Autodesk.DesignScript.Geometry.Point pt1 = crv1.PointAtParameter(0.5);
             Autodesk.DesignScript.Geometry.Point pt2 = crv2.PointAtParameter(0.5);
