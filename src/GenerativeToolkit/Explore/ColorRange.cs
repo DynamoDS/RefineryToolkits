@@ -17,7 +17,9 @@ namespace Autodesk.GenerativeToolkit.Explore
         /// <param name="brightness">Correction factor from 0-1</param>
         /// <param name="seed">Seed</param>
         /// <returns>distinct colors</returns>
-        public static List<Color> ContrastyColorRange(int amount = 19, double brightness = 0, int seed = 1)
+        public static List<Color> ContrastyColorRange(int amount = 19, 
+            double brightness = 0, 
+            int seed = 1)
         {
             if (amount > 19)
             {

@@ -47,7 +47,9 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
         /// <returns>List of packed rectangles</returns>
         [MultiReturn(new[] { packedItems, indices, remainingItems })]
-        public static Dictionary<string, object> Pack(List<Rectangle> rects, Rectangle bin, PlacementMethods placementMethod)
+        public static Dictionary<string, object> Pack(List<Rectangle> rects, 
+            Rectangle bin, 
+            PlacementMethods placementMethod)
         {
             freeRectangles = new List<FreeRectangle>();
             packedRectangles = new List<Rectangle>();
@@ -112,7 +114,9 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="item"></param>
         /// <param name="placementMethod"></param>
         /// <param name="idx"></param>
-        private static void PlaceItem(Rectangle item, PlacementMethods placementMethod, int idx)
+        private static void PlaceItem(Rectangle item, 
+            PlacementMethods placementMethod, 
+            int idx)
         {
             FreeRectangle f = BestFreeRect(item, placementMethod);
 
@@ -149,7 +153,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="item"></param>
         /// <param name="placementMethod"></param>
         /// <returns></returns>
-        private static FreeRectangle BestFreeRect(Rectangle item, PlacementMethods placementMethod)
+        private static FreeRectangle BestFreeRect(Rectangle item, 
+            PlacementMethods placementMethod)
         {
             List<FreeRectangle> fRects = new List<FreeRectangle>();
             foreach (var fRect in freeRectangles)
@@ -247,7 +252,9 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="rectangle"></param>
         /// <param name="rotate"></param>
         /// <returns></returns>
-        private static bool ItemFits(FreeRectangle f, Rectangle rectangle, bool rotate)
+        private static bool ItemFits(FreeRectangle f, 
+            Rectangle rectangle, 
+            bool rotate)
         {
             if (rotate == false && rectangle.Width <= f.width && rectangle.Height <= f.height)
             {
@@ -276,7 +283,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="f"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        private static double BSSF_Score(FreeRectangle f, Rectangle item)
+        private static double BSSF_Score(FreeRectangle f, 
+            Rectangle item)
         {
             double widthDifference;
             double heightDifference;
@@ -300,7 +308,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="f"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        private static double BLSF_Score(FreeRectangle f, Rectangle item)
+        private static double BLSF_Score(FreeRectangle f, 
+            Rectangle item)
         {
             double widthDifference;
             double heightDifference;
@@ -324,7 +333,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="f"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        private static double BAF_Score(FreeRectangle f, Rectangle item)
+        private static double BAF_Score(FreeRectangle f, 
+            Rectangle item)
         {
             double freeFArea = f.area();
             double rectArea = item.Width * item.Height;
@@ -336,7 +346,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// </summary>
         /// <param name="fRect"></param>
         /// <param name="item"></param>
-        private static void SplitFreeRectangle(FreeRectangle fRect, Rectangle item)
+        private static void SplitFreeRectangle(FreeRectangle fRect, 
+            Rectangle item)
         {
             if (item.Width < fRect.width)
             {
@@ -413,7 +424,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="f1"></param>
         /// <param name="rectBounds"></param>
         /// <returns></returns>
-        private static bool RectangleOverlaps(FreeRectangle f1, List<double> rectBounds)
+        private static bool RectangleOverlaps(FreeRectangle f1, 
+            List<double> rectBounds)
         {
             double f1BottomLeftX = f1.xPos;
             double f1BottomLeftY = f1.yPos;
@@ -441,7 +453,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="f1"></param>
         /// <param name="rectBounds"></param>
         /// <returns></returns>
-        private static List<double> Overlap_Bound(FreeRectangle f1, List<double> rectBounds)
+        private static List<double> Overlap_Bound(FreeRectangle f1, 
+            List<double> rectBounds)
         {
             // return bottom left x,y and top left x,y
 
@@ -468,7 +481,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="f1"></param>
         /// <param name="overlapBound"></param>
         /// <returns></returns>
-        private static List<FreeRectangle> ClipOverlap(FreeRectangle f1, List<double> overlapBound)
+        private static List<FreeRectangle> ClipOverlap(FreeRectangle f1, 
+            List<double> overlapBound)
         {
             double F1x = f1.xPos;
             double F1y = f1.yPos;
@@ -535,7 +549,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="f1"></param>
         /// <param name="f2"></param>
         /// <returns></returns>
-        private static bool IsEncapsulated(FreeRectangle f1, FreeRectangle f2)
+        private static bool IsEncapsulated(FreeRectangle f1, 
+            FreeRectangle f2)
         {
             int precsion = 2;
             if (Math.Round(f2.xPos, precsion) < Math.Round(f1.xPos, precsion) || Math.Round(f2.xPos, precsion) > Math.Round(f1.xPos+f1.width, precsion))

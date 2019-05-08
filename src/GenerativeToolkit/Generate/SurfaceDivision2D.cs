@@ -1,10 +1,8 @@
-﻿#region namespaces
-using Autodesk.DesignScript.Geometry;
+﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
@@ -17,7 +15,9 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="U">U parameter</param>
         /// <param name="V">V parameter</param>
         /// <returns>List of individual surfaces</returns>
-        public static List<Autodesk.DesignScript.Geometry.Geometry> DivideSurface(Surface surface, List<double> U, List<double> V)
+        public static List<Autodesk.DesignScript.Geometry.Geometry> DivideSurface(Surface surface, 
+            List<double> U, 
+            List<double> V)
         {
             List<IDisposable> disposables = new List<IDisposable>();
             List<Autodesk.DesignScript.Geometry.Geometry> dividedSurfaces = new List<Autodesk.DesignScript.Geometry.Geometry>();

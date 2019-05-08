@@ -188,18 +188,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyse\AdjacencyPreference.cs" />
-    <Compile Include="Analyse\Base.cs" />
-    <Compile Include="Analyse\Buzz.cs" />
-    <Compile Include="Analyse\Daylight.cs" />
-    <Compile Include="Analyse\Isovist.cs" />
-    <Compile Include="Analyse\Openess.cs" />
-    <Compile Include="Analyse\Productivity.cs" />
-    <Compile Include="Analyse\PathFinding.cs" />
-    <Compile Include="Analyse\SpaceNavigation.cs" />
-    <Compile Include="Analyse\ViewsToOutside.cs" />
-    <Compile Include="Analyse\Visibility.cs" />
-    <Compile Include="Analyse\VisiblePoints.cs" />
+    <Compile Include="Analyze\AdjacencyPreference.cs" />
+    <Compile Include="Analyze\Base.cs" />
+    <Compile Include="Analyze\Buzz.cs" />
+    <Compile Include="Analyze\Daylight.cs" />
+    <Compile Include="Analyze\Isovist.cs" />
+    <Compile Include="Analyze\Openess.cs" />
+    <Compile Include="Analyze\Productivity.cs" />
+    <Compile Include="Analyze\PathFinding.cs" />
+    <Compile Include="Analyze\SpaceNavigation.cs" />
+    <Compile Include="Analyze\ViewsToOutside.cs" />
+    <Compile Include="Analyze\Visibility.cs" />
+    <Compile Include="Analyze\VisiblePoints.cs" />
     <Compile Include="Explore\ColorRange.cs" />
     <Compile Include="Generate\AmenitySpace.cs" />
     <Compile Include="Generate\BinPacking3D.cs" />

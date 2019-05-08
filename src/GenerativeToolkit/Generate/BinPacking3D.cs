@@ -25,7 +25,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <returns name="packedIndices">Indices of packed items</returns>
         /// <returns name="remainItems">Cubiods that didn't get packed</returns>
         [MultiReturn(new[] { packedItems, indices, remainingItems })]
-        public static Dictionary<string, object> Pack(Cuboid bin, List<Cuboid> items)
+        public static Dictionary<string, object> Pack(Cuboid bin, 
+            List<Cuboid> items)
         {
             decimal length = Convert.ToDecimal(bin.Length);
             decimal width = Convert.ToDecimal(bin.Width);
