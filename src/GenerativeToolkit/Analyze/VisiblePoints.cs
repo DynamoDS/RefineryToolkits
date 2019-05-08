@@ -1,5 +1,4 @@
-﻿#region namespaces
-using Autodesk.DesignScript.Geometry;
+﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using GenerativeToolkit.Graphs.Geometry;
 using System;
@@ -7,14 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using GenerativeToolkit.Graphs;
 using Autodesk.DesignScript.Runtime;
-#endregion
 
-namespace Autodesk.GenerativeToolkit.Analyse
+namespace Autodesk.GenerativeToolkit.Analyze
 {
     public static class VisiblePoints
     {
-        private const string output1 = "score";
-        private const string output2 = "visiblePoints";
+        private const string scoreOutput = "score";
+        private const string geometryOutput = "visiblePoints";
 
         /// <summary>
         /// Calculates the visible points out of a list of sample points from a given origin.
@@ -25,8 +23,11 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
         /// <param name="obstacles">List of Polygons representing internal obstructions</param>
         /// <returns>precentages of the amount of visible points</returns>
-        [MultiReturn(new[] { output1, output2 })]
-        public static Dictionary<string, object> FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> obstacles)
+        [MultiReturn(new[] { scoreOutput, geometryOutput })]
+        public static Dictionary<string, object> FromOrigin(Point origin, 
+            List<Point> points, 
+            List<Polygon> boundary, 
+            [DefaultArgument("[]")] List<Polygon> obstacles)
         {
             Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
             GeometryPolygon gPol = GeometryPolygon.ByVertices(isovist.Points.Select(p => GeometryVertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
@@ -49,26 +50,28 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             return new Dictionary<string, object>()
             {
-                {output1, (1/totalPoints) * visibilityAmount},
-                {output2, visPoints }
+                {scoreOutput, (1/totalPoints) * visibilityAmount},
+                {geometryOutput, visPoints }
             };
         }
 
-        private static Polygon IsovistPolygon(List<Polygon> boundary, List<Polygon> obstacles, Point point)
+        private static Polygon IsovistPolygon(List<Polygon> boundary, 
+            List<Polygon> obstacles, 
+            Point point)
         {
             BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstacles);
 
-            if (baseGraph == null) { throw new ArgumentNullException("graph"); }
-            if (point == null) { throw new ArgumentNullException("point"); }
+            if (baseGraph == null) throw new ArgumentNullException("graph");
+            if (point == null) throw new ArgumentNullException("point");
 
             GeometryVertex origin = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
 
             List<GeometryVertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<Point> points = vertices.Select(v => Points.ToPoint(v)).ToList();
-            // TODO: Implement better way of checking if polygon is self intersectingç
+            
+            var polygon = Polygon.ByPoints(points);
 
-            Polygon polygon = Polygon.ByPoints(points);
-
+            // if polygon is self intersecting, make new polygon
             if (polygon.SelfIntersections().Length > 0)
             {
                 points.Add(point);
