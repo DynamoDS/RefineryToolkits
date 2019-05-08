@@ -5,70 +5,106 @@ __GenerativeToolkit__ is a [Dynamo](http://www.dynamobim.org) package that can b
 ### What does it do ?
 
 With a range of different nodes it helps you create generative design workflows in Dynamo and Revit.  
-![DynaWeb package screenshot](https://raw.githubusercontent.com/radumg/DynaWeb/master/samples/DynaWeb.png)
+![GenerativeToolkit package screenshot](https://github.com/designtechIO/GenerativeToolkit/blob/64-add-standard-OSS-project/repo-information-to-README-file/sampels/GenerativeToolkit.png)
 
-### How it came about
-
-__DynaWeb__ was designed as a package to make other packages, so it provides building blocks enabling you to build Dynamo integrations with just about any web service out there. After making DynaSlack & DynAsana, it became clear that writing a ZeroTouch-based package for every web service I or the community would want to integrate with was simply not scalable or sustainable, no matter how much code was re-used. DynAsana is an abstracted DynaSlack and DynaWeb is an even more abstracted & modularised DynAsana.
 
 # Getting Started
 
 ## Package manager
-`DynaWeb` is now available on the Dynamo package manager, search for `DynaWeb` and install it from there.
+`GenerativeToolkit` is now available on the Dynamo package manager, search for `GenerativeToolkit` and install it from there.
 See [Alternative installation methods](#alternative-installation-methods) at the end of this document for alternative install methods.
 
-# Using DynaWeb
-This repository has quite a few sample files provided to help you get started with __DynaWeb__. 
+# Using GenerativeToolkit
+This repository has quite a few sample files provided to help you get started with __GenerativeToolkit__. 
 
-I highly recommed starting with the samples as they contain detailed notes and instructions on how to use each of the nodes. 
+It is highly recommed starting with the samples as they contain detailed notes and instructions on how to use each of the nodes. 
 Feel free to open an issue or submit a PR if you'd like to see further some documentation added here.
 
 ## Samples
-There are 8 sample Dynamo graphs included with the package, provided in both Dynamo `1.3` XML file format and Dynamo `2.0`'s new JSON format.
+There are 11 sample Dynamo graphs included with the package, all made to work with  Dynamo `2.0`.
 
-You can find the samples in this repository's [`samples folder`](https://github.com/radumg/DynaWeb/tree/master/samples) folder, as well as and in the `extra` folder of the package you download using the Dynamo Package Manager, typically found here : `%appdata%\Dynamo\Dynamo Revit\1.3\packages\DynaWeb` (note version and Revit flavour of Dynamo, your location may vary).
+You can find the samples in this repository's [`samples folder`](https://github.com/designtechIO/GenerativeToolkit/tree/master/sampels) folder, as well as and in the `extra` folder of the package you download using the Dynamo Package Manager, typically found here : `%appdata%\Dynamo\Dynamo Revit\2\packages\GenerativeToolkit`
 
-The samples start from super-simple and progressively increase in complexity :
+The samples shows a simple example of how each node in the toolkit works. Some of the samples will have a Revit version (marked with __(RVT)__), and some also have a version setup to be used with Refinery (marked with __(RefineryVersion)__) :
 
-#### Sample 1 - A first request
-3 nodes, similar to out-of-the-box (OOTB) Dynamo experience today.
+#### Sample 1 - AllNodes
+Index graph showing all available nodes in the GenerativeToolkit packages.
 
-#### Sample 2 - A simple request
-Introduces the 3 stages of performing web requests and explains quite a few things. Also show how to achieve same thing with the OOTB node.
+#### Sample 2 - GenerativeToolkit_Binpacking2D
+The sample folder contains 3 different graphs showing different ways to use the Binpacking2D nodes. The binpacking 2D nodes requriers 3 inputs, a list of rectangles to pack, a single Rectangle to pack into and a placement method. There are 3 different placement methods in the package:
+- _Best Shortest Side Fits_ - Will pack the rectangle into the free area where it minimizes the length of the areas shortest side.
+- _Best Longest Side Fits_ - Will pack the rectangle into the free area where it minimizes the length of the areas longest side.
+- _Best Area Fits_ - Will pack the rectangle into the free area where the remaining area after the placement is minimized.
 
-#### Sample 3 - Requst + benchmarking
-Same as sample 2 but with added nodes that provide more information about the request (timing, etc) and output the results to text files.
+There are 3 different sample workflows in the sample folder:
+- _GenerativeToolkit_Binpacking2DTest_BAF_ show the result of packing rectangles with the Best Area Fits placement method, and different ways of sorting the rectangles to pack.
+- _GenerativeToolkit_Binpacking2DTest_BLSF_ show the result of packing rectangles with the Best Long Side Fits placement method, and different ways of sorting the rectangles to pack.
+- _GenerativeToolkit_Binpacking2DTest_BSSF_ show the result of packing rectangles with the Best Short Side Fits placement method, and different ways of sorting the rectangles to pack.
 
-#### Sample 4 - REST API example
-This introduces the use of the `WebClient` class and some of the basic priciples of interacting with REST services. Uses a REST API that is freely accessible and returns JSON reponses. Contrasts using a `WebClient` and a `WebRequest` to achieve same thing and also introduces `Deserialisation`.
+![IMAGE](sampels/Binpacking2D.png)
 
-#### Sample 5 - REST API advanced
-Introduces POST-ing to a REST API service and handling JSON payloads. Once the request is submitted, the response is deserialised too.
+#### Sample 3 - GenerativeToolkit_Binpacking3DTest
+This sample shows how the Binpacking3D node works. The node requires a Bin as a Cuboid and a list of Items also as Cuboids. The node will take the items and pack as many as possible into the Bin Cuboid.
+The sample displays the final pack and will also show which items has been packed (green cuboids) and which items hasn't (red cuboids). 
 
-#### Sample 6 - Complex POST request
-Further expands on the above example, building a complex `WebRequest` with 6 steps before its execution.
+![IMAGE](sampels/3DBinPackingSample.png)
 
-#### Sample 7 - Autodesk Forge - Upload file
-This example builds a `WebRequest` and attaches a file to it, to upload directly to the `Autodesk Forge` service. See the issue that sparked this sample [here](https://github.com/radumg/DynaWeb/issues/11).
 
-#### Sample 8 - Autodesk Forge - Request auth token
-This example builds a POST `WebRequest`, used to request an authorisation token from the `Autodesk Forge` service. See the issue that sparked this sample [here](https://github.com/radumg/DynaWeb/issues/13).
+#### Sample 4 - GenerativeToolkit_SurfaceDivisionTest
+The SurfaceDivision node will take any Surface and divided it based on U and V parameters.
 
+![IMAGE](sampels/SurfaceDivision.png)
+
+#### Sample 5 - GenerativeToolkit_GeometricMedianTest
+The GeometricMedian node takes a list of sample point and finds the point that minimizes the distance to all other points. In the sample file 5 different examples are shown. 
+
+![IMAGE](sampels/GeometricMedian.png)
+
+#### Sample 6 - GenerativeToolkit_IsovistFromPointTest 
+The Isovist.FromPoint node takes a boundary polygon, internal polygons and a origin point and calculates the visible area from that point.
+
+![IMAGE](sampels/IsovistFromPointGif.gif)
+
+#### Sample 7 - GenerativeToolkit_OpenessTest
+The Openess node takes a boundary polygon, obstacle polygons and a Surface and calculates how much of the surface perimeter is enclosed by a obstacle.
+
+The sample folder contains 2 versions of this sample, a Sandbox version and a Revit version.
+
+![IMAGE](sampels/Openess.png)
+
+#### Sample 8 - GenerativeToolkit_ShortestPath
+The Shortest Path node will calculate the path between two points with the minimum distance.
+
+![IMAGE](sampels/ShortestPath.png)
+
+#### Sample 9 - GenerativeToolkit_ViewsToOutsideTest
+Views to Outside will calculate in precentage how much views to outside there is from a origin point. Views to outside is represented by line segments. 
+
+The sample folder contains 3 versions of this sample, a Sandbox version, a Revit version and a version set up to be used in Refinery.
+
+![IMAGE](sampels/ViewsToOutsideGif.gif)
+
+
+#### Sample 10 - GenerativeToolkit_VisiblePointsTest
+Visible Points calculates the amount of visible points from a origin point. The points can represent what ever you want them to be, it could be "how much of this space (represented by points) is visible form this point" or "How many other desks (represented with points) are visible from this point".
+
+The sample folder contains 2 versions of this sample, a Sandbox version and a version set up to be used in Refinery.
+
+![IMAGE](sampels/VisiblePointsGif.gif)
+
+#### Sample 11 - GenerativeToolkit_DistinctColorsTest
+The ContrastyColorRange node returns a given amount of colors in a random order which all are visually distinct from each other.
+The maximum colors that can be created right now is 19.
+
+![IMAGE](sampels/ColorRange.png)
 
 ## Structure
-There's 5 main components in DynaWeb :
-- `WebRequest` : the web request that gets executed
-- `WebClient` : the context in which a request is executed
-- `WebResponse` : this contains the response from the server, as well as additional metadata about the response & server itself 
-- `Execution` : this provides nodes that simply execute requests, making it easier & clearer to use standard http verbs such as GET, POST, etc.
-- `Helpers` : a few helper nodes, with a particular focus on `Deserialisation.`
+The __GenerativeToolkit__ is organized in 4 categories, based on their use in a Generative Design process :
+- `Generate` : In this category you can find nodes to help generate design options.
+- `Analyse` : The designs generated in the previous step can now be measured, or analyzed on how well they achieve goals defined by the designer. This category contains nodes to help with that.
+- `Rank` : Based on the results of the analysis, design options can be ordered or ranked. This category has nodes for that.
+- `Explore` : In Explore, nodes that helps visualize result are placed. 
 
-Simply put, use `WebRequest` nodes for one-off requests and start using a `WebClient` when you are interacting with REST APIs and/or have multiple request to similar endpoints/URLs.
-When using a `WebClient`, the `WebRequest` is still what gets executed, but it allows you more control over how that occurs (custom timeouts, etc)
-
-#### Fun facts
-- when executing a `WebRequest` on its own, the DynaWeb package constructs an empty `WebClient` in the background anyway as it's needed for execution
-- the strucuture of the source code shows up directly in Dynamo
 
 ## Alternative installation methods
 
@@ -77,10 +113,10 @@ If you prefer to install one of the more experimental/work-in-progress builds, y
 
 - Download the latest release from the [Releases page](https://github.com/radumg/DynaWeb/releases)
 - unzip the downloaded file
-- once unzipped, copy the `DynaWeb` folder to the location of your Dynamo packages  :
-    - `%appdata%\Dynamo\Dynamo Core\1.3\packages` for Dynamo Sandbox, replacing `1.3` with your version of Dynamo
-    - `%appdata%\Dynamo\Dynamo Revit\1.3\packages` for Dynamo for Revit, replacing `1.3` with your version of Dynamo
-- start Dynamo, the package should now be listed as `DynWWW` in the library.
+- once unzipped, copy the `GenerativeToolkit` folder to the location of your Dynamo packages  :
+    - `%appdata%\Dynamo\Dynamo Core\2\packages` for Dynamo Sandbox, replacing `2` with your version of Dynamo
+    - `%appdata%\Dynamo\Dynamo Revit\2\packages` for Dynamo for Revit, replacing `2` with your version of Dynamo
+- start Dynamo, the package should now be listed as `GenerativeToolkit` in the library.
 
 ### Still can't see the package in Dynamo ?
 
@@ -93,33 +129,19 @@ As [reported](https://github.com/radumg/DynaWeb/issues/10) by users, Windows som
 
 ![image](https://user-images.githubusercontent.com/15014799/29770289-3c13172a-8be6-11e7-983e-6fb3c71ad136.png)
 
-### Updating from alpha-0.5 build ?
-The changes in `1.0` are breaking, meaning graphs using the previous version will not work. However, instead of re-creating them, you can simply open the `.dyn` files using Notepad (though i recommend SublimeText) and perform the following text find/replaces :
-- replace `DSCore.Web.` with `DynaWeb.`
-- replace `DynWWW.dll` with `DynaWeb.dll`
-- replace `WebClient.WebClient` with `WebClient.ByUrl`
-
 
 ## Prerequisites
 
 This project requires the following applications or libraries be installed :
 
 ```
-Dynamo : version 1.3 or later
+Dynamo : version 2 or later
 ```
 ```
 .Net : version 4.5 or later
 ```
 
 Please note the project has no dependency to Revit and its APIs, so it will happily run in Dynamo Sandbox or Dynamo Studio.
-
-
-## Built with
-
-The `DynaWeb` project relies on a few community-published NuGet packages as listed below :
-* [Newtonsoft](https://www.nuget.org/packages/newtonsoft.json/) - handles serializing and deserializing to JSON
-* [RestSharp](https://www.nuget.org/packages/RestSharp/) - enables easier interaction with REST API endpoints
-* [DynamoServices](https://www.nuget.org/packages/DynamoVisualProgramming.DynamoServices/2.0.0-beta4066) - an official Dynamo package providing support for better mapping of C# code to Dynamo nodes
 
 ## Contributing
 
