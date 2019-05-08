@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evaluate
+namespace Autodesk.GenerativeToolkit.Analyze
 {
-    class Class1
+    static class Daylight
     {
     }
 }

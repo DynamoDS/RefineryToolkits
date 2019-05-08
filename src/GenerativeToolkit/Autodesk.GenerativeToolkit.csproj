@@ -200,7 +200,6 @@
     <Compile Include="Analyse\ViewsToOutside.cs" />
     <Compile Include="Analyse\Visibility.cs" />
     <Compile Include="Analyse\VisiblePoints.cs" />
-    <Compile Include="Evaluate\Class1.cs" />
     <Compile Include="Explore\ColorRange.cs" />
     <Compile Include="Generate\AmenitySpace.cs" />
     <Compile Include="Generate\BinPacking3D.cs" />

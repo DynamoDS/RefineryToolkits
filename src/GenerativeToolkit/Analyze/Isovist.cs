@@ -11,12 +11,10 @@ using GenerativeToolkit.Graphs;
 using Autodesk.DesignScript.Runtime;
 #endregion
 
-namespace Autodesk.GenerativeToolkit.Analyse
+namespace Autodesk.GenerativeToolkit.Analyze
 {
     public static class Isovist
     {
-        #region Public Methods
-
         /// <summary>
         /// Returns a surface representing the Isovist area visible from 
         /// the given point.
@@ -26,20 +24,23 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="point">Origin point</param>
         /// <returns name="isovist">Surface representing the isovist area</returns>
         [NodeCategory("Actions")]
-        public static Surface FromPoint(List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> internals, DSPoint point)
+        public static Surface FromPoint(List<Polygon> boundary, 
+            [DefaultArgument("[]")] List<Polygon> internals, 
+            DSPoint point)
         {
             BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary,internals);
 
-            if (baseGraph == null) { throw new ArgumentNullException("graph"); }
-            if (point == null) { throw new ArgumentNullException("point"); }
+            if (baseGraph == null) throw new ArgumentNullException("graph");
+            if (point == null) throw new ArgumentNullException("point");
 
             GeometryVertex origin = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
 
             List<GeometryVertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<DSPoint> points = vertices.Select(v => Points.ToPoint(v)).ToList();
 
-            Polygon polygon = Polygon.ByPoints(points);
+            var polygon = Polygon.ByPoints(points);
 
+            // if polygon is self intersecting, make new polygon
             if (polygon.SelfIntersections().Length > 0)
             {
                 points.Add(point);
@@ -49,7 +50,5 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             return Surface.ByPatch(polygon);
         }
-
-        #endregion
     }
 }
