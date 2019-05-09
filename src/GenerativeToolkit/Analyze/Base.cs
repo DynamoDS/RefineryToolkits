@@ -33,7 +33,7 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// Checks if the input is a Visibility or Base graph.
         /// </summary>
         /// <param name="graph">Graph</param>
-        /// <returns></returns>
+        /// <returns>Visibility Graph</returns>
         [IsVisibleInDynamoLibrary(false)]
         [NodeCategory("Query")]
         public static bool IsVisibilityGraph(BaseGraph graph)

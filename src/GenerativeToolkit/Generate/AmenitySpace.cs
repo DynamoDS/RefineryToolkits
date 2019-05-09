@@ -1,27 +1,26 @@
-﻿#region namespaces
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Runtime;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class AmenitySpace
     {
-        private const string amenitySurface = "amenitySrf";
-        private const string remainingSurface = "remainSrf";
+        private const string amenitySurfaceOutputPort = "amenitySrf";
+        private const string remainingSurfaceOutputPort = "remainSrf";
 
         /// <summary>
         /// Creates an amentiy space on a given surface, returning both the amenity space and the remaining space within the original surface
         /// </summary>
         /// <param name="surface">Surface to create Amenity Spaces on</param>
         /// <param name="offset">How much to offset to surface perimeter with</param>
-        /// <param name="depth"></param>
-        /// <search></search>
-        [MultiReturn(new[] { amenitySurface, remainingSurface })]
-        public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(Autodesk.DesignScript.Geometry.Surface surface, 
-            double offset, 
+        /// <param name="depth"></param> 
+        /// <returns>amenity surface and remaining surface</returns>
+        [MultiReturn(new[] { amenitySurfaceOutputPort, remainingSurfaceOutputPort })]
+        public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(
+            Autodesk.DesignScript.Geometry.Surface surface,
+            double offset,
             double depth)
         {
             List<Curve> inCrvs = Utilities.Surface.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
@@ -91,8 +90,8 @@ namespace Autodesk.GenerativeToolkit.Generate
             Dictionary<string, Surface> newOutput;
             newOutput = new Dictionary<string, Surface>
             {
-                {amenitySurface,amenitySurf},
-                {remainingSurface,remainSurf}
+                {amenitySurfaceOutputPort,amenitySurf},
+                {remainingSurfaceOutputPort,remainSurf}
             };
 
             //Dispose redundant geometry
@@ -108,7 +107,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             crvList.ForEach(crv => crv.Dispose());
             loftSrf.Dispose();
             intersectingCurves.ForEach(crv => crv.Dispose());
-            extendCurves.ForEach(crv => crv.Dispose());    
+            extendCurves.ForEach(crv => crv.Dispose());
 
             return newOutput;
         }

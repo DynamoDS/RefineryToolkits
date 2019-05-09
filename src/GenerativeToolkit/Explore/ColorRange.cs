@@ -1,15 +1,14 @@
-﻿#region namespaces
-using Autodesk.DesignScript.Runtime;
-using DSCore;
+﻿using DSCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Explore
 {
     public static class Colors
     {
+        private const int MaxColorAmount = 19;
+
         /// <summary>
         /// Creates a given amount of distinct colors which can be used in a color range
         /// </summary>
@@ -17,20 +16,21 @@ namespace Autodesk.GenerativeToolkit.Explore
         /// <param name="brightness">Correction factor from 0-1</param>
         /// <param name="seed">Seed</param>
         /// <returns>distinct colors</returns>
-        public static List<Color> ContrastyColorRange(int amount = 19, 
-            double brightness = 0, 
+        public static List<Color> ContrastyColorRange(
+            int amount = 19,
+            double brightness = 0,
             int seed = 1)
         {
-            if (amount > 19)
+            if (amount > MaxColorAmount)
             {
-                throw new System.ArgumentException("Maximum number of colours supported right now is 19");
+                throw new System.ArgumentException(string.Format("Maximum number of colours supported right now is {0}", MaxColorAmount));
             }
             Random rnd = new Random(seed);
-            List<int> indexRanges = Enumerable.Range(0, 19).ToList();
+            List<int> indexRanges = Enumerable.Range(0, MaxColorAmount).ToList();
             List<int> shuffledIndexes = indexRanges.OrderBy(x => rnd.Next()).ToList();
 
             List<Color> colors = new List<Color>();
-            foreach (int i in shuffledIndexes.GetRange(0,amount))
+            foreach (int i in shuffledIndexes.GetRange(0, amount))
             {
                 Color color = ColorPalette[i];
                 int red;
@@ -49,7 +49,7 @@ namespace Autodesk.GenerativeToolkit.Explore
                     green = Convert.ToInt32((255 - color.Green) * brightness + color.Green);
                     blue = Convert.ToInt32((255 - color.Blue) * brightness + color.Blue);
                 }
-                colors.Add(Color.ByARGB(r: red, g: green, b: blue));            
+                colors.Add(Color.ByARGB(r: red, g: green, b: blue));
             }
             return colors;
         }

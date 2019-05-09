@@ -1,15 +1,13 @@
-﻿#region namespaces
-using Autodesk.DesignScript.Geometry;
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using Dynamo.Graph.Nodes;
+using GenerativeToolkit.Graphs;
 using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using GenerativeToolkit.Graphs;
-using Autodesk.DesignScript.Runtime;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
@@ -24,11 +22,12 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="point">Origin point</param>
         /// <returns name="isovist">Surface representing the isovist area</returns>
         [NodeCategory("Actions")]
-        public static Surface FromPoint(List<Polygon> boundary, 
-            [DefaultArgument("[]")] List<Polygon> internals, 
+        public static Surface FromPoint(
+            List<Polygon> boundary,
+            [DefaultArgument("[]")] List<Polygon> internals,
             DSPoint point)
         {
-            BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary,internals);
+            BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
 
             if (baseGraph == null) throw new ArgumentNullException("graph");
             if (point == null) throw new ArgumentNullException("point");
@@ -47,8 +46,11 @@ namespace Autodesk.GenerativeToolkit.Analyze
                 polygon = Polygon.ByPoints(points);
 
             }
+            Surface surface = Surface.ByPatch(polygon);
+            polygon.Dispose();
+            points.ForEach(p => p.Dispose());
 
-            return Surface.ByPatch(polygon);
+            return surface;
         }
     }
 }
