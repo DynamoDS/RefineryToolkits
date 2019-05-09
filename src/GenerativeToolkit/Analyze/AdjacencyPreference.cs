@@ -1,16 +1,20 @@
-﻿#region namespaces
-using Autodesk.DesignScript.Geometry;
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
+using MIConvexHull;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MIConvexHull;
-using Autodesk.DesignScript.Runtime;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
     public static class AdjacencyPreference
     {
+        /// <summary>
+        /// Assume test_distance to be 1000 
+        /// </summary>
+        private const double testDistance = 1000;
+
+
         /// <summary>
         /// Returns the geometric median point of a list of points.
         /// The geometric median is the point minimizing the sum of distances to the sample points
@@ -31,11 +35,11 @@ namespace Autodesk.GenerativeToolkit.Analyze
                 {
                     return FermatPoint(points);
                 }
-                
+
             }
             // Else If 4 points return wither the point inside the convex hull
             // or the crossing point of the diagonals of the quadrilateral
-            if(points.Count == 4)
+            if (points.Count == 4)
             {
                 List<Point> convexHull = ConvexHull(points);
                 if (convexHull.Count == 3)
@@ -68,20 +72,21 @@ namespace Autodesk.GenerativeToolkit.Analyze
             int n = points.Count;
             Point commonPoint = CommonPointByPoints(testPoints, points, n);
 
-            return commonPoint;        
+            return commonPoint;
         }
 
         #region Private Methods
 
         /// <summary>
-        /// returns the geometric median of a list of points > 4 and < 3
+        /// returns the geometric median of a list of points bigger than 4 and smaller than 3
         /// </summary>
         /// <param name="testPoints"></param>
         /// <param name="points"></param>
         /// <param name="n"></param>
-        /// <returns></returns>
-        private static Point CommonPointByPoints(List<Point> testPoints, 
-            List<Point> points, 
+        /// <returns>geometric median of a list of points bigger than 4 and smaller than 3</returns>
+        private static Point CommonPointByPoints(
+            List<Point> testPoints,
+            List<Point> points,
             int n)
         {
             double currentX = 0;
@@ -104,12 +109,12 @@ namespace Autodesk.GenerativeToolkit.Analyze
             // minimum_distance becomes sum of 
             // all distances from MidPoint to 
             // all given points 
-            double minimumDistance = DistanceSum(Point.ByCoordinates(currentX,currentY), points, n);
+            double minimumDistance = DistanceSum(Point.ByCoordinates(currentX, currentY), points, n);
 
             int k = 0;
-            while (k < n) 
+            while (k < n)
             {
-                for (int i = 0; i < n ; i++)
+                for (int i = 0; i < n; i++)
                 {
                     if (i != k)
                     {
@@ -125,8 +130,6 @@ namespace Autodesk.GenerativeToolkit.Analyze
                 k++;
             }
 
-            // Assume test_distance to be 1000 
-            double testDistance = 1000;
             int flag = 0;
 
             // Lowest Limit till which we are going 
@@ -136,14 +139,15 @@ namespace Autodesk.GenerativeToolkit.Analyze
             // Test loop for approximation starts here 
             while (testDistance > lowerLimit)
             {
+                double newTestDistance = testDistance;
                 flag = 0;
 
                 // Loop for iterating over all 4 neighbours 
                 for (int i = 0; i < 4; i++)
                 {
                     // Finding Neighbours done 
-                    double newX = currentX + (double)testDistance * testPoints[i].X;
-                    double newY = currentY + (double)testDistance * testPoints[i].Y;
+                    double newX = currentX + (double)newTestDistance * testPoints[i].X;
+                    double newY = currentY + (double)newTestDistance * testPoints[i].Y;
 
                     // New sum of Euclidean distances 
                     // from the neighbor to the given 
@@ -168,22 +172,22 @@ namespace Autodesk.GenerativeToolkit.Analyze
                 // loop for better approximation 
                 if (flag == 0)
                 {
-                    testDistance /= 2;
+                    newTestDistance /= 2;
                 }
-                    
             }
             return Point.ByCoordinates(currentX, currentY);
         }
 
         /// <summary>
-        /// Return the sum of Euclidean Distances 
+        /// Calculates the sum of Euclidean Distances 
         /// </summary>
         /// <param name="point"></param>
         /// <param name="points"></param>
         /// <param name="n"></param>
-        /// <returns></returns>
-        private static double DistanceSum(Point point, 
-            List<Point> points, 
+        /// <returns>sum of Euclidean Distances</returns>
+        private static double DistanceSum(
+            Point point,
+            List<Point> points,
             int n)
         {
             double sum = 0;
@@ -198,13 +202,14 @@ namespace Autodesk.GenerativeToolkit.Analyze
         }
 
         /// <summary>
-        /// if points are triangle with angel > 120, return vertex at that angle
+        /// if points are triangle with angel bigger than or equal to 120, return vertex at that angle
         /// </summary>
         /// <param name="A"></param>
         /// <param name="B"></param>
         /// <param name="C"></param>
-        /// <returns></returns>
-        private static Point VertexAtAngle(Point A, 
+        /// <returns>vertex at angle than or equal to 120</returns>
+        private static Point VertexAtAngle(
+            Point A,
             Point B,
             Point C)
         {
@@ -227,17 +232,16 @@ namespace Autodesk.GenerativeToolkit.Analyze
             alpha = Math.Ceiling(alpha * 180 / Math.PI);
             betta = Math.Ceiling(betta * 180 / Math.PI);
             gamma = Math.Ceiling(gamma * 180 / Math.PI);
-            
 
-            if(alpha >= 120)
+            if (alpha >= 120)
             {
                 return A;
             }
-            if(betta >= 120)
+            if (betta >= 120)
             {
                 return B;
             }
-            if(gamma >= 120)
+            if (gamma >= 120)
             {
                 return C;
             }
@@ -250,8 +254,9 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// </summary>
         /// <param name="pt1"></param>
         /// <param name="pt2"></param>
-        /// <returns></returns>
-        private static double LengthSquare(Point pt1, 
+        /// <returns>distance b/w two points</returns>
+        private static double LengthSquare(
+            Point pt1,
             Point pt2)
         {
             double xDiff = pt1.X - pt2.X;
@@ -260,17 +265,17 @@ namespace Autodesk.GenerativeToolkit.Analyze
         }
 
         /// <summary>
-        /// returns the common point of a triangle with angles < 120
+        /// finds the common point of a triangle with angles bigger than 120
         /// </summary>
         /// <param name="points"></param>
-        /// <returns></returns>
+        /// <returns>common point of a triangle with angles bigger than 120</returns>
         private static Point FermatPoint(List<Point> points)
         {
             List<Point> sortedPoints = points.OrderBy(pt => pt.Y).Reverse().ToList();
 
             Vector vectorAB = Vector.ByTwoPoints(sortedPoints[0], sortedPoints[1]).Rotate(Vector.ZAxis(), 90);
             Vector vectorAC = Vector.ByTwoPoints(sortedPoints[2], sortedPoints[0]).Rotate(Vector.ZAxis(), 90);
-          
+
             Point midpointAB = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[1].X) / 2, (sortedPoints[0].Y + sortedPoints[1].Y) / 2);
             Point midpointAC = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[2].X) / 2, (sortedPoints[0].Y + sortedPoints[2].Y) / 2);
 
@@ -295,16 +300,16 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// returns the Convex Hull of a list of points
         /// </summary>
         /// <param name="points"></param>
-        /// <returns></returns>
+        /// <returns>Convex Hull</returns>
         private static List<Point> ConvexHull(List<Point> points)
         {
-            var verticies = new Vertex[points.Count];
+            var vertices = new Vertex[points.Count];
             for (int i = 0; i < points.Count; i++)
             {
-                verticies[i] = new Vertex(points[i].X, points[i].Y);
+                vertices[i] = new Vertex(points[i].X, points[i].Y);
             }
 
-            var convexHull = MIConvexHull.ConvexHull.Create(verticies).Result.Points.ToList();
+            var convexHull = MIConvexHull.ConvexHull.Create(vertices).Result.Points.ToList();
 
             List<Point> convexHullPoints = new List<Point>();
             foreach (Vertex vertex in convexHull)
@@ -316,16 +321,18 @@ namespace Autodesk.GenerativeToolkit.Analyze
         }
 
         #endregion
-    }
 
-    [IsVisibleInDynamoLibrary(false)]
-    public class Vertex : IVertex
-    {
-        public Vertex(double x, double y)
+        [IsVisibleInDynamoLibrary(false)]
+        private class Vertex : IVertex
         {
-            Position = new double[2] { x, y };
+            public Vertex(double x, double y)
+            {
+                Position = new double[2] { x, y };
+            }
+
+            public double[] Position { get; set; }
         }
 
-        public double[] Position { get; set; }
     }
+
 }

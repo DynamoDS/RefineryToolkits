@@ -1,14 +1,13 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
     public static class ViewsToOutside
     {
-        private const string scoreOutput = "score";
-        private const string geometryOutput = "segments";
+        private const string scoreOutputPort = "score";
+        private const string geometryOutputPort = "segments";
 
         /// <summary>
         /// Calculates the view to outside from a given point based on a 360 degree ratio.
@@ -19,10 +18,11 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="viewSegments">Line segments representing the views to outside</param>
         /// <param name="origin">Origin point to measure from</param>
         /// <returns>precentage of 360 view that is to the outside</returns>
-        [MultiReturn(new[] { scoreOutput, geometryOutput })]
-        public static Dictionary<string, object> ByLineSegments(List<Curve> viewSegments, 
-            Point origin, 
-            List<Polygon> boundary, 
+        [MultiReturn(new[] { scoreOutputPort, geometryOutputPort })]
+        public static Dictionary<string, object> ByLineSegments(
+            List<Curve> viewSegments,
+            Point origin,
+            List<Polygon> boundary,
             [DefaultArgument("[]")] List<Polygon> internals)
         {
             Surface isovist = Isovist.FromPoint(boundary, internals, origin);
@@ -54,9 +54,9 @@ namespace Autodesk.GenerativeToolkit.Analyze
 
             return new Dictionary<string, object>()
             {
-                {scoreOutput, score },
-                {geometryOutput, lines }
+                {scoreOutputPort, score },
+                {geometryOutputPort, lines }
             };
-        }      
+        }
     }
 }

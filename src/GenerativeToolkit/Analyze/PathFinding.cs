@@ -1,21 +1,21 @@
-﻿using Autodesk.DesignScript.Runtime;
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
+using Dynamo.Graph.Nodes;
+using GenerativeToolkit.Graphs;
 using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSPolygon = Autodesk.DesignScript.Geometry.Polygon;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using GenerativeToolkit.Graphs;
-using Dynamo.Graph.Nodes;
-using Autodesk.DesignScript.Geometry;
-using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
+using DSPolygon = Autodesk.DesignScript.Geometry.Polygon;
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
     public static class PathFinding
     {
-        private const string graph = "path";
-        private const string length = "length";
+        private const string graphOutputPort = "path";
+        private const string lengthOutputPort = "length";
 
         /// <summary>
         /// Returns a graph representing the shortest path 
@@ -26,9 +26,10 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="destination">Destination point</param>
         /// <returns name="path">Graph representing the shortest path</returns>
         /// <returns name="length">Length of path</returns>
-        [MultiReturn(new[] { graph, length })]
-        public static Dictionary<string, object> ShortestPath(Visibility visGraph, 
-            DSPoint origin, 
+        [MultiReturn(new[] { graphOutputPort, lengthOutputPort })]
+        public static Dictionary<string, object> ShortestPath(
+            Visibility visGraph,
+            DSPoint origin,
             DSPoint destination)
         {
 
@@ -48,8 +49,8 @@ namespace Autodesk.GenerativeToolkit.Analyze
 
             return new Dictionary<string, object>()
             {
-                {graph, baseGraph },
-                {length, baseGraph.graph.edges.Select(e => e.Length).Sum() }
+                {graphOutputPort, baseGraph },
+                {lengthOutputPort, baseGraph.graph.edges.Select(e => e.Length).Sum() }
             };
         }
 
@@ -59,7 +60,8 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="boundary"></param>
         /// <param name="internals"></param>
         /// <returns name = "visGraph">VisibilityGraph for use in ShortestPath</returns>
-        public static Visibility CreateVisibilityGraph(List<DSPolygon> boundary, 
+        public static Visibility CreateVisibilityGraph(
+            List<DSPolygon> boundary,
             List<DSPolygon> internals)
         {
             var graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
@@ -84,5 +86,5 @@ namespace Autodesk.GenerativeToolkit.Analyze
             }
             return lines;
         }
-    }  
+    }
 }
