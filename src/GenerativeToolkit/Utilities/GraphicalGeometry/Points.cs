@@ -13,6 +13,13 @@ using GenerativeToolkit.Graphs.Geometry;
 
 namespace Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry
 {
+    /***************************************************************************************
+    * Title: Graphical
+    * Author: Alvaro Ortega Pickmans
+    * Date: 2017
+    * Availability: https://github.com/alvpickmans/Graphical
+    *
+    ***************************************************************************************/
 
     /// <summary>
     /// Static class extending Point functionality
