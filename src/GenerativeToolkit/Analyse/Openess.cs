@@ -22,7 +22,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <returns>Score from 0-1, 1 being totally enclosed and 0 being totally open</returns>
         public static double FromSurface(Surface surface, [DefaultArgument("0.0")] double tolerance, [DefaultArgument("[]")] List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> obstacles)
         {
-            List<Curve> perimeterCrvs = GTUtil.Surface.OffsetPerimeterCurves(surface, tolerance)["outsetCrvs"].ToList();
+            List<Curve> perimeterCrvs = GTUtil.SurfaceExtension.OffsetPerimeterCurves(surface, tolerance)["outsetCrvs"].ToList();
             List<Polygon> intersectionPolygons = new List<Polygon>();
             intersectionPolygons.AddRange(boundary);
             intersectionPolygons.AddRange(obstacles);

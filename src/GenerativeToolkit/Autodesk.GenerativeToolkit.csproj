@@ -202,12 +202,16 @@
     <Compile Include="Generate\AmenitySpace.cs" />
     <Compile Include="Generate\BinPacking3D.cs" />
     <Compile Include="Generate\DeskLayout.cs" />
-    <Compile Include="Utilities\GenerativeToolkitGeometry.cs" />
+    <Compile Include="Utilities\PointExtension.cs" />
+    <Compile Include="Utilities\VectorExtension.cs" />
+    <Compile Include="Utilities\SurfaceExtension.cs" />
+    <Compile Include="Utilities\LineExtension.cs" />
     <Compile Include="Utilities\GenerativeToolkitList.cs" />
     <Compile Include="Generate\BinPacking2D.cs" />
     <Compile Include="Generate\SurfaceDivision2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rank\SeededShuffle.cs" />
+    <Compile Include="Utilities\CurveExtension.cs" />
     <Compile Include="Utilities\GraphicalGeometry\Curves.cs" />
     <Compile Include="Utilities\GraphicalGeometry\Points.cs" />
   </ItemGroup>

@@ -9,7 +9,7 @@ using Autodesk.DesignScript.Runtime;
 namespace Autodesk.GenerativeToolkit.Utilities
 {
     [IsVisibleInDynamoLibrary(false)]
-    internal static class List
+    internal static class ListExtension
     {
 
         #region RunningTotals

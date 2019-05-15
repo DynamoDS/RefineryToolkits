@@ -23,12 +23,12 @@ namespace Autodesk.GenerativeToolkit.Generate
         [MultiReturn(new[] { output1, output2 })]
         public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(Autodesk.DesignScript.Geometry.Surface surface, double offset, double depth)
         {
-            List<Curve> inCrvs = Utilities.Surface.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
+            List<Curve> inCrvs = Utilities.SurfaceExtension.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
             Autodesk.DesignScript.Geometry.Surface inSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
 
             Curve max;
             List<Curve> others;
-            Dictionary<string, dynamic> dict = Utilities.Curve.MaximumLength(inCrvs);
+            Dictionary<string, dynamic> dict = Utilities.CurveExtension.MaximumLength(inCrvs);
             if (dict["maxCrv"].Count < 1)
             {
                 max = dict["otherCrvs"][0] as Curve;
@@ -43,11 +43,11 @@ namespace Autodesk.GenerativeToolkit.Generate
             }
 
             List<Curve> perimCrvs = surface.PerimeterCurves().ToList();
-            List<Curve> matchCrvs = Utilities.Curve.FindMatchingVectorCurves(max, perimCrvs);
+            List<Curve> matchCrvs = Utilities.CurveExtension.FindMatchingVectorCurves(max, perimCrvs);
 
 
             Curve max2;
-            Dictionary<string, dynamic> dict2 = Utilities.Curve.MaximumLength(matchCrvs);
+            Dictionary<string, dynamic> dict2 = Utilities.CurveExtension.MaximumLength(matchCrvs);
             if (dict2["maxCrv"].Count < 1)
             {
                 max2 = dict2["otherCrvs"][0] as Curve;
@@ -57,7 +57,7 @@ namespace Autodesk.GenerativeToolkit.Generate
                 max2 = dict2["maxCrv"][0] as Curve;
             }
 
-            Vector vec = Utilities.Vector.ByTwoCurves(max2, max);
+            Vector vec = Utilities.VectorExtension.ByTwoCurves(max2, max);
 
             Autodesk.DesignScript.Geometry.Curve transLine = max.Translate(vec, depth) as Curve;
             Line extendLine = Utilities.Line.ExtendAtBothEnds(transLine, 1);
@@ -81,9 +81,9 @@ namespace Autodesk.GenerativeToolkit.Generate
                 extendCurves.Add(l);
             }
 
-            List<Autodesk.DesignScript.Geometry.Surface> split = Utilities.Surface.SplitPlanarSurfaceByMultipleCurves(loftSrf, extendCurves).OfType<Autodesk.DesignScript.Geometry.Surface>().ToList();
+            List<Autodesk.DesignScript.Geometry.Surface> split = Utilities.SurfaceExtension.SplitPlanarSurfaceByMultipleCurves(loftSrf, extendCurves).OfType<Autodesk.DesignScript.Geometry.Surface>().ToList();
 
-            Autodesk.DesignScript.Geometry.Surface amenitySurf = Utilities.Surface.MaximumArea(split)["maxSrf"] as Autodesk.DesignScript.Geometry.Surface;
+            Autodesk.DesignScript.Geometry.Surface amenitySurf = Utilities.SurfaceExtension.MaximumArea(split)["maxSrf"] as Autodesk.DesignScript.Geometry.Surface;
 
             Autodesk.DesignScript.Geometry.Surface remainSurf = inSrf.Split(amenitySurf)[0] as Autodesk.DesignScript.Geometry.Surface;
 
