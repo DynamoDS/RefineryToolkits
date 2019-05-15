@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GenerativeToolkit.Graphs;
-using GenerativeToolkit.Graphs.Geometry;
+using Autodesk.GenerativeToolkit.Core.Geometry;
 using GenerativeToolkit.Graphs.DataStructures;
 
 namespace GenerativeToolkit.Graphs.Algorithms
@@ -12,12 +12,12 @@ namespace GenerativeToolkit.Graphs.Algorithms
     public static class Algorithms
     {
         
-        public static Graph Dijkstra(Graph graph, GeometryVertex origin, GeometryVertex destination, Graph tempGraph = null)
+        public static Graph Dijkstra(Graph graph, Vertex origin, Vertex destination, Graph tempGraph = null)
         {
-            MinPriorityQ<GeometryVertex, double> Q = new MinPriorityQ<GeometryVertex, double>();
+            MinPriorityQ<Vertex, double> Q = new MinPriorityQ<Vertex, double>();
             bool originInGraph = false;
 
-            foreach(GeometryVertex v in graph.vertices)
+            foreach(Vertex v in graph.vertices)
             {
                 if (v.Equals(origin))
                 {
@@ -38,27 +38,27 @@ namespace GenerativeToolkit.Graphs.Algorithms
 
             if (!graph.Contains(destination)) { Q.Add(destination, Double.PositiveInfinity); }
 
-            Dictionary<GeometryVertex, GeometryVertex> ParentVertices = new Dictionary<GeometryVertex, GeometryVertex>();
-            List<GeometryVertex> S = new List<GeometryVertex>();
+            Dictionary<Vertex, Vertex> ParentVertices = new Dictionary<Vertex, Vertex>();
+            List<Vertex> S = new List<Vertex>();
 
             while (Q.Size > 0)
             {
                 double minDistance = Q.PeekValue();
-                GeometryVertex vertex = Q.Take();
+                Vertex vertex = Q.Take();
                 S.Add(vertex);
 
                 if (vertex.Equals(destination)) { break; }
 
-                List<GeometryEdge> edges = new List<GeometryEdge>();
+                List<Edge> edges = new List<Edge>();
                 edges.AddRange(graph.GetVertexEdges(vertex));
                 if(tempGraph != null && tempGraph.edges.Any())
                 {
                     edges.AddRange(tempGraph.GetVertexEdges(vertex));
                 }
 
-                foreach(GeometryEdge e in edges)
+                foreach(Edge e in edges)
                 {
-                    GeometryVertex w = e.GetVertexPair(vertex);
+                    Vertex w = e.GetVertexPair(vertex);
                     double newLength = minDistance + e.Length;
                     
                     if(!S.Contains(w) && newLength < Q.GetValue(w))
@@ -72,11 +72,11 @@ namespace GenerativeToolkit.Graphs.Algorithms
             }
 
             Graph path = new Graph();
-            GeometryVertex dest = destination;
+            Vertex dest = destination;
             while (dest != origin)
             {
-                GeometryVertex parent = ParentVertices[dest];
-                path.AddEdge(new GeometryEdge(parent, dest));
+                Vertex parent = ParentVertices[dest];
+                path.AddEdge(new Edge(parent, dest));
                 dest = parent;
             }
             // Reversing edges list so they will be sorted from origin to target

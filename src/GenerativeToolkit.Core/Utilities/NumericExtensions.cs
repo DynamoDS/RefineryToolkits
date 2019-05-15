@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenerativeToolkit.Graphs.Extensions
+namespace Autodesk.GenerativeToolkit.Core.Utillites
 {
     /// <summary>
     /// Extensions methods for numerical objects
@@ -41,9 +41,7 @@ namespace GenerativeToolkit.Graphs.Extensions
         /// <returns></returns>
         public static bool AlmostEqualTo(this double value1, double value2)
         {
-
             return Math.Abs(value1 - value2) <= EPS;
-
         }
 
         /// <summary>

@@ -148,14 +148,6 @@
     <Compile Include="Algorithms\Algorithms.cs" />
     <Compile Include="DataStructures\BinaryHeap.cs" />
     <Compile Include="DataStructures\PriorityQ.cs" />
-    <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Extensions\NumericExtensions.cs" />
-    <Compile Include="Geometry\GeometryBase.cs" />
-    <Compile Include="Geometry\GeometryBoundingBox.cs" />
-    <Compile Include="Geometry\GeometryEdge.cs" />
-    <Compile Include="Geometry\GeometryPolygon.cs" />
-    <Compile Include="Geometry\GeometryVector.cs" />
-    <Compile Include="Geometry\GeometryVertex.cs" />
     <Compile Include="Graphs\EdgeKey.cs" />
     <Compile Include="Graphs\Graph.cs" />
     <Compile Include="Graphs\VisibilityGraph.cs" />
@@ -164,6 +156,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GenerativeToolkit.Core\GenerativeToolkit.Core.csproj">
+      <Project>{a528fcd0-0855-409c-88e0-e36e6a718fd3}</Project>
+      <Name>GenerativeToolkit.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
