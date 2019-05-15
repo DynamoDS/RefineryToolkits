@@ -1,15 +1,12 @@
-﻿#region namespaces
+﻿using Autodesk.DesignScript.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.DesignScript.Geometry;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class DeskLayout
     {
-        #region Create
         /// <summary>
         /// Creates a layout of desks on a surface based on desk dimensions
         /// </summary>
@@ -18,7 +15,11 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="deskDepth">the depth of the desks in mm</param>
         /// <param name="backToBack">the distance in mm between two desks where the people sat at them are back to back</param>
         /// <search></search>
-        public static object Create(Autodesk.DesignScript.Geometry.Surface surface, double deskWidth = 1400, double deskDepth = 800, double backToBack = 2200)
+        public static object Create(
+            Surface surface,
+            double deskWidth = 1400,
+            double deskDepth = 800,
+            double backToBack = 2200)
         {
             Surface boundingSrf = Utilities.SurfaceExtension.BoundingSurface(surface);
             List<Curve> perimCrvs = boundingSrf.PerimeterCurves().ToList();
@@ -223,6 +224,5 @@ namespace Autodesk.GenerativeToolkit.Generate
             return cleanRect;
 
         }
-        #endregion 
     }
 }

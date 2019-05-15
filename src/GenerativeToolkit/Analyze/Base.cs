@@ -12,7 +12,7 @@ using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using GenerativeToolkit.Graphs;
 #endregion
 
-namespace Autodesk.GenerativeToolkit.Analyse
+namespace Autodesk.GenerativeToolkit.Analyze
 {
     /***************************************************************************************
     * Title: Graphical
@@ -36,12 +36,13 @@ namespace Autodesk.GenerativeToolkit.Analyse
         #endregion
 
         #region Public Properties
-        [IsVisibleInDynamoLibrary(false)]
+
         /// <summary>
         /// Checks if the input is a Visibility or Base graph.
         /// </summary>
         /// <param name="graph">Graph</param>
-        /// <returns></returns>
+        /// <returns>Visibility Graph</returns>
+        [IsVisibleInDynamoLibrary(false)]
         [NodeCategory("Query")]
         public static bool IsVisibilityGraph(BaseGraph graph)
         {
@@ -61,17 +62,18 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
         #region Public Constructors
 
-        [IsVisibleInDynamoLibrary(false)]
         /// <summary>
         /// Creates a Graph by a set of boundary and internal polygons.
         /// </summary>
         /// <param name="boundaries">Boundary polygons</param>
         /// <param name="internals">Internal polygons</param>
         /// <returns name="baseGraph">Base graph</returns>
-        public static BaseGraph ByBoundaryAndInternalPolygons(List<Polygon> boundaries, [DefaultArgument("[]")]List<Polygon> internals)
+        [IsVisibleInDynamoLibrary(false)]
+        public static BaseGraph ByBoundaryAndInternalPolygons(List<Polygon> boundaries, 
+            [DefaultArgument("[]")]List<Polygon> internals)
         {
-            if (boundaries == null) { throw new NullReferenceException("boundaryPolygons"); }
-            if (internals == null) { throw new NullReferenceException("internalPolygons"); }
+            if (boundaries == null) throw new NullReferenceException("boundaryPolygons");
+            if (internals == null) throw new NullReferenceException("internalPolygons");
             List<GeometryPolygon> input = new List<GeometryPolygon>();
             foreach (Polygon pol in boundaries)
             {
@@ -90,15 +92,16 @@ namespace Autodesk.GenerativeToolkit.Analyse
             return new BaseGraph(input);
         }
 
-        [IsVisibleInDynamoLibrary(false)]
+
         /// <summary>
         /// Creates a graph by a set of closed polygons
         /// </summary>
         /// <param name="polygons">Polygons</param>
         /// <returns name="baseGraph">Base graph</returns>
+        [IsVisibleInDynamoLibrary(false)]
         public static BaseGraph ByPolygons(List<Polygon> polygons)
         {
-            if (polygons == null) { throw new NullReferenceException("polygons"); }
+            if (polygons == null) throw new NullReferenceException("polygons");
             List<GeometryPolygon> input = new List<GeometryPolygon>();
             foreach (Polygon pol in polygons)
             {
@@ -110,15 +113,15 @@ namespace Autodesk.GenerativeToolkit.Analyse
             return new BaseGraph(input);
         }
 
-        [IsVisibleInDynamoLibrary(false)]
         /// <summary>
         /// Creates a new Graph by a set of lines.
         /// </summary>
         /// <param name="lines">Lines</param>
         /// <returns name="baseGraph">Base Graph</returns>
+        [IsVisibleInDynamoLibrary(false)]
         public static BaseGraph ByLines(List<Line> lines)
         {
-            if (lines == null) { throw new NullReferenceException("lines"); }
+            if (lines == null) throw new NullReferenceException("lines");
             BaseGraph g = new BaseGraph()
             {
                 graph = new Graph()
@@ -151,7 +154,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="package"></param>
         /// <param name="parameters"></param>
         [IsVisibleInDynamoLibrary(false)]
-        public void Tessellate(IRenderPackage package, TessellationParameters parameters)
+        public void Tessellate(IRenderPackage package, 
+            TessellationParameters parameters)
         {
             if (this.GetType() == typeof(Visibility))
             {
@@ -173,7 +177,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
         }
 
-        internal void TesselateBaseGraph(IRenderPackage package, TessellationParameters parameters)
+        internal void TesselateBaseGraph(IRenderPackage package, 
+            TessellationParameters parameters)
         {
             foreach (GeometryVertex v in graph.vertices)
             {
@@ -186,13 +191,17 @@ namespace Autodesk.GenerativeToolkit.Analyse
             }
         }
 
-        internal static void AddColouredVertex(IRenderPackage package, GeometryVertex vertex, DSCore.Color color)
+        internal static void AddColouredVertex(IRenderPackage package, 
+            GeometryVertex vertex, 
+            DSCore.Color color)
         {
             package.AddPointVertex(vertex.X, vertex.Y, vertex.Z);
             package.AddPointVertexColor(color.Red, color.Green, color.Blue, color.Alpha);
         }
 
-        internal static void AddColouredEdge(IRenderPackage package, GeometryEdge edge, DSCore.Color color)
+        internal static void AddColouredEdge(IRenderPackage package, 
+            GeometryEdge edge, 
+            DSCore.Color color)
         {
             package.AddLineStripVertex(edge.StartVertex.X, edge.StartVertex.Y, edge.StartVertex.Z);
             package.AddLineStripVertex(edge.EndVertex.X, edge.EndVertex.Y, edge.EndVertex.Z);

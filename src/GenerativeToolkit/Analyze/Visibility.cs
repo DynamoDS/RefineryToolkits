@@ -1,5 +1,4 @@
-﻿#region namespaces
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
@@ -11,9 +10,8 @@ using Dynamo.Graph.Nodes;
 using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
 using GenerativeToolkit.Graphs.Extensions;
 using GenerativeToolkit.Graphs;
-#endregion
 
-namespace Autodesk.GenerativeToolkit.Analyse
+namespace Autodesk.GenerativeToolkit.Analyze
 {
 
     /***************************************************************************************
@@ -30,6 +28,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
     [IsVisibleInDynamoLibrary(false)]
     public class Visibility : BaseGraph
     {
+        private const string graphOutput = "visGraph";
+        private const string factorsOutput = "factors";
+
         #region Internal Properties
         internal Dictionary<double, DSCore.Color> colorRange { get; private set; }
 
@@ -60,7 +61,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         [IsVisibleInDynamoLibrary(false)]
         public static Visibility ByBaseGraph(BaseGraph baseGraph, bool reduced = true)
         {
-            if (baseGraph == null) { throw new ArgumentNullException("graph"); }
+            if (baseGraph == null)  throw new ArgumentNullException("graph"); 
             var visGraph = new VisibilityGraph(baseGraph.graph, reduced, true);
             var visibilityGraph = new Visibility()
             {
@@ -87,7 +88,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
         [IsVisibleInDynamoLibrary(false)]
         public static Visibility ConnectGraphs(List<Visibility> visibilityGraphs, List<Line> lines)
         {
-            if (visibilityGraphs == null) { throw new ArgumentNullException("visibilityGraphs"); }
+            if (visibilityGraphs == null) throw new ArgumentNullException("visibilityGraphs");
 
             List<VisibilityGraph> visGraphs = visibilityGraphs.Select(vg => (VisibilityGraph)vg.graph).ToList();
             VisibilityGraph mergedGraph = VisibilityGraph.Merge(visGraphs);
@@ -110,13 +111,13 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <returns name="visGraph">Visibility Graph</returns>
         /// <returns name="factors">Connectivity factors by edge on graph</returns>
         [NodeCategory("Query")]
-        [MultiReturn(new[] { "visGraph", "factors" })]
+        [MultiReturn(new[] { graphOutput, factorsOutput })]
         public static Dictionary<string, object> Connectivity(
             Visibility visGraph,
             [DefaultArgument("null")] List<DSCore.Color> colours,
             [DefaultArgument("null")] List<double> indices)
         {
-            if (visGraph == null) { throw new ArgumentNullException("visGraph"); }
+            if (visGraph == null) throw new ArgumentNullException("visGraph");
 
             VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
 
@@ -141,8 +142,8 @@ namespace Autodesk.GenerativeToolkit.Analyse
 
             return new Dictionary<string, object>()
             {
-                {"visGraph", graph },
-                {"factors", graph.Factors }
+                {graphOutput, graph },
+                {factorsOutput, graph.Factors }
             };
         }
         #endregion

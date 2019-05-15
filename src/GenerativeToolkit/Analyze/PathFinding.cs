@@ -1,23 +1,21 @@
-﻿#region namespaces
+﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
+using Dynamo.Graph.Nodes;
+using GenerativeToolkit.Graphs;
 using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSPolygon = Autodesk.DesignScript.Geometry.Polygon;
 using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using GenerativeToolkit.Graphs;
-using Dynamo.Graph.Nodes;
-using Autodesk.DesignScript.Geometry;
-using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
-#endregion
+using DSPolygon = Autodesk.DesignScript.Geometry.Polygon;
 
-namespace Autodesk.GenerativeToolkit.Analyse
+namespace Autodesk.GenerativeToolkit.Analyze
 {
     public static class PathFinding
     {
-        private const string output1 = "path";
-        private const string output2 = "length";
+        private const string graphOutputPort = "path";
+        private const string lengthOutputPort = "length";
 
 
         /***************************************************************************************
@@ -37,28 +35,31 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="destination">Destination point</param>
         /// <returns name="path">Graph representing the shortest path</returns>
         /// <returns name="length">Length of path</returns>
-        [MultiReturn(new[] { output1, output2 })]
-        public static Dictionary<string, object> ShortestPath(Visibility visGraph, DSPoint origin, DSPoint destination)
+        [MultiReturn(new[] { graphOutputPort, lengthOutputPort })]
+        public static Dictionary<string, object> ShortestPath(
+            Visibility visGraph,
+            DSPoint origin,
+            DSPoint destination)
         {
 
-            if (visGraph == null) { throw new ArgumentNullException("visibility"); }
-            if (origin == null) { throw new ArgumentNullException("origin"); }
-            if (destination == null) { throw new ArgumentNullException("destination"); }
+            if (visGraph == null) throw new ArgumentNullException("visibility");
+            if (origin == null) throw new ArgumentNullException("origin");
+            if (destination == null) throw new ArgumentNullException("destination");
 
-            GeometryVertex gOrigin = GeometryVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
-            GeometryVertex gDestination = GeometryVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
+            var gOrigin = GeometryVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
+            var gDestination = GeometryVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
 
-            VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
+            var visibilityGraph = visGraph.graph as VisibilityGraph;
 
-            BaseGraph baseGraph = new BaseGraph()
+            var baseGraph = new BaseGraph()
             {
                 graph = VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination)
             };
 
             return new Dictionary<string, object>()
             {
-                {output1, baseGraph },
-                {output2, baseGraph.graph.edges.Select(e => e.Length).Sum() }
+                {graphOutputPort, baseGraph },
+                {lengthOutputPort, baseGraph.graph.edges.Select(e => e.Length).Sum() }
             };
         }
 
@@ -68,10 +69,12 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="boundary"></param>
         /// <param name="internals"></param>
         /// <returns name = "visGraph">VisibilityGraph for use in ShortestPath</returns>
-        public static Visibility CreateVisibilityGraph(List<DSPolygon> boundary, List<DSPolygon> internals)
+        public static Visibility CreateVisibilityGraph(
+            List<DSPolygon> boundary,
+            List<DSPolygon> internals)
         {
-            BaseGraph graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
-            Visibility visGraph = Visibility.ByBaseGraph(graph);
+            var graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
+            var visGraph = Visibility.ByBaseGraph(graph);
 
             return visGraph;
         }
@@ -92,5 +95,5 @@ namespace Autodesk.GenerativeToolkit.Analyse
             }
             return lines;
         }
-    }  
+    }
 }

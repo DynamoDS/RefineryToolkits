@@ -1,4 +1,5 @@
-﻿#region namespaces
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.DesignScript.Geometry;
@@ -10,19 +11,21 @@ namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class AmenitySpace
     {
-        private const string output1 = "amenitySrf";
-        private const string output2 = "remainSrf";
+        private const string amenitySurfaceOutputPort = "amenitySrf";
+        private const string remainingSurfaceOutputPort = "remainSrf";
 
-        #region Create
         /// <summary>
         /// Creates an amentiy space on a given surface, returning both the amenity space and the remaining space within the original surface
         /// </summary>
         /// <param name="surface">Surface to create Amenity Spaces on</param>
         /// <param name="offset">How much to offset to surface perimeter with</param>
-        /// <param name="depth"></param>
-        /// <search></search>
-        [MultiReturn(new[] { output1, output2 })]
-        public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(Autodesk.DesignScript.Geometry.Surface surface, double offset, double depth)
+        /// <param name="depth"></param> 
+        /// <returns>amenity surface and remaining surface</returns>
+        [MultiReturn(new[] { amenitySurfaceOutputPort, remainingSurfaceOutputPort })]
+        public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(
+            Autodesk.DesignScript.Geometry.Surface surface,
+            double offset,
+            double depth)
         {
             List<Curve> inCrvs = Utilities.SurfaceExtension.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
             Autodesk.DesignScript.Geometry.Surface inSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
@@ -60,12 +63,12 @@ namespace Autodesk.GenerativeToolkit.Generate
 
             Vector vec = Utilities.VectorExtension.ByTwoCurves(max2, max);
 
-            Autodesk.DesignScript.Geometry.Curve transLine = max.Translate(vec, depth) as Curve;
+            Curve transLine = max.Translate(vec, depth) as Curve;
             Line extendLine = Utilities.Line.ExtendAtBothEnds(transLine, 1);
 
 
             List<Curve> crvList = new List<Curve>() { max, extendLine };
-            Autodesk.DesignScript.Geometry.Surface loftSrf = Autodesk.DesignScript.Geometry.Surface.ByLoft(crvList);
+            Surface loftSrf = Surface.ByLoft(crvList);
 
             List<bool> boolLst = new List<bool>();
             foreach (var crv in others)
@@ -82,17 +85,17 @@ namespace Autodesk.GenerativeToolkit.Generate
                 extendCurves.Add(l);
             }
 
-            List<Autodesk.DesignScript.Geometry.Surface> split = Utilities.SurfaceExtension.SplitPlanarSurfaceByMultipleCurves(loftSrf, extendCurves).OfType<Autodesk.DesignScript.Geometry.Surface>().ToList();
+            List<Surface> split = Utilities.Surface.SplitPlanarSurfaceByMultipleCurves(loftSrf, extendCurves).OfType<Surface>().ToList();
 
-            Autodesk.DesignScript.Geometry.Surface amenitySurf = Utilities.SurfaceExtension.MaximumArea(split)["maxSrf"] as Autodesk.DesignScript.Geometry.Surface;
+            Surface amenitySurf = Utilities.Surface.MaximumArea(split)["maxSrf"] as Surface;
 
-            Autodesk.DesignScript.Geometry.Surface remainSurf = inSrf.Split(amenitySurf)[0] as Autodesk.DesignScript.Geometry.Surface;
+            Surface remainSurf = inSrf.Split(amenitySurf)[0] as Surface;
 
-            Dictionary<string, Autodesk.DesignScript.Geometry.Surface> newOutput;
-            newOutput = new Dictionary<string, Autodesk.DesignScript.Geometry.Surface>
+            Dictionary<string, Surface> newOutput;
+            newOutput = new Dictionary<string, Surface>
             {
-                {output1,amenitySurf},
-                {output2,remainSurf}
+                {amenitySurfaceOutputPort,amenitySurf},
+                {remainingSurfaceOutputPort,remainSurf}
             };
 
             //Dispose redundant geometry
@@ -108,11 +111,9 @@ namespace Autodesk.GenerativeToolkit.Generate
             crvList.ForEach(crv => crv.Dispose());
             loftSrf.Dispose();
             intersectingCurves.ForEach(crv => crv.Dispose());
-            extendCurves.ForEach(crv => crv.Dispose());    
+            extendCurves.ForEach(crv => crv.Dispose());
 
             return newOutput;
-
         }
-        #endregion 
     }
 }
