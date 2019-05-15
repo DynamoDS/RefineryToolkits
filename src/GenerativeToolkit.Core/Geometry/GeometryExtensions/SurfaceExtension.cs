@@ -1,11 +1,12 @@
-﻿using Autodesk.DesignScript.Runtime;
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autodesk.GenerativeToolkit.Utilities
+namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
 {
     [IsVisibleInDynamoLibrary(false)]
     internal static class SurfaceExtension
@@ -19,7 +20,7 @@ namespace Autodesk.GenerativeToolkit.Utilities
         /// <search></search>
         public static Autodesk.DesignScript.Geometry.Surface BoundingSurface(this Autodesk.DesignScript.Geometry.Surface surface)
         {
-            BoundingBox bb = surface.BoundingBox;
+            Autodesk.DesignScript.Geometry.BoundingBox bb = surface.BoundingBox;
             Cuboid c = bb.ToCuboid();
             Autodesk.DesignScript.Geometry.Surface srf = (c.Explode())[0] as Autodesk.DesignScript.Geometry.Surface;
 

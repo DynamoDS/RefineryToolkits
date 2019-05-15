@@ -4,12 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autodesk.DesignScript.Geometry;
 
-namespace Autodesk.GenerativeToolkit.Utilities
+namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
 {
     [IsVisibleInDynamoLibrary(false)]
     internal static class PointExtension
     {
+        [IsVisibleInDynamoLibrary(false)]
+        public static Vertex ToVertex(this Point point)
+        {
+            return Vertex.ByCoordinates(point.X, point.Y, point.Z);
+        }
+
+        [IsVisibleInDynamoLibrary(false)]
+        public static Point ToPoint(this Vertex vertex)
+        {
+            return Point.ByCoordinates(vertex.X, vertex.Y, vertex.Z);
+        }
+       
 
         #region CompareCoincidental
         /// <summary>

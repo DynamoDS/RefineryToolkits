@@ -1,10 +1,10 @@
 ﻿using GenerativeToolkit.Graphs;
-using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autodesk.GenerativeToolkit.Core.Geometry;
 
 namespace GenerativeToolkit.Graphs
 {
@@ -13,12 +13,12 @@ namespace GenerativeToolkit.Graphs
     /// </summary>
     public class EdgeKey : IComparable<EdgeKey>
     {
-        internal GeometryVertex Centre { get; private set; }
-        internal GeometryVertex Vertex { get; private set; }
-        internal GeometryEdge Edge { get; private set; }
-        internal GeometryEdge RayEdge { get; private set; }
+        internal Vertex Centre { get; private set; }
+        internal Vertex Vertex { get; private set; }
+        internal Edge Edge { get; private set; }
+        internal Edge RayEdge { get; private set; }
 
-        internal EdgeKey(GeometryEdge rayEdge, GeometryEdge e)
+        internal EdgeKey(Edge rayEdge, Edge e)
         {
             RayEdge = rayEdge;
             Edge = e;
@@ -26,26 +26,26 @@ namespace GenerativeToolkit.Graphs
             Vertex = RayEdge.EndVertex;
         }
 
-        internal EdgeKey(GeometryVertex centre, GeometryVertex end, GeometryEdge e)
+        internal EdgeKey(Vertex centre, Vertex end, Edge e)
         {
             Centre = centre;
             Vertex = end;
             Edge = e;
-            RayEdge = GeometryEdge.ByStartVertexEndVertex(centre, end);
+            RayEdge = Edge.ByStartVertexEndVertex(centre, end);
         }
 
-        internal static double DistanceToIntersection(GeometryVertex centre, GeometryVertex maxVertex, GeometryEdge e)
+        internal static double DistanceToIntersection(Vertex centre, Vertex maxVertex, Edge e)
         {
-            var centreProj = GeometryVertex.ByCoordinates(centre.X, centre.Y, 0);
-            var maxProj = GeometryVertex.ByCoordinates(maxVertex.X, maxVertex.Y, 0);
-            var startProj = GeometryVertex.ByCoordinates(e.StartVertex.X, e.StartVertex.Y, 0);
-            var endProj = GeometryVertex.ByCoordinates(e.EndVertex.X, e.EndVertex.Y, 0);
-            GeometryEdge rayEdge = GeometryEdge.ByStartVertexEndVertex(centreProj, maxProj);
-            GeometryEdge edgeProj = GeometryEdge.ByStartVertexEndVertex(startProj, endProj);
+            var centreProj = Vertex.ByCoordinates(centre.X, centre.Y, 0);
+            var maxProj = Vertex.ByCoordinates(maxVertex.X, maxVertex.Y, 0);
+            var startProj = Vertex.ByCoordinates(e.StartVertex.X, e.StartVertex.Y, 0);
+            var endProj = Vertex.ByCoordinates(e.EndVertex.X, e.EndVertex.Y, 0);
+            Edge rayEdge = Edge.ByStartVertexEndVertex(centreProj, maxProj);
+            Edge edgeProj = Edge.ByStartVertexEndVertex(startProj, endProj);
             GeometryBase intersection = rayEdge.Intersection(edgeProj);
-            if (intersection != null && intersection.GetType() == typeof(GeometryVertex))
+            if (intersection != null && intersection.GetType() == typeof(Vertex))
             {
-                return centre.DistanceTo((GeometryVertex)intersection);
+                return centre.DistanceTo((Vertex)intersection);
             }
             else
             {
@@ -95,11 +95,11 @@ namespace GenerativeToolkit.Graphs
             else if (selfDist < otherDist) { return -1; }
             else
             {
-                GeometryVertex sameVertex = null;
+                Vertex sameVertex = null;
                 if (other.Edge.Contains(Edge.StartVertex)) { sameVertex = Edge.StartVertex; }
                 else if (other.Edge.Contains(Edge.EndVertex)) { sameVertex = Edge.EndVertex; }
-                double aslf = GeometryVertex.ArcRadAngle(Vertex, Centre, Edge.GetVertexPair(sameVertex));
-                double aot = GeometryVertex.ArcRadAngle(Vertex, Centre, other.Edge.GetVertexPair(sameVertex));
+                double aslf = Vertex.ArcRadAngle(Vertex, Centre, Edge.GetVertexPair(sameVertex));
+                double aot = Vertex.ArcRadAngle(Vertex, Centre, other.Edge.GetVertexPair(sameVertex));
 
                 if (aslf < aot) { return -1; }
                 else { return 1; }

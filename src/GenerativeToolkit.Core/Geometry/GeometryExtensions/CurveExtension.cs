@@ -5,11 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autodesk.GenerativeToolkit.Utilities
+namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
 {
     [IsVisibleInDynamoLibrary(false)]
     internal static class CurveExtension
     {
+        #region Internal Methods
+        [IsVisibleInDynamoLibrary(false)]
+        public static Edge ToEdge(this Autodesk.DesignScript.Geometry.Line line)
+        {
+            return Edge.ByStartVertexEndVertex(line.StartPoint.ToVertex(), line.EndPoint.ToVertex());
+        }
+        #endregion
 
         #region FindMatchingVectorCurves
         /// <summary>

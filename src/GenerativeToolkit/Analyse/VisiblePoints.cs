@@ -1,7 +1,6 @@
 ﻿#region namespaces
-using Autodesk.DesignScript.Geometry;
-using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
-using GenerativeToolkit.Graphs.Geometry;
+using DSGeom = Autodesk.DesignScript.Geometry;
+using Autodesk.GenerativeToolkit.Core.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +25,10 @@ namespace Autodesk.GenerativeToolkit.Analyse
         /// <param name="obstacles">List of Polygons representing internal obstructions</param>
         /// <returns>precentages of the amount of visible points</returns>
         [MultiReturn(new[] { output1, output2 })]
-        public static Dictionary<string, object> FromOrigin(Point origin, List<Point> points, List<Polygon> boundary, [DefaultArgument("[]")] List<Polygon> obstacles)
+        public static Dictionary<string, object> FromOrigin(DSGeom.Point origin, List<DSGeom.Point> points, List<DSGeom.Polygon> boundary, [DefaultArgument("[]")] List<DSGeom.Polygon> obstacles)
         {
-            Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
-            GeometryPolygon gPol = GeometryPolygon.ByVertices(isovist.Points.Select(p => GeometryVertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
+            DSGeom.Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
+            Polygon gPol = Polygon.ByVertices(isovist.Points.Select(p => Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
 
             List<Point> visPoints = new List<Point>();
             double totalPoints = points.Count;
@@ -37,7 +36,7 @@ namespace Autodesk.GenerativeToolkit.Analyse
  
             foreach (Point point in points)
             {
-                GeometryVertex vertex = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
+                Vertex vertex = Vertex.ByCoordinates(point.X, point.Y, point.Z);
                 
                 if (gPol.ContainsVertex(vertex))
                 {
@@ -61,9 +60,9 @@ namespace Autodesk.GenerativeToolkit.Analyse
             if (baseGraph == null) { throw new ArgumentNullException("graph"); }
             if (point == null) { throw new ArgumentNullException("point"); }
 
-            GeometryVertex origin = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
+            Vertex origin = Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            List<GeometryVertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            List<Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<Point> points = vertices.Select(v => Points.ToPoint(v)).ToList();
             // TODO: Implement better way of checking if polygon is self intersectingç
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Core.Geometry;
 #endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
@@ -25,7 +26,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         {
             List<Curve> inCrvs = Utilities.SurfaceExtension.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
             Autodesk.DesignScript.Geometry.Surface inSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
-
+            
             Curve max;
             List<Curve> others;
             Dictionary<string, dynamic> dict = Utilities.CurveExtension.MaximumLength(inCrvs);
@@ -77,7 +78,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             List<Curve> extendCurves = new List<Curve>();
             foreach (Curve crv in intersectingCurves)
             {
-                var l = Utilities.Line.ExtendAtBothEnds(crv, 1);
+                var l =  .ExtendAtBothEnds(crv, 1);
                 extendCurves.Add(l);
             }
 

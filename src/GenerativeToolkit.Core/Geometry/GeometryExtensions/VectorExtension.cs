@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autodesk.GenerativeToolkit.Utilities
+namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
 {
     [IsVisibleInDynamoLibrary(false)]
     internal static class VectorExtension
