@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.GenerativeToolkit.Core.Utillites;
+using GenerativeToolkit.Graphs.Extensions;
 
-namespace Autodesk.GenerativeToolkit.Core.Geometry
+namespace GenerativeToolkit.Graphs.Geometry
 {
     // Resources:
     // https://www.mathsisfun.com/algebra/vectors-cross-product.html
@@ -13,7 +13,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
     // https://betterexplained.com/articles/cross-product/
     // http://mathworld.wolfram.com/CrossProduct.html
 
-    public class Vector 
+    public class GeometryVector 
     {
         #region Public Properties
         public double X { get; private set; }
@@ -25,7 +25,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
 
         #region Constructors
 
-        private Vector(double x, double y, double z, double length = Double.PositiveInfinity)
+        private GeometryVector(double x, double y, double z, double length = Double.PositiveInfinity)
         {
             X = x;
             Y = y;
@@ -33,43 +33,43 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
             Length = (Double.IsPositiveInfinity(length)) ? Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2)) : length;
         }
 
-        public static Vector ByCoordinates(double x, double y, double z)
+        public static GeometryVector ByCoordinates(double x, double y, double z)
         {
-            return new Vector(x, y, z);
+            return new GeometryVector(x, y, z);
         }
 
-        public static Vector ByTwoVertices(Vertex start, Vertex end)
+        public static GeometryVector ByTwoVertices(GeometryVertex start, GeometryVertex end)
         {
             var x = end.X - start.X;
             var y = end.Y - start.Y;
             var z = end.Z - start.Z;
             var length = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
-            return new Vector(x, y, z, length);
+            return new GeometryVector(x, y, z, length);
         }
 
-        public static Vector XAxis()
+        public static GeometryVector XAxis()
         {
-            return new Vector(1, 0, 0, 1);
+            return new GeometryVector(1, 0, 0, 1);
         }
 
-        public static Vector YAxis()
+        public static GeometryVector YAxis()
         {
-            return new Vector(0, 1, 0, 1);
+            return new GeometryVector(0, 1, 0, 1);
         }
 
-        public static Vector ZAxis()
+        public static GeometryVector ZAxis()
         {
-            return new Vector(0, 0, 1, 1);
+            return new GeometryVector(0, 0, 1, 1);
         }
         #endregion
 
         #region Public Methods
-        public double Dot(Vector vector)
+        public double Dot(GeometryVector vector)
         {
             return (this.X * vector.X) + (this.Y * vector.Y) + (this.Z * vector.Z);
         }
 
-        public double Angle(Vector vector)
+        public double Angle(GeometryVector vector)
         {
             double dot = this.Dot(vector);
             double cos = dot / (this.Length * vector.Length);
@@ -87,40 +87,40 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
             }
         }
 
-        public Vector Cross(Vector vector)
+        public GeometryVector Cross(GeometryVector vector)
         {
             double x = (this.Y * vector.Z) - (this.Z * vector.Y);
             double y = (this.Z * vector.X) - (this.X * vector.Z);
             double z = (this.X * vector.Y) - (this.Y * vector.X);
             double angle = this.Angle(vector).ToRadians();
             double length = this.Length * vector.Length * Math.Sin(angle);
-            return new Vector(x, y, z, length);
+            return new GeometryVector(x, y, z, length);
         }
 
-        public Vector Scale(double factor)
+        public GeometryVector Scale(double factor)
         {
-            return new Vector(this.X * factor, this.Y * factor, this.Z * factor);
+            return new GeometryVector(this.X * factor, this.Y * factor, this.Z * factor);
         }
 
-        public Vector Normalized()
+        public GeometryVector Normalized()
         {
-            return new Vector(this.X / this.Length, this.Y / this.Length, this.Z / this.Length, this.Length / this.Length);
+            return new GeometryVector(this.X / this.Length, this.Y / this.Length, this.Z / this.Length, this.Length / this.Length);
         }
 
-        public bool IsParallelTo(Vector vector)
+        public bool IsParallelTo(GeometryVector vector)
         {
             var dot = Math.Abs(this.Normalized().Dot(vector.Normalized()));
             return dot.AlmostEqualTo(1);
         }
 
-        public Vertex AsVertex()
+        public GeometryVertex AsVertex()
         {
-            return Vertex.ByCoordinates(this.X, this.Y, this.Z);
+            return GeometryVertex.ByCoordinates(this.X, this.Y, this.Z);
         }
 
-        public static Vector operator *(Vector vector, double value)
+        public static GeometryVector operator *(GeometryVector vector, double value)
         {
-            return new Vector(vector.X * value, vector.Y * value, vector.Z * value);
+            return new GeometryVector(vector.X * value, vector.Y * value, vector.Z * value);
         }
         #endregion
 

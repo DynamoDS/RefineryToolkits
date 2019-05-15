@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autodesk.GenerativeToolkit.Core.Geometry
+namespace GenerativeToolkit.Graphs.Geometry
 {
     /// <summary>
     /// Base abstract class for all spatial geometries
@@ -17,12 +17,12 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         //internal int thresholdDecimals { get; private set; }
         #endregion
 
-        private BoundingBox boundingBox;
+        private GeometryBoundingBox boundingBox;
 
         /// <summary>
         /// Geometry's Axis Aligned Bounding Box
         /// </summary>
-        public BoundingBox BoundingBox
+        public GeometryBoundingBox BoundingBox
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
             }
         }
 
-        internal abstract BoundingBox ComputeBoundingBox();
+        internal abstract GeometryBoundingBox ComputeBoundingBox();
 
     }
 }
