@@ -22,7 +22,7 @@ namespace Autodesk.GenerativeToolkit.Analyze
             [DefaultArgument("[]")] List<Polygon> boundary,
             [DefaultArgument("[]")] List<Polygon> obstacles)
         {
-            List<Curve> perimeterCrvs = GTUtil.Surface.OffsetPerimeterCurves(surface, tolerance)["outsetCrvs"].ToList();
+            List<Curve> perimeterCrvs = GTUtil.SurfaceExtension.OffsetPerimeterCurves(surface, tolerance)["outsetCrvs"].ToList();
             List<Polygon> intersectionPolygons = new List<Polygon>();
             intersectionPolygons.AddRange(boundary);
             intersectionPolygons.AddRange(obstacles);

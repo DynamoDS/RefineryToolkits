@@ -14,6 +14,14 @@ using GenerativeToolkit.Graphs;
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
+    /***************************************************************************************
+    * Title: Graphical
+    * Author: Alvaro Ortega Pickmans
+    * Date: 2017
+    * Availability: https://github.com/alvpickmans/Graphical
+    *
+    ***************************************************************************************/
+                                                                    
     /// <summary>
     /// Representation of a Graph.
     /// </summary>

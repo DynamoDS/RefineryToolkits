@@ -2,6 +2,10 @@
 using Autodesk.DesignScript.Runtime;
 using System.Collections.Generic;
 using System.Linq;
+using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Core.Geometry;
+#endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
@@ -23,12 +27,12 @@ namespace Autodesk.GenerativeToolkit.Generate
             double offset,
             double depth)
         {
-            List<Curve> inCrvs = Utilities.Surface.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
-            Surface inSrf = Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
-
+            List<Curve> inCrvs = Utilities.SurfaceExtension.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
+            Autodesk.DesignScript.Geometry.Surface inSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
+            
             Curve max;
             List<Curve> others;
-            Dictionary<string, dynamic> dict = Utilities.Curve.MaximumLength(inCrvs);
+            Dictionary<string, dynamic> dict = Utilities.CurveExtension.MaximumLength(inCrvs);
             if (dict["maxCrv"].Count < 1)
             {
                 max = dict["otherCrvs"][0] as Curve;
@@ -43,11 +47,11 @@ namespace Autodesk.GenerativeToolkit.Generate
             }
 
             List<Curve> perimCrvs = surface.PerimeterCurves().ToList();
-            List<Curve> matchCrvs = Utilities.Curve.FindMatchingVectorCurves(max, perimCrvs);
+            List<Curve> matchCrvs = Utilities.CurveExtension.FindMatchingVectorCurves(max, perimCrvs);
 
 
             Curve max2;
-            Dictionary<string, dynamic> dict2 = Utilities.Curve.MaximumLength(matchCrvs);
+            Dictionary<string, dynamic> dict2 = Utilities.CurveExtension.MaximumLength(matchCrvs);
             if (dict2["maxCrv"].Count < 1)
             {
                 max2 = dict2["otherCrvs"][0] as Curve;
@@ -57,7 +61,7 @@ namespace Autodesk.GenerativeToolkit.Generate
                 max2 = dict2["maxCrv"][0] as Curve;
             }
 
-            Vector vec = Utilities.Vector.ByTwoCurves(max2, max);
+            Vector vec = Utilities.VectorExtension.ByTwoCurves(max2, max);
 
             Curve transLine = max.Translate(vec, depth) as Curve;
             Line extendLine = Utilities.Line.ExtendAtBothEnds(transLine, 1);
@@ -77,7 +81,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             List<Curve> extendCurves = new List<Curve>();
             foreach (Curve crv in intersectingCurves)
             {
-                var l = Utilities.Line.ExtendAtBothEnds(crv, 1);
+                var l =  .ExtendAtBothEnds(crv, 1);
                 extendCurves.Add(l);
             }
 
