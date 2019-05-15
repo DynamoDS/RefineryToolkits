@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GenerativeToolkit.Graphs.Geometry;
 
-namespace Autodesk.GenerativeToolkit.Core.Utillites
+namespace GenerativeToolkit.Graphs.Extensions
 {
     /// <summary>
     /// Static class extending List funtionality
@@ -99,25 +100,6 @@ namespace Autodesk.GenerativeToolkit.Core.Utillites
                 .Select(x => x.Select(v => v.Value).ToList())
                 .ToList();
         }
-
-        #region RunningTotals
-        /// <summary>
-        /// Calculates the running totals from a list of numbers
-        /// </summary>
-        /// <param name="numbers"></param>
-        /// <search></search>
-        public static List<double> RunningTotals(this List<double> numbers)
-        {
-            double count = 0;
-            List<double> runningTotals = new List<double>();
-            foreach (double n in numbers)
-            {
-                count = count + n;
-                runningTotals.Add(count);
-            }
-            return runningTotals;
-        }
-        #endregion
 
     }
 }

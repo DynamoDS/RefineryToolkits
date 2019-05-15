@@ -13,16 +13,6 @@ namespace Autodesk.GenerativeToolkit.Analyze
 {
     public static class Isovist
     {
-        #region Public Methods
-
-        /***************************************************************************************
-        * Title: Graphical
-        * Author: Alvaro Ortega Pickmans
-        * Date: 2017
-        * Availability: https://github.com/alvpickmans/Graphical
-        *
-        ***************************************************************************************/
-
         /// <summary>
         /// Returns a surface representing the Isovist area visible from 
         /// the given point.

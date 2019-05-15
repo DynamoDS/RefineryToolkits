@@ -4,42 +4,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.GenerativeToolkit.Core.Utillites;
+using GenerativeToolkit.Graphs.Extensions;
 #endregion
 
 
-namespace Autodesk.GenerativeToolkit.Core.Geometry
+namespace GenerativeToolkit.Graphs.Geometry
 {
     /// <summary>
     /// Representation of Edges on a graph
     /// </summary>
-    public class Edge : GeometryBase
+    public class GeometryEdge : GeometryBase
     {
         #region Variables
         /// <summary>
         /// StartVertex
         /// </summary>
-        public Vertex StartVertex { get; private set; }
+        public GeometryVertex StartVertex { get; private set; }
 
         /// <summary>
         /// EndVertex
         /// </summary>
-        public Vertex EndVertex { get; private set; }
+        public GeometryVertex EndVertex { get; private set; }
 
 
         public double Length { get; private set; }
 
-        public Vector Direction { get; private set; }
+        public GeometryVector Direction { get; private set; }
 
         #endregion
 
         #region Constructors
-        public Edge(Vertex start, Vertex end)
+        public GeometryEdge(GeometryVertex start, GeometryVertex end)
         {
             StartVertex = start;
             EndVertex = end;
             Length = StartVertex.DistanceTo(EndVertex);
-            Direction = Vector.ByTwoVertices(StartVertex, EndVertex);
+            Direction = GeometryVector.ByTwoVertices(StartVertex, EndVertex);
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         /// <param name="start">Start vertex</param>
         /// <param name="end">End gVertex</param>
         /// <returns name="edge">edge</returns>
-        public static Edge ByStartVertexEndVertex(Vertex start, Vertex end)
+        public static GeometryEdge ByStartVertexEndVertex(GeometryVertex start, GeometryVertex end)
         {
-            return new Edge(start, end);
+            return new GeometryEdge(start, end);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        public bool Contains(Vertex vertex)
+        public bool Contains(GeometryVertex vertex)
         {
             return StartVertex.Equals(vertex) || EndVertex.Equals(vertex);
         }
@@ -81,22 +81,22 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        public Vertex GetVertexPair(Vertex vertex)
+        public GeometryVertex GetVertexPair(GeometryVertex vertex)
         {
             return (StartVertex.Equals(vertex)) ? EndVertex : StartVertex;
         }
 
-        public bool IsCoplanarTo(Edge edge)
+        public bool IsCoplanarTo(GeometryEdge edge)
         {
             // http://mathworld.wolfram.com/Coplanar.html
-            Vector a = this.Direction;
-            Vector b = edge.Direction;
-            Vector c = Vector.ByTwoVertices(this.StartVertex, edge.StartVertex);
+            GeometryVector a = this.Direction;
+            GeometryVector b = edge.Direction;
+            GeometryVector c = GeometryVector.ByTwoVertices(this.StartVertex, edge.StartVertex);
 
             return c.Dot(a.Cross(b)) == 0;
         }
 
-        public GeometryBase Intersection(Edge other)
+        public GeometryBase Intersection(GeometryEdge other)
         {
             // http://mathworld.wolfram.com/Line-LineIntersection.html
             if (!this.BoundingBox.Intersects(other.BoundingBox)) { return null; }
@@ -115,7 +115,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
                 // Not fully inclusive but overlapping
                 else if (this.StartVertex.OnEdge(other) || this.EndVertex.OnEdge(other))
                 {
-                    Vertex[] vertices = new Vertex[4]
+                    GeometryVertex[] vertices = new GeometryVertex[4]
                     {
                         this.StartVertex,
                         this.EndVertex,
@@ -123,7 +123,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
                         other.EndVertex
                     };
                     var sorted = vertices.OrderBy(v => v.Y).ThenBy(v => v.X).ThenBy(v => v.Z).ToList();
-                    return Edge.ByStartVertexEndVertex(sorted[1], sorted[2]);
+                    return GeometryEdge.ByStartVertexEndVertex(sorted[1], sorted[2]);
                 }
                 // Not intersecting
                 else
@@ -138,7 +138,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
 
 
             // No coincident nor same extremes
-            var c = Vector.ByTwoVertices(this.StartVertex, other.StartVertex);
+            var c = GeometryVector.ByTwoVertices(this.StartVertex, other.StartVertex);
             var cxb = c.Cross(b);
             var axb = a.Cross(b);
             var dot = cxb.Dot(axb);
@@ -163,7 +163,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
             // s == NaN means they are parallels so never intersect
             if (s < 0 || s > 1 || Double.IsNaN(s)) { return null; }
 
-            Vertex intersection = this.StartVertex.Translate(a.Scale(s));
+            GeometryVertex intersection = this.StartVertex.Translate(a.Scale(s));
 
             if (intersection.Equals(other.StartVertex)){ return other.StartVertex; }
             if (intersection.Equals(other.EndVertex)) { return other.EndVertex; }
@@ -175,7 +175,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
             return intersection;
         }
 
-        public bool Intersects(Edge edge)
+        public bool Intersects(GeometryEdge edge)
         {
             if(this.StartVertex.OnEdge(edge) || this.EndVertex.OnEdge(edge))
             {
@@ -187,12 +187,12 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
             return this.Intersection(edge) != null;
         }
 
-        public double DistanceTo(Vertex vertex)
+        public double DistanceTo(GeometryVertex vertex)
         {
             return vertex.DistanceTo(this);
         }
 
-        public double DistanceTo(Edge edge)
+        public double DistanceTo(GeometryEdge edge)
         {
             // http://mathworld.wolfram.com/Line-LineDistance.html
             if (this.IsCoplanarTo(edge))
@@ -208,8 +208,8 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
             {
                 var a = this.Direction;
                 var b = edge.Direction;
-                var c = Vector.ByTwoVertices(this.StartVertex, edge.StartVertex);
-                Vector cross = a.Cross(b);
+                var c = GeometryVector.ByTwoVertices(this.StartVertex, edge.StartVertex);
+                GeometryVector cross = a.Cross(b);
                 double numerator = c.Dot(cross);
                 double denominator = cross.Length;
                 return Math.Abs(numerator) / Math.Abs(denominator);
@@ -230,7 +230,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         {
             if (obj == null || GetType() != obj.GetType()) { return false; }
 
-            Edge e= (Edge)obj;
+            GeometryEdge e= (GeometryEdge)obj;
             if (StartVertex.Equals(e.StartVertex) && EndVertex.Equals(e.EndVertex)) { return true; }
             if (StartVertex.Equals(e.EndVertex) && EndVertex.Equals(e.StartVertex)) { return true; }
             return false;
@@ -256,9 +256,9 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
             return String.Format("gEdge(StartVertex: {0}, EndVertex: {1})", StartVertex, EndVertex);
         }
 
-        internal override BoundingBox ComputeBoundingBox()
+        internal override GeometryBoundingBox ComputeBoundingBox()
         {
-            return BoundingBox.ByMinVertexMaxVertex(StartVertex, EndVertex);
+            return GeometryBoundingBox.ByMinVertexMaxVertex(StartVertex, EndVertex);
         }
 
         #endregion

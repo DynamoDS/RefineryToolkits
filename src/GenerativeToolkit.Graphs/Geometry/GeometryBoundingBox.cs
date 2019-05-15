@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GenerativeToolkit.Graphs.Extensions;
 
-namespace Autodesk.GenerativeToolkit.Core.Geometry
+namespace GenerativeToolkit.Graphs.Geometry
 {
     /// <summary>
     /// Axis Aligned Bounding Box
     /// </summary>
-    public class BoundingBox
+    public class GeometryBoundingBox
     {
         #region Private Properties
         private double[] min = new double[3];
@@ -20,22 +21,22 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         /// <summary>
         /// Bounding Box's minimum vertex
         /// </summary>
-        public Vertex MinVertex
+        public GeometryVertex MinVertex
         {
-            get { return Vertex.ByCoordinatesArray(min); }
+            get { return GeometryVertex.ByCoordinatesArray(min); }
         }
 
         /// <summary>
         /// Bounding Box's maximum vertex
         /// </summary>
-        public Vertex MaxVertex
+        public GeometryVertex MaxVertex
         {
-            get { return Vertex.ByCoordinatesArray(max); }
+            get { return GeometryVertex.ByCoordinatesArray(max); }
         }
         #endregion
 
         #region Private Constructor
-        internal BoundingBox(IEnumerable<double> xCoordinates, IEnumerable<double> yCoordinates, IEnumerable<double> zCoordinates)
+        internal GeometryBoundingBox(IEnumerable<double> xCoordinates, IEnumerable<double> yCoordinates, IEnumerable<double> zCoordinates)
         {
             this.min = new double[3] { xCoordinates.Min(), yCoordinates.Min(), zCoordinates.Min() };
             this.max = new double[3] { xCoordinates.Max(), yCoordinates.Max(), zCoordinates.Max() };
@@ -49,9 +50,9 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public static BoundingBox ByMinVertexMaxVertex(Vertex min, Vertex max)
+        public static GeometryBoundingBox ByMinVertexMaxVertex(GeometryVertex min, GeometryVertex max)
         {
-            return new BoundingBox(new double[2] { min.X, max.X}, new double[2] { min.Y, max.Y }, new double[2] { min.Z, max.Z });
+            return new GeometryBoundingBox(new double[2] { min.X, max.X}, new double[2] { min.Y, max.Y }, new double[2] { min.Z, max.Z });
         }
         #endregion
 
@@ -61,7 +62,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Intersects(BoundingBox other)
+        public bool Intersects(GeometryBoundingBox other)
         {
             return
                 (min[0] <= other.max[0]) && (max[0] >= other.min[0]) &&

@@ -1,6 +1,8 @@
-﻿﻿#region namespaces
-using DSGeom = Autodesk.DesignScript.Geometry;
-using Autodesk.GenerativeToolkit.Core.Geometry;
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
+using GenerativeToolkit.Graphs;
+using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +30,8 @@ namespace Autodesk.GenerativeToolkit.Analyze
             List<Polygon> boundary,
             [DefaultArgument("[]")] List<Polygon> obstacles)
         {
-            DSGeom.Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
-            Polygon gPol = Polygon.ByVertices(isovist.Points.Select(p => Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
+            Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
+            GeometryPolygon gPol = GeometryPolygon.ByVertices(isovist.Points.Select(p => GeometryVertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
 
             List<Point> visPoints = new List<Point>();
             double totalPoints = points.Count;
@@ -37,8 +39,8 @@ namespace Autodesk.GenerativeToolkit.Analyze
 
             foreach (Point point in points)
             {
-                Vertex vertex = Vertex.ByCoordinates(point.X, point.Y, point.Z);
-                
+                GeometryVertex vertex = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
+
                 if (gPol.ContainsVertex(vertex))
                 {
                     ++visibilityAmount;
@@ -71,9 +73,9 @@ namespace Autodesk.GenerativeToolkit.Analyze
                 throw new ArgumentNullException("point");
             }
 
-            Vertex origin = Vertex.ByCoordinates(point.X, point.Y, point.Z);
+            GeometryVertex origin = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            List<Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            List<GeometryVertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<Point> points = vertices.Select(v => Points.ToPoint(v)).ToList();
 
             var polygon = Polygon.ByPoints(points);

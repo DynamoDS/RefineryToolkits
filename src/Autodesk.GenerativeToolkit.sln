@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerativeToolkit.Graphs", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerativeToolkitTests", "Autodesk.GenerativeToolkitTests\GenerativeToolkitTests.csproj", "{131F7DDC-E68C-49ED-80CB-1211DF4E4C74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerativeToolkit.Core", "GenerativeToolkit.Core\GenerativeToolkit.Core.csproj", "{A528FCD0-0855-409C-88E0-E36E6A718FD3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{131F7DDC-E68C-49ED-80CB-1211DF4E4C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{131F7DDC-E68C-49ED-80CB-1211DF4E4C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{131F7DDC-E68C-49ED-80CB-1211DF4E4C74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A528FCD0-0855-409C-88E0-E36E6A718FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A528FCD0-0855-409C-88E0-E36E6A718FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A528FCD0-0855-409C-88E0-E36E6A718FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A528FCD0-0855-409C-88E0-E36E6A718FD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
