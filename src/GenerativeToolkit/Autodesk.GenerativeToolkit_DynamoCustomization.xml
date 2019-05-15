@@ -4,8 +4,8 @@
     <name>Autodesk.GenerativeToolkit</name>
   </assembly>
   <namespaces>
-    <namespace name="Autodesk.GenerativeToolkit.Analyse">
-      <category>GenerativeToolkit.Analyse</category>
+    <namespace name="Autodesk.GenerativeToolkit.Analyze">
+      <category>GenerativeToolkit.Analyze</category>
     </namespace>
     <namespace name="Autodesk.GenerativeToolkit.Evaluate">
       <category>GenerativeToolkit.Evaluate</category>
