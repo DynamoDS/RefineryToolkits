@@ -262,9 +262,5 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         }
 
         #endregion
-
-    }
-
-    
-    
+    }   
 }
