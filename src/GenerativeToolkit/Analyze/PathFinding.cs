@@ -1,14 +1,12 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
-using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
+using Autodesk.GenerativeToolkit.Graphs;
 using Dynamo.Graph.Nodes;
-using GenerativeToolkit.Graphs;
-using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using DSPolygon = Autodesk.DesignScript.Geometry.Polygon;
+using DSGeom = Autodesk.DesignScript.Geometry;
+using GTGeom = Autodesk.GenerativeToolkit.Core.Geometry;
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
@@ -38,16 +36,16 @@ namespace Autodesk.GenerativeToolkit.Analyze
         [MultiReturn(new[] { graphOutputPort, lengthOutputPort })]
         public static Dictionary<string, object> ShortestPath(
             Visibility visGraph,
-            DSPoint origin,
-            DSPoint destination)
+            Point origin,
+            Point destination)
         {
 
             if (visGraph == null) throw new ArgumentNullException("visibility");
             if (origin == null) throw new ArgumentNullException("origin");
             if (destination == null) throw new ArgumentNullException("destination");
 
-            var gOrigin = GeometryVertex.ByCoordinates(origin.X, origin.Y, origin.Z);
-            var gDestination = GeometryVertex.ByCoordinates(destination.X, destination.Y, destination.Z);
+            var gOrigin = GTGeom.Vertex.ByCoordinates(origin.X, origin.Y, origin.Z);
+            var gDestination = GTGeom.Vertex.ByCoordinates(destination.X, destination.Y, destination.Z);
 
             var visibilityGraph = visGraph.graph as VisibilityGraph;
 
@@ -70,8 +68,8 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="internals"></param>
         /// <returns name = "visGraph">VisibilityGraph for use in ShortestPath</returns>
         public static Visibility CreateVisibilityGraph(
-            List<DSPolygon> boundary,
-            List<DSPolygon> internals)
+            List<DSGeom.Polygon> boundary,
+            List<DSGeom.Polygon> internals)
         {
             var graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
             var visGraph = Visibility.ByBaseGraph(graph);
@@ -87,10 +85,10 @@ namespace Autodesk.GenerativeToolkit.Analyze
         public static List<Line> Lines(BaseGraph path)
         {
             List<Line> lines = new List<Line>();
-            foreach (GeometryEdge edge in path.graph.edges)
+            foreach (GTGeom.Edge edge in path.graph.edges)
             {
-                var start = Points.ToPoint(edge.StartVertex);
-                var end = Points.ToPoint(edge.EndVertex);
+                var start = GTGeom.Points.ToPoint(edge.StartVertex);
+                var end = GTGeom.Points.ToPoint(edge.EndVertex);
                 lines.Add(Line.ByStartPointEndPoint(start, end));
             }
             return lines;

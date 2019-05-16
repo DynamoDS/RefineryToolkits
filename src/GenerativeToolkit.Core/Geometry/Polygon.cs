@@ -171,7 +171,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         #region Public Methods
 
         /// <summary>
-        /// Determines if a gVertex is inside the gPolygon using Fast Winding Number method
+        /// Determines if a Vertex is inside the gPolygon using Fast Winding Number method
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>

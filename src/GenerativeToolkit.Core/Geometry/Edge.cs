@@ -46,7 +46,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         /// gEdge constructor by start and end vertices
         /// </summary>
         /// <param name="start">Start vertex</param>
-        /// <param name="end">End gVertex</param>
+        /// <param name="end">End Vertex</param>
         /// <returns name="edge">edge</returns>
         public static Edge ByStartVertexEndVertex(Vertex start, Vertex end)
         {
@@ -60,8 +60,8 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         /// <returns name="edge">edge</returns>
         //public static gEdge ByLine(Line line)
         //{
-        //    gVertex start = gVertex.ByCoordinates(line.StartPoint.X, line.StartPoint.Y, line.StartPoint.Z);
-        //    gVertex end = gVertex.ByCoordinates(line.EndPoint.X, line.EndPoint.Y, line.EndPoint.Z);
+        //    Vertex start = Vertex.ByCoordinates(line.StartPoint.X, line.StartPoint.Y, line.StartPoint.Z);
+        //    Vertex end = Vertex.ByCoordinates(line.EndPoint.X, line.EndPoint.Y, line.EndPoint.Z);
         //    return new gEdge(start, end);
         //}
         #endregion

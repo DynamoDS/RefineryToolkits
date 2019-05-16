@@ -1,15 +1,11 @@
-﻿#region namespaces
+﻿using Autodesk.GenerativeToolkit.Core.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.GenerativeToolkit.Core.Geometry;
-#endregion
 
-namespace GenerativeToolkit.Graphs
+namespace Autodesk.GenerativeToolkit.Graphs
 {
-    
+
     /// <summary>
     /// Representation of a Graph.
     /// Graph contains a Dictionary where
@@ -67,7 +63,7 @@ namespace GenerativeToolkit.Graphs
             edges = new List<Edge>();
             Id = Guid.NewGuid();
             //Setting up Graph instance by adding vertices, edges and polygons
-            foreach(Polygon gPolygon in gPolygonsSet)
+            foreach (Polygon gPolygon in gPolygonsSet)
             {
                 List<Vertex> vertices = gPolygon.vertices;
 
@@ -75,7 +71,7 @@ namespace GenerativeToolkit.Graphs
                 gPolygon.edges.Clear();
 
                 //If there is only one polygon, treat it as boundary
-                if(gPolygonsSet.Count() == 1)
+                if (gPolygonsSet.Count() == 1)
                 {
                     gPolygon.isBoundary = true;
                 }
@@ -132,7 +128,7 @@ namespace GenerativeToolkit.Graphs
 
         internal int GetNextId()
         {
-            if(this.pId == null)
+            if (this.pId == null)
             {
                 this.pId = 0;
             }
@@ -148,9 +144,9 @@ namespace GenerativeToolkit.Graphs
             this.edges.Clear();
             this.graph.Clear();
 
-            foreach(Polygon polygon in polygons.Values)
+            foreach (Polygon polygon in polygons.Values)
             {
-                foreach(Edge edge in polygon.edges)
+                foreach (Edge edge in polygon.edges)
                 {
                     this.AddEdge(edge);
                 }
@@ -184,10 +180,11 @@ namespace GenerativeToolkit.Graphs
         public List<Edge> GetVertexEdges(Vertex vertex)
         {
             List<Edge> edgesList = new List<Edge>();
-            if(graph.TryGetValue(vertex, out edgesList))
+            if (graph.TryGetValue(vertex, out edgesList))
             {
                 return edgesList;
-            }else
+            }
+            else
             {
                 //graph.Add(vertex, new List<gEdge>());
                 return new List<Edge>();
@@ -224,7 +221,7 @@ namespace GenerativeToolkit.Graphs
             {
                 graph.Add(edge.EndVertex, new List<Edge>() { edge });
             }
-            
+
             if (!edges.Contains(edge)) { edges.Add(edge); }
         }
 
@@ -234,17 +231,17 @@ namespace GenerativeToolkit.Graphs
         public void BuildPolygons()
         {
             var computedVertices = new List<Vertex>();
-            
-            foreach(Vertex v in vertices)
+
+            foreach (Vertex v in vertices)
             {
                 // If already belongs to a polygon or is not a polygon vertex or already computed
-                if( computedVertices.Contains(v) || graph[v].Count > 2) { continue; }
+                if (computedVertices.Contains(v) || graph[v].Count > 2) { continue; }
 
                 computedVertices.Add(v);
                 Polygon polygon = new Polygon(GetNextId(), false);
-                
+
                 polygon.AddVertex(v);
-                foreach(Edge edge in GetVertexEdges(v))
+                foreach (Edge edge in GetVertexEdges(v))
                 {
                     Edge currentEdge = edge;
                     Vertex currentVertex = edge.GetVertexPair(v);
@@ -255,17 +252,17 @@ namespace GenerativeToolkit.Graphs
 
                         var connectedEdges = graph[currentVertex];
                         //It is extreme vertex, polygon not closed
-                        if(connectedEdges.Count < 2)
+                        if (connectedEdges.Count < 2)
                         {
                             break;
                         }
                         // If just two edges, select the one that is not current nextEdge
-                        else if(connectedEdges.Count == 2)
+                        else if (connectedEdges.Count == 2)
                         {
                             currentEdge = connectedEdges[0].Equals(currentEdge) ? connectedEdges[1] : connectedEdges[0];
                         }
                         // If 4, is self intersection
-                        else if(connectedEdges.Count == 4)
+                        else if (connectedEdges.Count == 4)
                         {
                             var edgesWithVertexAlreadyInPolygon = connectedEdges
                                 .Where(e => !e.Equals(currentEdge) && polygon.Vertices.Contains(e.GetVertexPair(currentVertex)))
@@ -278,11 +275,11 @@ namespace GenerativeToolkit.Graphs
                             }
                             // If two, it means that is a intersection with two previous edges computed,
                             // so set the next to the one that is not parallel to current
-                            else if(edgesWithVertexAlreadyInPolygon.Count == 2)
+                            else if (edgesWithVertexAlreadyInPolygon.Count == 2)
                             {
                                 currentEdge = edgesWithVertexAlreadyInPolygon[0].Direction.IsParallelTo(currentEdge.Direction) ?
                                     edgesWithVertexAlreadyInPolygon[1] :
-                                    edgesWithVertexAlreadyInPolygon[0] ; 
+                                    edgesWithVertexAlreadyInPolygon[0];
                             }
                             // More than two, none on the current polygon so select one of those not yet computed
                             else
@@ -314,14 +311,14 @@ namespace GenerativeToolkit.Graphs
         //TODO: Improve overriding equality methods as per http://www.loganfranken.com/blog/687/overriding-equals-in-c-part-1/
 
         /// <summary>
-        /// Customizing the render of gVertex
+        /// Customizing the render of Vertex
         /// </summary>
         /// <param name="package"></param>
         /// <param name="parameters"></param>
         //[IsVisibleInDynamoLibrary(false)]
         //public void Tessellate(IRenderPackage package, TessellationParameters parameters)
         //{
-        //    foreach(gVertex v in vertices)
+        //    foreach(Vertex v in vertices)
         //    {
         //        v.Tessellate(package, parameters);
         //    }
@@ -344,7 +341,7 @@ namespace GenerativeToolkit.Graphs
                 polygons = new Dictionary<int, Polygon>(this.polygons)
             };
 
-            foreach(var item in this.graph)
+            foreach (var item in this.graph)
             {
                 newGraph.graph.Add(item.Key, new List<Edge>(item.Value));
             }
