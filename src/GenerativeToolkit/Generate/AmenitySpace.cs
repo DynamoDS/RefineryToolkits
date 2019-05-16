@@ -25,9 +25,12 @@ namespace Autodesk.GenerativeToolkit.Generate
             double offset,
             double depth)
         {
+            // offset perimeter curves by the specified offset and create new surface.
+            // makes sure there are space between outer perimeter and the amenity space
             List<Curve> inCrvs = surface.OffsetPerimeterCurves(offset)["insetCrvs"].ToList();
-            Autodesk.DesignScript.Geometry.Surface inSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
-            
+            Surface inSrf = Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
+
+            // get longest curve of the inSrf
             Curve max;
             List<Curve> others;
             Dictionary<string, dynamic> dict = inCrvs.MaximumLength();
@@ -44,10 +47,11 @@ namespace Autodesk.GenerativeToolkit.Generate
                 others = dict["otherCrvs"];
             }
 
+            // get perimeter curves of input surface 
             List<Curve> perimCrvs = surface.PerimeterCurves().ToList();
             List<Curve> matchCrvs = max.FindMatchingVectorCurves(perimCrvs);
 
-
+            // get longest curve  
             Curve max2;
             Dictionary<string, dynamic> dict2 = matchCrvs.MaximumLength();
             if (dict2["maxCrv"].Count < 1)
