@@ -15,15 +15,6 @@ namespace Autodesk.GenerativeToolkit.Analyze
         private const string graphOutputPort = "path";
         private const string lengthOutputPort = "length";
 
-
-        /***************************************************************************************
-        * Title: Graphical
-        * Author: Alvaro Ortega Pickmans
-        * Date: 2017
-        * Availability: https://github.com/alvpickmans/Graphical
-        *
-        ***************************************************************************************/
-
         /// <summary>
         /// Returns a graph representing the shortest path 
         /// between two points on a given Visibility Graph.

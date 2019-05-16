@@ -1,4 +1,14 @@
-﻿using Autodesk.GenerativeToolkit.Core.Geometry;
+﻿/***************************************************************************************
+* This code is originally created by Alvaro Alvaro Ortega Pickmans, and is available
+* in his Graphical Packages
+* Title: Graphical
+* Author: Alvaro Ortega Pickmans
+* Date: 2017
+* Availability: https://github.com/alvpickmans/Graphical
+*
+***************************************************************************************/
+
+using Autodesk.GenerativeToolkit.Core.Geometry;
 using Autodesk.GenerativeToolkit.Graphs.DataStructures;
 using System;
 using System.Collections.Generic;
@@ -8,7 +18,6 @@ namespace Autodesk.GenerativeToolkit.Graphs.Algorithms
 {
     public static class Algorithms
     {
-
         public static Graph Dijkstra(Graph graph, Vertex origin, Vertex destination, Graph tempGraph = null)
         {
             MinPriorityQ<Vertex, double> Q = new MinPriorityQ<Vertex, double>();
