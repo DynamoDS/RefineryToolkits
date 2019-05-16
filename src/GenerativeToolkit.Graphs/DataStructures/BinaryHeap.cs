@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenerativeToolkit.Graphs.DataStructures
+namespace Autodesk.GenerativeToolkit.Graphs.DataStructures
 {
     /// <summary>
     /// Custom Enum to determine behaviour of BinaryHeap

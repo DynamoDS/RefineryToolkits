@@ -1,8 +1,8 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Core.Geometry.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using GTUtil = Autodesk.GenerativeToolkit.Utilities;
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
@@ -22,7 +22,7 @@ namespace Autodesk.GenerativeToolkit.Analyze
             [DefaultArgument("[]")] List<Polygon> boundary,
             [DefaultArgument("[]")] List<Polygon> obstacles)
         {
-            List<Curve> perimeterCrvs = GTUtil.Surface.OffsetPerimeterCurves(surface, tolerance)["outsetCrvs"].ToList();
+            List<Curve> perimeterCrvs = surface.OffsetPerimeterCurves(tolerance)["outsetCrvs"].ToList();
             List<Polygon> intersectionPolygons = new List<Polygon>();
             intersectionPolygons.AddRange(boundary);
             intersectionPolygons.AddRange(obstacles);

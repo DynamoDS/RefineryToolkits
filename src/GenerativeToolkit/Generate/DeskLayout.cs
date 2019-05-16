@@ -1,4 +1,6 @@
 ﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.GenerativeToolkit.Core.Geometry.Extensions;
+using Autodesk.GenerativeToolkit.Core.Utillites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +23,12 @@ namespace Autodesk.GenerativeToolkit.Generate
             double deskDepth = 800,
             double backToBack = 2200)
         {
-            Surface boundingSrf = Utilities.Surface.BoundingSurface(surface);
+            Surface boundingSrf = surface.BoundingSurface();
             List<Curve> perimCrvs = boundingSrf.PerimeterCurves().ToList();
 
             Curve max;
             List<Curve> others;
-            Dictionary<string, dynamic> dict = Utilities.Curve.MaximumLength(perimCrvs);
+            Dictionary<string, dynamic> dict = perimCrvs.MaximumLength();
             if (dict["maxCrv"].Count < 1)
             {
                 max = dict["otherCrvs"][0] as Curve;
@@ -46,7 +48,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             foreach (Curve crv in others)
             {
                 List<bool> subList = new List<bool>();
-                if (Utilities.Point.CompareCoincidental(comPt, crv.StartPoint))
+                if (comPt.CompareCoincidental(crv.StartPoint))
                 {
                     subList.Add(true);
                 }
@@ -54,7 +56,7 @@ namespace Autodesk.GenerativeToolkit.Generate
                 {
                     subList.Add(false);
                 }
-                if (Utilities.Point.CompareCoincidental(comPt, crv.EndPoint))
+                if (comPt.CompareCoincidental(crv.EndPoint))
                 {
                     subList.Add(true);
                 }
@@ -116,7 +118,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             var flatLst = repeatLst.SelectMany(i => i).ToList();
             flatLst.Insert(0, halfb2b + halfDeskDepth);
 
-            List<double> partials = Utilities.List.RunningTotals(flatLst);
+            List<double> partials = flatLst.RunningTotals();
 
             List<bool> mask3 = new List<bool>();
             foreach (double p in partials)
@@ -145,7 +147,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             var offsetNumFlat = offsetNums.SelectMany(i => i).ToList();
             offsetNumFlat.Insert(0, halfDeskWidth);
 
-            List<double> partialsOffsets = Utilities.List.RunningTotals(offsetNumFlat);
+            List<double> partialsOffsets = offsetNumFlat.RunningTotals();
 
             List<bool> mask4 = new List<bool>();
             foreach (double p in partialsOffsets)

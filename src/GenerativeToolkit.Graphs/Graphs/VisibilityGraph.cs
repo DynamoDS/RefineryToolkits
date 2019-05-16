@@ -1,16 +1,10 @@
-﻿#region namespaces
+﻿using Autodesk.GenerativeToolkit.Core.Geometry;
+using Autodesk.GenerativeToolkit.Core.Utillites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GenerativeToolkit.Graphs.Geometry;
-using GenerativeToolkit.Graphs.Extensions;
-using GenerativeToolkit.Graphs;
-using System.Diagnostics;
-#endregion
 
-namespace GenerativeToolkit.Graphs
+namespace Autodesk.GenerativeToolkit.Graphs
 {
     /// <summary>
     /// Construction of VisibilityGraph Graph
@@ -33,9 +27,9 @@ namespace GenerativeToolkit.Graphs
         {
             baseGraph = inputGraph;
 
-            List<GeometryEdge> resultEdges = VisibilityAnalysis(baseGraph, baseGraph.vertices, reducedGraph, halfScan);
+            List<Edge> resultEdges = VisibilityAnalysis(baseGraph, baseGraph.vertices, reducedGraph, halfScan);
 
-            foreach (GeometryEdge edge in resultEdges)
+            foreach (Edge edge in resultEdges)
             {
                 this.AddEdge(edge);
             }
@@ -44,12 +38,12 @@ namespace GenerativeToolkit.Graphs
 
         #region Public Constructors
 
-        public static List<GeometryVertex> VertexVisibility(GeometryVertex origin, Graph baseGraph)
+        public static List<Vertex> VertexVisibility(Vertex origin, Graph baseGraph)
         {
-            GeometryVertex o = origin;
-            if(baseGraph.Contains(origin)) { o = baseGraph.vertices[baseGraph.vertices.IndexOf(origin)]; }
+            Vertex o = origin;
+            if (baseGraph.Contains(origin)) { o = baseGraph.vertices[baseGraph.vertices.IndexOf(origin)]; }
             var visibleVertices = VisibleVertices(o, baseGraph, null, null, null, false, false, true);
-            
+
             return visibleVertices;
 
         }
@@ -57,35 +51,35 @@ namespace GenerativeToolkit.Graphs
         public static VisibilityGraph Merge(List<VisibilityGraph> graphs)
         {
             Graph graph = new Graph();
-            List<GeometryEdge> edges = new List<GeometryEdge>();
+            List<Edge> edges = new List<Edge>();
             foreach (VisibilityGraph g in graphs)
             {
                 Dictionary<int, int> oldNewIds = new Dictionary<int, int>();
-                foreach (GeometryPolygon p in g.baseGraph.polygons.Values)
+                foreach (Polygon p in g.baseGraph.polygons.Values)
                 {
                     int nextId = graph.GetNextId();
                     oldNewIds.Add(p.id, nextId);
-                    GeometryPolygon polygon = (GeometryPolygon)p.Clone();
+                    Polygon polygon = (Polygon)p.Clone();
                     polygon.id = nextId;
                     graph.polygons.Add(nextId, polygon);
-                }               
+                }
 
-                foreach (GeometryEdge e in g.edges)
+                foreach (Edge e in g.edges)
                 {
-                    GeometryVertex start = (GeometryVertex)e.StartVertex.Clone();
-                    GeometryVertex end = (GeometryVertex)e.EndVertex.Clone();
+                    Vertex start = (Vertex)e.StartVertex.Clone();
+                    Vertex end = (Vertex)e.EndVertex.Clone();
                     //start.polygonId = oldNewIds[start.polygonId];
                     //end.polygonId = oldNewIds[end.polygonId];
-                    edges.Add(GeometryEdge.ByStartVertexEndVertex(start, end));
+                    edges.Add(Edge.ByStartVertexEndVertex(start, end));
                 }
             }
-            
+
             VisibilityGraph visibilityGraph = new VisibilityGraph()
             {
                 baseGraph = new Graph(graph.polygons.Values.ToList()),
             };
 
-            foreach(GeometryEdge edge in edges)
+            foreach (Edge edge in edges)
             {
                 visibilityGraph.AddEdge(edge);
             }
@@ -98,15 +92,15 @@ namespace GenerativeToolkit.Graphs
 
         #region Internal Methods
 
-        internal List<GeometryEdge> VisibilityAnalysis(Graph baseGraph, List<GeometryVertex> vertices, bool reducedGraph, bool halfScan)
+        internal List<Edge> VisibilityAnalysis(Graph baseGraph, List<Vertex> vertices, bool reducedGraph, bool halfScan)
         {
-            List<GeometryEdge> visibleEdges = new List<GeometryEdge>();
+            List<Edge> visibleEdges = new List<Edge>();
 
-            foreach (GeometryVertex v in vertices)
+            foreach (Vertex v in vertices)
             {
-                foreach (GeometryVertex v2 in VisibleVertices(v, baseGraph, null, null, null, halfScan, reducedGraph))
+                foreach (Vertex v2 in VisibleVertices(v, baseGraph, null, null, null, halfScan, reducedGraph))
                 {
-                    GeometryEdge newEdge = new GeometryEdge(v, v2);
+                    Edge newEdge = new Edge(v, v2);
                     if (!visibleEdges.Contains(newEdge)) { visibleEdges.Add(newEdge); }
                 }
             }
@@ -125,19 +119,19 @@ namespace GenerativeToolkit.Graphs
         /// <param name="singleVertices"></param>
         /// <param name="scan"></param>
         /// <returns name="visibleVertices">List of vertices visible from the analysed vertex</returns>
-        public static List<GeometryVertex> VisibleVertices(
-            GeometryVertex centre,
+        public static List<Vertex> VisibleVertices(
+            Vertex centre,
             Graph baseGraph,
-            GeometryVertex origin = null,
-            GeometryVertex destination = null,
-            List<GeometryVertex> singleVertices = null,
+            Vertex origin = null,
+            Vertex destination = null,
+            List<Vertex> singleVertices = null,
             bool halfScan = true,
             bool reducedGraph = true,
             bool maxVisibility = false)
         {
             #region Initialize variables and sort vertices
-            List<GeometryEdge> edges = baseGraph.edges;
-            List<GeometryVertex> vertices = baseGraph.vertices;
+            List<Edge> edges = baseGraph.edges;
+            List<Vertex> vertices = baseGraph.vertices;
 
 
             if (origin != null) { vertices.Add(origin); }
@@ -145,10 +139,10 @@ namespace GenerativeToolkit.Graphs
             if (singleVertices != null) { vertices.AddRange(singleVertices); }
 
 
-            GeometryVertex maxVertex = vertices.OrderByDescending(v => v.DistanceTo(centre)).First();
+            Vertex maxVertex = vertices.OrderByDescending(v => v.DistanceTo(centre)).First();
             double maxDistance = centre.DistanceTo(maxVertex) * 1.5;
             //vertices = vertices.OrderBy(v => Point.RadAngle(centre.point, v.point)).ThenBy(v => centre.DistanceTo(v)).ToList();
-            vertices = GeometryVertex.OrderByRadianAndDistance(vertices, centre);
+            vertices = Vertex.OrderByRadianAndDistance(vertices, centre);
 
             #endregion
 
@@ -157,8 +151,8 @@ namespace GenerativeToolkit.Graphs
             //from centre to maxDistance on the XAxis
             List<EdgeKey> openEdges = new List<EdgeKey>();
             double xMax = Math.Abs(centre.X) + 1.5 * maxDistance;
-            GeometryEdge halfEdge = GeometryEdge.ByStartVertexEndVertex(centre, GeometryVertex.ByCoordinates(xMax, centre.Y, centre.Z));
-            foreach (GeometryEdge e in edges)
+            Edge halfEdge = Edge.ByStartVertexEndVertex(centre, Vertex.ByCoordinates(xMax, centre.Y, centre.Z));
+            foreach (Edge e in edges)
             {
                 if (centre.OnEdge(e)) { continue; }
                 if (halfEdge.Intersects(e))
@@ -172,21 +166,21 @@ namespace GenerativeToolkit.Graphs
 
             #endregion
 
-            List<GeometryVertex> visibleVertices = new List<GeometryVertex>();
-            GeometryVertex prev = null;
+            List<Vertex> visibleVertices = new List<Vertex>();
+            Vertex prev = null;
             bool prevVisible = false;
             for (var i = 0; i < vertices.Count; i++)
             {
-                GeometryVertex vertex = vertices[i];
+                Vertex vertex = vertices[i];
                 if (vertex.Equals(centre) || vertex.Equals(prev)) { continue; }// v == to centre or to previous when updating graph
                 //Check only half of vertices as eventually they will become 'v'
-                if (halfScan && GeometryVertex.RadAngle(centre, vertex) > Math.PI) { break; }
+                if (halfScan && Vertex.RadAngle(centre, vertex) > Math.PI) { break; }
                 //Removing clock wise edges incident on v
                 if (openEdges.Count > 0 && baseGraph.graph.ContainsKey(vertex))
                 {
-                    foreach (GeometryEdge edge in baseGraph.graph[vertex])
+                    foreach (Edge edge in baseGraph.graph[vertex])
                     {
-                        int orientation = GeometryVertex.Orientation(centre, vertex, edge.GetVertexPair(vertex));
+                        int orientation = Vertex.Orientation(centre, vertex, edge.GetVertexPair(vertex));
 
                         if (orientation == -1)
                         {
@@ -203,17 +197,18 @@ namespace GenerativeToolkit.Graphs
 
                 //Checking if p is visible from p.
                 bool isVisible = false;
-                GeometryPolygon vertexPolygon = null;
-                if (vertex.polygonId >= 0) {
+                Polygon vertexPolygon = null;
+                if (vertex.polygonId >= 0)
+                {
                     baseGraph.polygons.TryGetValue(vertex.polygonId, out vertexPolygon);
                 }
                 // If centre is on an edge of a inner polygon vertex belongs, check if the centre-vertex edge lies inside
                 // or if on one of vertex's edges.
                 if (vertexPolygon != null && !vertexPolygon.isBoundary && vertexPolygon.ContainsVertex(centre))
                 {
-                    GeometryVertex mid = GeometryVertex.MidVertex(centre, vertex);
+                    Vertex mid = Vertex.MidVertex(centre, vertex);
                     // If mid is on any edge of vertex, is visible, otherwise not.
-                    foreach(GeometryEdge edge in baseGraph.graph[vertex])
+                    foreach (Edge edge in baseGraph.graph[vertex])
                     {
                         if (mid.OnEdge(edge))
                         {
@@ -223,21 +218,21 @@ namespace GenerativeToolkit.Graphs
                     }
                 }
                 //No collinear vertices
-                else if (prev == null || GeometryVertex.Orientation(centre, prev, vertex) != 0 || !prev.OnEdge(centre, vertex))
+                else if (prev == null || Vertex.Orientation(centre, prev, vertex) != 0 || !prev.OnEdge(centre, vertex))
                 {
-                    
+
                     if (openEdges.Count == 0)
                     {
                         if (vertexPolygon != null && vertexPolygon.isBoundary && vertexPolygon.ContainsVertex(centre))
                         {
-                            isVisible = vertexPolygon.ContainsVertex(GeometryVertex.MidVertex(centre, vertex));
+                            isVisible = vertexPolygon.ContainsVertex(Vertex.MidVertex(centre, vertex));
                         }
                         else
                         {
                             isVisible = true;
                         }
                     }
-                    else if (vertex.OnEdge(openEdges.First().Edge) || !openEdges.First().Edge.Intersects(new GeometryEdge(centre, vertex))) //TODO: Change this intersection to Edge.Intersects
+                    else if (vertex.OnEdge(openEdges.First().Edge) || !openEdges.First().Edge.Intersects(new Edge(centre, vertex))) //TODO: Change this intersection to Edge.Intersects
                     {
                         isVisible = true;
                     }
@@ -298,28 +293,28 @@ namespace GenerativeToolkit.Graphs
                 if (isVisible)
                 {
                     // Check reducedGraph if vertices belongs to different polygons
-                    if (reducedGraph && centre.polygonId != vertex.polygonId) 
+                    if (reducedGraph && centre.polygonId != vertex.polygonId)
                     {
-                        bool isOriginExtreme =  true;
+                        bool isOriginExtreme = true;
                         bool isTargetExtreme = true;
                         // For reduced graphs, it is checked if the edge is extrem or not.
                         // For an edge to be extreme, the edges coincident at the start and end vertex
                         // will have the same orientation (both clock or counter-clock wise)
-                        
+
                         // Vertex belongs to a polygon
                         if (centre.polygonId >= 0 && !IsBoundaryVertex(centre, baseGraph))
                         {
-                            var orientationsOrigin = baseGraph.GetAdjecentVertices(centre).Select(otherVertex => GeometryVertex.Orientation(vertex, centre, otherVertex)).ToList();
+                            var orientationsOrigin = baseGraph.GetAdjecentVertices(centre).Select(otherVertex => Vertex.Orientation(vertex, centre, otherVertex)).ToList();
                             isOriginExtreme = orientationsOrigin.All(o => o == orientationsOrigin.First());
                         }
 
-                        if(vertex.polygonId >= 0 && !IsBoundaryVertex(vertex, baseGraph))
+                        if (vertex.polygonId >= 0 && !IsBoundaryVertex(vertex, baseGraph))
                         {
-                            var orientationsTarget = baseGraph.GetAdjecentVertices(vertex).Select(otherVertex => GeometryVertex.Orientation(centre, vertex, otherVertex)).ToList();
+                            var orientationsTarget = baseGraph.GetAdjecentVertices(vertex).Select(otherVertex => Vertex.Orientation(centre, vertex, otherVertex)).ToList();
                             isTargetExtreme = orientationsTarget.All(o => o == orientationsTarget.First());
                         }
 
-                        if(isTargetExtreme || isOriginExtreme) { visibleVertices.Add(vertex); }
+                        if (isTargetExtreme || isOriginExtreme) { visibleVertices.Add(vertex); }
                     }
                     else
                     {
@@ -329,9 +324,9 @@ namespace GenerativeToolkit.Graphs
 
                 if (baseGraph.Contains(vertex))
                 {
-                    foreach (GeometryEdge e in baseGraph.graph[vertex])
+                    foreach (Edge e in baseGraph.graph[vertex])
                     {
-                        if (!centre.OnEdge(e) && GeometryVertex.Orientation(centre, vertex, e.GetVertexPair(vertex)) == 1)
+                        if (!centre.OnEdge(e) && Vertex.Orientation(centre, vertex, e.GetVertexPair(vertex)) == 1)
                         {
                             EdgeKey k = new EdgeKey(centre, vertex, e);
                             openEdges.AddItemSorted(k);
@@ -339,36 +334,36 @@ namespace GenerativeToolkit.Graphs
                     }
                 }
 
-                if(isVisible && maxVisibility && vertex.polygonId >= 0)
+                if (isVisible && maxVisibility && vertex.polygonId >= 0)
                 {
-                    List<GeometryVertex> vertexPairs = baseGraph.GetAdjecentVertices(vertex);
-                    int firstOrientation = GeometryVertex.Orientation(centre, vertex, vertexPairs[0]);
-                    int secondOrientation = GeometryVertex.Orientation(centre, vertex, vertexPairs[1]);
+                    List<Vertex> vertexPairs = baseGraph.GetAdjecentVertices(vertex);
+                    int firstOrientation = Vertex.Orientation(centre, vertex, vertexPairs[0]);
+                    int secondOrientation = Vertex.Orientation(centre, vertex, vertexPairs[1]);
                     bool isColinear = false;
 
                     //if both edges lie on the same side of the centre-vertex edge or one of them is colinear or centre is contained on any of the edges
-                    if(firstOrientation == secondOrientation || firstOrientation == 0 || secondOrientation == 0)
+                    if (firstOrientation == secondOrientation || firstOrientation == 0 || secondOrientation == 0)
                     {
-                        GeometryVertex rayVertex = vertex.Translate(GeometryVector.ByTwoVertices(centre, vertex), maxDistance);
-                        GeometryEdge rayEdge = GeometryEdge.ByStartVertexEndVertex(centre, rayVertex);
-                        GeometryVertex projectionVertex = null;
+                        Vertex rayVertex = vertex.Translate(Vector.ByTwoVertices(centre, vertex), maxDistance);
+                        Edge rayEdge = Edge.ByStartVertexEndVertex(centre, rayVertex);
+                        Vertex projectionVertex = null;
 
                         // if both orientation are not on the same side, means that one of them is colinear
                         isColinear = firstOrientation != secondOrientation ? true : false;
 
-                        foreach(EdgeKey ek in openEdges)
+                        foreach (EdgeKey ek in openEdges)
                         {
-                            GeometryVertex intersection = rayEdge.Intersection(ek.Edge) as GeometryVertex;
-                            if(intersection != null &&!intersection.Equals(vertex))
+                            Vertex intersection = rayEdge.Intersection(ek.Edge) as Vertex;
+                            if (intersection != null && !intersection.Equals(vertex))
                             {
                                 projectionVertex = intersection;
-                                GeometryPolygon polygon = null;
+                                Polygon polygon = null;
                                 baseGraph.polygons.TryGetValue(vertex.polygonId, out polygon);
-                                if(polygon != null)
+                                if (polygon != null)
                                 {
                                     // If polygon is internal, don't compute intersection if mid point lies inside the polygon but not on its edges
-                                    GeometryVertex mid = GeometryVertex.MidVertex(vertex, intersection);
-                                    bool containsEdge = GeometryVertex.Orientation(centre, vertex, mid) != 0  && polygon.ContainsVertex(mid);
+                                    Vertex mid = Vertex.MidVertex(vertex, intersection);
+                                    bool containsEdge = Vertex.Orientation(centre, vertex, mid) != 0 && polygon.ContainsVertex(mid);
                                     if (!polygon.isBoundary && containsEdge)
                                     {
                                         projectionVertex = null;
@@ -377,10 +372,10 @@ namespace GenerativeToolkit.Graphs
                                 break;
                             }
                         }
-                        if(projectionVertex != null)
+                        if (projectionVertex != null)
                         {
                             // if edges are before rayEdge, projection Vertex goes after vertex
-                            if(firstOrientation == -1 || secondOrientation == -1)
+                            if (firstOrientation == -1 || secondOrientation == -1)
                             {
                                 visibleVertices.Add(projectionVertex);
                             }
@@ -390,7 +385,7 @@ namespace GenerativeToolkit.Graphs
                             }
                         }
                     }
-                    if(vertexPairs.Contains(centre) && !visibleVertices.Contains(centre))
+                    if (vertexPairs.Contains(centre) && !visibleVertices.Contains(centre))
                     {
                         visibleVertices.Add(centre);
                     }
@@ -400,7 +395,7 @@ namespace GenerativeToolkit.Graphs
             return visibleVertices;
         }
 
-        internal static bool EdgeIntersect(GeometryEdge halfEdge, GeometryEdge edge)
+        internal static bool EdgeIntersect(Edge halfEdge, Edge edge)
         {
             //For simplicity, it only takes into acount the 2d projection to the xy plane,
             //so the result will be based on a porjection even if points have z values.
@@ -414,7 +409,7 @@ namespace GenerativeToolkit.Graphs
             return intersects;
         }
 
-        internal static bool EdgeIntersect(GeometryVertex start, GeometryVertex end, GeometryEdge edge)
+        internal static bool EdgeIntersect(Vertex start, Vertex end, Edge edge)
         {
             //For simplicity, it only takes into acount the 2d projection to the xy plane,
             //so the result will be based on a projection even if points have z values.
@@ -429,51 +424,51 @@ namespace GenerativeToolkit.Graphs
         }
 
         internal static bool EdgeIntersectProjection(
-            GeometryVertex p1,
-            GeometryVertex q1,
-            GeometryVertex p2,
-            GeometryVertex q2,
+            Vertex p1,
+            Vertex q1,
+            Vertex p2,
+            Vertex q2,
             string plane = "xy")
         {
             //For more details https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
 
-            int o1 = GeometryVertex.Orientation(p1, q1, p2, plane);
-            int o2 = GeometryVertex.Orientation(p1, q1, q2, plane);
-            int o3 = GeometryVertex.Orientation(p2, q2, p1, plane);
-            int o4 = GeometryVertex.Orientation(p2, q2, q1, plane);
+            int o1 = Vertex.Orientation(p1, q1, p2, plane);
+            int o2 = Vertex.Orientation(p1, q1, q2, plane);
+            int o3 = Vertex.Orientation(p2, q2, p1, plane);
+            int o4 = Vertex.Orientation(p2, q2, q1, plane);
 
             //General case
             if (o1 != o2 && o3 != o4) { return true; }
 
             //Special Cases
             // p1, q1 and p2 are colinear and p2 lies on segment p1q1
-            if (o1 == 0 && GeometryVertex.OnEdgeProjection(p1, p2, q1, plane)) { return true; }
+            if (o1 == 0 && Vertex.OnEdgeProjection(p1, p2, q1, plane)) { return true; }
 
             // p1, q1 and p2 are colinear and q2 lies on segment p1q1
-            if (o2 == 0 && GeometryVertex.OnEdgeProjection(p1, q2, q1, plane)) { return true; }
+            if (o2 == 0 && Vertex.OnEdgeProjection(p1, q2, q1, plane)) { return true; }
 
             // p2, q2 and p1 are colinear and p1 lies on segment p2q2
-            if (o3 == 0 && GeometryVertex.OnEdgeProjection(p2, p1, q2, plane)) { return true; }
+            if (o3 == 0 && Vertex.OnEdgeProjection(p2, p1, q2, plane)) { return true; }
 
             // p2, q2 and q1 are colinear and q1 lies on segment p2q2
-            if (o4 == 0 && GeometryVertex.OnEdgeProjection(p2, q1, q2, plane)) { return true; }
+            if (o4 == 0 && Vertex.OnEdgeProjection(p2, q1, q2, plane)) { return true; }
 
             return false; //Doesn't fall on any of the above cases
 
 
         }
 
-        internal static bool EdgeInPolygon(GeometryVertex v1, GeometryVertex v2, Graph graph, double maxDistance)
+        internal static bool EdgeInPolygon(Vertex v1, Vertex v2, Graph graph, double maxDistance)
         {
             //Not on the same polygon
             if (v1.polygonId != v2.polygonId) { return false; }
             //At least one doesn't belong to any polygon
             if (v1.polygonId == -1 || v2.polygonId == -1) { return false; }
-            GeometryVertex midVertex = GeometryVertex.MidVertex(v1, v2);
+            Vertex midVertex = Vertex.MidVertex(v1, v2);
             return graph.polygons[v1.polygonId].ContainsVertex(midVertex);
         }
 
-        internal static bool IsBoundaryVertex(GeometryVertex vertex, Graph graph)
+        internal static bool IsBoundaryVertex(Vertex vertex, Graph graph)
         {
             return (vertex.polygonId < 0) ? false : graph.polygons[vertex.polygonId].isBoundary;
         }
@@ -488,12 +483,12 @@ namespace GenerativeToolkit.Graphs
         /// <param name="visibilityGraph">VisibilityGraph Graph</param>
         /// <param name="edges">Lines to add as new gEdges</param>
         /// <returns></returns>
-        public static VisibilityGraph AddEdges(VisibilityGraph visibilityGraph, List<GeometryEdge> edges)
+        public static VisibilityGraph AddEdges(VisibilityGraph visibilityGraph, List<Edge> edges)
         {
             if (edges == null) { throw new NullReferenceException("edges"); }
-            List<GeometryVertex> singleVertices = new List<GeometryVertex>();
+            List<Vertex> singleVertices = new List<Vertex>();
 
-            foreach (GeometryEdge e in edges)
+            foreach (Edge e in edges)
             {
                 if (!singleVertices.Contains(e.StartVertex)) { singleVertices.Add(e.StartVertex); }
                 if (!singleVertices.Contains(e.EndVertex)) { singleVertices.Add(e.EndVertex); }
@@ -505,7 +500,7 @@ namespace GenerativeToolkit.Graphs
 
             }
 
-            foreach (GeometryEdge e in edges) { updatedGraph.AddEdge(e); }
+            foreach (Edge e in edges) { updatedGraph.AddEdge(e); }
 
             return updatedGraph;
         }
@@ -516,18 +511,18 @@ namespace GenerativeToolkit.Graphs
         /// <param name="visibilityGraph">VisibilityGraph Graph</param>
         /// <param name="vertices">Points to add as gVertices</param>
         /// <returns></returns>
-        public static VisibilityGraph AddVertices(VisibilityGraph visibilityGraph, List<GeometryVertex> vertices, bool reducedGraph = true)
+        public static VisibilityGraph AddVertices(VisibilityGraph visibilityGraph, List<Vertex> vertices, bool reducedGraph = true)
         {
             //TODO: Seems that original graph gets updated as well
             if (vertices == null) { throw new NullReferenceException("vertices"); }
 
             VisibilityGraph newVisGraph = (VisibilityGraph)visibilityGraph.Clone();
-            List<GeometryVertex> singleVertices = new List<GeometryVertex>();
+            List<Vertex> singleVertices = new List<Vertex>();
 
-            foreach (GeometryVertex v in vertices)
+            foreach (Vertex v in vertices)
             {
                 if (newVisGraph.Contains(v)) { continue; }
-                GeometryEdge closestEdge = newVisGraph.baseGraph.edges.OrderBy(e => e.DistanceTo(v)).First();
+                Edge closestEdge = newVisGraph.baseGraph.edges.OrderBy(e => e.DistanceTo(v)).First();
 
                 if (!closestEdge.DistanceTo(v).AlmostEqualTo(0))
                 {
@@ -543,18 +538,18 @@ namespace GenerativeToolkit.Graphs
 
             newVisGraph.baseGraph.ResetEdgesFromPolygons();
 
-            foreach (GeometryVertex centre in singleVertices)
+            foreach (Vertex centre in singleVertices)
             {
-                foreach (GeometryVertex v in VisibleVertices(centre, newVisGraph.baseGraph, null, null, singleVertices, false, reducedGraph))
+                foreach (Vertex v in VisibleVertices(centre, newVisGraph.baseGraph, null, null, singleVertices, false, reducedGraph))
                 {
-                    newVisGraph.AddEdge(new GeometryEdge(centre, v));
+                    newVisGraph.AddEdge(new Edge(centre, v));
                 }
             }
 
             return newVisGraph;
         }
 
-        public static Graph ShortestPath(VisibilityGraph visibilityGraph, GeometryVertex origin, GeometryVertex destination)
+        public static Graph ShortestPath(VisibilityGraph visibilityGraph, Vertex origin, Vertex destination)
         {
             Graph shortest;
 
@@ -567,22 +562,22 @@ namespace GenerativeToolkit.Graphs
             }
             else
             {
-                GeometryVertex gO = (!containsOrigin) ? origin : null;
-                GeometryVertex gD = (!containsDestination) ? destination : null;
+                Vertex gO = (!containsOrigin) ? origin : null;
+                Vertex gD = (!containsDestination) ? destination : null;
                 Graph tempGraph = new Graph();
 
                 if (!containsOrigin)
                 {
-                    foreach (GeometryVertex v in VisibleVertices(origin, visibilityGraph.baseGraph, null, gD, null, false, true))
+                    foreach (Vertex v in VisibleVertices(origin, visibilityGraph.baseGraph, null, gD, null, false, true))
                     {
-                        tempGraph.AddEdge(new GeometryEdge(origin, v));
+                        tempGraph.AddEdge(new Edge(origin, v));
                     }
                 }
                 if (!containsDestination)
                 {
-                    foreach (GeometryVertex v in VisibleVertices(destination, visibilityGraph.baseGraph, gO, null, null, false, true))
+                    foreach (Vertex v in VisibleVertices(destination, visibilityGraph.baseGraph, gO, null, null, false, true))
                     {
-                        tempGraph.AddEdge(new GeometryEdge(destination, v));
+                        tempGraph.AddEdge(new Edge(destination, v));
                     }
                 }
                 shortest = Algorithms.Algorithms.Dijkstra(visibilityGraph, origin, destination, tempGraph);
@@ -595,7 +590,7 @@ namespace GenerativeToolkit.Graphs
         public List<double> ConnectivityFactor()
         {
             List<int> connected = new List<int>();
-            foreach(GeometryEdge edge in edges)
+            foreach (Edge edge in edges)
             {
                 connected.Add(graph[edge.StartVertex].Count + graph[edge.EndVertex].Count());
             }
@@ -613,19 +608,19 @@ namespace GenerativeToolkit.Graphs
         {
             VisibilityGraph newGraph = new VisibilityGraph()
             {
-                graph = new Dictionary<GeometryVertex, List<GeometryEdge>>(),
-                edges = new List<GeometryEdge>(this.edges),
-                polygons = new Dictionary<int, GeometryPolygon>(this.polygons),
+                graph = new Dictionary<Vertex, List<Edge>>(),
+                edges = new List<Edge>(this.edges),
+                polygons = new Dictionary<int, Polygon>(this.polygons),
                 baseGraph = (Graph)this.baseGraph.Clone()
             };
 
             foreach (var item in this.graph)
             {
-                newGraph.graph.Add(item.Key, new List<GeometryEdge>(item.Value));
+                newGraph.graph.Add(item.Key, new List<Edge>(item.Value));
             }
 
             return newGraph;
         }
-        
+
     }
 }

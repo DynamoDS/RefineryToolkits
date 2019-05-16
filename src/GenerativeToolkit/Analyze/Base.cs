@@ -1,19 +1,25 @@
 ﻿#region namespaces
+using Autodesk.DesignScript.Interfaces;
+using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Graphs;
+using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Interfaces;
-using Autodesk.DesignScript.Runtime;
-using GenerativeToolkit.Graphs.Geometry;
-using Dynamo.Graph.Nodes;
-using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
-using GenerativeToolkit.Graphs;
+using DSGeom = Autodesk.DesignScript.Geometry;
+using GTGeom = Autodesk.GenerativeToolkit.Core.Geometry;
 #endregion
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
+    /***************************************************************************************
+    * Title: Graphical
+    * Author: Alvaro Ortega Pickmans
+    * Date: 2017
+    * Availability: https://github.com/alvpickmans/Graphical
+    *
+    ***************************************************************************************/
+
     /// <summary>
     /// Representation of a Graph.
     /// </summary>
@@ -46,7 +52,7 @@ namespace Autodesk.GenerativeToolkit.Analyze
         #region Internal Constructors
         internal BaseGraph() { }
 
-        internal BaseGraph(List<GeometryPolygon> gPolygons)
+        internal BaseGraph(List<GTGeom.Polygon> gPolygons)
         {
             graph = new Graph(gPolygons);
         }
@@ -61,23 +67,24 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="internals">Internal polygons</param>
         /// <returns name="baseGraph">Base graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public static BaseGraph ByBoundaryAndInternalPolygons(List<Polygon> boundaries, 
-            [DefaultArgument("[]")]List<Polygon> internals)
+        public static BaseGraph ByBoundaryAndInternalPolygons(
+            List<DSGeom.Polygon> boundaries,
+            [DefaultArgument("[]")]List<DSGeom.Polygon> internals)
         {
             if (boundaries == null) throw new NullReferenceException("boundaryPolygons");
             if (internals == null) throw new NullReferenceException("internalPolygons");
-            List<GeometryPolygon> input = new List<GeometryPolygon>();
-            foreach (Polygon pol in boundaries)
+            List<GTGeom.Polygon> input = new List<GTGeom.Polygon>();
+            foreach (DSGeom.Polygon pol in boundaries)
             {
-                var vertices = pol.Points.Select(pt => GeometryVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                GeometryPolygon gPol = GeometryPolygon.ByVertices(vertices, true);
+                var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
+                GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, true);
                 input.Add(gPol);
             }
 
-            foreach (Polygon pol in internals)
+            foreach (DSGeom.Polygon pol in internals)
             {
-                var vertices = pol.Points.Select(pt => GeometryVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                GeometryPolygon gPol = GeometryPolygon.ByVertices(vertices, false);
+                var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
+                GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, false);
                 input.Add(gPol);
             }
 
@@ -91,14 +98,14 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="polygons">Polygons</param>
         /// <returns name="baseGraph">Base graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public static BaseGraph ByPolygons(List<Polygon> polygons)
+        public static BaseGraph ByPolygons(List<DSGeom.Polygon> polygons)
         {
             if (polygons == null) throw new NullReferenceException("polygons");
-            List<GeometryPolygon> input = new List<GeometryPolygon>();
-            foreach (Polygon pol in polygons)
+            List<GTGeom.Polygon> input = new List<GTGeom.Polygon>();
+            foreach (DSGeom.Polygon pol in polygons)
             {
-                var vertices = pol.Points.Select(pt => GeometryVertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                GeometryPolygon gPol = GeometryPolygon.ByVertices(vertices, false);
+                var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
+                GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, false);
                 input.Add(gPol);
             }
 
@@ -111,7 +118,7 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="lines">Lines</param>
         /// <returns name="baseGraph">Base Graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public static BaseGraph ByLines(List<Line> lines)
+        public static BaseGraph ByLines(List<DSGeom.Line> lines)
         {
             if (lines == null) throw new NullReferenceException("lines");
             BaseGraph g = new BaseGraph()
@@ -119,11 +126,11 @@ namespace Autodesk.GenerativeToolkit.Analyze
                 graph = new Graph()
             };
 
-            foreach (Line line in lines)
+            foreach (DSGeom.Line line in lines)
             {
-                GeometryVertex start = Points.ToVertex(line.StartPoint);
-                GeometryVertex end = Points.ToVertex(line.EndPoint);
-                g.graph.AddEdge(GeometryEdge.ByStartVertexEndVertex(start, end));
+                GTGeom.Vertex start = GTGeom.Points.ToVertex(line.StartPoint);
+                GTGeom.Vertex end = GTGeom.Points.ToVertex(line.EndPoint);
+                g.graph.AddEdge(GTGeom.Edge.ByStartVertexEndVertex(start, end));
             }
             return g;
         }
@@ -146,7 +153,8 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="package"></param>
         /// <param name="parameters"></param>
         [IsVisibleInDynamoLibrary(false)]
-        public void Tessellate(IRenderPackage package, 
+        public void Tessellate(
+            IRenderPackage package,
             TessellationParameters parameters)
         {
             if (this.GetType() == typeof(Visibility))
@@ -169,30 +177,33 @@ namespace Autodesk.GenerativeToolkit.Analyze
 
         }
 
-        internal void TesselateBaseGraph(IRenderPackage package, 
+        internal void TesselateBaseGraph(
+            IRenderPackage package,
             TessellationParameters parameters)
         {
-            foreach (GeometryVertex v in graph.vertices)
+            foreach (GTGeom.Vertex v in graph.vertices)
             {
                 AddColouredVertex(package, v, vertexDefaultColour);
             }
 
-            foreach (GeometryEdge e in graph.edges)
+            foreach (GTGeom.Edge e in graph.edges)
             {
                 AddColouredEdge(package, e, edgeDefaultColour);
             }
         }
 
-        internal static void AddColouredVertex(IRenderPackage package, 
-            GeometryVertex vertex, 
+        internal static void AddColouredVertex(
+            IRenderPackage package,
+            GTGeom.Vertex vertex,
             DSCore.Color color)
         {
             package.AddPointVertex(vertex.X, vertex.Y, vertex.Z);
             package.AddPointVertexColor(color.Red, color.Green, color.Blue, color.Alpha);
         }
 
-        internal static void AddColouredEdge(IRenderPackage package, 
-            GeometryEdge edge, 
+        internal static void AddColouredEdge(
+            IRenderPackage package,
+            GTGeom.Edge edge,
             DSCore.Color color)
         {
             package.AddLineStripVertex(edge.StartVertex.X, edge.StartVertex.Y, edge.StartVertex.Z);

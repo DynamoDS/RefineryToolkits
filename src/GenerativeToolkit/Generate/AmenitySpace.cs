@@ -2,6 +2,8 @@
 using Autodesk.DesignScript.Runtime;
 using System.Collections.Generic;
 using System.Linq;
+using Autodesk.GenerativeToolkit.Core.Geometry.Extensions;
+
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
@@ -31,7 +33,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             // get longest curve of the inSrf
             Curve max;
             List<Curve> others;
-            Dictionary<string, dynamic> dict = Utilities.Curve.MaximumLength(inCrvs);
+            Dictionary<string, dynamic> dict = inCrvs.MaximumLength();
             if (dict["maxCrv"].Count < 1)
             {
                 max = dict["otherCrvs"][0] as Curve;
@@ -47,11 +49,11 @@ namespace Autodesk.GenerativeToolkit.Generate
 
             // get perimeter curves of input surface 
             List<Curve> perimCrvs = surface.PerimeterCurves().ToList();
-            List<Curve> matchCrvs = Utilities.Curve.FindMatchingVectorCurves(max, perimCrvs);
+            List<Curve> matchCrvs = max.FindMatchingVectorCurves(perimCrvs);
 
             // get longest curve  
             Curve max2;
-            Dictionary<string, dynamic> dict2 = Utilities.Curve.MaximumLength(matchCrvs);
+            Dictionary<string, dynamic> dict2 = matchCrvs.MaximumLength();
             if (dict2["maxCrv"].Count < 1)
             {
                 max2 = dict2["otherCrvs"][0] as Curve;
@@ -61,10 +63,10 @@ namespace Autodesk.GenerativeToolkit.Generate
                 max2 = dict2["maxCrv"][0] as Curve;
             }
 
-            Vector vec = Utilities.Vector.ByTwoCurves(max2, max);
+            Vector vec = max2.ByTwoCurves(max);
 
             Curve transLine = max.Translate(vec, depth) as Curve;
-            Line extendLine = Utilities.Line.ExtendAtBothEnds(transLine, 1);
+            Line extendLine = transLine.ExtendAtBothEnds(1);
 
 
             List<Curve> crvList = new List<Curve>() { max, extendLine };
@@ -81,13 +83,13 @@ namespace Autodesk.GenerativeToolkit.Generate
             List<Curve> extendCurves = new List<Curve>();
             foreach (Curve crv in intersectingCurves)
             {
-                var l = Utilities.Line.ExtendAtBothEnds(crv, 1);
+                var l = crv.ExtendAtBothEnds(1);
                 extendCurves.Add(l);
             }
 
-            List<Surface> split = Utilities.Surface.SplitPlanarSurfaceByMultipleCurves(loftSrf, extendCurves).OfType<Surface>().ToList();
+            List<Surface> split = loftSrf.SplitPlanarSurfaceByMultipleCurves(extendCurves).OfType<Surface>().ToList();
 
-            Surface amenitySurf = Utilities.Surface.MaximumArea(split)["maxSrf"] as Surface;
+            Surface amenitySurf = split.MaximumArea()["maxSrf"] as Surface;
 
             Surface remainSurf = inSrf.Split(amenitySurf)[0] as Surface;
 

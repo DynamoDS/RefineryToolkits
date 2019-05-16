@@ -1,18 +1,25 @@
-﻿using System;
+﻿using Autodesk.DesignScript.Interfaces;
+using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Core.Geometry.Extensions;
+using Autodesk.GenerativeToolkit.Core.Utillites;
+using Autodesk.GenerativeToolkit.Graphs;
+using Dynamo.Graph.Nodes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSPoint = Autodesk.DesignScript.Geometry.Point;
-using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Interfaces;
-using Autodesk.DesignScript.Runtime;
-using System.Globalization;
-using Dynamo.Graph.Nodes;
-using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
-using GenerativeToolkit.Graphs.Extensions;
-using GenerativeToolkit.Graphs;
+using DSGeom = Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
+
+    /***************************************************************************************
+    * Title: Graphical
+    * Author: Alvaro Ortega Pickmans
+    * Date: 2017
+    * Availability: https://github.com/alvpickmans/Graphical
+    *
+    ***************************************************************************************/
+
     /// <summary>
     /// Representation of a Graph.
     /// </summary>
@@ -52,7 +59,7 @@ namespace Autodesk.GenerativeToolkit.Analyze
         [IsVisibleInDynamoLibrary(false)]
         public static Visibility ByBaseGraph(BaseGraph baseGraph, bool reduced = true)
         {
-            if (baseGraph == null)  throw new ArgumentNullException("graph"); 
+            if (baseGraph == null) throw new ArgumentNullException("graph");
             var visGraph = new VisibilityGraph(baseGraph.graph, reduced, true);
             var visibilityGraph = new Visibility()
             {
@@ -77,7 +84,7 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <returns name="visGraph">Connected VisibilityGraph</returns>
         [NodeCategory("Actions")]
         [IsVisibleInDynamoLibrary(false)]
-        public static Visibility ConnectGraphs(List<Visibility> visibilityGraphs, List<Line> lines)
+        public static Visibility ConnectGraphs(List<Visibility> visibilityGraphs, List<DSGeom.Line> lines)
         {
             if (visibilityGraphs == null) throw new ArgumentNullException("visibilityGraphs");
 
@@ -150,7 +157,7 @@ namespace Autodesk.GenerativeToolkit.Analyze
         public void TessellateVisibilityGraph(IRenderPackage package, TessellationParameters parameters)
         {
 
-            //foreach(gVertex v in graph.vertices)
+            //foreach(Vertex v in graph.vertices)
             //{
             //    AddColouredVertex(package, v, vertexDefaultColour);
             //}

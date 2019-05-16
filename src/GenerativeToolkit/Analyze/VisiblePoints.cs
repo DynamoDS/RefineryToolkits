@@ -1,11 +1,10 @@
-﻿using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Runtime;
-using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
-using GenerativeToolkit.Graphs;
-using GenerativeToolkit.Graphs.Geometry;
+﻿using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Graphs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DSGeom = Autodesk.DesignScript.Geometry;
+using GTGeom = Autodesk.GenerativeToolkit.Core.Geometry;
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
@@ -25,21 +24,21 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <returns>precentages of the amount of visible points</returns>
         [MultiReturn(new[] { scoreOutputPort, geometryOutputPort })]
         public static Dictionary<string, object> FromOrigin(
-            Point origin,
-            List<Point> points,
-            List<Polygon> boundary,
-            [DefaultArgument("[]")] List<Polygon> obstacles)
+            DSGeom.Point origin,
+            List<DSGeom.Point> points,
+            List<DSGeom.Polygon> boundary,
+            [DefaultArgument("[]")] List<DSGeom.Polygon> obstacles)
         {
-            Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
-            GeometryPolygon gPol = GeometryPolygon.ByVertices(isovist.Points.Select(p => GeometryVertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
+            DSGeom.Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
+            GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(isovist.Points.Select(p => GTGeom.Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
 
-            List<Point> visPoints = new List<Point>();
+            List<DSGeom.Point> visPoints = new List<DSGeom.Point>();
             double totalPoints = points.Count;
             double visibilityAmount = 0;
 
-            foreach (Point point in points)
+            foreach (DSGeom.Point point in points)
             {
-                GeometryVertex vertex = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
+                GTGeom.Vertex vertex = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
                 if (gPol.ContainsVertex(vertex))
                 {
@@ -56,10 +55,10 @@ namespace Autodesk.GenerativeToolkit.Analyze
             };
         }
 
-        private static Polygon IsovistPolygon(
-            List<Polygon> boundary,
-            List<Polygon> obstacles,
-            Point point)
+        private static DSGeom.Polygon IsovistPolygon(
+            List<DSGeom.Polygon> boundary,
+            List<DSGeom.Polygon> obstacles,
+            DSGeom.Point point)
         {
             BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstacles);
 
@@ -73,18 +72,18 @@ namespace Autodesk.GenerativeToolkit.Analyze
                 throw new ArgumentNullException("point");
             }
 
-            GeometryVertex origin = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
+            GTGeom.Vertex origin = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            List<GeometryVertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
-            List<Point> points = vertices.Select(v => Points.ToPoint(v)).ToList();
+            List<GTGeom.Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            List<DSGeom.Point> points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
 
-            var polygon = Polygon.ByPoints(points);
+            var polygon = DSGeom.Polygon.ByPoints(points);
 
             // if polygon is self intersecting, make new polygon
             if (polygon.SelfIntersections().Length > 0)
             {
                 points.Add(point);
-                polygon = Polygon.ByPoints(points);
+                polygon = DSGeom.Polygon.ByPoints(points);
             }
             return polygon;
         }
