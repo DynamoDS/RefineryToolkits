@@ -1,12 +1,7 @@
-﻿using GenerativeToolkit.Graphs;
+﻿using Autodesk.GenerativeToolkit.Core.Geometry;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.GenerativeToolkit.Core.Geometry;
 
-namespace GenerativeToolkit.Graphs
+namespace Autodesk.GenerativeToolkit.Graphs
 {
     /// <summary>
     /// VisibilityGraph graph's EdgeKey class to create a tree data structure.

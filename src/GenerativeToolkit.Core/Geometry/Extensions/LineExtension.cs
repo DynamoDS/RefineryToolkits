@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
 {
     [IsVisibleInDynamoLibrary(false)]
-    internal static class LineExtension
+    public static class LineExtension
     {
 
         #region ExtendAtBothEnds

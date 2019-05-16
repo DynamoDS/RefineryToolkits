@@ -1,23 +1,20 @@
-﻿using System;
+﻿using Autodesk.GenerativeToolkit.Core.Geometry;
+using Autodesk.GenerativeToolkit.Graphs.DataStructures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GenerativeToolkit.Graphs;
-using Autodesk.GenerativeToolkit.Core.Geometry;
-using GenerativeToolkit.Graphs.DataStructures;
 
-namespace GenerativeToolkit.Graphs.Algorithms
+namespace Autodesk.GenerativeToolkit.Graphs.Algorithms
 {
     public static class Algorithms
     {
-        
+
         public static Graph Dijkstra(Graph graph, Vertex origin, Vertex destination, Graph tempGraph = null)
         {
             MinPriorityQ<Vertex, double> Q = new MinPriorityQ<Vertex, double>();
             bool originInGraph = false;
 
-            foreach(Vertex v in graph.vertices)
+            foreach (Vertex v in graph.vertices)
             {
                 if (v.Equals(origin))
                 {
@@ -51,17 +48,17 @@ namespace GenerativeToolkit.Graphs.Algorithms
 
                 List<Edge> edges = new List<Edge>();
                 edges.AddRange(graph.GetVertexEdges(vertex));
-                if(tempGraph != null && tempGraph.edges.Any())
+                if (tempGraph != null && tempGraph.edges.Any())
                 {
                     edges.AddRange(tempGraph.GetVertexEdges(vertex));
                 }
 
-                foreach(Edge e in edges)
+                foreach (Edge e in edges)
                 {
                     Vertex w = e.GetVertexPair(vertex);
                     double newLength = minDistance + e.Length;
-                    
-                    if(!S.Contains(w) && newLength < Q.GetValue(w))
+
+                    if (!S.Contains(w) && newLength < Q.GetValue(w))
                     {
                         Q.UpdateItem(w, newLength);
                         //dist[w] = newLength;
@@ -82,8 +79,8 @@ namespace GenerativeToolkit.Graphs.Algorithms
             // Reversing edges list so they will be sorted from origin to target
             path.edges.Reverse();
             return path;
-            
+
         }
-        
+
     }
 }

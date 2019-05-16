@@ -1,20 +1,16 @@
-﻿using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Runtime;
-using Autodesk.GenerativeToolkit.Utilities.GraphicalGeometry;
+﻿using Autodesk.DesignScript.Runtime;
+using Autodesk.GenerativeToolkit.Graphs;
 using Dynamo.Graph.Nodes;
-using GenerativeToolkit.Graphs;
-using GenerativeToolkit.Graphs.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSPoint = Autodesk.DesignScript.Geometry.Point;
+using DSGeom = Autodesk.DesignScript.Geometry;
+using GTGeom = Autodesk.GenerativeToolkit.Core.Geometry;
 
 namespace Autodesk.GenerativeToolkit.Analyze
 {
     public static class Isovist
     {
-        #region Public Methods
-
         /***************************************************************************************
         * Title: Graphical
         * Author: Alvaro Ortega Pickmans
@@ -32,31 +28,31 @@ namespace Autodesk.GenerativeToolkit.Analyze
         /// <param name="point">Origin point</param>
         /// <returns name="isovist">Surface representing the isovist area</returns>
         [NodeCategory("Actions")]
-        public static Surface FromPoint(
-            List<Polygon> boundary,
-            [DefaultArgument("[]")] List<Polygon> internals,
-            DSPoint point)
+        public static DSGeom.Surface FromPoint(
+            List<DSGeom.Polygon> boundary,
+            [DefaultArgument("[]")] List<DSGeom.Polygon> internals,
+            DSGeom.Point point)
         {
             BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
 
             if (baseGraph == null) throw new ArgumentNullException("graph");
             if (point == null) throw new ArgumentNullException("point");
 
-            GeometryVertex origin = GeometryVertex.ByCoordinates(point.X, point.Y, point.Z);
+            GTGeom.Vertex origin = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            List<GeometryVertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
-            List<DSPoint> points = vertices.Select(v => Points.ToPoint(v)).ToList();
+            List<GTGeom.Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            List<DSGeom.Point> points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
 
-            var polygon = Polygon.ByPoints(points);
+            var polygon = DSGeom.Polygon.ByPoints(points);
 
             // if polygon is self intersecting, make new polygon
             if (polygon.SelfIntersections().Length > 0)
             {
                 points.Add(point);
-                polygon = Polygon.ByPoints(points);
+                polygon = DSGeom.Polygon.ByPoints(points);
 
             }
-            Surface surface = Surface.ByPatch(polygon);
+            DSGeom.Surface surface = DSGeom.Surface.ByPatch(polygon);
             polygon.Dispose();
             points.ForEach(p => p.Dispose());
 

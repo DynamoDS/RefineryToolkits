@@ -4,25 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autodesk.DesignScript.Geometry;
+using DSGeom = Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
 {
     [IsVisibleInDynamoLibrary(false)]
-    internal static class PointExtension
+    public static class PointExtension
     {
-        [IsVisibleInDynamoLibrary(false)]
-        public static Vertex ToVertex(this Point point)
-        {
-            return Vertex.ByCoordinates(point.X, point.Y, point.Z);
-        }
-
-        [IsVisibleInDynamoLibrary(false)]
-        public static Point ToPoint(this Vertex vertex)
-        {
-            return Point.ByCoordinates(vertex.X, vertex.Y, vertex.Z);
-        }
-       
+      
 
         #region CompareCoincidental
         /// <summary>
@@ -32,7 +21,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
         /// <param name="point2"></param>
         /// <param name="tolerance">number of decimal places to round to</param>
         /// <search></search>
-        public static bool CompareCoincidental(this Autodesk.DesignScript.Geometry.Point point1, Autodesk.DesignScript.Geometry.Point point2, double tolerance = 8)
+        public static bool CompareCoincidental(this DSGeom.Point point1, DSGeom.Point point2, double tolerance = 8)
         {
             double pt1X = System.Math.Round(point1.X, 8);
             double pt1Y = System.Math.Round(point1.Y, 8);
@@ -66,7 +55,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
         /// <param name="length"></param>
         /// <param name="param"></param>
         /// <search></search>
-        public static dynamic MoveAlongCurve(this Autodesk.DesignScript.Geometry.Point point, Autodesk.DesignScript.Geometry.PolyCurve polycurve, double length, double param)
+        public static dynamic MoveAlongCurve(this DSGeom.Point point, DSGeom.PolyCurve polycurve, double length, double param)
         {
             if (length > polycurve.Length)
             {
@@ -109,7 +98,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
         /// <param name="polycurve"></param>
         /// <param name="percentage"></param>
         /// <search></search>
-        public static dynamic RandomlyMoveAlongCurve(this Autodesk.DesignScript.Geometry.Point point, Autodesk.DesignScript.Geometry.PolyCurve polycurve, double percentage)
+        public static dynamic RandomlyMoveAlongCurve(this DSGeom.Point point, DSGeom.PolyCurve polycurve, double percentage)
         {
             if (percentage > 100 || percentage < 0)
             {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Autodesk.GenerativeToolkit.Core.Geometry.Extensions
 {
     [IsVisibleInDynamoLibrary(false)]
-    internal static class SurfaceExtension
+    public static class SurfaceExtension
     {
 
         #region BoundingSurface

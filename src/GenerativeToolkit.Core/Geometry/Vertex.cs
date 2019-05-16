@@ -42,7 +42,7 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         #endregion
         #region Public Constructors
         /// <summary>
-        /// gVertex constructor method by a given set of XYZ coordinates
+        /// Vertex constructor method by a given set of XYZ coordinates
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -271,11 +271,11 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         {
             System.Globalization.NumberFormatInfo inf = new System.Globalization.NumberFormatInfo();
             inf.NumberDecimalSeparator = ".";
-            return string.Format("gVertex(X = {0}, Y = {1}, Z = {2})", X.ToString("0.000", inf), Y.ToString("0.000", inf), Z.ToString("0.000", inf));
+            return string.Format("Vertex(X = {0}, Y = {1}, Z = {2})", X.ToString("0.000", inf), Y.ToString("0.000", inf), Z.ToString("0.000", inf));
         }
 
         /// <summary>
-        /// Customizing the render of gVertex
+        /// Customizing the render of Vertex
         /// </summary>
         /// <param name="package"></param>
         /// <param name="parameters"></param>
