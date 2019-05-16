@@ -183,12 +183,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GenerativeToolkit.Graphs\GenerativeToolkit.Graphs.csproj">
+    <ProjectReference Include="..\..\src\GenerativeToolkit.Graphs\GenerativeToolkit.Graphs.csproj">
       <Project>{e7aec112-deea-4d3e-a125-386cf8d93eac}</Project>
       <Name>GenerativeToolkit.Graphs</Name>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\GenerativeToolkit\Autodesk.GenerativeToolkit.csproj">
+    <ProjectReference Include="..\..\src\GenerativeToolkit\GenerativeToolkit.csproj">
       <Project>{C0338A2E-8280-4B65-8007-5D2E8B7A243B}</Project>
       <Name>Autodesk.GenerativeToolkit</Name>
       <Private>True</Private>

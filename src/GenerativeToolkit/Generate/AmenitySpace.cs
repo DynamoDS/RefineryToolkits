@@ -27,7 +27,7 @@ namespace Autodesk.GenerativeToolkit.Generate
         {
             // offset perimeter curves by the specified offset and create new surface.
             // makes sure there are space between outer perimeter and the amenity space
-            List<Curve> inCrvs = Utilities.Surface.OffsetPerimeterCurves(surface, offset)["insetCrvs"].ToList();
+            List<Curve> inCrvs = surface.OffsetPerimeterCurves(offset)["insetCrvs"].ToList();
             Surface inSrf = Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
 
             // get longest curve of the inSrf
