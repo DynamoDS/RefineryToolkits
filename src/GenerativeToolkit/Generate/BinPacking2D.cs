@@ -1,20 +1,16 @@
-﻿#region namespaces
-using Autodesk.DesignScript.Geometry;
+﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class BinPacking2D
     {
-        private const string output1 = "packedRectangles";
-        private const string output2 = "packedIndices";
-        private const string output3 = "remainRectangles"; 
+        private const string packedItemsOutputPort = "packedRectangles";
+        private const string indicesOutputPort = "packedIndices";
+        private const string remainingItemsOutputPort = "remainRectangles";
 
         private class FreeRectangle
         {
@@ -47,8 +43,11 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="bin"> Rectangle to pack into</param>
         /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
         /// <returns>List of packed rectangles</returns>
-        [MultiReturn(new[] { output1, output2, output3 })]
-        public static Dictionary<string, object> Pack(List<Rectangle> rects, Rectangle bin, string placementMethod = "BSSF")
+        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
+        public static Dictionary<string, object> Pack(
+            List<Rectangle> rects,
+            Rectangle bin,
+            PlacementMethods placementMethod)
         {
             freeRectangles = new List<FreeRectangle>();
             packedRectangles = new List<Rectangle>();
@@ -67,48 +66,56 @@ namespace Autodesk.GenerativeToolkit.Generate
             int idx = 0;
             foreach (var rect in rects)
             {
-                PlaceItem(rect, placementMethod,idx);
+                PlaceItem(rect, placementMethod, idx);
                 idx++;
             }
 
             Dictionary<string, object> newOutput;
             newOutput = new Dictionary<string, object>
             {
-                {output1,packedRectangles},
-                {output2,packedIndices},
-                {output3,remainRectangles}
+                {packedItemsOutputPort,packedRectangles},
+                {indicesOutputPort,packedIndices},
+                {remainingItemsOutputPort,remainRectangles}
             };
             return newOutput;
         }
 
-        #region Placement Methods
         /// <summary>
-        /// Best Short Side Fits:
-        /// Packs next rectangle into the free area where the length of the longer leftover side is minimized. 
+        /// Placement methods
         /// </summary>
-        public static string BestShortSideFits =>  "BSSF";
-
-        /// <summary>
-        /// Best Long Side Fits:
-        /// Packs next rectangle into the free area where the length of the shorter leftover side is minimized.  
-        /// </summary>
-        public static string BestLongSideFits => "BLSF";
-
-        /// <summary>
-        /// Best Area Fits:
-        /// Picks the free area that is smallest in area to place the next rectangle into.
-        /// </summary>
-        public static string BestAreaFits => "BAF";
-
-        #endregion
+        public enum PlacementMethods
+        {
+            /// <summary>
+            /// Best Short Side Fits:
+            /// Packs next rectangle into the free area where the length of the longer leftover side is minimized. 
+            /// </summary>
+            BestShortSideFits,
+            /// <summary>
+            /// Best Long Side Fits:
+            /// Packs next rectangle into the free area where the length of the shorter leftover side is minimized.  
+            /// </summary>
+            BestLongSideFits,
+            /// <summary>
+            /// Best Area Fits:
+            /// Picks the free area that is smallest in area to place the next rectangle into.
+            /// </summary>
+            BestAreaFits
+        }
 
         #endregion
 
         #region Private Methods
 
-        #region Find best freerectangle and place next rectangle
-
-        private static void PlaceItem(Rectangle item, string placementMethod, int idx)
+        /// <summary>
+        /// Find best freerectangle and place next rectangle
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="placementMethod"></param>
+        /// <param name="idx"></param>
+        private static void PlaceItem(
+            Rectangle item,
+            PlacementMethods placementMethod,
+            int idx)
         {
             FreeRectangle f = BestFreeRect(item, placementMethod);
 
@@ -139,7 +146,15 @@ namespace Autodesk.GenerativeToolkit.Generate
             }
         }
 
-        private static FreeRectangle BestFreeRect(Rectangle item, string placementMethod)
+        /// <summary>
+        /// Chooses the best free rectangle based on the placement method
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="placementMethod"></param>
+        /// <returns>free rectangle with best score</returns>
+        private static FreeRectangle BestFreeRect(
+            Rectangle item,
+            PlacementMethods placementMethod)
         {
             List<FreeRectangle> fRects = new List<FreeRectangle>();
             foreach (var fRect in freeRectangles)
@@ -156,19 +171,18 @@ namespace Autodesk.GenerativeToolkit.Generate
                         width = fRect.width,
                         rotate = false,
                     };
-                    if (placementMethod == "BSSF")
+                    if (placementMethod == PlacementMethods.BestShortSideFits)
                     {
                         newFree.score = BSSF_Score(newFree, item);
                     }
-                    else if (placementMethod == "BLSF")
+                    else if (placementMethod == PlacementMethods.BestLongSideFits)
                     {
                         newFree.score = BLSF_Score(newFree, item);
                     }
-                    else if (placementMethod == "BAF")
+                    else if (placementMethod == PlacementMethods.BestAreaFits)
                     {
                         newFree.score = BAF_Score(newFree, item);
                     }
-                    
                     fitsItem.Add(newFree);
                 }
                 if (ItemFits(fRect, item, true))
@@ -178,18 +192,18 @@ namespace Autodesk.GenerativeToolkit.Generate
                         xPos = fRect.xPos,
                         yPos = fRect.yPos,
                         height = fRect.height,
-                        width = fRect.width,                      
+                        width = fRect.width,
                         rotate = true,
                     };
-                    if (placementMethod == "BSSF")
+                    if (placementMethod == PlacementMethods.BestShortSideFits)
                     {
                         newFree.score = BSSF_Score(newFree, item);
                     }
-                    else if (placementMethod == "BLSF")
+                    else if (placementMethod == PlacementMethods.BestLongSideFits)
                     {
                         newFree.score = BLSF_Score(newFree, item);
                     }
-                    else if (placementMethod == "BAF")
+                    else if (placementMethod == PlacementMethods.BestAreaFits)
                     {
                         newFree.score = BAF_Score(newFree, item);
                     }
@@ -231,7 +245,17 @@ namespace Autodesk.GenerativeToolkit.Generate
 
         }
 
-        private static bool ItemFits(FreeRectangle f, Rectangle rectangle, bool rotate)
+        /// <summary>
+        /// Checks if the rectangle fits in the freeRectangle
+        /// </summary>
+        /// <param name="f"></param>
+        /// <param name="rectangle"></param>
+        /// <param name="rotate"></param>
+        /// <returns>boolean</returns>
+        private static bool ItemFits(
+            FreeRectangle f,
+            Rectangle rectangle,
+            bool rotate)
         {
             if (rotate == false && rectangle.Width <= f.width && rectangle.Height <= f.height)
             {
@@ -244,16 +268,25 @@ namespace Autodesk.GenerativeToolkit.Generate
             return false;
         }
 
+        /// <summary>
+        /// Rotates the item rectangle
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>rotated rectangle</returns>
         private static Rectangle Rotate(Rectangle item)
         {
             return Rectangle.ByWidthLength(item.Height, item.Width);
         }
-        #endregion
 
-        #region Scoring Methods
-
-        // Best Short Side Fits
-        private static double BSSF_Score(FreeRectangle f, Rectangle item)
+        /// <summary>
+        /// Scoring Method for best short side fits
+        /// </summary>
+        /// <param name="f"></param>
+        /// <param name="item"></param>
+        /// <returns>Score of Best Short Side Fits</returns>
+        private static double BSSF_Score(
+            FreeRectangle f,
+            Rectangle item)
         {
             double widthDifference;
             double heightDifference;
@@ -270,8 +303,16 @@ namespace Autodesk.GenerativeToolkit.Generate
 
             return new List<double> { widthDifference, heightDifference }.Min();
         }
-        // Best Long Side Fits
-        private static double BLSF_Score(FreeRectangle f, Rectangle item)
+
+        /// <summary>
+        /// Scoring Method for Best Long Side Fits
+        /// </summary>
+        /// <param name="f"></param>
+        /// <param name="item"></param>
+        /// <returns>Score of Best Long Side Fits</returns>
+        private static double BLSF_Score(
+            FreeRectangle f,
+            Rectangle item)
         {
             double widthDifference;
             double heightDifference;
@@ -288,18 +329,30 @@ namespace Autodesk.GenerativeToolkit.Generate
 
             return new List<double> { widthDifference, heightDifference }.Max();
         }
-        // Best Area Fits
-        private static double BAF_Score(FreeRectangle f, Rectangle item)
+
+        /// <summary>
+        /// Scoring Method for Best Area Fits
+        /// </summary>
+        /// <param name="f"></param>
+        /// <param name="item"></param>
+        /// <returns>Score of Best Area Fits</returns>
+        private static double BAF_Score(
+            FreeRectangle f,
+            Rectangle item)
         {
             double freeFArea = f.area();
             double rectArea = item.Width * item.Height;
             return freeFArea - rectArea;
         }
-        #endregion
 
-        #region Split Free area
-
-        private static void SplitFreeRectangle(FreeRectangle fRect, Rectangle item)
+        /// <summary>
+        /// Split the free area into freeRectangles
+        /// </summary>
+        /// <param name="fRect"></param>
+        /// <param name="item"></param>
+        private static void SplitFreeRectangle(
+            FreeRectangle fRect,
+            Rectangle item)
         {
             if (item.Width < fRect.width)
             {
@@ -330,10 +383,12 @@ namespace Autodesk.GenerativeToolkit.Generate
                 });
             }
         }
-        #endregion
 
-        #region Rectangle Boundary points
-
+        /// <summary>
+        /// Gets the boundary points of a rectangle
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <returns>rectangle boundary points</returns>
         private static List<double> RectBounds(Rectangle rect)
         {
             double BottomLeftX = rect.StartPoint.X - rect.Width;
@@ -342,10 +397,11 @@ namespace Autodesk.GenerativeToolkit.Generate
             double TopRightY = rect.StartPoint.Y + rect.Height;
             return new List<double> { BottomLeftX, BottomLeftY, TopRightX, TopRightY };
         }
-        #endregion
 
-        #region Remove overlaps and redundant rectangles
-
+        /// <summary>
+        /// Remove overlap of free areas
+        /// </summary>
+        /// <param name="itemBounds"></param>
         private static void RemoveOverlaps(List<double> itemBounds)
         {
             List<FreeRectangle> freeRects = new List<FreeRectangle>();
@@ -353,7 +409,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             {
                 if (RectangleOverlaps(rect, itemBounds))
                 {
-                    List<double> overlapBound = Overlap_Bound(rect, itemBounds);
+                    List<double> overlapBound = OverlapBound(rect, itemBounds);
                     List<FreeRectangle> newRects = ClipOverlap(rect, overlapBound);
                     freeRects.AddRange(newRects);
                 }
@@ -366,9 +422,16 @@ namespace Autodesk.GenerativeToolkit.Generate
             RemoveEncapsulated();
         }
 
-        // Check if two rectangles overlaps
-        // https://www.geeksforgeeks.org/find-two-rectangles-overlap/
-        private static bool RectangleOverlaps(FreeRectangle f1, List<double> rectBounds)
+        /// <summary>
+        /// Checks if two rectangles overlaps
+        /// https://www.geeksforgeeks.org/find-two-rectangles-overlap/
+        /// </summary>
+        /// <param name="f1"></param>
+        /// <param name="rectBounds"></param>
+        /// <returns>boolean</returns>
+        private static bool RectangleOverlaps(
+            FreeRectangle f1,
+            List<double> rectBounds)
         {
             double f1BottomLeftX = f1.xPos;
             double f1BottomLeftY = f1.yPos;
@@ -390,8 +453,15 @@ namespace Autodesk.GenerativeToolkit.Generate
             return true;
         }
 
-        // Get the min/max points of the overlap BoundingBox
-        private static List<double> Overlap_Bound(FreeRectangle f1, List<double> rectBounds)
+        /// <summary>
+        /// Get the min/max points of the overlap BoundingBox
+        /// </summary>
+        /// <param name="f1"></param>
+        /// <param name="rectBounds"></param>
+        /// <returns>overlapping boundary</returns>
+        private static List<double> OverlapBound(
+            FreeRectangle f1,
+            List<double> rectBounds)
         {
             // return bottom left x,y and top left x,y
 
@@ -412,8 +482,15 @@ namespace Autodesk.GenerativeToolkit.Generate
             return new List<double> { overlapBotLeftX, overlapBotLeftY, overlapTopRightX, overlapTopRightY };
         }
 
-        // Clip overlap
-        private static List<FreeRectangle> ClipOverlap(FreeRectangle f1, List<double> overlapBound)
+        /// <summary>
+        /// Clip overlap of overlapping free areas
+        /// </summary>
+        /// <param name="f1"></param>
+        /// <param name="overlapBound"></param>
+        /// <returns>free rectangles after clipping the overlap</returns>
+        private static List<FreeRectangle> ClipOverlap(
+            FreeRectangle f1,
+            List<double> overlapBound)
         {
             double F1x = f1.xPos;
             double F1y = f1.yPos;
@@ -453,7 +530,7 @@ namespace Autodesk.GenerativeToolkit.Generate
                 newFreeRects.Add(new FreeRectangle
                 {
                     width = f1.width,
-                    height = overlapBotLeftY-F1y,
+                    height = overlapBotLeftY - F1y,
                     xPos = F1x,
                     yPos = F1y
                 });
@@ -464,7 +541,7 @@ namespace Autodesk.GenerativeToolkit.Generate
                 newFreeRects.Add(new FreeRectangle
                 {
                     width = f1.width,
-                    height = (F1y+f1.height) - overlapTopRightY,
+                    height = (F1y + f1.height) - overlapTopRightY,
                     xPos = F1x,
                     yPos = overlapTopRightY
                 });
@@ -474,11 +551,18 @@ namespace Autodesk.GenerativeToolkit.Generate
 
         }
 
-        // check if FreeRectangle is fully incapsulated in another
-        private static bool IsEncapsulated(FreeRectangle f1, FreeRectangle f2)
+        /// <summary>
+        /// check if FreeRectangle is fully incapsulated in another
+        /// </summary>
+        /// <param name="f1"></param>
+        /// <param name="f2"></param>
+        /// <returns>boolean</returns>
+        private static bool IsEncapsulated(
+            FreeRectangle f1,
+            FreeRectangle f2)
         {
             int precsion = 2;
-            if (Math.Round(f2.xPos, precsion) < Math.Round(f1.xPos, precsion) || Math.Round(f2.xPos, precsion) > Math.Round(f1.xPos+f1.width, precsion))
+            if (Math.Round(f2.xPos, precsion) < Math.Round(f1.xPos, precsion) || Math.Round(f2.xPos, precsion) > Math.Round(f1.xPos + f1.width, precsion))
             {
                 return false;
             }
@@ -497,12 +581,14 @@ namespace Autodesk.GenerativeToolkit.Generate
             return true;
         }
 
-        // If FreeRectangle is fully encapsulated, remove it.
+        /// <summary>
+        /// If FreeRectangle is fully encapsulated, remove it.
+        /// </summary>
         private static void RemoveEncapsulated()
         {
             for (int i = 0; i < freeRectangles.Count; i++)
             {
-                for (int j = i+1; j < freeRectangles.Count; j++)
+                for (int j = i + 1; j < freeRectangles.Count; j++)
                 {
                     if (IsEncapsulated(freeRectangles[j], freeRectangles[i]))
                     {
@@ -518,7 +604,6 @@ namespace Autodesk.GenerativeToolkit.Generate
                 }
             }
         }
-        #endregion
 
         #endregion
     }

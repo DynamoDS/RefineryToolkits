@@ -1,10 +1,20 @@
-﻿using System;
+﻿/***************************************************************************************
+* This code is originally created by Alvaro Alvaro Ortega Pickmans, and is available
+* in his Graphical Packages
+* Title: Graphical
+* Author: Alvaro Ortega Pickmans
+* Date: 2017
+* Availability: https://github.com/alvpickmans/Graphical
+*
+***************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenerativeToolkit.Graphs.DataStructures
+namespace Autodesk.GenerativeToolkit.Graphs.DataStructures
 {
     /// <summary>
     /// Binary Priority Queue

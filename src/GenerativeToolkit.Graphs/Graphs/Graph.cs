@@ -1,15 +1,21 @@
-﻿#region namespaces
+﻿/***************************************************************************************
+* This code is originally created by Alvaro Alvaro Ortega Pickmans, and is available
+* in his Graphical Packages
+* Title: Graphical
+* Author: Alvaro Ortega Pickmans
+* Date: 2017
+* Availability: https://github.com/alvpickmans/Graphical
+*
+***************************************************************************************/
+
+using Autodesk.GenerativeToolkit.Core.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GenerativeToolkit.Graphs.Geometry;
-#endregion
 
-namespace GenerativeToolkit.Graphs
+namespace Autodesk.GenerativeToolkit.Graphs
 {
-    
+
     /// <summary>
     /// Representation of a Graph.
     /// Graph contains a Dictionary where
@@ -26,7 +32,7 @@ namespace GenerativeToolkit.Graphs
         /// <summary>
         /// Polygons dictionary with their Id as dictionary key
         /// </summary>
-        internal Dictionary<int, GeometryPolygon> polygons = new Dictionary<int, GeometryPolygon>();
+        internal Dictionary<int, Polygon> polygons = new Dictionary<int, Polygon>();
 
         /// <summary>
         /// Polygon's Id counter.
@@ -36,19 +42,19 @@ namespace GenerativeToolkit.Graphs
         /// <summary>
         /// Dictionary with vertex as key and values edges associated with the vertex.
         /// </summary>
-        internal Dictionary<GeometryVertex, List<GeometryEdge>> graph = new Dictionary<GeometryVertex, List<GeometryEdge>>();
+        internal Dictionary<Vertex, List<Edge>> graph = new Dictionary<Vertex, List<Edge>>();
 
         /// <summary>
         /// Graph's vertices
         /// </summary>
-        public List<GeometryVertex> vertices { get { return graph.Keys.ToList(); } }
+        public List<Vertex> vertices { get { return graph.Keys.ToList(); } }
 
         /// <summary>
         /// Graph's edges
         /// </summary>
-        public List<GeometryEdge> edges { get; internal set; }
+        public List<Edge> edges { get; internal set; }
 
-        public List<GeometryPolygon> Polygons
+        public List<Polygon> Polygons
         {
             get { return polygons.Values.ToList(); }
         }
@@ -58,24 +64,24 @@ namespace GenerativeToolkit.Graphs
         #region Internal Constructors
         public Graph()
         {
-            edges = new List<GeometryEdge>();
+            edges = new List<Edge>();
             Id = Guid.NewGuid();
         }
 
-        public Graph(List<GeometryPolygon> gPolygonsSet)
+        public Graph(List<Polygon> gPolygonsSet)
         {
-            edges = new List<GeometryEdge>();
+            edges = new List<Edge>();
             Id = Guid.NewGuid();
             //Setting up Graph instance by adding vertices, edges and polygons
-            foreach(GeometryPolygon gPolygon in gPolygonsSet)
+            foreach (Polygon gPolygon in gPolygonsSet)
             {
-                List<GeometryVertex> vertices = gPolygon.vertices;
+                List<Vertex> vertices = gPolygon.vertices;
 
                 // Clear pre-existing edges in the case this is an updating process.
                 gPolygon.edges.Clear();
 
                 //If there is only one polygon, treat it as boundary
-                if(gPolygonsSet.Count() == 1)
+                if (gPolygonsSet.Count() == 1)
                 {
                     gPolygon.isBoundary = true;
                 }
@@ -97,9 +103,9 @@ namespace GenerativeToolkit.Graphs
                     for (var j = 0; j < vertexCount; j++)
                     {
                         int next_index = (j + 1) % vertexCount;
-                        GeometryVertex vertex = vertices[j];
-                        GeometryVertex next_vertex = vertices[next_index];
-                        GeometryEdge edge = new GeometryEdge(vertex, next_vertex);
+                        Vertex vertex = vertices[j];
+                        Vertex next_vertex = vertices[next_index];
+                        Edge edge = new Edge(vertex, next_vertex);
 
                         //If is a valid polygon, add id to vertex and
                         //edge to vertices dictionary
@@ -107,7 +113,7 @@ namespace GenerativeToolkit.Graphs
                         {
                             vertex.polygonId = newId;
                             next_vertex.polygonId = newId;
-                            GeometryPolygon gPol = new GeometryPolygon();
+                            Polygon gPol = new Polygon();
                             if (polygons.TryGetValue(newId, out gPol))
                             {
                                 gPol.edges.Add(edge);
@@ -132,7 +138,7 @@ namespace GenerativeToolkit.Graphs
 
         internal int GetNextId()
         {
-            if(this.pId == null)
+            if (this.pId == null)
             {
                 this.pId = 0;
             }
@@ -148,9 +154,9 @@ namespace GenerativeToolkit.Graphs
             this.edges.Clear();
             this.graph.Clear();
 
-            foreach(GeometryPolygon polygon in polygons.Values)
+            foreach (Polygon polygon in polygons.Values)
             {
-                foreach(GeometryEdge edge in polygon.edges)
+                foreach (Edge edge in polygon.edges)
                 {
                     this.AddEdge(edge);
                 }
@@ -166,7 +172,7 @@ namespace GenerativeToolkit.Graphs
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        public bool Contains(GeometryVertex vertex)
+        public bool Contains(Vertex vertex)
         {
             return graph.ContainsKey(vertex);
         }
@@ -176,25 +182,26 @@ namespace GenerativeToolkit.Graphs
         /// </summary>
         /// <param name="edge"></param>
         /// <returns></returns>
-        public bool Contains(GeometryEdge edge)
+        public bool Contains(Edge edge)
         {
             return edges.Contains(edge);
         }
 
-        public List<GeometryEdge> GetVertexEdges(GeometryVertex vertex)
+        public List<Edge> GetVertexEdges(Vertex vertex)
         {
-            List<GeometryEdge> edgesList = new List<GeometryEdge>();
-            if(graph.TryGetValue(vertex, out edgesList))
+            List<Edge> edgesList = new List<Edge>();
+            if (graph.TryGetValue(vertex, out edgesList))
             {
                 return edgesList;
-            }else
+            }
+            else
             {
                 //graph.Add(vertex, new List<gEdge>());
-                return new List<GeometryEdge>();
+                return new List<Edge>();
             }
         }
 
-        public List<GeometryVertex> GetAdjecentVertices(GeometryVertex v)
+        public List<Vertex> GetAdjecentVertices(Vertex v)
         {
             return graph[v].Select(edge => edge.GetVertexPair(v)).ToList();
         }
@@ -203,17 +210,17 @@ namespace GenerativeToolkit.Graphs
         /// Add edge to the analisys graph
         /// </summary>
         /// <param name="edge">New edge</param>
-        public void AddEdge(GeometryEdge edge)
+        public void AddEdge(Edge edge)
         {
-            List<GeometryEdge> startEdgesList = new List<GeometryEdge>();
-            List<GeometryEdge> endEdgesList = new List<GeometryEdge>();
+            List<Edge> startEdgesList = new List<Edge>();
+            List<Edge> endEdgesList = new List<Edge>();
             if (graph.TryGetValue(edge.StartVertex, out startEdgesList))
             {
                 if (!startEdgesList.Contains(edge)) { startEdgesList.Add(edge); }
             }
             else
             {
-                graph.Add(edge.StartVertex, new List<GeometryEdge>() { edge });
+                graph.Add(edge.StartVertex, new List<Edge>() { edge });
             }
 
             if (graph.TryGetValue(edge.EndVertex, out endEdgesList))
@@ -222,9 +229,9 @@ namespace GenerativeToolkit.Graphs
             }
             else
             {
-                graph.Add(edge.EndVertex, new List<GeometryEdge>() { edge });
+                graph.Add(edge.EndVertex, new List<Edge>() { edge });
             }
-            
+
             if (!edges.Contains(edge)) { edges.Add(edge); }
         }
 
@@ -233,21 +240,21 @@ namespace GenerativeToolkit.Graphs
         /// </summary>
         public void BuildPolygons()
         {
-            var computedVertices = new List<GeometryVertex>();
-            
-            foreach(GeometryVertex v in vertices)
+            var computedVertices = new List<Vertex>();
+
+            foreach (Vertex v in vertices)
             {
                 // If already belongs to a polygon or is not a polygon vertex or already computed
-                if( computedVertices.Contains(v) || graph[v].Count > 2) { continue; }
+                if (computedVertices.Contains(v) || graph[v].Count > 2) { continue; }
 
                 computedVertices.Add(v);
-                GeometryPolygon polygon = new GeometryPolygon(GetNextId(), false);
-                
+                Polygon polygon = new Polygon(GetNextId(), false);
+
                 polygon.AddVertex(v);
-                foreach(GeometryEdge edge in GetVertexEdges(v))
+                foreach (Edge edge in GetVertexEdges(v))
                 {
-                    GeometryEdge currentEdge = edge;
-                    GeometryVertex currentVertex = edge.GetVertexPair(v);
+                    Edge currentEdge = edge;
+                    Vertex currentVertex = edge.GetVertexPair(v);
                     while (!polygon.vertices.Contains(currentVertex) || !computedVertices.Contains(currentVertex))
                     {
                         polygon.AddVertex(currentVertex);
@@ -255,17 +262,17 @@ namespace GenerativeToolkit.Graphs
 
                         var connectedEdges = graph[currentVertex];
                         //It is extreme vertex, polygon not closed
-                        if(connectedEdges.Count < 2)
+                        if (connectedEdges.Count < 2)
                         {
                             break;
                         }
                         // If just two edges, select the one that is not current nextEdge
-                        else if(connectedEdges.Count == 2)
+                        else if (connectedEdges.Count == 2)
                         {
                             currentEdge = connectedEdges[0].Equals(currentEdge) ? connectedEdges[1] : connectedEdges[0];
                         }
                         // If 4, is self intersection
-                        else if(connectedEdges.Count == 4)
+                        else if (connectedEdges.Count == 4)
                         {
                             var edgesWithVertexAlreadyInPolygon = connectedEdges
                                 .Where(e => !e.Equals(currentEdge) && polygon.Vertices.Contains(e.GetVertexPair(currentVertex)))
@@ -278,11 +285,11 @@ namespace GenerativeToolkit.Graphs
                             }
                             // If two, it means that is a intersection with two previous edges computed,
                             // so set the next to the one that is not parallel to current
-                            else if(edgesWithVertexAlreadyInPolygon.Count == 2)
+                            else if (edgesWithVertexAlreadyInPolygon.Count == 2)
                             {
                                 currentEdge = edgesWithVertexAlreadyInPolygon[0].Direction.IsParallelTo(currentEdge.Direction) ?
                                     edgesWithVertexAlreadyInPolygon[1] :
-                                    edgesWithVertexAlreadyInPolygon[0] ; 
+                                    edgesWithVertexAlreadyInPolygon[0];
                             }
                             // More than two, none on the current polygon so select one of those not yet computed
                             else
@@ -314,14 +321,14 @@ namespace GenerativeToolkit.Graphs
         //TODO: Improve overriding equality methods as per http://www.loganfranken.com/blog/687/overriding-equals-in-c-part-1/
 
         /// <summary>
-        /// Customizing the render of gVertex
+        /// Customizing the render of Vertex
         /// </summary>
         /// <param name="package"></param>
         /// <param name="parameters"></param>
         //[IsVisibleInDynamoLibrary(false)]
         //public void Tessellate(IRenderPackage package, TessellationParameters parameters)
         //{
-        //    foreach(gVertex v in vertices)
+        //    foreach(Vertex v in vertices)
         //    {
         //        v.Tessellate(package, parameters);
         //    }
@@ -339,14 +346,14 @@ namespace GenerativeToolkit.Graphs
         {
             Graph newGraph = new Graph()
             {
-                graph = new Dictionary<GeometryVertex, List<GeometryEdge>>(),
-                edges = new List<GeometryEdge>(this.edges),
-                polygons = new Dictionary<int, GeometryPolygon>(this.polygons)
+                graph = new Dictionary<Vertex, List<Edge>>(),
+                edges = new List<Edge>(this.edges),
+                polygons = new Dictionary<int, Polygon>(this.polygons)
             };
 
-            foreach(var item in this.graph)
+            foreach (var item in this.graph)
             {
-                newGraph.graph.Add(item.Key, new List<GeometryEdge>(item.Value));
+                newGraph.graph.Add(item.Key, new List<Edge>(item.Value));
             }
 
             return newGraph;

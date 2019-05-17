@@ -1,20 +1,17 @@
-﻿#region namespaces
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
+using CromulentBisgetti.ContainerPacking.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Runtime;
-using CromulentBisgetti.ContainerPacking.Algorithms;
-using CromulentBisgetti.ContainerPacking.Entities;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
     public static class BinPacking3D
     {
-        private const string output1 = "packedItems";
-        private const string output2 = "packedIndices";
-        private const string output3 = "remainItems";
+        private const string packedItemsOutputPort = "packedItems";
+        private const string indicesOutputPort = "packedIndices";
+        private const string remainingItemsOutputPort = "remainItems";
 
         /// <summary>
         /// Packs a sample list of Cuboids in a bin Cuboid
@@ -24,8 +21,10 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <returns name="packedItems">Packed Cuboids</returns>
         /// <returns name="packedIndices">Indices of packed items</returns>
         /// <returns name="remainItems">Cubiods that didn't get packed</returns>
-        [MultiReturn(new[] { output1, output2, output3 })]
-        public static Dictionary<string, object> Pack(Cuboid bin, List<Cuboid> items)
+        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
+        public static Dictionary<string, object> Pack(
+            Cuboid bin,
+            List<Cuboid> items)
         {
             decimal length = Convert.ToDecimal(bin.Length);
             decimal width = Convert.ToDecimal(bin.Width);
@@ -55,9 +54,9 @@ namespace Autodesk.GenerativeToolkit.Generate
             Dictionary<string, object> newOutput;
             newOutput = new Dictionary<string, object>
             {
-                {output1,packedCuboids},
-                {output2,packedIndices},
-                {output3,unpackedCuboids}
+                { BinPacking3D.packedItemsOutputPort, packedCuboids},
+                { indicesOutputPort, packedIndices},
+                { remainingItemsOutputPort, unpackedCuboids}
             };
 
             return newOutput;

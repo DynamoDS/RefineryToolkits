@@ -1,9 +1,6 @@
-﻿#region namespaces
-using Autodesk.DesignScript.Runtime;
-using System;
+﻿using System;
 using System.Collections;
 using System.Linq;
-#endregion
 
 namespace Autodesk.GenerativeToolkit.Rank
 {
@@ -16,7 +13,9 @@ namespace Autodesk.GenerativeToolkit.Rank
         /// <param name="list">List to shuffle</param>
         /// <param name="seed">Seed</param>
         /// <returns>randomized list</returns>
-        public static IList SeededShuffle(IList list, int seed = 1)
+        public static IList SeededShuffle(
+            IList list,
+            int seed = 1)
         {
             var rng = new Random(seed);
             return list.Cast<object>().OrderBy(_ => rng.Next()).ToList();
