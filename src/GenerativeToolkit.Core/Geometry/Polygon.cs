@@ -131,6 +131,8 @@ namespace Autodesk.GenerativeToolkit.Core.Geometry
         #region Internal Methods
         public void AddVertex(Vertex vertex)
         {
+            if (vertex == null) return;
+
             vertex.polygonId = this.id;
             vertices.Add(vertex);
         }

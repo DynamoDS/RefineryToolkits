@@ -5,7 +5,7 @@ __GenerativeToolkit__ is a [Dynamo](http://www.dynamobim.org) package that can b
 ### What does it do ?
 
 With a range of different nodes it helps you create generative design workflows in Dynamo and Revit.  
-![GenerativeToolkit package screenshot](https://github.com/designtechIO/GenerativeToolkit/blob/64-add-standard-OSS-project/repo-information-to-README-file/sampels/GenerativeToolkit.png)
+![GenerativeToolkit package screenshot](https://github.com/designtechIO/GenerativeToolkit/blob/64-add-standard-OSS-project/repo-information-to-README-file/samples/GenerativeToolkit.png)
 
 
 # Getting Started
@@ -23,7 +23,7 @@ Feel free to open an issue or submit a PR if you'd like to see further some docu
 ## Samples
 There are 11 sample Dynamo graphs included with the package, all made to work with  Dynamo `2.0`.
 
-You can find the samples in this repository's [`samples folder`](https://github.com/designtechIO/GenerativeToolkit/tree/master/sampels) folder, as well as and in the `extra` folder of the package you download using the Dynamo Package Manager, typically found here : `%appdata%\Dynamo\Dynamo Revit\2\packages\GenerativeToolkit`
+You can find the samples in this repository's [`samples folder`](https://github.com/designtechIO/GenerativeToolkit/tree/master/samples) folder, as well as and in the `extra` folder of the package you download using the Dynamo Package Manager, typically found here : `%appdata%\Dynamo\Dynamo Revit\2\packages\GenerativeToolkit`
 
 The samples shows a simple example of how each node in the toolkit works. Some of the samples will have a Revit version (marked with __(RVT)__), and some also have a version setup to be used with Refinery (marked with __(RefineryVersion)__) :
 
@@ -41,48 +41,48 @@ There are 3 different sample workflows in the sample folder:
 - _GenerativeToolkit_Binpacking2DTest_BLSF_ show the result of packing rectangles with the Best Long Side Fits placement method, and different ways of sorting the rectangles to pack.
 - _GenerativeToolkit_Binpacking2DTest_BSSF_ show the result of packing rectangles with the Best Short Side Fits placement method, and different ways of sorting the rectangles to pack.
 
-![IMAGE](sampels/Binpacking2D.png)
+![IMAGE](samples/Binpacking2D.png)
 
 #### Sample 3 - GenerativeToolkit_Binpacking3DTest
 This sample shows how the Binpacking3D node works. The node requires a Bin as a Cuboid and a list of Items also as Cuboids. The node will take the items and pack as many as possible into the Bin Cuboid.
 The sample displays the final pack and will also show which items has been packed (green cuboids) and which items hasn't (red cuboids). 
 
-![IMAGE](sampels/3DBinPackingSample.png)
+![IMAGE](samples/3DBinPackingSample.png)
 
 
 #### Sample 4 - GenerativeToolkit_SurfaceDivisionTest
 The SurfaceDivision node will take any Surface and divided it based on U and V parameters.
 
-![IMAGE](sampels/SurfaceDivision.png)
+![IMAGE](samples/SurfaceDivision.png)
 
 #### Sample 5 - GenerativeToolkit_GeometricMedianTest
 The GeometricMedian node takes a list of sample point and finds the point that minimizes the distance to all other points. In the sample file 5 different examples are shown. 
 
-![IMAGE](sampels/GeometricMedian.png)
+![IMAGE](samples/GeometricMedian.png)
 
 #### Sample 6 - GenerativeToolkit_IsovistFromPointTest 
 The Isovist.FromPoint node takes a boundary polygon, internal polygons and a origin point and calculates the visible area from that point.
 
-![IMAGE](sampels/IsovistFromPointGif.gif)
+![IMAGE](samples/IsovistFromPointGif.gif)
 
 #### Sample 7 - GenerativeToolkit_OpenessTest
 The Openess node takes a boundary polygon, obstacle polygons and a Surface and calculates how much of the surface perimeter is enclosed by a obstacle.
 
 The sample folder contains 2 versions of this sample, a Sandbox version and a Revit version.
 
-![IMAGE](sampels/Openess.png)
+![IMAGE](samples/Openess.png)
 
 #### Sample 8 - GenerativeToolkit_ShortestPath
 The Shortest Path node will calculate the path between two points with the minimum distance.
 
-![IMAGE](sampels/ShortestPath.png)
+![IMAGE](samples/ShortestPath.png)
 
 #### Sample 9 - GenerativeToolkit_ViewsToOutsideTest
 Views to Outside will calculate in precentage how much views to outside there is from a origin point. Views to outside is represented by line segments. 
 
 The sample folder contains 3 versions of this sample, a Sandbox version, a Revit version and a version set up to be used in Refinery.
 
-![IMAGE](sampels/ViewsToOutsideGif.gif)
+![IMAGE](samples/ViewsToOutsideGif.gif)
 
 
 #### Sample 10 - GenerativeToolkit_VisiblePointsTest
@@ -90,13 +90,13 @@ Visible Points calculates the amount of visible points from a origin point. The 
 
 The sample folder contains 2 versions of this sample, a Sandbox version and a version set up to be used in Refinery.
 
-![IMAGE](sampels/VisiblePointsGif.gif)
+![IMAGE](samples/VisiblePointsGif.gif)
 
 #### Sample 11 - GenerativeToolkit_DistinctColorsTest
 The ContrastyColorRange node returns a given amount of colors in a random order which all are visually distinct from each other.
 The maximum colors that can be created right now is 19.
 
-![IMAGE](sampels/ColorRange.png)
+![IMAGE](samples/ColorRange.png)
 
 ## Structure
 The __GenerativeToolkit__ is organized in 4 categories, based on their use in a Generative Design process :
@@ -140,6 +140,8 @@ Please read [CONTRIBUTING.md](https://github.com/radumg/DynWWW/blob/master/docs/
 
 __Radu Gidei__ : [Github profile](https://github.com/radumg), [Twitter profile](https://twitter.com/radugidei)
 
-## License
+## Licensing
 
-This project is licensed under the GNU AGPL 3.0 License - see the [LICENSE FILE](https://github.com/radumg/DynWWW/blob/master/LICENSE) for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](https://github.com/radumg/DynWWW/blob/master/LICENSE) for details.
+
+### Packages used

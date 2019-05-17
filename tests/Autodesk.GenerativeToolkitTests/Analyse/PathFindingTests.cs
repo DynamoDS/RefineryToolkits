@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Autodesk.GenerativeToolkit.Analyse;
+using Autodesk.GenerativeToolkit.Analyze;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TestServices;
 using Autodesk.DesignScript.Geometry;
+using Autodesk.GenerativeToolkit.Analyze;
 
-namespace Autodesk.GenerativeToolkit.Analyse.Tests
+namespace Autodesk.GenerativeToolkit.Analyze.Tests
 {
     [TestFixture]
     public class PathFindingTests : GeometricTestBase

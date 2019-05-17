@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
-    public static class BinPacking3D
+    public static partial class BinPacking
     {
-        private const string packedItemsOutputPort = "packedItems";
-        private const string indicesOutputPort = "packedIndices";
-        private const string remainingItemsOutputPort = "remainItems";
+        private const string packedItemsOutputPort3D = "packedItems";
+        private const string indicesOutputPort3D = "packedIndices";
+        private const string remainingItemsOutputPort3D = "remainItems";
 
         /// <summary>
         /// Packs a sample list of Cuboids in a bin Cuboid
@@ -21,8 +21,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <returns name="packedItems">Packed Cuboids</returns>
         /// <returns name="packedIndices">Indices of packed items</returns>
         /// <returns name="remainItems">Cubiods that didn't get packed</returns>
-        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
-        public static Dictionary<string, object> Pack(
+        [MultiReturn(new[] { packedItemsOutputPort3D, indicesOutputPort3D, remainingItemsOutputPort3D })]
+        public static Dictionary<string, object> Pack3D(
             Cuboid bin,
             List<Cuboid> items)
         {
@@ -54,9 +54,9 @@ namespace Autodesk.GenerativeToolkit.Generate
             Dictionary<string, object> newOutput;
             newOutput = new Dictionary<string, object>
             {
-                { BinPacking3D.packedItemsOutputPort, packedCuboids},
-                { indicesOutputPort, packedIndices},
-                { remainingItemsOutputPort, unpackedCuboids}
+                { packedItemsOutputPort3D, packedCuboids},
+                { indicesOutputPort3D, packedIndices},
+                { remainingItemsOutputPort3D, unpackedCuboids}
             };
 
             return newOutput;

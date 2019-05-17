@@ -48,22 +48,8 @@ namespace Autodesk.GenerativeToolkit.Generate
             foreach (Curve crv in others)
             {
                 List<bool> subList = new List<bool>();
-                if (comPt.CompareCoincidental(crv.StartPoint))
-                {
-                    subList.Add(true);
-                }
-                else
-                {
-                    subList.Add(false);
-                }
-                if (comPt.CompareCoincidental(crv.EndPoint))
-                {
-                    subList.Add(true);
-                }
-                else
-                {
-                    subList.Add(false);
-                }
+                subList.Add(comPt.CompareCoincidental(crv.StartPoint));
+                subList.Add(comPt.CompareCoincidental(crv.EndPoint));
                 boolList.Add(subList);
             }
 
@@ -123,14 +109,7 @@ namespace Autodesk.GenerativeToolkit.Generate
             List<bool> mask3 = new List<bool>();
             foreach (double p in partials)
             {
-                if (p > crvLen)
-                {
-                    mask3.Add(true);
-                }
-                else
-                {
-                    mask3.Add(false);
-                }
+                mask3.Add(p > crvLen);
             }
 
             List<double> partialFalse = partials.Zip(mask3, (name, filter) => new { name, filter, }).Where(item => item.filter == false).Select(item => item.name).ToList();

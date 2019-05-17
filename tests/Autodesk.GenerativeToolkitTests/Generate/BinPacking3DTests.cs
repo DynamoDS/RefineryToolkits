@@ -32,7 +32,7 @@ namespace Autodesk.GenerativeToolkit.Generate.Tests
 
             // Check if the result is a dictionary that contains the keys
             // "packedItems", "remainItems" and "packedIndices"
-            var result = BinPacking3D.Pack(bin, items);
+            var result = BinPacking.Pack3D(bin, items);
             Assert.IsTrue(result.Keys.Contains("packedItems"));
             Assert.IsTrue(result.Keys.Contains("remainItems"));
             Assert.IsTrue(result.Keys.Contains("packedIndices"));

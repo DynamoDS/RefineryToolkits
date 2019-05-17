@@ -79,7 +79,11 @@ namespace Autodesk.GenerativeToolkit.Generate
                 boolLst.Add(b);
             }
 
-            List<Curve> intersectingCurves = others.Zip(boolLst, (name, filter) => new { name, filter, }).Where(item => item.filter == true).Select(item => item.name).ToList();
+            List<Curve> intersectingCurves = others
+                .Zip(boolLst, (name, filter) => new { name, filter, })
+                .Where(item => item.filter == true)
+                .Select(item => item.name)
+                .ToList();
             List<Curve> extendCurves = new List<Curve>();
             foreach (Curve crv in intersectingCurves)
             {
@@ -87,7 +91,10 @@ namespace Autodesk.GenerativeToolkit.Generate
                 extendCurves.Add(l);
             }
 
-            List<Surface> split = loftSrf.SplitPlanarSurfaceByMultipleCurves(extendCurves).OfType<Surface>().ToList();
+            List<Surface> split = loftSrf
+                .SplitPlanarSurfaceByMultipleCurves(extendCurves)
+                .OfType<Surface>()
+                .ToList();
 
             Surface amenitySurf = split.MaximumArea()["maxSrf"] as Surface;
 
