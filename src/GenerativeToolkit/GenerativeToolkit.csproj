@@ -245,20 +245,24 @@
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourceXmls Include="$(TargetDir)*.xml" />
       <SourcePkg Include="$(ProjectDir)pkg.json" />
+      <SourceSamples Include="$(SolutionDir)*.dyn" />
     </ItemGroup>
     <!--Copying to Build Folder-->
     <Copy SourceFiles="@(SourceDlls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourcePdbs)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourceXmls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourcePkg)" DestinationFolder="$(TargetDir)$(ProjectName)" />
+    <Copy SourceFiles="@(SourceSamples)" DestinationFolder="$(TargetDir)$(ProjectName)\extra" />
     <ItemGroup>
       <SourcePackage Include="$(TargetDir)\$(ProjectName)\**\*" />
     </ItemGroup>
     <PropertyGroup>
       <!--Copy to Dynamo sandbox for testing -->
       <DeployFolder Condition="'$(Configuration)' == 'Debug'">$(AppData)\Dynamo\Dynamo Core\2.0\packages\$(ProjectName)</DeployFolder>
+      <!--Copy to Dynamo Revit for testing -->
+      <DeployFolder Condition="'$(Configuration)' == 'DebugRevit'">$(AppData)\Dynamo\Dynamo Revit\2.0\packages\$(ProjectName)</DeployFolder>
       <!--Copy to Dynamo revit for publishing -->
-      <DeployFolder Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'DebugRevit'">$(AppData)\Dynamo\Dynamo Revit\2.0\packages\$(ProjectName)</DeployFolder>
+      <DeployFolder Condition="'$(Configuration)' == 'Release'">$(AppData)\Dynamo\Dynamo Revit\2.0\packages\$(ProjectName)</DeployFolder>
     </PropertyGroup>
     <Copy SourceFiles="@(SourcePackage)" DestinationFolder="$(DeployFolder)\%(RecursiveDir)" />
   </Target>
