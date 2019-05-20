@@ -133,15 +133,19 @@ Dynamo : version 2 or later
 Please note the project has no dependency to Revit and its APIs, so it will happily run in Dynamo Sandbox or Dynamo Studio.
 
 ## Contributing
-
-Please read [CONTRIBUTING.md](https://github.com/radumg/DynWWW/blob/master/docs/CONTRIBUTING.md) for details on how to contribute to this package. Please also read the [CODE OF CONDUCT.md](https://github.com/radumg/DynWWW/blob/master/docs/CODE_OF_CONDUCT.md).
+Please read [CONTRIBUTING.md](https://github.com/designtechIO/GenerativeToolkit/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package. Please also read the [CODE OF CONDUCT.md](https://github.com/designtechIO/GenerativeToolkit/tree/master/docs/CODE_OF_CONDUCT.md).
 
 ## Authors
 
-__Radu Gidei__ : [Github profile](https://github.com/radumg), [Twitter profile](https://twitter.com/radugidei)
+__Sylvester Knudsen__ : [Github profile](https://github.com/SHKnudsen), [Twitter profile](https://twitter.com/SHKnudsen)
 
 ## Licensing
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](https://github.com/radumg/DynWWW/blob/master/LICENSE) for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](https://github.com/designtechIO/GenerativeToolkit/tree/master/LICENSE) for details.
 
 ### Packages used
+[Graphical](https://github.com/alvpickmans/Graphical)
+
+[MIConvexHull](https://github.com/DesignEngrLab/MIConvexHull)
+
+[3DContainerPacking](https://github.com/davidmchapman/3DContainerPacking)
