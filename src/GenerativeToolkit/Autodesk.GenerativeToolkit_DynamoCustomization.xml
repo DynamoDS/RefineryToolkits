@@ -16,14 +16,14 @@
     <namespace name="Autodesk.GenerativeToolkit.Generate">
       <category>GenerativeToolkit.Generate</category>
     </namespace>
+    <namespace name="Autodesk.GenerativeToolkit.Generate.BinPacking.PlacementMethods">
+      <category>GenerativeToolkit.Generate.BinPacking</category>
+    </namespace>
     <namespace name="Autodesk.GenerativeToolkit.Integrate">
       <category>GenerativeToolkit.Integrate</category>
     </namespace>
     <namespace name="Autodesk.GenerativeToolkit.Rank">
       <category>GenerativeToolkit.Rank</category>
-    </namespace>
-    <namespace name="Autodesk.GenerativeToolkit.Utilities">
-      <category>GenerativeToolkit.Utilities</category>
     </namespace>
   </namespaces>
 </doc>

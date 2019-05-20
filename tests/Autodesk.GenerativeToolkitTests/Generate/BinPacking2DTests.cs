@@ -40,5 +40,26 @@ namespace Autodesk.GenerativeToolkit.Generate.Tests
             var packedIndices = (List<int>)result["packedIndices"];
             Assert.AreEqual(packedIndices, new List<int> { 0, 1, 2, 4 });
         }
+
+        [Test]
+        public void PlacementPropertyBLSFTest()
+        {
+            string blsf = BinPacking.PlacementMethods.BestLongSideFits.ToString();
+            Assert.True(blsf == "BLSF");
+        }
+
+        [Test]
+        public void PlacementPropertyBSSFTest()
+        {
+            string bssf = BinPacking.PlacementMethods.BestShortSideFits.ToString();
+            Assert.True(bssf == "BSSF");
+        }
+
+        [Test]
+        public void PlacementPropertyBAFTest()
+        {
+            string baf = BinPacking.PlacementMethods.BestAreaFits.ToString();
+            Assert.True(baf == "BAF");
+        }
     }
 }
