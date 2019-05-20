@@ -1,4 +1,4 @@
-﻿using Autodesk.GenerativeToolkit.Analyse;
+﻿using Autodesk.GenerativeToolkit.Analyze;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TestServices;
 using Autodesk.DesignScript.Geometry;
 
-namespace Autodesk.GenerativeToolkit.Analyse.Tests
+namespace Autodesk.GenerativeToolkit.Analyze.Tests
 {
     [TestFixture]
     public class AdjacencyPreferenceTests : GeometricTestBase
