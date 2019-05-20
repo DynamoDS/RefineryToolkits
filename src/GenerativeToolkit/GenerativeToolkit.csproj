@@ -245,7 +245,7 @@
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourceXmls Include="$(TargetDir)*.xml" />
       <SourcePkg Include="$(ProjectDir)pkg.json" />
-      <SourceSamples Include="$(SolutionDir)*.dyn" />
+      <SourceSamples Include="$(SolutionDir)..\samples\*.dyn" />
     </ItemGroup>
     <!--Copying to Build Folder-->
     <Copy SourceFiles="@(SourceDlls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
