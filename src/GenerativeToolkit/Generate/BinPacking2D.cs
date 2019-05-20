@@ -1,16 +1,17 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
+using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Autodesk.GenerativeToolkit.Generate
 {
-    public static class BinPacking2D
+    public static partial class BinPacking
     {
-        private const string packedItemsOutputPort = "packedRectangles";
-        private const string indicesOutputPort = "packedIndices";
-        private const string remainingItemsOutputPort = "remainRectangles";
+        private const string packedItemsOutputPort2D = "packedRectangles";
+        private const string indicesOutputPort2D = "packedIndices";
+        private const string remainingItemsOutputPort2D = "remainRectangles";
 
         private class FreeRectangle
         {
@@ -43,8 +44,8 @@ namespace Autodesk.GenerativeToolkit.Generate
         /// <param name="bin"> Rectangle to pack into</param>
         /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
         /// <returns>List of packed rectangles</returns>
-        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
-        public static Dictionary<string, object> Pack(
+        [MultiReturn(new[] { packedItemsOutputPort2D, indicesOutputPort2D, remainingItemsOutputPort2D })]
+        public static Dictionary<string, object> Pack2D(
             List<Rectangle> rects,
             Rectangle bin,
             PlacementMethods placementMethod)
@@ -73,9 +74,9 @@ namespace Autodesk.GenerativeToolkit.Generate
             Dictionary<string, object> newOutput;
             newOutput = new Dictionary<string, object>
             {
-                {packedItemsOutputPort,packedRectangles},
-                {indicesOutputPort,packedIndices},
-                {remainingItemsOutputPort,remainRectangles}
+                {packedItemsOutputPort2D,packedRectangles},
+                {indicesOutputPort2D,packedIndices},
+                {remainingItemsOutputPort2D,remainRectangles}
             };
             return newOutput;
         }

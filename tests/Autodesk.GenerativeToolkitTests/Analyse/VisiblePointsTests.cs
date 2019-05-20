@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TestServices;
 using Autodesk.DesignScript.Geometry;
 
-namespace Autodesk.GenerativeToolkit.Analyse.Tests
+namespace Autodesk.GenerativeToolkit.Analyze.Tests
 {
     [TestFixture]
     public class VisiblePointsTests : GeometricTestBase

@@ -26,7 +26,7 @@ namespace Autodesk.GenerativeToolkit.Generate.Tests
                 Rectangle.ByWidthLength(15,15)
             };
 
-            var result = BinPacking2D.Pack(items, bin);
+            var result = BinPacking.Pack2D(items, bin, BinPacking.PlacementMethods.BestAreaFits);
             Assert.IsTrue(result.Keys.Contains("packedRectangles"));
             Assert.IsTrue(result.Keys.Contains("remainRectangles"));
             Assert.IsTrue(result.Keys.Contains("packedIndices"));
@@ -44,21 +44,21 @@ namespace Autodesk.GenerativeToolkit.Generate.Tests
         [Test]
         public void PlacementPropertyBLSFTest()
         {
-            string blsf = BinPacking2D.BestLongSideFits;
+            string blsf = BinPacking.PlacementMethods.BestLongSideFits.ToString();
             Assert.True(blsf == "BLSF");
         }
 
         [Test]
         public void PlacementPropertyBSSFTest()
         {
-            string bssf = BinPacking2D.BestShortSideFits;
+            string bssf = BinPacking.PlacementMethods.BestShortSideFits.ToString();
             Assert.True(bssf == "BSSF");
         }
 
         [Test]
         public void PlacementPropertyBAFTest()
         {
-            string baf = BinPacking2D.BestAreaFits;
+            string baf = BinPacking.PlacementMethods.BestAreaFits.ToString();
             Assert.True(baf == "BAF");
         }
     }
