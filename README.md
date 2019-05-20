@@ -5,7 +5,7 @@ __GenerativeToolkit__ is a [Dynamo](http://www.dynamobim.org) package that can b
 ### What does it do ?
 
 With a range of different nodes it helps you create generative design workflows in Dynamo and Revit.  
-![GenerativeToolkit package screenshot](https://github.com/designtechIO/GenerativeToolkit/blob/64-add-standard-OSS-project/repo-information-to-README-file/samples/GenerativeToolkit.png)
+![GenerativeToolkit package screenshot](samples/GenerativeToolkit.png)
 
 
 # Getting Started
