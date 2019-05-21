@@ -56,8 +56,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="CromulentBisgetti.ContainerPacking">
-      <HintPath>..\..\3DContainerPacking\src\CromulentBisgetti.ContainerPacking\bin\Debug\netstandard2.0\CromulentBisgetti.ContainerPacking.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\lib\3DContainerPacking\CromulentBisgetti.ContainerPacking.dll</HintPath>
     </Reference>
     <Reference Include="DesignScriptBuiltin, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DesignScriptBuiltin.dll</HintPath>
