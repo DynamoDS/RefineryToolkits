@@ -47,63 +47,6 @@
   "Outputs": [],
   "Nodes": [
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking3D.Pack@Autodesk.DesignScript.Geometry.Cuboid,Autodesk.DesignScript.Geometry.Cuboid[]",
-      "Id": "94485228d45c4cef9e95efbb04846ed8",
-      "Inputs": [
-        {
-          "Id": "04e1e2d1f0c14e3a876cc0d48e76ad93",
-          "Name": "bin",
-          "Description": "Cuboid to pack sample Cuboids into\n\nCuboid",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "6a1f1ff84df74a3794554165fafbdafc",
-          "Name": "items",
-          "Description": "List of Cuboids to pack\n\nCuboid[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "7455690a08da4dbc9e979fd3fae8f1d9",
-          "Name": "packedItems",
-          "Description": "Packed Cuboids",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "ac0357bef30f4f70bd8bc050770dc30f",
-          "Name": "packedIndices",
-          "Description": "Indices of packed items",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "79e47200e1f64ab8837d54e5ca75c90e",
-          "Name": "remainItems",
-          "Description": "Cubiods that didn't get packed",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Packs a sample list of Cuboids in a bin Cuboid\n\nBinPacking3D.Pack (bin: Cuboid, items: Cuboid[]): var[]..[]"
-    },
-    {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
       "Code": "length = 500;\nwidth = 400;\nheight = 300;",
@@ -1053,29 +996,66 @@
       ],
       "Replication": "Disabled",
       "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack3D@Autodesk.DesignScript.Geometry.Cuboid,Autodesk.DesignScript.Geometry.Cuboid[]",
+      "Id": "a84a8b45a6874e2493ae09ebed0a26d7",
+      "Inputs": [
+        {
+          "Id": "b4c8e67a44824dbd943c2c21de388d14",
+          "Name": "bin",
+          "Description": "Cuboid to pack sample Cuboids into\n\nCuboid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8b84d023abe54dfb9f648990b5ca5bd4",
+          "Name": "items",
+          "Description": "List of Cuboids to pack\n\nCuboid[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b219e0274d334c32b4de40a8a82016bb",
+          "Name": "packedItems",
+          "Description": "Packed Cuboids",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e5a8d9ec72724e81bdb44f599fd292dc",
+          "Name": "packedIndices",
+          "Description": "Indices of packed items",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6ca8dc2e2f344e4da36bccfccd849263",
+          "Name": "remainItems",
+          "Description": "Cubiods that didn't get packed",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Packs a sample list of Cuboids in a bin Cuboid\n\nBinPacking.Pack3D (bin: Cuboid, items: Cuboid[]): var[]..[]"
     }
   ],
   "Connectors": [
-    {
-      "Start": "7455690a08da4dbc9e979fd3fae8f1d9",
-      "End": "972cd7b1288741808ea3cfc572abb8a2",
-      "Id": "f30ac48666034f84ad540e4c8f4fa430"
-    },
-    {
-      "Start": "7455690a08da4dbc9e979fd3fae8f1d9",
-      "End": "85df8c84e3f746ef826fa45ae9fb83e6",
-      "Id": "c3e6a2083b374945a8104bf3bdf5903d"
-    },
-    {
-      "Start": "ac0357bef30f4f70bd8bc050770dc30f",
-      "End": "ab120a5c16124bb29f50f3e7de23ee83",
-      "Id": "bbadcc3ddb174ff9b1c7883f9d74a37a"
-    },
-    {
-      "Start": "ac0357bef30f4f70bd8bc050770dc30f",
-      "End": "5c28cbcf6dff40c180cff4dac70c4e4a",
-      "Id": "09f19d7910c44b4c84e4a035f6e2d73f"
-    },
     {
       "Start": "131fdd4805f946db827b047d0e76c7ee",
       "End": "f20511ee98c14e2380efd34621a6cfa0",
@@ -1123,13 +1103,8 @@
     },
     {
       "Start": "c2c51bf2f1d847ca9d30861a35125ea8",
-      "End": "04e1e2d1f0c14e3a876cc0d48e76ad93",
-      "Id": "0c95a6caea214e2a90e123e3860df24d"
-    },
-    {
-      "Start": "201c290ffd4143958885112c7c5f55ff",
-      "End": "6a1f1ff84df74a3794554165fafbdafc",
-      "Id": "3049e6e8976b4f54bca549162ceab128"
+      "End": "b4c8e67a44824dbd943c2c21de388d14",
+      "Id": "625bc19ff6c640dfb77b16f755d32588"
     },
     {
       "Start": "201c290ffd4143958885112c7c5f55ff",
@@ -1140,6 +1115,11 @@
       "Start": "201c290ffd4143958885112c7c5f55ff",
       "End": "b4e2a93906f14cd1b1f2b571e9f04ca3",
       "Id": "164f246972c54a0bb7f00d8607a1e4d0"
+    },
+    {
+      "Start": "201c290ffd4143958885112c7c5f55ff",
+      "End": "8b84d023abe54dfb9f648990b5ca5bd4",
+      "Id": "ca8750cabbdb40a3bed6bf63f2fb7b25"
     },
     {
       "Start": "12aa17c8a505470e811c9c68d8b749bd",
@@ -1230,6 +1210,26 @@
       "Start": "dbd8de64483b4c6b984a0148a90edd6b",
       "End": "b6ea0d036bb9467f9a2672254e957040",
       "Id": "6b2eee65051545e1a6200815be24e523"
+    },
+    {
+      "Start": "b219e0274d334c32b4de40a8a82016bb",
+      "End": "972cd7b1288741808ea3cfc572abb8a2",
+      "Id": "22e94c02468847b49b0345988f7b4980"
+    },
+    {
+      "Start": "b219e0274d334c32b4de40a8a82016bb",
+      "End": "85df8c84e3f746ef826fa45ae9fb83e6",
+      "Id": "68b3a161309a4c439701726f4dc3b46b"
+    },
+    {
+      "Start": "e5a8d9ec72724e81bdb44f599fd292dc",
+      "End": "ab120a5c16124bb29f50f3e7de23ee83",
+      "Id": "dffa9d82f0794804abd095dd9534c6a5"
+    },
+    {
+      "Start": "e5a8d9ec72724e81bdb44f599fd292dc",
+      "End": "5c28cbcf6dff40c180cff4dac70c4e4a",
+      "Id": "4f440746ef21435bbcfe037ec94b2f47"
     }
   ],
   "Dependencies": [],
@@ -1256,16 +1256,6 @@
       "UpZ": -0.20023679229631555
     },
     "NodeViews": [
-      {
-        "ShowGeometry": false,
-        "Name": "BinPacking3D.Pack",
-        "Id": "94485228d45c4cef9e95efbb04846ed8",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1063.4950922751125,
-        "Y": 1325.7621092522982
-      },
       {
         "ShowGeometry": true,
         "Name": "Bin Dimensions",
@@ -1515,6 +1505,16 @@
         "Excluded": false,
         "X": 985.24153077363735,
         "Y": 579.31287238463756
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "BinPacking.Pack3D",
+        "Id": "a84a8b45a6874e2493ae09ebed0a26d7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 905.25319412780141,
+        "Y": 1304.1325311968064
       }
     ],
     "Annotations": [
@@ -1593,14 +1593,14 @@
         "Nodes": [
           "7c3d7b45466948088a67fc07e7dc8d5d",
           "835323dc7ae14c699788933a2d977b4f",
-          "94485228d45c4cef9e95efbb04846ed8"
+          "a84a8b45a6874e2493ae09ebed0a26d7"
         ],
         "Left": 874.76128910884,
-        "Top": 1229.7621092522982,
-        "Width": 436.73380316627254,
-        "Height": 451.23131558341015,
+        "Top": 1208.1325311968064,
+        "Width": 424.17611348271521,
+        "Height": 472.86089363890187,
         "FontSize": 36.0,
-        "InitialTop": 1325.7621092522982,
+        "InitialTop": 1304.1325311968064,
         "InitialHeight": 291.23131558341015,
         "TextblockHeight": 86.0,
         "Background": "#FFB9F9E1"
@@ -1904,8 +1904,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 20.60357813872497,
-    "Y": -32.108848118544472,
-    "Zoom": 0.27282281096980149
+    "X": -571.39607959552347,
+    "Y": -930.79739282865853,
+    "Zoom": 0.95618217788793058
   }
 }

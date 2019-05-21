@@ -587,7 +587,7 @@
         "Height": 255.21333333333331,
         "FontSize": 36.0,
         "InitialTop": -10.025470127853168,
-        "InitialHeight": 253.0,
+        "InitialHeight": 254.21333333333331,
         "TextblockHeight": 43.0,
         "Background": "#FFB9F9E1"
       },
@@ -619,7 +619,7 @@
         "Height": 172.0,
         "FontSize": 36.0,
         "InitialTop": 318.52336439972953,
-        "InitialHeight": 214.21333333333337,
+        "InitialHeight": 145.0,
         "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
@@ -852,8 +852,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -2131.9276136857579,
-    "Y": -209.62886231911682,
-    "Zoom": 1.2557309072392748
+    "X": -1909.6105357370418,
+    "Y": 272.41360947732829,
+    "Zoom": 0.79390550667667281
   }
 }

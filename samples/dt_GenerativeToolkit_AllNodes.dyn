@@ -12,7 +12,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "1feb8772afc2471494fa9313c6257133",
       "Inputs": [
         {
@@ -42,7 +42,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.Isovist.FromPoint@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Point",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.Isovist.FromPoint@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Point",
       "Id": "8a138d86ce5b4573a19874fcefd42dd3",
       "Inputs": [
         {
@@ -90,7 +90,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.PathFinding.CreateVisibilityGraph@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.CreateVisibilityGraph@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "d7e8736654804d35b00374ba1ce1dfcb",
       "Inputs": [
         {
@@ -129,7 +129,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.PathFinding.ShortestPath@var,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.ShortestPath@var,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
       "Id": "672498da9c0348e6acf4b5b52dec3de6",
       "Inputs": [
         {
@@ -186,7 +186,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.PathFinding.Lines@var",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.Lines@var",
       "Id": "10caed0b524240cfab7fc22f58778cd3",
       "Inputs": [
         {
@@ -216,13 +216,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.ViewsToOutside.ByLineSegments@Autodesk.DesignScript.Geometry.Line[],Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.ViewsToOutside.ByLineSegments@Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "15dfeef8a73d4e78b44d75ddde509ff4",
       "Inputs": [
         {
           "Id": "503c02fcb8b1406c92f3633f6e1622ee",
           "Name": "viewSegments",
-          "Description": "Line segments representing the views to outside\n\nLine[]",
+          "Description": "Line segments representing the views to outside\n\nCurve[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -259,8 +259,17 @@
       "Outputs": [
         {
           "Id": "cb9eff5209d34f58baa21b912fe7fed6",
-          "Name": "double",
+          "Name": "score",
           "Description": "precentage of 360 view that is to the outside",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c2a6a7eb2903477887bf46ea201885a7",
+          "Name": "segments",
+          "Description": "var",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -268,12 +277,12 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Calculates the view to outside from a given point based on a 360 degree ratio. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nViewsToOutside.ByLineSegments (viewSegments: Line[], origin: Point, boundary: Polygon[], internals: Polygon[] = []): double"
+      "Description": "Calculates the view to outside from a given point based on a 360 degree ratio. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nViewsToOutside.ByLineSegments (viewSegments: Curve[], origin: Point, boundary: Polygon[], internals: Polygon[] = []): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.VisiblePoints.FromOrigin@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.VisiblePoints.FromOrigin@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "4caa818760c54b889adb9d5479c58bbb",
       "Inputs": [
         {
@@ -316,8 +325,17 @@
       "Outputs": [
         {
           "Id": "7dbc72e0964e456dac58d65c52bf5275",
-          "Name": "double",
+          "Name": "score",
           "Description": "precentages of the amount of visible points",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8badaa3ce5ac44508689765e84eba6f9",
+          "Name": "visiblePoints",
+          "Description": "var",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -325,7 +343,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Calculates the visible points out of a list of sample points from a given origin. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nVisiblePoints.FromOrigin (origin: Point, points: Point[], boundary: Polygon[], obstacles: Polygon[] = []): double"
+      "Description": "Calculates the visible points out of a list of sample points from a given origin. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nVisiblePoints.FromOrigin (origin: Point, points: Point[], boundary: Polygon[], obstacles: Polygon[] = []): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -413,7 +431,7 @@
         {
           "Id": "26e2c57060da47e99838d56e8e63657d",
           "Name": "amenitySrf",
-          "Description": "var",
+          "Description": "amenity surface and remaining surface",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -435,7 +453,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking2D.Pack@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,string",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
       "Id": "4c060ecdfa084336ada52b3d3423cc66",
       "Inputs": [
         {
@@ -459,7 +477,7 @@
         {
           "Id": "fdbdea0462c440b7acd5bda4e350ade9",
           "Name": "placementMethod",
-          "Description": "Method for choosing where to place the next rectangle\n\nstring\nDefault value : \"BSSF\" (disabled)",
+          "Description": "Method for choosing where to place the next rectangle\n\nvar",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -469,28 +487,26 @@
       "Outputs": [
         {
           "Id": "391709312f0a483b88a74e0af89f38e4",
-          "Name": "Rectangle[]",
+          "Name": "packedRectangles",
           "Description": "List of packed rectangles",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Packs a sample list of Rectangles in a bin Rectangle\n\nBinPacking2D.Pack (rects: Rectangle[], bin: Rectangle, placementMethod: string = \"BSSF\"): Rectangle[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking2D.BAF",
-      "Id": "7034d77b82c1465b939193b1c9ddd69c",
-      "Inputs": [],
-      "Outputs": [
+        },
         {
-          "Id": "95aa169ba72e4589a0fd787d594622c0",
-          "Name": "string",
-          "Description": "string",
+          "Id": "5fd596d37ac542ebb3f36ee0c8373724",
+          "Name": "packedIndices",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4168e216ddc048bca809f03cd25addfc",
+          "Name": "remainRectangles",
+          "Description": "var",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -498,52 +514,12 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Picks the free area that is smallest in area to place the next rectangle into.\n\nBinPacking2D.BAF: string"
+      "Description": "Packs a sample list of Rectangles in a bin Rectangle\n\nBinPacking.Pack2D (rects: Rectangle[], bin: Rectangle, placementMethod: var): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking2D.BLSF",
-      "Id": "820f6c500fe543efb863349343917116",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "3a83f1c04b1641c6815a96b1829dcc96",
-          "Name": "string",
-          "Description": "string",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Packs next rectangle into the free area where the length of the shorter leftover side is minimized.\n\nBinPacking2D.BLSF: string"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking2D.BSSF",
-      "Id": "b9d9dd9ab9004464aed8e35577f0ac9e",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "5e9096be88ea4a2bae1b95f9ac3fc7ec",
-          "Name": "string",
-          "Description": "string",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Packs next rectangle into the free area where the length of the longer leftover side is minimized.\n\nBinPacking2D.BSSF: string"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking3D.Pack@Autodesk.DesignScript.Geometry.Cuboid,Autodesk.DesignScript.Geometry.Cuboid[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack3D@Autodesk.DesignScript.Geometry.Cuboid,Autodesk.DesignScript.Geometry.Cuboid[]",
       "Id": "1564e93fa33f409cb92f4874b316381b",
       "Inputs": [
         {
@@ -577,8 +553,8 @@
         },
         {
           "Id": "8d4bf0d571c14ea5be06b0b1196ac22d",
-          "Name": "remainItems",
-          "Description": "Cubiods that didn't get packed",
+          "Name": "packedIndices",
+          "Description": "Indices of packed items",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -586,8 +562,8 @@
         },
         {
           "Id": "3871b8c27e7c49a49487a22ad5e2ccaa",
-          "Name": "packedIndices",
-          "Description": "var",
+          "Name": "remainItems",
+          "Description": "Cubiods that didn't get packed",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -595,7 +571,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packs a sample list of Cuboids in a bin Cuboid\n\nBinPacking3D.Pack (bin: Cuboid, items: Cuboid[]): var[]..[]"
+      "Description": "Packs a sample list of Cuboids in a bin Cuboid\n\nBinPacking.Pack3D (bin: Cuboid, items: Cuboid[]): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -744,7 +720,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.Openess.FromSurface@Autodesk.DesignScript.Geometry.Surface,double,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.Openess.FromSurface@Autodesk.DesignScript.Geometry.Surface,double,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "b3a514dae9404447bbed244c8c10e44e",
       "Inputs": [
         {
@@ -797,6 +773,66 @@
       ],
       "Replication": "Auto",
       "Description": "gives a openess score from 0-1 based on how enclosed a Surface is.\n\nOpeness.FromSurface (surface: Surface, tolerance: double = 0, boundary: Polygon[] = [], obstacles: Polygon[] = []): double"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking_PlacementMethods.BestAreaFits",
+      "Id": "fd04ed1e8e124f6e9facdacbc4c2f31f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a43cb46eb2844b47812c86b3accea084",
+          "Name": "var",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "BinPacking_PlacementMethods.BestAreaFits: var"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking_PlacementMethods.BestLongSideFits",
+      "Id": "b7090c58671e4c72ad66c23f493e313e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "44ede1fe546e4e65a00e066cd041b22f",
+          "Name": "var",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "BinPacking_PlacementMethods.BestLongSideFits: var"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking_PlacementMethods.BestShortSideFits",
+      "Id": "e626900de05f48f9ac2a7a67f2228c31",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4967ae6b37934c87bdb88547eea06807",
+          "Name": "var",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "BinPacking_PlacementMethods.BestShortSideFits: var"
     }
   ],
   "Connectors": [],
@@ -926,36 +962,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "BinPacking2D.BAF",
-        "Id": "7034d77b82c1465b939193b1c9ddd69c",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1002.47511077227,
-        "Y": 999.050735160984
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "BinPacking2D.BLSF",
-        "Id": "820f6c500fe543efb863349343917116",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1002.47511077227,
-        "Y": 1089.73219710032
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "BinPacking2D.BSSF",
-        "Id": "b9d9dd9ab9004464aed8e35577f0ac9e",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1002.47511077227,
-        "Y": 1180.41365903965
-      },
-      {
-        "ShowGeometry": true,
         "Name": "BinPacking3D.Pack",
         "Id": "1564e93fa33f409cb92f4874b316381b",
         "IsSetAsInput": false,
@@ -1003,12 +1009,42 @@
         "Excluded": false,
         "X": 256.33138951354408,
         "Y": 407.35018737549723
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "BinPacking_PlacementMethods.BestAreaFits",
+        "Id": "fd04ed1e8e124f6e9facdacbc4c2f31f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1006.7954898401297,
+        "Y": 963.54515557660477
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "BinPacking_PlacementMethods.BestLongSideFits",
+        "Id": "b7090c58671e4c72ad66c23f493e313e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1004.452453016891,
+        "Y": 1056.09511009454
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "BinPacking_PlacementMethods.BestShortSideFits",
+        "Id": "e626900de05f48f9ac2a7a67f2228c31",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1010.310045074988,
+        "Y": 1146.302027789236
       }
     ],
     "Annotations": [
       {
         "Id": "5570c4a74e334adcb8014b55c2eb06f3",
-        "Title": "Analyse - Actions ",
+        "Title": "Analyze - Actions ",
         "Nodes": [
           "1feb8772afc2471494fa9313c6257133",
           "8a138d86ce5b4573a19874fcefd42dd3",
@@ -1030,7 +1066,7 @@
       },
       {
         "Id": "86c8e6cfac2f465385614fc3d396409d",
-        "Title": "Analyse - Querying ",
+        "Title": "Analyze - Querying ",
         "Nodes": [
           "10caed0b524240cfab7fc22f58778cd3"
         ],
@@ -1072,7 +1108,7 @@
         ],
         "Left": 992.47511077227,
         "Top": 104.181237315927,
-        "Width": 318.0,
+        "Width": 359.0,
         "Height": 782.43785464819507,
         "FontSize": 36.0,
         "InitialTop": 157.181237315927,
@@ -1082,20 +1118,20 @@
       },
       {
         "Id": "5182cb5c0d8648e8a071db88eb7a7a48",
-        "Title": "Analyse - Querying",
+        "Title": "Analyze - Querying",
         "Nodes": [
-          "7034d77b82c1465b939193b1c9ddd69c",
-          "820f6c500fe543efb863349343917116",
-          "b9d9dd9ab9004464aed8e35577f0ac9e"
+          "fd04ed1e8e124f6e9facdacbc4c2f31f",
+          "b7090c58671e4c72ad66c23f493e313e",
+          "e626900de05f48f9ac2a7a67f2228c31"
         ],
-        "Left": 992.47511077227,
-        "Top": 903.050735160984,
-        "Width": 156.57000000000002,
-        "Height": 370.36292387866592,
+        "Left": 994.452453016891,
+        "Top": 910.54515557660477,
+        "Width": 345.857592058097,
+        "Height": 328.75687221263127,
         "FontSize": 36.0,
-        "InitialTop": 999.050735160984,
+        "InitialTop": 963.54515557660477,
         "InitialHeight": 326.36292387866592,
-        "TextblockHeight": 86.0,
+        "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
       {
@@ -1132,7 +1168,7 @@
         "Height": 537.57338313009416,
         "FontSize": 48.0,
         "InitialTop": 92.655733848719819,
-        "InitialHeight": 411.02989676309903,
+        "InitialHeight": 421.57338313009416,
         "TextblockHeight": 115.0,
         "Background": "#FFFFFFFF"
       },
@@ -1325,8 +1361,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 1106.8286659060409,
-    "Y": 188.91243211442062,
-    "Zoom": 0.938335517881513
+    "X": -133.07330875772027,
+    "Y": -472.15512306421613,
+    "Zoom": 0.8535930721034628
   }
 }

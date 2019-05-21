@@ -716,7 +716,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.PathFinding.ShortestPath@var,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.ShortestPath@var,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
       "Id": "433f7243db664f04b6af924dd68d6f99",
       "Inputs": [
         {
@@ -812,7 +812,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.PathFinding.CreateVisibilityGraph@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.CreateVisibilityGraph@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "68c8d0f879e445f0928812c45f76bf47",
       "Inputs": [
         {
@@ -851,7 +851,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.PathFinding.Lines@var",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.Lines@var",
       "Id": "1fafe1f994e541b3baa55d1530142a7e",
       "Inputs": [
         {

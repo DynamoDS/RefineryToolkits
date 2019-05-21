@@ -690,7 +690,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.VisiblePoints.FromOrigin@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.VisiblePoints.FromOrigin@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "2e99691a9fd3455187c5962d335d004d",
       "Inputs": [
         {

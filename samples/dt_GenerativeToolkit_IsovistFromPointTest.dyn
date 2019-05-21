@@ -283,7 +283,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.Isovist.FromPoint@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Point",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.Isovist.FromPoint@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Point",
       "Id": "b2ce6aeb2e54403f857be13baaa08af2",
       "Inputs": [
         {
@@ -976,8 +976,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 2271.06230039185,
-    "Y": -238.0856159846968,
-    "Zoom": 1.4443971180628044
+    "X": -175.52266264052389,
+    "Y": -19.857835794464847,
+    "Zoom": 0.79501128096188867
   }
 }

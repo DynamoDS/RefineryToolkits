@@ -506,7 +506,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyse.Openess.FromSurface@Autodesk.DesignScript.Geometry.Surface,double,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.Openess.FromSurface@Autodesk.DesignScript.Geometry.Surface,double,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "c89c7d34431f4abea728d97a905c035d",
       "Inputs": [
         {

@@ -1107,7 +1107,7 @@
         {
           "Id": "63d37c24b8734e4c8110c60a20effd75",
           "Name": "geometry",
-          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
+          "Description": "Geometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1116,7 +1116,7 @@
         {
           "Id": "740bb3b6e67f4be0b8786d265f2c5d03",
           "Name": "color",
-          "Description": "The color.\n\nColor",
+          "Description": "Color",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1127,7 +1127,7 @@
         {
           "Id": "d7b3b18bd490451096e70522ec4965fb",
           "Name": "GeometryColor",
-          "Description": "A Display object.",
+          "Description": "GeometryColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1135,7 +1135,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1288,204 +1288,6 @@
       ],
       "Replication": "Disabled",
       "Description": "Makes a new list out of the given inputs"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking2D.Pack@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,string",
-      "Id": "e8a1128e81114c889e8c8614b889ec0e",
-      "Inputs": [
-        {
-          "Id": "74a7fe6dbf6f4750b31782c31b57d21c",
-          "Name": "rects",
-          "Description": "list of Rectangles to Pack\n\nRectangle[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "334e3344f9fb42bf9a17df10ec6791a5",
-          "Name": "bin",
-          "Description": "Rectangle to pack into\n\nRectangle",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "151850d500f544c9afc860841f04a001",
-          "Name": "placementMethod",
-          "Description": "Method for choosing where to place the next rectangle\n\nstring\nDefault value : \"BSSF\" (disabled)",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "1352bec5a8644773b96a1270b3b2e0a2",
-          "Name": "packedRectangles",
-          "Description": "List of packed rectangles",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "e0c9fc93e2344e98a794d635fd222bee",
-          "Name": "remainRectangles",
-          "Description": "var",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "01845ab3f57647ac9b06287155f039e3",
-          "Name": "packedIndices",
-          "Description": "var",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Packs a sample list of Rectangles in a bin Rectangle\n\nBinPacking2D.Pack (rects: Rectangle[], bin: Rectangle, placementMethod: string = \"BSSF\"): var[]..[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking2D.Pack@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,string",
-      "Id": "3cb3c7ddfcde46d6b466dbca5f66c0c3",
-      "Inputs": [
-        {
-          "Id": "4aa8f2c1fd5540c4b086d26cd57b14a5",
-          "Name": "rects",
-          "Description": "list of Rectangles to Pack\n\nRectangle[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "17b4d7d27e934607b13e04658241f0d1",
-          "Name": "bin",
-          "Description": "Rectangle to pack into\n\nRectangle",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "d4ea163d9ed64c5585714966394c2076",
-          "Name": "placementMethod",
-          "Description": "Method for choosing where to place the next rectangle\n\nstring\nDefault value : \"BSSF\" (disabled)",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "672e84ec36b147eb9e02b9dd73a72934",
-          "Name": "packedRectangles",
-          "Description": "List of packed rectangles",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "805e8bfbc4614ddcaf126e9a31d934b8",
-          "Name": "remainRectangles",
-          "Description": "var",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "0dc80dd6d8f24e5e84a84c87ad03b3b3",
-          "Name": "packedIndices",
-          "Description": "var",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Packs a sample list of Rectangles in a bin Rectangle\n\nBinPacking2D.Pack (rects: Rectangle[], bin: Rectangle, placementMethod: string = \"BSSF\"): var[]..[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking2D.Pack@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,string",
-      "Id": "747f529a5c394b448f0596a8e91f5db0",
-      "Inputs": [
-        {
-          "Id": "e39a6b9071704adeabf90adf2222d63a",
-          "Name": "rects",
-          "Description": "list of Rectangles to Pack\n\nRectangle[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "f959992de58a41698ccd7b8e6ab160b7",
-          "Name": "bin",
-          "Description": "Rectangle to pack into\n\nRectangle",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "3d213507c952470184eaae90ffc54e53",
-          "Name": "placementMethod",
-          "Description": "Method for choosing where to place the next rectangle\n\nstring\nDefault value : \"BSSF\" (disabled)",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "bb6be13196a04a57a8de6655300fdd17",
-          "Name": "packedRectangles",
-          "Description": "List of packed rectangles",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "bb82f8671de54635bc4189916866e4ec",
-          "Name": "remainRectangles",
-          "Description": "var",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "92c1c5f1d9004257b8f4fe75aa9651cd",
-          "Name": "packedIndices",
-          "Description": "var",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Packs a sample list of Rectangles in a bin Rectangle\n\nBinPacking2D.Pack (rects: Rectangle[], bin: Rectangle, placementMethod: string = \"BSSF\"): var[]..[]"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -1703,14 +1505,60 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking2D.BestAreaFits",
-      "Id": "0b46f3867eca49d4b270388a2895e220",
-      "Inputs": [],
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
+      "Id": "5b3f2067acbe4bb583db1951b8c9f414",
+      "Inputs": [
+        {
+          "Id": "875f2a5a303e40758cb861bdfb2165ef",
+          "Name": "rects",
+          "Description": "list of Rectangles to Pack\n\nRectangle[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e1514ff9814b4cdf83c1e117bbb437bc",
+          "Name": "bin",
+          "Description": "Rectangle to pack into\n\nRectangle",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a0e7ce4e652b4351bb67055ee9dcbcb7",
+          "Name": "placementMethod",
+          "Description": "Method for choosing where to place the next rectangle\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
       "Outputs": [
         {
-          "Id": "c29c371599db4d98b8cf08589ba4dc20",
-          "Name": "string",
-          "Description": "string",
+          "Id": "22a471da62324379b17a0da3e80899f8",
+          "Name": "packedRectangles",
+          "Description": "List of packed rectangles",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "67d3bb540fde4b3cafccdd7b842ac6f8",
+          "Name": "packedIndices",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e3296b29ee8a4de4868e32dee317429a",
+          "Name": "remainRectangles",
+          "Description": "var",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1718,7 +1566,159 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Best Area Fits: Picks the free area that is smallest in area to place the next rectangle into.\n\nBinPacking2D.BestAreaFits: string"
+      "Description": "Packs a sample list of Rectangles in a bin Rectangle\n\nBinPacking.Pack2D (rects: Rectangle[], bin: Rectangle, placementMethod: var): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking_PlacementMethods.BestAreaFits",
+      "Id": "08a13f8fed644989b1adb0d0c997695f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e15907dde3454f2ba25818650b5f0c70",
+          "Name": "var",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "BinPacking_PlacementMethods.BestAreaFits: var"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
+      "Id": "fd3a4c31e5e64f38b37dbc847333f67b",
+      "Inputs": [
+        {
+          "Id": "167d1d42e1b64ffd9c2d9c2da2a18b2b",
+          "Name": "rects",
+          "Description": "list of Rectangles to Pack\n\nRectangle[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2ab970c83b3b4364a97096c91b892af7",
+          "Name": "bin",
+          "Description": "Rectangle to pack into\n\nRectangle",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "69d15d06f06048efa7e6bc4458b8c8ee",
+          "Name": "placementMethod",
+          "Description": "Method for choosing where to place the next rectangle\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a10120cea7ae4a2cac2e71a63558a91b",
+          "Name": "packedRectangles",
+          "Description": "List of packed rectangles",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a46ef499ae6a4d6b8d27fced2307c780",
+          "Name": "packedIndices",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "842cd2388ae649af86f121c74a9ac6d6",
+          "Name": "remainRectangles",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Packs a sample list of Rectangles in a bin Rectangle\n\nBinPacking.Pack2D (rects: Rectangle[], bin: Rectangle, placementMethod: var): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
+      "Id": "21aa7d2cf8de4a559ff4e3c01ffa8f8d",
+      "Inputs": [
+        {
+          "Id": "64769047639443a2ab2d8bd8c7b95722",
+          "Name": "rects",
+          "Description": "list of Rectangles to Pack\n\nRectangle[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9215a57d8e684245b93c476d048c15b2",
+          "Name": "bin",
+          "Description": "Rectangle to pack into\n\nRectangle",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "79fab49d13244d94b7db845b7a7a15ae",
+          "Name": "placementMethod",
+          "Description": "Method for choosing where to place the next rectangle\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "51be6a6fd1e14d549f47f888665d1cc6",
+          "Name": "packedRectangles",
+          "Description": "List of packed rectangles",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c0ce059444e14ade8cd03f3a906637b9",
+          "Name": "packedIndices",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5c10f3afb44743198c459099c267dfce",
+          "Name": "remainRectangles",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Packs a sample list of Rectangles in a bin Rectangle\n\nBinPacking.Pack2D (rects: Rectangle[], bin: Rectangle, placementMethod: var): var[]..[]"
     }
   ],
   "Connectors": [
@@ -1774,8 +1774,8 @@
     },
     {
       "Start": "d635bba804e14137ae5541e7fb85a3ee",
-      "End": "74a7fe6dbf6f4750b31782c31b57d21c",
-      "Id": "185357d60d2b406cbea9b109dcdc83db"
+      "End": "875f2a5a303e40758cb861bdfb2165ef",
+      "Id": "ab6840822ca44104991534636fdaaa91"
     },
     {
       "Start": "a9cb294edc3f465995e571b6aeafe1ad",
@@ -1809,8 +1809,8 @@
     },
     {
       "Start": "153277ba64594f9aa4d08b732a718cdc",
-      "End": "334e3344f9fb42bf9a17df10ec6791a5",
-      "Id": "8c3cee5b782c4f96a03734144010c36e"
+      "End": "e1514ff9814b4cdf83c1e117bbb437bc",
+      "Id": "0040a551eb0b470fbe863274bb1b247e"
     },
     {
       "Start": "0871df95685e451398a732bfe4d06423",
@@ -1844,8 +1844,8 @@
     },
     {
       "Start": "13622e9a280a4788ae9d7939599a123d",
-      "End": "4aa8f2c1fd5540c4b086d26cd57b14a5",
-      "Id": "3024f26eb9d1443b97ab699cda5d943a"
+      "End": "167d1d42e1b64ffd9c2d9c2da2a18b2b",
+      "Id": "4f017408e6ed4fa1958eabe1678203f8"
     },
     {
       "Start": "fd8fa5b73bf94e8dafc73aaf39b37926",
@@ -1854,8 +1854,8 @@
     },
     {
       "Start": "b9501c801cac4d139fd65f03e3f9704e",
-      "End": "e39a6b9071704adeabf90adf2222d63a",
-      "Id": "76abac4b865a47b48978d025e5388491"
+      "End": "64769047639443a2ab2d8bd8c7b95722",
+      "Id": "cd54d49cc1d646a18ddcde03051f4b60"
     },
     {
       "Start": "ab51f287c6e54b50b6ae429bfc317e07",
@@ -1874,8 +1874,8 @@
     },
     {
       "Start": "a759c31f3fa44e38bba56c6f90644bbe",
-      "End": "17b4d7d27e934607b13e04658241f0d1",
-      "Id": "87658922b4604075a4bd1958dd994f3a"
+      "End": "2ab970c83b3b4364a97096c91b892af7",
+      "Id": "ac130ca0908649a49f7906b80d616cfa"
     },
     {
       "Start": "5c0a587321354c4c901605addda0e3fe",
@@ -1914,8 +1914,8 @@
     },
     {
       "Start": "4aeb3f3595e04ea39cd7765de081aa33",
-      "End": "f959992de58a41698ccd7b8e6ab160b7",
-      "Id": "e8403174888e425f80976a5ea502cedb"
+      "End": "9215a57d8e684245b93c476d048c15b2",
+      "Id": "d698eda07ba742bdbf57b7e4e4cb325e"
     },
     {
       "Start": "9742dd5e705648098dc765803c2103f5",
@@ -1983,51 +1983,6 @@
       "Id": "19334c332848434d8cea6cb868cb868c"
     },
     {
-      "Start": "1352bec5a8644773b96a1270b3b2e0a2",
-      "End": "abc9d7992f3c4c67b63912a0d02ebe62",
-      "Id": "c144865888f54ab0a8ae4ac1a7b7df30"
-    },
-    {
-      "Start": "1352bec5a8644773b96a1270b3b2e0a2",
-      "End": "83ae101345bd439ca139e6d46beddfa6",
-      "Id": "d736ee91025c4561bdd424f6a1598869"
-    },
-    {
-      "Start": "1352bec5a8644773b96a1270b3b2e0a2",
-      "End": "29699d0241094a86bf363a6876f0e4f1",
-      "Id": "8689595c13114d25bf2fd3bc9c0b0bf9"
-    },
-    {
-      "Start": "672e84ec36b147eb9e02b9dd73a72934",
-      "End": "63872c3fb8cd4d0a9fe8521d73d4be1f",
-      "Id": "eb297d66c8b146728f408b4521aa7b19"
-    },
-    {
-      "Start": "672e84ec36b147eb9e02b9dd73a72934",
-      "End": "51147debcb1b4336aa8fbb7f66c1f584",
-      "Id": "5e3d100af90c49e4822cfb761167d672"
-    },
-    {
-      "Start": "672e84ec36b147eb9e02b9dd73a72934",
-      "End": "b54a01309e044c67b84c9931770706ef",
-      "Id": "eb54889cceb14c73b2f6bbd029e04b78"
-    },
-    {
-      "Start": "bb6be13196a04a57a8de6655300fdd17",
-      "End": "ed99076f118c4440970a7df55463a875",
-      "Id": "d31ea29128e5419eb264f4cbfbcb8851"
-    },
-    {
-      "Start": "bb6be13196a04a57a8de6655300fdd17",
-      "End": "519d39df61dc4ea5933312d609aa018c",
-      "Id": "697e29e577484739a18a1bf737a6aff6"
-    },
-    {
-      "Start": "bb6be13196a04a57a8de6655300fdd17",
-      "End": "74ca6b1a67224845ab0a536cdda65669",
-      "Id": "037d7ccdb5234ae29b34b9089e12a31e"
-    },
-    {
       "Start": "8896c8fde5904807bb4810105f277f31",
       "End": "e1401ea3d1194966bb6c0085879bb459",
       "Id": "cece734a9a5c4b13b986aee25ee6f31f"
@@ -2043,19 +1998,64 @@
       "Id": "52ca16ade45649c593eb479f56654f71"
     },
     {
-      "Start": "c29c371599db4d98b8cf08589ba4dc20",
-      "End": "3d213507c952470184eaae90ffc54e53",
-      "Id": "39a70184cdb3446aa4153ca011f0a5d8"
+      "Start": "22a471da62324379b17a0da3e80899f8",
+      "End": "abc9d7992f3c4c67b63912a0d02ebe62",
+      "Id": "8d66e0db9e844941932c300314190684"
     },
     {
-      "Start": "c29c371599db4d98b8cf08589ba4dc20",
-      "End": "d4ea163d9ed64c5585714966394c2076",
-      "Id": "5d88a4aa5d3b485fa276a388998dccff"
+      "Start": "22a471da62324379b17a0da3e80899f8",
+      "End": "83ae101345bd439ca139e6d46beddfa6",
+      "Id": "8cbf6d21c1c1463387d15d50e0490cb8"
     },
     {
-      "Start": "c29c371599db4d98b8cf08589ba4dc20",
-      "End": "151850d500f544c9afc860841f04a001",
-      "Id": "27701b87d5a940abb00b33ba7dcb6fd8"
+      "Start": "22a471da62324379b17a0da3e80899f8",
+      "End": "29699d0241094a86bf363a6876f0e4f1",
+      "Id": "c5cc50f5609e4e308cb0addd1cb41f93"
+    },
+    {
+      "Start": "e15907dde3454f2ba25818650b5f0c70",
+      "End": "a0e7ce4e652b4351bb67055ee9dcbcb7",
+      "Id": "5815114ba490403d8c3eecf3d2d3814d"
+    },
+    {
+      "Start": "e15907dde3454f2ba25818650b5f0c70",
+      "End": "69d15d06f06048efa7e6bc4458b8c8ee",
+      "Id": "09f2196b97a840faae4d5ec5f4d1d349"
+    },
+    {
+      "Start": "e15907dde3454f2ba25818650b5f0c70",
+      "End": "79fab49d13244d94b7db845b7a7a15ae",
+      "Id": "131da671cf894c4889870745dfa2e0bb"
+    },
+    {
+      "Start": "a10120cea7ae4a2cac2e71a63558a91b",
+      "End": "63872c3fb8cd4d0a9fe8521d73d4be1f",
+      "Id": "674931b3e60f46c2a2f388cb53482223"
+    },
+    {
+      "Start": "a10120cea7ae4a2cac2e71a63558a91b",
+      "End": "51147debcb1b4336aa8fbb7f66c1f584",
+      "Id": "0ae57895429b45e9a07ea53736e7cc90"
+    },
+    {
+      "Start": "a10120cea7ae4a2cac2e71a63558a91b",
+      "End": "b54a01309e044c67b84c9931770706ef",
+      "Id": "815a397bb79a40288f0a76be9b2b0ba8"
+    },
+    {
+      "Start": "51be6a6fd1e14d549f47f888665d1cc6",
+      "End": "ed99076f118c4440970a7df55463a875",
+      "Id": "6ccfb3151d3b4229a706cb2ed87ff03b"
+    },
+    {
+      "Start": "51be6a6fd1e14d549f47f888665d1cc6",
+      "End": "519d39df61dc4ea5933312d609aa018c",
+      "Id": "bb01726a324d4f4ca9a2074d4334b44a"
+    },
+    {
+      "Start": "51be6a6fd1e14d549f47f888665d1cc6",
+      "End": "74ca6b1a67224845ab0a536cdda65669",
+      "Id": "8628dbcacadc4186aa8066ff3d51b258"
     }
   ],
   "Dependencies": [],
@@ -2065,7 +2065,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.3.0.4794",
+      "Version": "2.0.2.6826",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -2444,36 +2444,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "BinPacking2D.Pack",
-        "Id": "e8a1128e81114c889e8c8614b889ec0e",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1564.938411468094,
-        "Y": 515.59902130060118
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "BinPacking2D.Pack",
-        "Id": "3cb3c7ddfcde46d6b466dbca5f66c0c3",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1589.4753534145489,
-        "Y": 159.54226642056517
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "BinPacking2D.Pack",
-        "Id": "747f529a5c394b448f0596a8e91f5db0",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1591.4715290991842,
-        "Y": -128.90512000907171
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Watch",
         "Id": "16fe1bbcbd7944a5929e80c2731d7766",
         "IsSetAsInput": false,
@@ -2544,13 +2514,43 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "BinPacking2D.BestAreaFits",
-        "Id": "0b46f3867eca49d4b270388a2895e220",
+        "Name": "BinPacking.Pack2D",
+        "Id": "5b3f2067acbe4bb583db1951b8c9f414",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 296.67775699988636,
-        "Y": 702.64601428279946
+        "X": 1542.1957693795578,
+        "Y": 536.31119256288184
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "BinPacking_PlacementMethods.BestAreaFits",
+        "Id": "08a13f8fed644989b1adb0d0c997695f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 223.45134964427257,
+        "Y": 866.397164919035
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "BinPacking.Pack2D",
+        "Id": "fd3a4c31e5e64f38b37dbc847333f67b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1584.9001044596621,
+        "Y": 198.95258167092948
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "BinPacking.Pack2D",
+        "Id": "21aa7d2cf8de4a559ff4e3c01ffa8f8d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1579.3627735513162,
+        "Y": -129.53927026088894
       }
     ],
     "Annotations": [
@@ -2582,7 +2582,7 @@
           "3652657ed3fa400c93e62614a2e2740a",
           "9aa83888a6fc43ba97f7629c1bc7b8ab",
           "8b2009e638b142189b4de3beb7377ffe",
-          "e8a1128e81114c889e8c8614b889ec0e"
+          "5b3f2067acbe4bb583db1951b8c9f414"
         ],
         "Left": 736.0827700743821,
         "Top": 456.66238483388872,
@@ -2603,14 +2603,14 @@
           "198eac55c335433da8a0128a8a607e36",
           "25a1a8ebc091437ca4ce35fbaa85198f",
           "748667b7350b4118bd413cc154adda6e",
-          "3cb3c7ddfcde46d6b466dbca5f66c0c3"
+          "fd3a4c31e5e64f38b37dbc847333f67b"
         ],
         "Left": 737.91371963089659,
-        "Top": 106.54226642056517,
+        "Top": 133.97271201410763,
         "Width": 1797.0,
-        "Height": 218.37147732776236,
+        "Height": 209.97986965682185,
         "FontSize": 36.0,
-        "InitialTop": 159.54226642056517,
+        "InitialTop": 186.97271201410763,
         "InitialHeight": 217.37147732776236,
         "TextblockHeight": 43.0,
         "Background": "#FFB9F9E1"
@@ -2624,14 +2624,15 @@
           "302f6c3003bc409f9a4ee7231fdf9974",
           "d17faabf50394909b2dada2e25992f1c",
           "6c2caeef84004805b21ed89eb5211bb3",
-          "747f529a5c394b448f0596a8e91f5db0"
+          "21aa7d2cf8de4a559ff4e3c01ffa8f8d",
+          "d8a4c73de7654f94a9339161c634b665"
         ],
         "Left": 744.79281154158639,
-        "Top": -188.60151576003665,
+        "Top": -217.60494746547556,
         "Width": 1796.9999999999998,
-        "Height": 214.72051912976917,
+        "Height": 243.72395083520809,
         "FontSize": 36.0,
-        "InitialTop": -135.60151576003665,
+        "InitialTop": -164.60494746547556,
         "InitialHeight": 213.72051912976917,
         "TextblockHeight": 43.0,
         "Background": "#FFB9F9E1"
@@ -2781,17 +2782,17 @@
         "Id": "60bfe7526703474cb9caeff136639221",
         "Title": "Placement Method",
         "Nodes": [
-          "0b46f3867eca49d4b270388a2895e220",
-          "6e0083e45d784228b97951656771f4d4"
+          "6e0083e45d784228b97951656771f4d4",
+          "08a13f8fed644989b1adb0d0c997695f"
         ],
-        "Left": 283.62284702791351,
-        "Top": 559.27190887498432,
-        "Width": 201.05490997197285,
-        "Height": 236.37410540781514,
+        "Left": 213.45134964427257,
+        "Top": 774.397164919035,
+        "Width": 308.0,
+        "Height": 185.0,
         "FontSize": 36.0,
-        "InitialTop": 655.27190887498432,
+        "InitialTop": 827.397164919035,
         "InitialHeight": 192.37410540781514,
-        "TextblockHeight": 86.0,
+        "TextblockHeight": 43.0,
         "Background": "#FFB9F9E1"
       },
       {
@@ -2927,8 +2928,8 @@
         "Id": "6e0083e45d784228b97951656771f4d4",
         "Title": "GenerativeToolkit",
         "Nodes": [],
-        "Left": 293.62284702791351,
-        "Top": 655.27190887498432,
+        "Left": 223.45134964427257,
+        "Top": 827.397164919035,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3078,8 +3079,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 3074.7314961719976,
-    "Y": -136.61289199443826,
-    "Zoom": 1.1326740722318906
+    "X": -1079.7386572552091,
+    "Y": 454.0319404975383,
+    "Zoom": 0.54926542762404329
   }
 }
