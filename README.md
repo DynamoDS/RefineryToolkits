@@ -1,29 +1,35 @@
-# Generative Toolkit
+# Refinery Toolkits
 
-__GenerativeToolkit__ is a [Dynamo](http://www.dynamobim.org) package that can be used with Dynamo Core, Dynamo for Revit and Refinery. It provides specific tools related to developing generative design workflows. 
+A collection of packages to accelerate generative design workflows in [Dynamo](http://www.dynamobim.org) & [Refinery](https://www.autodesk.com/solutions/refinery-beta).
 
-### What does it do ?
+# The toolkits
+There are currently 2 packages included in the toolkit, each focusing on enabling specific types of workflows:
+- SpacePlanning Toolkit
+- Massing Toolkit
 
-With a range of different nodes it helps you create generative design workflows in Dynamo and Revit.  
-![GenerativeToolkit package screenshot](samples/GenerativeToolkit.png)
+## Space Planning Toolkit
+The toolkit offers a range of nodes that help with general space-planning workflows in Dynamo and Revit.  
+![Space Planning Toolkit package nodes](samples/SpacePlanningToolkit.png)
 
+## Massing Toolkit
+optimization & design option generation
 
 # Getting Started
 
 ## Package manager
-`GenerativeToolkit` is now available on the Dynamo package manager, search for `GenerativeToolkit` and install it from there.
+Each toolkit is now available on the Dynamo package manager, search for `SpacePlanningToolkit` or `MassingToolkit` and install it from there.
 See [Alternative installation methods](#alternative-installation-methods) at the end of this document for alternative install methods.
 
-# Using GenerativeToolkit
-This repository has quite a few sample files provided to help you get started with __GenerativeToolkit__. 
+# Using the toolkits
+This repository has quite a few sample files provided to help you get started with each of the toolkits. 
 
 It is highly recommed starting with the samples as they contain detailed notes and instructions on how to use each of the nodes. 
 Feel free to open an issue or submit a PR if you'd like to see further some documentation added here.
 
 ## Samples
-There are 11 sample Dynamo graphs included with the package, all made to work with  Dynamo `2.0`.
+There are 11 sample Dynamo graphs included with the __SpacePlanningToolkit__ package, all made to work with  Dynamo `2.0`.
 
-You can find the samples in this repository's [`samples folder`](https://github.com/designtechIO/GenerativeToolkit/tree/master/samples) folder, as well as and in the `extra` folder of the package you download using the Dynamo Package Manager, typically found here : `%appdata%\Dynamo\Dynamo Revit\2\packages\GenerativeToolkit`
+You can find the samples in this repository's [`samples folder`](https://github.com/DynamoDS/RefineryToolkits/tree/master/samples) folder, as well as and in the `extra` folder of the package you download using the Dynamo Package Manager, typically found here : `%appdata%\Dynamo\Dynamo Revit\2\packages\GenerativeToolkit`
 
 The samples shows a simple example of how each node in the toolkit works. Some of the samples will have a Revit version (marked with __(RVT)__), and some also have a version setup to be used with Refinery (marked with __(RefineryVersion)__) :
 
