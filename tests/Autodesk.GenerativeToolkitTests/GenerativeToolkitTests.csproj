@@ -150,6 +150,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\GenerativeToolkit.Core\GenerativeToolkit.Core.csproj">
+      <Project>{a528fcd0-0855-409c-88e0-e36e6a718fd3}</Project>
+      <Name>GenerativeToolkit.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\GenerativeToolkit.Graphs\GenerativeToolkit.Graphs.csproj">
       <Project>{e7aec112-deea-4d3e-a125-386cf8d93eac}</Project>
       <Name>GenerativeToolkit.Graphs</Name>
