@@ -1,0 +1,20 @@
+﻿{
+  "license": "",
+  "file_hash": null,
+  "name": "Generative Toolkit",
+  "version": "1.0.0",
+  "description": "Collection of nodes to be used in Generative workflows",
+  "group": "",
+  "keywords": [ "Generative Design" ],
+  "dependencies": [],
+  "contents": "",
+  "engine_version": "2.0.1.5065",
+  "engine": "dynamo",
+  "engine_metadata": "",
+  "site_url": "",
+  "repository_url": "",
+  "contains_binaries": true,
+  "node_libraries": [
+    "Autodesk.RefineryToolkits.SpacePlanning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}
