@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TestServices;
 using Autodesk.DesignScript.Geometry;
-using Autodesk.GenerativeToolkit.Analyze;
 
 namespace Autodesk.GenerativeToolkit.Analyze.Tests
 {
