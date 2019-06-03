@@ -215,61 +215,13 @@
       "Description": "Create a CoordinateSystem with origin at input Point, with X and Y Axes set as WCS X and Y Axes.\n\nCoordinateSystem.ByOrigin (origin: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)): CoordinateSystem"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double,double",
-      "Id": "07ac8581fd774f13a30810a59bf78727",
-      "Inputs": [
-        {
-          "Id": "5a3a00fd14d44ec2b49e885f4f01eba3",
-          "Name": "x",
-          "Description": "double\nDefault value : 0",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "9ab64065a8b34640b8be2de4452f1f0b",
-          "Name": "y",
-          "Description": "double\nDefault value : 0",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "60e6765f9d0c49fba70398119e5a92c1",
-          "Name": "z",
-          "Description": "double\nDefault value : 0",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "159b359df90d46adaacc79afc477e944",
-          "Name": "Point",
-          "Description": "Point",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Form a Point given 3 cartesian coordinates\n\nPoint.ByCoordinates (x: double = 0, y: double = 0, z: double = 0): Point"
-    },
-    {
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 100.0,
-      "MinimumValue": -23.8,
-      "StepValue": 0.1,
-      "InputValue": 0.017,
+      "MaximumValue": 1.0,
+      "MinimumValue": 0.0,
+      "StepValue": 0.01,
+      "InputValue": 0.34,
       "Id": "7f65efa755194e7eb5b44b5617db1c5a",
       "Inputs": [],
       "Outputs": [
@@ -290,10 +242,10 @@
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
       "NodeType": "NumberInputNode",
       "NumberType": "Double",
-      "MaximumValue": 100.0,
-      "MinimumValue": -24.746,
-      "StepValue": 0.1,
-      "InputValue": -5.935,
+      "MaximumValue": 1.0,
+      "MinimumValue": 0.0,
+      "StepValue": 0.01,
+      "InputValue": 0.27,
       "Id": "8b341dccf66d4899ace19cebead6ec5b",
       "Inputs": [],
       "Outputs": [
@@ -746,7 +698,7 @@
         {
           "Id": "d606805aac7e4f71beb3e0c22fb40650",
           "Name": "geometry",
-          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
+          "Description": "Geometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -755,7 +707,7 @@
         {
           "Id": "6b35462655834b108eb065109dfa2234",
           "Name": "color",
-          "Description": "The color.\n\nColor",
+          "Description": "Color",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -766,7 +718,7 @@
         {
           "Id": "053c58906a7547b393d39d7788d18abc",
           "Name": "GeometryColor",
-          "Description": "A Display object.",
+          "Description": "GeometryColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -774,7 +726,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
@@ -1055,6 +1007,84 @@
       ],
       "Replication": "Auto",
       "Description": "Returns what is passed in, doing nothing.\n\nObject.Identity (obj: var): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Surface.ByPatch@Autodesk.DesignScript.Geometry.Curve",
+      "Id": "3dfc4bd820804bc7b79df1a36b3673ac",
+      "Inputs": [
+        {
+          "Id": "e4977be13fd741019b285ed3fc2181dd",
+          "Name": "closedCurve",
+          "Description": "Curve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d998550eb7f7439d988596a8b6b1c7f4",
+          "Name": "Surface",
+          "Description": "Surface",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Create a Surface by filling in the interior of a closed boundary defined by input Curves.\n\nSurface.ByPatch (closedCurve: Curve): Surface"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Surface.PointAtParameter@double,double",
+      "Id": "d3243c1a1af740738af11bae806c76ff",
+      "Inputs": [
+        {
+          "Id": "09155b103ab943749b432fe4ee8ac562",
+          "Name": "surface",
+          "Description": "Autodesk.DesignScript.Geometry.Surface",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6da9f393519b4c4482255a1d98219567",
+          "Name": "u",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fe820838cfb846aca3e33df12146af50",
+          "Name": "v",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "52927b8aecaa47ccbb731e3ee5c9eb00",
+          "Name": "Point",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Return the Point at specified U and V parameters.\n\nSurface.PointAtParameter (u: double = 0, v: double = 0): Point"
     }
   ],
   "Connectors": [
@@ -1094,24 +1124,14 @@
       "Id": "537d4cdb389f4ca19886a58d1c08aba0"
     },
     {
-      "Start": "159b359df90d46adaacc79afc477e944",
-      "End": "d21537aec4b84ceb94165db0c63bb811",
-      "Id": "85cb14bef37a41b2b8664003b0f5a848"
-    },
-    {
-      "Start": "159b359df90d46adaacc79afc477e944",
-      "End": "1067952e5bb44643a83937e3ca3f628a",
-      "Id": "8fe825422dfd47e9a5f862d637234569"
-    },
-    {
       "Start": "d2a00499586345388617b6ef1d46825b",
-      "End": "5a3a00fd14d44ec2b49e885f4f01eba3",
-      "Id": "a4d0cf4516704946995f237c0a50d656"
+      "End": "6da9f393519b4c4482255a1d98219567",
+      "Id": "831deda0ac23444b81c7853d1853bf9f"
     },
     {
       "Start": "e14e48265acc4fcda63891b71f7031e6",
-      "End": "9ab64065a8b34640b8be2de4452f1f0b",
-      "Id": "c862bfc4ae4342bb8d6cf2bbd32087a8"
+      "End": "fe820838cfb846aca3e33df12146af50",
+      "Id": "19a19d517c3841728734a5326cea3fc6"
     },
     {
       "Start": "2e314bdb47774a0d9116a63a73d61496",
@@ -1167,6 +1187,11 @@
       "Start": "3bc70d0d2c284479bf65774023ec4915",
       "End": "295db760864c410cb5001ad353b78a9e",
       "Id": "7b458589edf342ee8863a49d91a830bd"
+    },
+    {
+      "Start": "3bc70d0d2c284479bf65774023ec4915",
+      "End": "e4977be13fd741019b285ed3fc2181dd",
+      "Id": "ab972cdda361433497a04260d2e04d48"
     },
     {
       "Start": "3af75c32ebcd42e7a320bd272e63df08",
@@ -1247,6 +1272,21 @@
       "Start": "d8b418f0819d4d86afc539111dc0d2d7",
       "End": "d606805aac7e4f71beb3e0c22fb40650",
       "Id": "80d456b877994e56bb8c5a5601be481a"
+    },
+    {
+      "Start": "d998550eb7f7439d988596a8b6b1c7f4",
+      "End": "09155b103ab943749b432fe4ee8ac562",
+      "Id": "a6d7d72ac70f4b6a91c18177fcf0fe86"
+    },
+    {
+      "Start": "52927b8aecaa47ccbb731e3ee5c9eb00",
+      "End": "d21537aec4b84ceb94165db0c63bb811",
+      "Id": "3a964b5deb1b4435998ee87f3ee369ed"
+    },
+    {
+      "Start": "52927b8aecaa47ccbb731e3ee5c9eb00",
+      "End": "1067952e5bb44643a83937e3ca3f628a",
+      "Id": "1b8e28ab247740aeafc1742343d3c145"
     }
   ],
   "Dependencies": [],
@@ -1256,7 +1296,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.3.0.4794",
+      "Version": "2.0.2.6826",
       "RunType": "Automatic",
       "RunPeriod": "1000"
     },
@@ -1325,23 +1365,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Point.ByCoordinates",
-        "Id": "07ac8581fd774f13a30810a59bf78727",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 160.3116963218514,
-        "Y": 52.9774986200994
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Number Slider",
         "Id": "7f65efa755194e7eb5b44b5617db1c5a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -189.68830367814849,
-        "Y": 2.9774986200997375
+        "X": 1328.9075971489096,
+        "Y": 168.33474257802962
       },
       {
         "ShowGeometry": true,
@@ -1350,8 +1380,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -189.68830367814849,
-        "Y": 52.9774986200994
+        "X": 1328.9075971489096,
+        "Y": 252.33474257802962
       },
       {
         "ShowGeometry": true,
@@ -1522,6 +1552,26 @@
         "Excluded": false,
         "X": 3529.7087391170362,
         "Y": 766.48824561826314
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Surface.ByPatch",
+        "Id": "3dfc4bd820804bc7b79df1a36b3673ac",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1328.9075971489096,
+        "Y": 60.334742578029619
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Surface.PointAtParameter",
+        "Id": "d3243c1a1af740738af11bae806c76ff",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1727.9075971489096,
+        "Y": 134.33474257802962
       }
     ],
     "Annotations": [
@@ -1549,16 +1599,17 @@
         "Id": "580c39e3b528482ba773b9b6f777763b",
         "Title": "Sample Point",
         "Nodes": [
-          "07ac8581fd774f13a30810a59bf78727",
           "7f65efa755194e7eb5b44b5617db1c5a",
-          "8b341dccf66d4899ace19cebead6ec5b"
+          "8b341dccf66d4899ace19cebead6ec5b",
+          "d3243c1a1af740738af11bae806c76ff",
+          "3dfc4bd820804bc7b79df1a36b3673ac"
         ],
-        "Left": -199.68830367814849,
-        "Top": -50.022501379900262,
-        "Width": 527.99999999999989,
-        "Height": 247.99999999999966,
+        "Left": 1318.9075971489096,
+        "Top": 7.3347425780296192,
+        "Width": 615.0,
+        "Height": 313.0,
         "FontSize": 36.0,
-        "InitialTop": 2.9774986200997375,
+        "InitialTop": 60.334742578029619,
         "InitialHeight": 194.99999999999966,
         "TextblockHeight": 43.0,
         "Background": "#FFD8D8D8"
@@ -1691,7 +1742,7 @@
         "Height": 354.55609096523426,
         "FontSize": 36.0,
         "InitialTop": 557.93215465302887,
-        "InitialHeight": 279.0,
+        "InitialHeight": 353.55609096523426,
         "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
@@ -1836,8 +1887,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 123.48936043218333,
-    "Y": 213.28983859575811,
-    "Zoom": 0.17761873144121104
+    "X": 171.33984574702248,
+    "Y": 96.254887360358737,
+    "Zoom": 0.604350332629014
   }
 }
