@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <doc>
   <assembly>
-    <name>GenerativeToolkitRevit</name>
+    <name>Autodesk.RefineryToolkits.MassingRevit</name>
   </assembly>
   <namespaces>
-    <namespace name="GenerativeToolkit">
-      <category>Generative Toolkit</category>
+    <namespace name="Autodesk.RefineryToolkits.MassingRevit.Integrate">
+      <category>RefineryToolkits.Massing.Integrate</category>
     </namespace>
   </namespaces>
 </doc>

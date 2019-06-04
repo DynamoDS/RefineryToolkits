@@ -11,13 +11,14 @@ using RevitServices.Persistence;
 using RevitServices.Transactions;
 using Autodesk.DesignScript.Geometry;
 using Dynamo.Graph.Nodes;
+using Autodesk.RefineryToolkits.MassingSandbox.Generate;
 
 namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
 {
     /// <summary>
     /// Revit description.
     /// </summary>
-    public static class Revit
+    public static class RevitNodes
     {
         internal static Document Document => DocumentManager.Instance.CurrentDBDocument;
 

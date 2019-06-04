@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "file_hash": null,
-  "name": "MassingRevit",
+  "name": "Refinery Toolkits - MassingRevit",
   "version": "2019.3.1",
   "description": "Generative Design",
   "group": "Proving Ground",
@@ -19,7 +19,7 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "MassingRevit, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null",
-    "MassingSandbox, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
+    "Autodesk.RefineryToolkits.MassingRevit, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null",
+    "Autodesk.RefineryToolkits.MassingSandbox, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
   ]
 }

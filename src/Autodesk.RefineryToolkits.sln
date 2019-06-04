@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassingRevit", "MassingRevit\MassingRevit.csproj", "{290CA621-CA65-4A16-8503-B9E0C63EB739}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassingSandbox", "MassingSandbox\MassingSandbox.csproj", "{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{290CA621-CA65-4A16-8503-B9E0C63EB739}.Release|Any CPU.Build.0 = Release|Any CPU
 		{290CA621-CA65-4A16-8503-B9E0C63EB739}.Release|x64.ActiveCfg = Release|x64
 		{290CA621-CA65-4A16-8503-B9E0C63EB739}.Release|x64.Build.0 = Release|x64
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.Debug|x64.ActiveCfg = Debug|x64
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.Debug|x64.Build.0 = Debug|x64
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.DebugRevit|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.DebugRevit|Any CPU.Build.0 = Debug|Any CPU
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.DebugRevit|x64.ActiveCfg = Debug|x64
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.DebugRevit|x64.Build.0 = Debug|x64
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.Release|x64.ActiveCfg = Release|x64
+		{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
