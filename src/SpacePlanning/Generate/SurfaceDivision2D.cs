@@ -1,4 +1,5 @@
 ﻿using Autodesk.DesignScript.Geometry;
+using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="U">U parameter</param>
         /// <param name="V">V parameter</param>
         /// <returns>List of individual surfaces</returns>
+        [NodeCategory("Create")]
         public static List<Autodesk.DesignScript.Geometry.Geometry> DivideSurface(
             Surface surface,
             List<double> U,

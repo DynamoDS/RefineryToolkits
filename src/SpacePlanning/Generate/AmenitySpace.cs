@@ -3,7 +3,7 @@ using Autodesk.DesignScript.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.RefineryToolkits.Core.Geometry.Extensions;
-
+using Dynamo.Graph.Nodes;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 {
@@ -19,6 +19,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="offset">How much to offset to surface perimeter with</param>
         /// <param name="depth"></param> 
         /// <returns>amenity surface and remaining surface</returns>
+        [NodeCategory("Create")]
         [MultiReturn(new[] { amenitySurfaceOutputPort, remainingSurfaceOutputPort })]
         public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(
             Autodesk.DesignScript.Geometry.Surface surface,

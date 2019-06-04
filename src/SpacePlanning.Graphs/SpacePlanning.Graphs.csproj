@@ -7,8 +7,8 @@
     <ProjectGuid>{E7AEC112-DEEA-4D3E-A125-386CF8D93EAC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Autodesk.GenerativeToolkit.Graphs</RootNamespace>
-    <AssemblyName>Autodesk.GenerativeToolkit.Graphs</AssemblyName>
+    <RootNamespace>Autodesk.RefineryToolkits.SpacePlanning.Graphs</RootNamespace>
+    <AssemblyName>Autodesk.RefineryToolkits.SpacePlanning.Graphs</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

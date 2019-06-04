@@ -6,8 +6,8 @@
     <ProjectGuid>{131F7DDC-E68C-49ED-80CB-1211DF4E4C74}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Autodesk.GenerativeToolkitTests</RootNamespace>
-    <AssemblyName>Autodesk.GenerativeToolkitTests</AssemblyName>
+    <RootNamespace>Autodesk.RefineryToolkits.SpacePlanningTests</RootNamespace>
+    <AssemblyName>Autodesk.RefineryToolkits.SpacePlanningTests</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

@@ -1,6 +1,7 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using CromulentBisgetti.ContainerPacking.Entities;
+using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <returns name="packedItems">Packed Cuboids</returns>
         /// <returns name="packedIndices">Indices of packed items</returns>
         /// <returns name="remainItems">Cubiods that didn't get packed</returns>
+        [NodeCategory("Create")]
         [MultiReturn(new[] { packedItemsOutputPort3D, indicesOutputPort3D, remainingItemsOutputPort3D })]
         public static Dictionary<string, object> Pack3D(
             Cuboid bin,

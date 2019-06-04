@@ -44,6 +44,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="bin"> Rectangle to pack into</param>
         /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
         /// <returns>List of packed rectangles</returns>
+        [NodeCategory("Create")]
         [MultiReturn(new[] { packedItemsOutputPort2D, indicesOutputPort2D, remainingItemsOutputPort2D })]
         public static Dictionary<string, object> Pack2D(
             List<Rectangle> rects,

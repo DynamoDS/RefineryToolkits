@@ -7,8 +7,8 @@
     <ProjectGuid>{C0338A2E-8280-4B65-8007-5D2E8B7A243B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Autodesk.GenerativeToolkit</RootNamespace>
-    <AssemblyName>Autodesk.GenerativeToolkit</AssemblyName>
+    <RootNamespace>Autodesk.RefineryToolkits.SpacePlanning</RootNamespace>
+    <AssemblyName>Autodesk.RefineryToolkits.SpacePlanning</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -27,7 +27,7 @@
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files\Dynamo\Dynamo Core\2\DynamoSandbox.exe</StartProgram>
-    <DocumentationFile>bin\Debug\Autodesk.GenerativeToolkit.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Autodesk.RefineryToolkits.SpacePlanning.xml</DocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -231,7 +231,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Autodesk.GenerativeToolkit_DynamoCustomization.xml">
+    <Content Include="Autodesk.RefineryToolkits.SpacePlanning_DynamoCustomization.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MIConvexHull.xml" />

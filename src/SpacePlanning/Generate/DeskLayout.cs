@@ -1,6 +1,7 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.RefineryToolkits.Core.Geometry.Extensions;
 using Autodesk.RefineryToolkits.Core.Utillites;
+using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="deskDepth">the depth of the desks in mm</param>
         /// <param name="backToBack">the distance in mm between two desks where the people sat at them are back to back</param>
         /// <search></search>
+        [NodeCategory("Create")]
         public static object Create(
             Surface surface,
             double deskWidth = 1400,
