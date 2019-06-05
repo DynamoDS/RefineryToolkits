@@ -9,12 +9,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
     public static class AdjacencyPreference
     {
-        /// <summary>
-        /// Assume test_distance to be 1000 
-        /// </summary>
-        private const double testDistance = 1000;
-
-
+       
         /// <summary>
         /// Returns the geometric median point of a list of points.
         /// The geometric median is the point minimizing the sum of distances to the sample points
@@ -89,6 +84,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             List<Point> points,
             int n)
         {
+
+            // Assume test_distance to be 1000 
+            double testDistance = 1000;
+
             double currentX = 0;
             double currentY = 0;
             //Point currentPoint = Point.ByCoordinates(0,0);
@@ -139,15 +138,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             // Test loop for approximation starts here 
             while (testDistance > lowerLimit)
             {
-                double newTestDistance = testDistance;
                 flag = 0;
 
                 // Loop for iterating over all 4 neighbours 
                 for (int i = 0; i < 4; i++)
                 {
                     // Finding Neighbours done 
-                    double newX = currentX + (double)newTestDistance * testPoints[i].X;
-                    double newY = currentY + (double)newTestDistance * testPoints[i].Y;
+                    double newX = currentX + (double)testDistance * testPoints[i].X;
+                    double newY = currentY + (double)testDistance * testPoints[i].Y;
 
                     // New sum of Euclidean distances 
                     // from the neighbor to the given 
@@ -172,7 +170,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 // loop for better approximation 
                 if (flag == 0)
                 {
-                    newTestDistance /= 2;
+                    testDistance /= 2;
                 }
             }
             return Point.ByCoordinates(currentX, currentY);
