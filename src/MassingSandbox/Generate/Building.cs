@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
-
+using Autodesk.RefineryToolkits.Massing.Generate.Types;
 using Dynamo.Graph.Nodes;
 
-namespace GenerativeToolkit
+namespace Autodesk.RefineryToolkits.Massing.Generate
 {
     internal enum ShapeType { U, L, H, O, D }
 

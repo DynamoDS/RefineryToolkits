@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.DesignScript.Geometry;
 
-namespace GenerativeToolkit
+namespace Autodesk.RefineryToolkits.Massing.Generate.Types
 {
     internal class BuildingD : BuildingBase
     {

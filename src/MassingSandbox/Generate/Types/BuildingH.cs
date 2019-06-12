@@ -3,32 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.DesignScript.Geometry;
 
-namespace GenerativeToolkit
+namespace Autodesk.RefineryToolkits.Massing.Generate.Types
 {
-    internal class BuildingL : BuildingBase
+    internal class BuildingH : BuildingBase
     {
-        public BuildingL()
+        public BuildingH()
         {
-            Type = ShapeType.L;
+            Type = ShapeType.H;
         }
 
         protected override void Setup()
         {
-            UsesDepth = Width <= Depth || Length <= Depth ? false : true;
+            UsesDepth = Width <= Depth * 2 || Length <= Depth ? false : true;
         }
 
         protected override (Curve boundary, List<Curve> holes) CreateBaseCurves()
         {
             Curve boundary = null;
-
+            
             if (UsesDepth)
             {
                 var points = new[]
                 {
                     Point.ByCoordinates(0, 0),
+                    Point.ByCoordinates(Depth, 0),
+                    Point.ByCoordinates(Depth, (Length - Depth) / 2),
+                    Point.ByCoordinates(Width - Depth, (Length - Depth) / 2),
+                    Point.ByCoordinates(Width - Depth, 0),
                     Point.ByCoordinates(Width, 0),
-                    Point.ByCoordinates(Width, Depth),
-                    Point.ByCoordinates(Depth, Depth),
+                    Point.ByCoordinates(Width, Length),
+                    Point.ByCoordinates(Width - Depth, Length),
+                    Point.ByCoordinates(Width - Depth, (Length + Depth) / 2),
+                    Point.ByCoordinates(Depth, (Length + Depth) / 2),
                     Point.ByCoordinates(Depth, Length),
                     Point.ByCoordinates(0, Length)
                 };
@@ -39,8 +45,7 @@ namespace GenerativeToolkit
             }
             else
             {
-                // L is too chunky - make a box.
-
+                // H is too chunky - make a box.
                 boundary = Rectangle.ByWidthLength(BaseCenter, Width, Length);
             }
 
@@ -51,23 +56,18 @@ namespace GenerativeToolkit
         {
             if (UsesDepth)
             {
-                // One core along the bottom leg of building.
+                // One core along the center of building.
 
                 double coreHeight = Depth * (1 - (2 * hallwayToDepth));
 
-                using (var point = Point.ByCoordinates(Width / 2, Depth / 2))
-                using (var zAxis = Vector.ZAxis())
-                using (var plane = Plane.ByOriginNormal(point, zAxis))
+                return new List<Curve>
                 {
-                    return new List<Curve>
-                    {
-                        Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
-                    };
-                }
+                    Rectangle.ByWidthLength(BaseCenter, CoreArea / coreHeight, coreHeight)
+                };
             }
             else
             {
-                // Simple box building, core is in the center with the same aspect ratio as floorplate.
+                // Simple box building, core has same aspect ratio as floorplate.
                 return base.CreateCoreCurves();
             }
         }

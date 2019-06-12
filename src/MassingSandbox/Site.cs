@@ -5,7 +5,7 @@ using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using Dynamo.Graph.Nodes;
 
-namespace GenerativeToolkit
+namespace Autodesk.RefineryToolkits.Massing
 {
     /// <summary>
     /// Site description.

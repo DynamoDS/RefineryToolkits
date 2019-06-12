@@ -12,7 +12,7 @@ using RevitServices.Transactions;
 using Autodesk.DesignScript.Geometry;
 using Dynamo.Graph.Nodes;
 
-namespace GenerativeToolkit
+namespace Autodesk.RefineryToolkits.Massing.Integrate
 {
     /// <summary>
     /// Revit description.

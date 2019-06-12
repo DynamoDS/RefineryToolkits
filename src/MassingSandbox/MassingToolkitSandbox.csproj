@@ -12,13 +12,26 @@
     <ProjectGuid>{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MassingToolkitSandbox</RootNamespace>
-    <AssemblyName>MassingToolkitSandbox</AssemblyName>
+    <RootNamespace>Autodesk.RefineryToolkits.Massing</RootNamespace>
+    <AssemblyName>Autodesk.RefineryToolkits.Massing</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Program Files\Dynamo\Dynamo Core\2\DynamoSandbox.exe</StartProgram>
+    <DocumentationFile>bin\Debug\Autodesk.RefineryToolkits.Massing.xml</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -27,31 +40,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>
-    </CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <CodeAnalysisRuleSet>
-    </CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>
-    </CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>
-    </CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Debug\MassingToolkitSandbox.xml</DocumentationFile>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DesignScriptBuiltin, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
@@ -147,15 +135,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building\BuildingBase.cs" />
-    <Compile Include="Building\BuildingFromCurve.cs" />
-    <Compile Include="Building\BuildingL.cs" />
-    <Compile Include="Building\BuildingH.cs" />
-    <Compile Include="Building\BuildingD.cs" />
-    <Compile Include="Building\BuildingO.cs" />
-    <Compile Include="Building\BuildingA.cs" />
-    <Compile Include="Building\BuildingU.cs" />
-    <Compile Include="Building.cs" />
+    <Compile Include="Generate\BuildingBase.cs" />
+    <Compile Include="Generate\Types\BuildingFromCurve.cs" />
+    <Compile Include="Generate\Types\BuildingL.cs" />
+    <Compile Include="Generate\Types\BuildingH.cs" />
+    <Compile Include="Generate\Types\BuildingD.cs" />
+    <Compile Include="Generate\Types\BuildingO.cs" />
+    <Compile Include="Generate\Types\BuildingA.cs" />
+    <Compile Include="Generate\Types\BuildingU.cs" />
+    <Compile Include="Generate\Building.cs" />
     <Compile Include="Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
