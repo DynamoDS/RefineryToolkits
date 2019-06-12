@@ -9,10 +9,11 @@ There are currently 2 packages included in the toolkit, each focusing on enablin
 
 ## Space Planning Toolkit
 The toolkit offers a range of nodes that help with general space-planning workflows in Dynamo and Revit.  
-![Space Planning Toolkit package nodes](samples/SpacePlanningToolkit.png)
+![Space Planning Toolkit package nodes](docs/images/SpacePlanningToolkit.png)
 
 ## Massing Toolkit
 optimization & design option generation
+![Massing Toolkit package nodes](docs/images/MassingToolkit.png)
 
 # Getting Started
 
@@ -47,48 +48,48 @@ There are 3 different sample workflows in the sample folder:
 - _GenerativeToolkit_Binpacking2DTest_BLSF_ show the result of packing rectangles with the Best Long Side Fits placement method, and different ways of sorting the rectangles to pack.
 - _GenerativeToolkit_Binpacking2DTest_BSSF_ show the result of packing rectangles with the Best Short Side Fits placement method, and different ways of sorting the rectangles to pack.
 
-![IMAGE](samples/Binpacking2D.png)
+![IMAGE](samples/SpacePlanning/PBinpacking2D.png)
 
 #### Sample 3 - GenerativeToolkit_Binpacking3DTest
 This sample shows how the Binpacking3D node works. The node requires a Bin as a Cuboid and a list of Items also as Cuboids. The node will take the items and pack as many as possible into the Bin Cuboid.
 The sample displays the final pack and will also show which items has been packed (green cuboids) and which items hasn't (red cuboids). 
 
-![IMAGE](samples/3DBinPackingSample.png)
+![IMAGE](samples/SpacePlanning/3DBinPackingSample.png)
 
 
 #### Sample 4 - GenerativeToolkit_SurfaceDivisionTest
 The SurfaceDivision node will take any Surface and divided it based on U and V parameters.
 
-![IMAGE](samples/SurfaceDivision.png)
+![IMAGE](samples/SpacePlanning/SurfaceDivision.png)
 
 #### Sample 5 - GenerativeToolkit_GeometricMedianTest
 The GeometricMedian node takes a list of sample point and finds the point that minimizes the distance to all other points. In the sample file 5 different examples are shown. 
 
-![IMAGE](samples/GeometricMedian.png)
+![IMAGE](samples/SpacePlanning/GeometricMedian.png)
 
 #### Sample 6 - GenerativeToolkit_IsovistFromPointTest 
 The Isovist.FromPoint node takes a boundary polygon, internal polygons and a origin point and calculates the visible area from that point.
 
-![IMAGE](samples/IsovistFromPointGif.gif)
+![IMAGE](samples/SpacePlanning/IsovistFromPointGif.gif)
 
 #### Sample 7 - GenerativeToolkit_OpenessTest
 The Openess node takes a boundary polygon, obstacle polygons and a Surface and calculates how much of the surface perimeter is enclosed by a obstacle.
 
 The sample folder contains 2 versions of this sample, a Sandbox version and a Revit version.
 
-![IMAGE](samples/Openess.png)
+![IMAGE](samples/SpacePlanning/Openess.png)
 
 #### Sample 8 - GenerativeToolkit_ShortestPath
 The Shortest Path node will calculate the path between two points with the minimum distance.
 
-![IMAGE](samples/ShortestPath.png)
+![IMAGE](samples/SpacePlanning/ShortestPath.png)
 
 #### Sample 9 - GenerativeToolkit_ViewsToOutsideTest
 Views to Outside will calculate in precentage how much views to outside there is from a origin point. Views to outside is represented by line segments. 
 
 The sample folder contains 3 versions of this sample, a Sandbox version, a Revit version and a version set up to be used in Refinery.
 
-![IMAGE](samples/ViewsToOutsideGif.gif)
+![IMAGE](samples/SpacePlanning/ViewsToOutsideGif.gif)
 
 
 #### Sample 10 - GenerativeToolkit_VisiblePointsTest
@@ -96,13 +97,13 @@ Visible Points calculates the amount of visible points from a origin point. The 
 
 The sample folder contains 2 versions of this sample, a Sandbox version and a version set up to be used in Refinery.
 
-![IMAGE](samples/VisiblePointsGif.gif)
+![IMAGE](samples/SpacePlanning/VisiblePointsGif.gif)
 
 #### Sample 11 - GenerativeToolkit_DistinctColorsTest
 The ContrastyColorRange node returns a given amount of colors in a random order which all are visually distinct from each other.
 The maximum colors that can be created right now is 19.
 
-![IMAGE](samples/ColorRange.png)
+![IMAGE](samples/SpacePlanning/ColorRange.png)
 
 ## Structure
 The __GenerativeToolkit__ is organized in 4 categories, based on their use in a Generative Design process :
@@ -117,7 +118,7 @@ The __GenerativeToolkit__ is organized in 4 categories, based on their use in a 
 ### Manual install
 If you prefer to install one of the more experimental/work-in-progress builds, you can still follow the instructions below.
 
-- Download the latest release from the [Releases page](https://github.com/radumg/DynaWeb/releases)
+- Download the latest release from the [Releases page](https://github.com/DynamoDS/RefineryToolkits/releases)
 - unzip the downloaded file
 - once unzipped, copy the `GenerativeToolkit` folder to the location of your Dynamo packages  :
     - `%appdata%\Dynamo\Dynamo Core\2\packages` for Dynamo Sandbox, replacing `2` with your version of Dynamo
@@ -139,7 +140,7 @@ Dynamo : version 2 or later
 Please note the project has no dependency to Revit and its APIs, so it will happily run in Dynamo Sandbox or Dynamo Studio.
 
 ## Contributing
-Please read [CONTRIBUTING.md](https://github.com/designtechIO/GenerativeToolkit/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package. Please also read the [CODE OF CONDUCT.md](https://github.com/designtechIO/GenerativeToolkit/tree/master/docs/CODE_OF_CONDUCT.md).
+Please read [CONTRIBUTING.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package. Please also read the [CODE OF CONDUCT.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CODE_OF_CONDUCT.md).
 
 ## Authors
 
@@ -147,7 +148,7 @@ __Sylvester Knudsen__ : [Github profile](https://github.com/SHKnudsen), [Twitter
 
 ## Licensing
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](https://github.com/designtechIO/GenerativeToolkit/tree/master/LICENSE) for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](https://github.com/DynamoDS/RefineryToolkits/tree/master/LICENSE) for details.
 
 ### Packages used
 [Graphical](https://github.com/alvpickmans/Graphical)
