@@ -1,12 +1,14 @@
 {
   "license": "MIT",
   "file_hash": null,
-  "name": "Refinery Nodes",
-  "version": "2019.3.1",
-  "description": "Refinery nodes.",
-  "group": "Proving Ground",
+  "name": "Refinery Toolkit for Massing [Revit]",
+  "version": "0.0.1",
+  "description": "Collection of nodes to be used in Generative Massing workflows",
+  "group": "",
   "keywords": [
-    "utilities"
+    "Generative Design",
+    "Massing",
+    "Refinery"
   ],
   "dependencies": [
 
@@ -19,7 +21,7 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "GenerativeToolkitRevit, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null",
-    "GenerativeToolkitSandbox, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
+    "Autodesk.RefineryToolkits.MassingRevit, Version=0.0.1, Culture=neutral, PublicKeyToken=null",
+    "Autodesk.RefineryToolkits.MassingSandbox, Version=0.0.1, Culture=neutral, PublicKeyToken=null"
   ]
 }

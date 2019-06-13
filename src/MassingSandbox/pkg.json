@@ -1,17 +1,19 @@
 {
   "license": "MIT",
   "file_hash": null,
-  "name": "Refinery Nodes",
-  "version": "2019.3.1",
-  "description": "Refinery nodes.",
-  "group": "Proving Ground",
+  "name": "Refinery Toolkit for Massing [Sandbox]",
+  "version": "0.0.1",
+  "description": "Collection of nodes to be used in Generative Massing workflows",
+  "group": "",
   "keywords": [
-    "utilities"
+    "Generative Design",
+    "Massing",
+    "Refinery"
   ],
   "dependencies": [
 
   ],
-  "contents": "", 
+  "contents": "",
   "engine_version": "2.0.2",
   "engine": "dynamo",
   "engine_metadata": "",
@@ -19,6 +21,6 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "GenerativeToolkitSandbox, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
+    "Autodesk.RefineryToolkits.MassingSandbox, Version=0.0.1, Culture=neutral, PublicKeyToken=null"
   ]
 }
