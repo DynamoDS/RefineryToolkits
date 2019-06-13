@@ -244,7 +244,7 @@
       <SourcePdbs Include="$(TargetDir)*.pdb" />
       <SourceXmls Include="$(TargetDir)*.xml" />
       <SourcePkg Include="$(ProjectDir)pkg.json" />
-      <SourceSamples Include="$(SolutionDir)..\samples\*.dyn" />
+      <SourceSamples Include="$(SolutionDir)..\samples\SpacePlanning\*.dyn" />
     </ItemGroup>
     <!--Copying to Build Folder-->
     <Copy SourceFiles="@(SourceDlls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
@@ -260,8 +260,8 @@
       <DeployFolder Condition="'$(Configuration)' == 'Debug'">$(AppData)\Dynamo\Dynamo Core\2.0\packages\$(ProjectName)</DeployFolder>
       <!--Copy to Dynamo Revit for testing -->
       <DeployFolder Condition="'$(Configuration)' == 'DebugRevit'">$(AppData)\Dynamo\Dynamo Revit\2.0\packages\$(ProjectName)</DeployFolder>
-      <!--Copy to Dynamo revit for publishing -->
-      <DeployFolder Condition="'$(Configuration)' == 'Release'">$(AppData)\Dynamo\Dynamo Revit\2.0\packages\$(ProjectName)</DeployFolder>
+      <!--Copy to release folder for publishing -->
+      <DeployFolder Condition="'$(Configuration)' == 'Release'">$(SolutionDir)\..\release\$(ProjectName)</DeployFolder>
     </PropertyGroup>
     <Copy SourceFiles="@(SourcePackage)" DestinationFolder="$(DeployFolder)\%(RecursiveDir)" />
   </Target>

@@ -1,9 +1,9 @@
 {
   "license": "MIT",
   "file_hash": null,
-  "name": "Refinery Nodes",
+  "name": "Refinery Toolkits - Massing Sandbox",
   "version": "2019.3.1",
-  "description": "Refinery nodes.",
+  "description": "Refinery Toolkit",
   "group": "Proving Ground",
   "keywords": [
     "utilities"
@@ -19,6 +19,6 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "GenerativeToolkitSandbox, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
+    "Autodesk.RefineryToolkits.MassingSandbox, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
   ]
 }

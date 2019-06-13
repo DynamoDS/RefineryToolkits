@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using Autodesk.DesignScript.Geometry;
 
-namespace Autodesk.RefineryToolkits.Massing.Generate
+namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 {
     internal abstract class BuildingBase : IDisposable
     {
