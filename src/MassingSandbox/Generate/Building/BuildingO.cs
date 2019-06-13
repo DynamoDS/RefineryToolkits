@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.DesignScript.Geometry;
 
-namespace Autodesk.RefineryToolkits.Massing.Generate.Types
+namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 {
     internal class BuildingO : BuildingBase
     {
