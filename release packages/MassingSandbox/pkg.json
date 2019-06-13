@@ -1,0 +1,24 @@
+{
+  "license": "MIT",
+  "file_hash": null,
+  "name": "Refinery Toolkits - Massing Sandbox",
+  "version": "2019.3.1",
+  "description": "Refinery Toolkit",
+  "group": "Proving Ground",
+  "keywords": [
+    "utilities"
+  ],
+  "dependencies": [
+
+  ],
+  "contents": "", 
+  "engine_version": "2.0.2",
+  "engine": "dynamo",
+  "engine_metadata": "",
+  "site_url": "",
+  "repository_url": "",
+  "contains_binaries": true,
+  "node_libraries": [
+    "Autodesk.RefineryToolkits.MassingSandbox, Version=2019.3.1.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}
