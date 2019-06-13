@@ -120,11 +120,11 @@ If you prefer to install one of the more experimental/work-in-progress builds, y
 
 - Download the latest release from the [Releases page](https://github.com/DynamoDS/RefineryToolkits/releases)
 - unzip the downloaded file, we recommend using [7zip](https://www.7-zip.org/download.html)
-- double-check that all `.dll` files in the package's `bin` folder have been [unblocked](https://blogs.msdn.microsoft.com/delay/p/unblockingdownloadedfile/)
-- once unzipped, copy the `GenerativeToolkit` folder to the location of your Dynamo packages  :
+- once unzipped, double-check that all `.dll` files in the package's `bin` folder have been [unblocked](https://blogs.msdn.microsoft.com/delay/p/unblockingdownloadedfile/)
+- copy the package folder to the location of your Dynamo packages  :
     - `%appdata%\Dynamo\Dynamo Core\2\packages` for Dynamo Sandbox, replacing `2` with your version of Dynamo
     - `%appdata%\Dynamo\Dynamo Revit\2\packages` for Dynamo for Revit, replacing `2` with your version of Dynamo
-- start Dynamo, the package should now be listed as `GenerativeToolkit` in the library.
+- start Dynamo, the package should now be listed as in the library and in Dynamo's `Package Manager`
 
 
 ## Prerequisites
@@ -132,10 +132,10 @@ If you prefer to install one of the more experimental/work-in-progress builds, y
 This project requires the following applications or libraries be installed :
 
 ```
-Dynamo : version 2 or later
+Dynamo : version 2.1 or later
 ```
 ```
-.Net : version 4.5 or later
+.NET : version 4.7 or later
 ```
 
 Please note the project has no dependency to Revit and its APIs, so it will happily run in Dynamo Sandbox or Dynamo Studio.
