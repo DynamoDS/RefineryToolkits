@@ -56,52 +56,68 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Analysis, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.0.4565\lib\net47\Analysis.dll</HintPath>
+    <Reference Include="Analysis, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\Analysis.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DesignScriptBuiltin, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DesignScriptBuiltin.dll</HintPath>
+    <Reference Include="CoreNodeModels, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\CoreNodeModels.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DSCoreNodes, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.0.4565\lib\net47\DSCoreNodes.dll</HintPath>
+    <Reference Include="CoreNodeModelsWpf, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\CoreNodeModelsWpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DSIronPython, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DSIronPython.dll</HintPath>
+    <Reference Include="DesignScriptBuiltin, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DesignScriptBuiltin.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoApplications, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DynamoApplications.dll</HintPath>
+    <Reference Include="DSCoreNodes, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\DSCoreNodes.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoCore, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DynamoCore.dll</HintPath>
+    <Reference Include="DSIronPython, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DSIronPython.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoInstallDetective, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DynamoInstallDetective.dll</HintPath>
+    <Reference Include="DynamoApplications, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoApplications.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoServices, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.2.0.4565\lib\net47\DynamoServices.dll</HintPath>
+    <Reference Include="DynamoCore, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoShapeManager, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DynamoShapeManager.dll</HintPath>
+    <Reference Include="DynamoCoreTests, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\DynamoCoreTests.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoUnits, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.2.0.4565\lib\net47\DynamoUnits.dll</HintPath>
+    <Reference Include="DynamoCoreWpf, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\DynamoCoreWpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoUtilities, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\DynamoUtilities.dll</HintPath>
+    <Reference Include="DynamoInstallDetective, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoInstallDetective.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="GeometryColor, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.0.4565\lib\net47\GeometryColor.dll</HintPath>
+    <Reference Include="DynamoServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.2.1.5204\lib\net47\DynamoServices.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DynamoShapeManager, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoShapeManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DynamoUnits, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.2.1.5204\lib\net47\DynamoUnits.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DynamoUtilities, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoUtilities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GeometryColor, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\GeometryColor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -130,12 +146,12 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ProtoCore, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\ProtoCore.dll</HintPath>
+    <Reference Include="ProtoCore, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\ProtoCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ProtoGeometry, Version=2.1.0.15993, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.2.0.4565\lib\net47\ProtoGeometry.dll</HintPath>
+    <Reference Include="ProtoGeometry, Version=2.2.1.5173, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.2.1.5204\lib\net47\ProtoGeometry.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -150,8 +166,16 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="VMDataBridge, Version=2.2.0.4565, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.0.4565\lib\net47\VMDataBridge.dll</HintPath>
+    <Reference Include="SystemTestServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\SystemTestServices.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="TestServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\TestServices.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VMDataBridge, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\VMDataBridge.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="WindowsBase" />
@@ -224,7 +248,7 @@
     <Copy SourceFiles="@(SourcePdbs)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourceXmls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourcePkg)" DestinationFolder="$(TargetDir)$(ProjectName)" />
-    <Copy SourceFiles="@(SourceSamples)" DestinationFolder="$(TargetDir)$(ProjectName)\extra" /> 
+    <Copy SourceFiles="@(SourceSamples)" DestinationFolder="$(TargetDir)$(ProjectName)\extra" />
     <ItemGroup>
       <SourcePackage Include="$(TargetDir)\$(ProjectName)\**\*" />
     </ItemGroup>
