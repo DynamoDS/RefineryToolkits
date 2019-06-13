@@ -48,7 +48,7 @@ There are 3 different sample workflows in the sample folder:
 - _GenerativeToolkit_Binpacking2DTest_BLSF_ show the result of packing rectangles with the Best Long Side Fits placement method, and different ways of sorting the rectangles to pack.
 - _GenerativeToolkit_Binpacking2DTest_BSSF_ show the result of packing rectangles with the Best Short Side Fits placement method, and different ways of sorting the rectangles to pack.
 
-![IMAGE](samples/SpacePlanning/PBinpacking2D.png)
+![IMAGE](samples/SpacePlanning/Binpacking2D.png)
 
 #### Sample 3 - GenerativeToolkit_Binpacking3DTest
 This sample shows how the Binpacking3D node works. The node requires a Bin as a Cuboid and a list of Items also as Cuboids. The node will take the items and pack as many as possible into the Bin Cuboid.
@@ -119,7 +119,8 @@ The __GenerativeToolkit__ is organized in 4 categories, based on their use in a 
 If you prefer to install one of the more experimental/work-in-progress builds, you can still follow the instructions below.
 
 - Download the latest release from the [Releases page](https://github.com/DynamoDS/RefineryToolkits/releases)
-- unzip the downloaded file
+- unzip the downloaded file, we recommend using [7zip](https://www.7-zip.org/download.html)
+- double-check that all `.dll` files in the package's `bin` folder have been [unblocked](https://blogs.msdn.microsoft.com/delay/p/unblockingdownloadedfile/)
 - once unzipped, copy the `GenerativeToolkit` folder to the location of your Dynamo packages  :
     - `%appdata%\Dynamo\Dynamo Core\2\packages` for Dynamo Sandbox, replacing `2` with your version of Dynamo
     - `%appdata%\Dynamo\Dynamo Revit\2\packages` for Dynamo for Revit, replacing `2` with your version of Dynamo
