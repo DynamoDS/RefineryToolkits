@@ -1,11 +1,15 @@
 ﻿{
   "license": "",
   "file_hash": null,
-  "name": "RefineryToolkits - SpacePlanning",
-  "version": "1.0.0",
+  "name": "Refinery Toolkit for Space Planning",
+  "version": "0.0.1",
   "description": "Collection of nodes to be used in Generative Space Planning workflows",
   "group": "",
-  "keywords": [ "Generative Design", "Space Planning" ],
+  "keywords": [
+    "Generative Design",
+    "Space Planning",
+    "Refinery"
+  ],
   "dependencies": [],
   "contents": "",
   "engine_version": "2.0.1.5065",
@@ -15,6 +19,6 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "Autodesk.RefineryToolkits.SpacePlanning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+    "Autodesk.RefineryToolkits.SpacePlanning, Version=0.0.1, Culture=neutral, PublicKeyToken=null"
   ]
 }
