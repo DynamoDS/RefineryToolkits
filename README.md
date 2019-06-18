@@ -17,9 +17,8 @@ optimization & design option generation
 
 # Getting Started
 
-## Package manager
-Each toolkit is now available on the Dynamo package manager, search for `SpacePlanningToolkit` or `MassingToolkit` and install it from there.
-See [Alternative installation methods](#alternative-installation-methods) at the end of this document for alternative install methods.
+## Installation
+The toolkits are not yet available on the Dynamo Package Manager. You can install them manually by following the instructions under the [Alternative installation methods](#alternative-installation-methods) section at the end of this document. 
 
 # Using the toolkits
 This repository has quite a few sample files provided to help you get started with each of the toolkits. 
