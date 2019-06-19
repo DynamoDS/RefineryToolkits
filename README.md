@@ -142,9 +142,6 @@ Please note the project has no dependency to Revit and its APIs, so it will happ
 ## Contributing
 Please read [CONTRIBUTING.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package. Please also read the [CODE OF CONDUCT.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CODE_OF_CONDUCT.md).
 
-## Authors
-
-__Sylvester Knudsen__ : [Github profile](https://github.com/SHKnudsen), [Twitter profile](https://twitter.com/SHKnudsen)
 
 ## Licensing
 
