@@ -17,9 +17,8 @@ optimization & design option generation
 
 # Getting Started
 
-## Package manager
-Each toolkit is now available on the Dynamo package manager, search for `SpacePlanningToolkit` or `MassingToolkit` and install it from there.
-See [Alternative installation methods](#alternative-installation-methods) at the end of this document for alternative install methods.
+## Installation
+The toolkits are not yet available on the Dynamo Package Manager. You can install them manually by following the instructions under the [Alternative installation methods](#alternative-installation-methods) section at the end of this document. 
 
 # Using the toolkits
 This repository has quite a few sample files provided to help you get started with each of the toolkits. 
@@ -48,7 +47,7 @@ There are 3 different sample workflows in the sample folder:
 - _GenerativeToolkit_Binpacking2DTest_BLSF_ show the result of packing rectangles with the Best Long Side Fits placement method, and different ways of sorting the rectangles to pack.
 - _GenerativeToolkit_Binpacking2DTest_BSSF_ show the result of packing rectangles with the Best Short Side Fits placement method, and different ways of sorting the rectangles to pack.
 
-![IMAGE](samples/SpacePlanning/PBinpacking2D.png)
+![IMAGE](samples/SpacePlanning/Binpacking2D.png)
 
 #### Sample 3 - GenerativeToolkit_Binpacking3DTest
 This sample shows how the Binpacking3D node works. The node requires a Bin as a Cuboid and a list of Items also as Cuboids. The node will take the items and pack as many as possible into the Bin Cuboid.
@@ -119,11 +118,12 @@ The __GenerativeToolkit__ is organized in 4 categories, based on their use in a 
 If you prefer to install one of the more experimental/work-in-progress builds, you can still follow the instructions below.
 
 - Download the latest release from the [Releases page](https://github.com/DynamoDS/RefineryToolkits/releases)
-- unzip the downloaded file
-- once unzipped, copy the `GenerativeToolkit` folder to the location of your Dynamo packages  :
+- unzip the downloaded file, we recommend using [7zip](https://www.7-zip.org/download.html)
+- once unzipped, double-check that all `.dll` files in the package's `bin` folder have been [unblocked](https://blogs.msdn.microsoft.com/delay/p/unblockingdownloadedfile/)
+- copy the package folder to the location of your Dynamo packages  :
     - `%appdata%\Dynamo\Dynamo Core\2\packages` for Dynamo Sandbox, replacing `2` with your version of Dynamo
     - `%appdata%\Dynamo\Dynamo Revit\2\packages` for Dynamo for Revit, replacing `2` with your version of Dynamo
-- start Dynamo, the package should now be listed as `GenerativeToolkit` in the library.
+- start Dynamo, the package should now be listed as in the library and in Dynamo's `Package Manager`
 
 
 ## Prerequisites
@@ -131,10 +131,10 @@ If you prefer to install one of the more experimental/work-in-progress builds, y
 This project requires the following applications or libraries be installed :
 
 ```
-Dynamo : version 2 or later
+Dynamo : version 2.1 or later
 ```
 ```
-.Net : version 4.5 or later
+.NET : version 4.7 or later
 ```
 
 Please note the project has no dependency to Revit and its APIs, so it will happily run in Dynamo Sandbox or Dynamo Studio.
@@ -142,9 +142,6 @@ Please note the project has no dependency to Revit and its APIs, so it will happ
 ## Contributing
 Please read [CONTRIBUTING.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package. Please also read the [CODE OF CONDUCT.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CODE_OF_CONDUCT.md).
 
-## Authors
-
-__Sylvester Knudsen__ : [Github profile](https://github.com/SHKnudsen), [Twitter profile](https://twitter.com/SHKnudsen)
 
 ## Licensing
 
