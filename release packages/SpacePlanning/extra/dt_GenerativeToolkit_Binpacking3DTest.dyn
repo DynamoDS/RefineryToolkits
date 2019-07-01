@@ -1000,7 +1000,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack3D@Autodesk.DesignScript.Geometry.Cuboid,Autodesk.DesignScript.Geometry.Cuboid[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking.Pack3D@Autodesk.DesignScript.Geometry.Cuboid,Autodesk.DesignScript.Geometry.Cuboid[]",
       "Id": "a84a8b45a6874e2493ae09ebed0a26d7",
       "Inputs": [
         {

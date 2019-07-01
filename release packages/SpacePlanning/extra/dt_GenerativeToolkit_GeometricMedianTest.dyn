@@ -72,7 +72,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "48ac742b5ae64288b59eb53874bffc60",
       "Inputs": [
         {
@@ -416,7 +416,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "20b78854c6e949dfb95ee81461712a78",
       "Inputs": [
         {
@@ -514,7 +514,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "73ba1130f5654484b1a1e833da764e97",
       "Inputs": [
         {
@@ -612,7 +612,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "27e7124fe5d34217afb2a14a91437e9b",
       "Inputs": [
         {
@@ -710,7 +710,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "196c84e76ced4f92baeb4fee741cf0eb",
       "Inputs": [
         {
