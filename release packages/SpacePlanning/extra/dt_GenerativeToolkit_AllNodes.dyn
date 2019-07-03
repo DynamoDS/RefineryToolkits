@@ -12,7 +12,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "1feb8772afc2471494fa9313c6257133",
       "Inputs": [
         {
@@ -42,7 +42,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.Isovist.FromPoint@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Point",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Isovist.FromPoint@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Point",
       "Id": "8a138d86ce5b4573a19874fcefd42dd3",
       "Inputs": [
         {
@@ -90,7 +90,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.CreateVisibilityGraph@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.PathFinding.CreateVisibilityGraph@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "d7e8736654804d35b00374ba1ce1dfcb",
       "Inputs": [
         {
@@ -129,7 +129,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.ShortestPath@var,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.PathFinding.ShortestPath@var,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
       "Id": "672498da9c0348e6acf4b5b52dec3de6",
       "Inputs": [
         {
@@ -186,7 +186,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.PathFinding.Lines@var",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.PathFinding.Lines@var",
       "Id": "10caed0b524240cfab7fc22f58778cd3",
       "Inputs": [
         {
@@ -216,7 +216,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.ViewsToOutside.ByLineSegments@Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.ViewsToOutside.ByLineSegments@Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "15dfeef8a73d4e78b44d75ddde509ff4",
       "Inputs": [
         {
@@ -282,7 +282,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.VisiblePoints.FromOrigin@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.VisiblePoints.FromOrigin@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "4caa818760c54b889adb9d5479c58bbb",
       "Inputs": [
         {
@@ -348,7 +348,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Explore.Colors.ContrastyColorRange@int,double,int",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Explore.Colors.ContrastyColorRange@int,double,int",
       "Id": "4702f8da299d409cb86cb938b288c374",
       "Inputs": [
         {
@@ -396,7 +396,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.AmenitySpace.Create@Autodesk.DesignScript.Geometry.Surface,double,double",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.AmenitySpace.Create@Autodesk.DesignScript.Geometry.Surface,double,double",
       "Id": "99f3ea4c05654aa9b8d2fdd662a8a902",
       "Inputs": [
         {
@@ -453,7 +453,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
       "Id": "4c060ecdfa084336ada52b3d3423cc66",
       "Inputs": [
         {
@@ -519,7 +519,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack3D@Autodesk.DesignScript.Geometry.Cuboid,Autodesk.DesignScript.Geometry.Cuboid[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking.Pack3D@Autodesk.DesignScript.Geometry.Cuboid,Autodesk.DesignScript.Geometry.Cuboid[]",
       "Id": "1564e93fa33f409cb92f4874b316381b",
       "Inputs": [
         {
@@ -576,7 +576,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.DeskLayout.Create@Autodesk.DesignScript.Geometry.Surface,double,double,double",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.DeskLayout.Create@Autodesk.DesignScript.Geometry.Surface,double,double,double",
       "Id": "434c6bb581c54c50895d4d9e60b18039",
       "Inputs": [
         {
@@ -633,7 +633,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.SurfaceDivision2D.DivideSurface@Autodesk.DesignScript.Geometry.Surface,double[],double[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.SurfaceDivision2D.DivideSurface@Autodesk.DesignScript.Geometry.Surface,double[],double[]",
       "Id": "12f8f420519f41689740b560d92d3ea6",
       "Inputs": [
         {
@@ -681,7 +681,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Rank.ListShuffle.SeededShuffle@var[]..[],int",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Rank.ListShuffle.SeededShuffle@var[]..[],int",
       "Id": "9a92f8f033de4646a843c95d240940e1",
       "Inputs": [
         {
@@ -720,7 +720,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.Openess.FromSurface@Autodesk.DesignScript.Geometry.Surface,double,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Openess.FromSurface@Autodesk.DesignScript.Geometry.Surface,double,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "b3a514dae9404447bbed244c8c10e44e",
       "Inputs": [
         {
@@ -777,7 +777,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking_PlacementMethods.BestAreaFits",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking_PlacementMethods.BestAreaFits",
       "Id": "fd04ed1e8e124f6e9facdacbc4c2f31f",
       "Inputs": [],
       "Outputs": [
@@ -797,7 +797,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking_PlacementMethods.BestLongSideFits",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking_PlacementMethods.BestLongSideFits",
       "Id": "b7090c58671e4c72ad66c23f493e313e",
       "Inputs": [],
       "Outputs": [
@@ -817,7 +817,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking_PlacementMethods.BestShortSideFits",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking_PlacementMethods.BestShortSideFits",
       "Id": "e626900de05f48f9ac2a7a67f2228c31",
       "Inputs": [],
       "Outputs": [

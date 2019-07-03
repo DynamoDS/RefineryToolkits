@@ -1505,7 +1505,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking_PlacementMethods.BestShortSideFits",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking_PlacementMethods.BestShortSideFits",
       "Id": "4e27bebf05b442b28f3355d89aaa2fda",
       "Inputs": [],
       "Outputs": [
@@ -1525,7 +1525,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
       "Id": "4ad294c9e6b14fc7aeb962aeff15749f",
       "Inputs": [
         {
@@ -1591,7 +1591,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
       "Id": "e766452e02d74b6eac920e9a468e880c",
       "Inputs": [
         {
@@ -1657,7 +1657,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.BinPacking.Pack2D@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle,var",
       "Id": "a19eb0bd5f1d4fefadc2fe9455e4e002",
       "Inputs": [
         {

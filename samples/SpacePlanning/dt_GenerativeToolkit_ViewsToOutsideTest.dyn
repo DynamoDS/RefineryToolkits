@@ -595,72 +595,6 @@
       "Description": "Allows for DesignScript code to be authored directly"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Analyze.ViewsToOutside.ByLineSegments@Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
-      "Id": "92f3eeebfba54a39b0c81236255599e8",
-      "Inputs": [
-        {
-          "Id": "6eb9778f06294b9394889d784bd08b48",
-          "Name": "viewSegments",
-          "Description": "Line segments representing the views to outside\n\nCurve[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "d21537aec4b84ceb94165db0c63bb811",
-          "Name": "origin",
-          "Description": "Origin point to measure from\n\nPoint",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "295db760864c410cb5001ad353b78a9e",
-          "Name": "boundary",
-          "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "ad78fd9ab5d945b988fd45455a86a100",
-          "Name": "internals",
-          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "1a86c774bdbb4d41a343b68f3c8f9184",
-          "Name": "score",
-          "Description": "precentage of 360 view that is to the outside",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "04425ef2b7c64547900b9495cf76f8b0",
-          "Name": "segments",
-          "Description": "var",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Calculates the view to outside from a given point based on a 360 degree ratio. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nViewsToOutside.ByLineSegments (viewSegments: Curve[], origin: Point, boundary: Polygon[], internals: Polygon[] = []): var[]..[]"
-    },
-    {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
       "NodeType": "ExtensionNode",
       "Id": "03cb791fd14e40818a32a9dc2d804b09",
@@ -1085,6 +1019,72 @@
       ],
       "Replication": "Auto",
       "Description": "Return the Point at specified U and V parameters.\n\nSurface.PointAtParameter (u: double = 0, v: double = 0): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.ViewsToOutside.ByLineSegments@Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "Id": "2e0515891a6541d2990d6850f93989a4",
+      "Inputs": [
+        {
+          "Id": "7af68b69006c43028ad419904e533b04",
+          "Name": "viewSegments",
+          "Description": "Line segments representing the views to outside\n\nCurve[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "65cac3618b1849d098d28a7842cc407c",
+          "Name": "origin",
+          "Description": "Origin point to measure from\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "285b7b59bd2b4d169d98fafa1c646805",
+          "Name": "boundary",
+          "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bd9d29e8370a46f0be2390b5170a997a",
+          "Name": "internals",
+          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "edff500e643c476283fbf56b5788eb17",
+          "Name": "score",
+          "Description": "precentage of 360 view that is to the outside",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ec97cc459c9b4fc8a6b6857e3b001fe6",
+          "Name": "segments",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Calculates the view to outside from a given point based on a 360 degree ratio. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nViewsToOutside.ByLineSegments (viewSegments: Curve[], origin: Point, boundary: Polygon[], internals: Polygon[] = []): var[]..[]"
     }
   ],
   "Connectors": [
@@ -1185,18 +1185,18 @@
     },
     {
       "Start": "3bc70d0d2c284479bf65774023ec4915",
-      "End": "295db760864c410cb5001ad353b78a9e",
-      "Id": "7b458589edf342ee8863a49d91a830bd"
-    },
-    {
-      "Start": "3bc70d0d2c284479bf65774023ec4915",
       "End": "e4977be13fd741019b285ed3fc2181dd",
       "Id": "ab972cdda361433497a04260d2e04d48"
     },
     {
+      "Start": "3bc70d0d2c284479bf65774023ec4915",
+      "End": "285b7b59bd2b4d169d98fafa1c646805",
+      "Id": "7597007bf1da4c6d86799ead608fb9eb"
+    },
+    {
       "Start": "3af75c32ebcd42e7a320bd272e63df08",
-      "End": "ad78fd9ab5d945b988fd45455a86a100",
-      "Id": "a50ea55614e94f20af49f06cf6b5116e"
+      "End": "bd9d29e8370a46f0be2390b5170a997a",
+      "Id": "6e0757e85c7a47f6bdb95c647569d2f8"
     },
     {
       "Start": "7a06ddf9f9034e70887f0a81b0786fb6",
@@ -1205,8 +1205,8 @@
     },
     {
       "Start": "3750e862ada44995a42b269ce7bc4586",
-      "End": "6eb9778f06294b9394889d784bd08b48",
-      "Id": "2bc54d0ca102440082adaa638128c662"
+      "End": "7af68b69006c43028ad419904e533b04",
+      "Id": "8ba7707e987746e28615064ecf5657c9"
     },
     {
       "Start": "46e0c642ba2f413d84318ab6866e981a",
@@ -1217,21 +1217,6 @@
       "Start": "487c853d7c7246db9351a6bd5894ce8b",
       "End": "731fd3fedeb3488082d9689b2680dcfb",
       "Id": "9faf6c347089451380ec293647dd2393"
-    },
-    {
-      "Start": "1a86c774bdbb4d41a343b68f3c8f9184",
-      "End": "a426aac7b4914209b4dc9198c553ebd1",
-      "Id": "71256b43c2c04464b29ad06545227614"
-    },
-    {
-      "Start": "04425ef2b7c64547900b9495cf76f8b0",
-      "End": "8d126c648d9747cba8b8b2ff4f942be3",
-      "Id": "e8109359f1d74de990a46dd245de98c6"
-    },
-    {
-      "Start": "04425ef2b7c64547900b9495cf76f8b0",
-      "End": "a5c292f2a80f44148b93e555c068533e",
-      "Id": "f133d1fe791543d3a31a363c98c22d57"
     },
     {
       "Start": "2d2f3a972ec8428c876bf93e315882e4",
@@ -1280,13 +1265,28 @@
     },
     {
       "Start": "52927b8aecaa47ccbb731e3ee5c9eb00",
-      "End": "d21537aec4b84ceb94165db0c63bb811",
-      "Id": "3a964b5deb1b4435998ee87f3ee369ed"
+      "End": "1067952e5bb44643a83937e3ca3f628a",
+      "Id": "1b8e28ab247740aeafc1742343d3c145"
     },
     {
       "Start": "52927b8aecaa47ccbb731e3ee5c9eb00",
-      "End": "1067952e5bb44643a83937e3ca3f628a",
-      "Id": "1b8e28ab247740aeafc1742343d3c145"
+      "End": "65cac3618b1849d098d28a7842cc407c",
+      "Id": "350dea76520e43f1af1d2edcceda828e"
+    },
+    {
+      "Start": "edff500e643c476283fbf56b5788eb17",
+      "End": "a426aac7b4914209b4dc9198c553ebd1",
+      "Id": "caa91db8f996494fba6ed73dc11bd9f8"
+    },
+    {
+      "Start": "ec97cc459c9b4fc8a6b6857e3b001fe6",
+      "End": "8d126c648d9747cba8b8b2ff4f942be3",
+      "Id": "e378520b20a746f08425bf3bcc358c68"
+    },
+    {
+      "Start": "ec97cc459c9b4fc8a6b6857e3b001fe6",
+      "End": "a5c292f2a80f44148b93e555c068533e",
+      "Id": "2de42dad1d3f4f96aee0143565767afd"
     }
   ],
   "Dependencies": [],
@@ -1302,12 +1302,12 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": 50.217530679183383,
-      "EyeY": 55.608241430736143,
-      "EyeZ": 35.7298815247336,
-      "LookX": -67.264018803121886,
-      "LookY": -95.206261166840164,
-      "LookZ": -38.350179925536352,
+      "EyeX": 32.06686587805433,
+      "EyeY": 36.733528277864039,
+      "EyeZ": 24.190528586361246,
+      "LookX": -51.807820001161147,
+      "LookY": -73.32938068943136,
+      "LookZ": -29.537920182998608,
       "UpX": -0.54079304931887129,
       "UpY": 0.782608156852429,
       "UpZ": -0.30832993795035746
@@ -1445,16 +1445,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "ViewsToOutside.ByLineSegments",
-        "Id": "92f3eeebfba54a39b0c81236255599e8",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 2618.691598598195,
-        "Y": 199.83786410020502
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Watch",
         "Id": "03cb791fd14e40818a32a9dc2d804b09",
         "IsSetAsInput": false,
@@ -1572,6 +1562,16 @@
         "Excluded": false,
         "X": 1727.9075971489096,
         "Y": 134.33474257802962
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "ViewsToOutside.ByLineSegments",
+        "Id": "2e0515891a6541d2990d6850f93989a4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2527.4695297127178,
+        "Y": 87.432785763899346
       }
     ],
     "Annotations": [
@@ -1610,7 +1610,7 @@
         "Height": 313.0,
         "FontSize": 36.0,
         "InitialTop": 60.334742578029619,
-        "InitialHeight": 194.99999999999966,
+        "InitialHeight": 337.0,
         "TextblockHeight": 43.0,
         "Background": "#FFD8D8D8"
       },
@@ -1639,15 +1639,15 @@
         "Id": "a07b0a7ee750466b90e9df0a8671e271",
         "Title": "GenerativeToolkit - View To Outside",
         "Nodes": [
-          "92f3eeebfba54a39b0c81236255599e8",
-          "03cb791fd14e40818a32a9dc2d804b09"
+          "03cb791fd14e40818a32a9dc2d804b09",
+          "2e0515891a6541d2990d6850f93989a4"
         ],
-        "Left": 2608.691598598195,
-        "Top": 103.83786410020502,
-        "Width": 465.6899451942727,
-        "Height": 267.0,
+        "Left": 2517.4695297127178,
+        "Top": -8.5672142361006536,
+        "Width": 556.91201407975,
+        "Height": 318.33772503005173,
         "FontSize": 36.0,
-        "InitialTop": 199.83786410020502,
+        "InitialTop": 87.432785763899346,
         "InitialHeight": 145.93264669374605,
         "TextblockHeight": 86.0,
         "Background": "#FFC1D676"
@@ -1887,8 +1887,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 171.33984574702248,
-    "Y": 96.254887360358737,
-    "Zoom": 0.604350332629014
+    "X": 215.20245986836238,
+    "Y": 289.1342960467137,
+    "Zoom": 0.26677843908391136
   }
 }

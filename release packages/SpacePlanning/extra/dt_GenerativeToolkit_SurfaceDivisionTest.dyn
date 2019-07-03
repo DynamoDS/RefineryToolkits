@@ -398,7 +398,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Generate.SurfaceDivision2D.DivideSurface@Autodesk.DesignScript.Geometry.Surface,double[],double[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.SurfaceDivision2D.DivideSurface@Autodesk.DesignScript.Geometry.Surface,double[],double[]",
       "Id": "5f5fa1230cbc4b2ca63dd7288d728306",
       "Inputs": [
         {
@@ -466,7 +466,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Explore.Colors.ContrastyColorRange@int,double,int",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Explore.Colors.ContrastyColorRange@int,double,int",
       "Id": "777dc3aff1124756be4b959ab7a4db4e",
       "Inputs": [
         {

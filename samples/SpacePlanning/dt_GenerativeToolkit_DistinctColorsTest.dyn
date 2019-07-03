@@ -91,7 +91,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.GenerativeToolkit.Explore.Colors.ContrastyColorRange@int,double,int",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Explore.Colors.ContrastyColorRange@int,double,int",
       "Id": "1d8e47a5392f41fab1add1459b4515b6",
       "Inputs": [
         {
