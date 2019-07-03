@@ -1508,11 +1508,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Site.ViewDistance@Autodesk.DesignScript.Geometry.Surface,Autodesk.DesignScript.Geometry.Geometry[],DSCore.Color,DSCore.Color,double,double",
-      "Id": "48417bd2f0d049cb8bf41028fb4dd0c1",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Analyze.SiteAnalysis.ViewDistance@Autodesk.DesignScript.Geometry.Surface,Autodesk.DesignScript.Geometry.Geometry[],DSCore.Color,DSCore.Color,double,double",
+      "Id": "3b7ed3315a1d4685a167fd80b02f2152",
       "Inputs": [
         {
-          "Id": "cb73014def784d0dad303a2002c96faa",
+          "Id": "e2e4c1b4a9104a05a2f1d4a417d2bf28",
           "Name": "surface",
           "Description": "Surface, such as building's facade, to search from.\n\nSurface",
           "UsingDefaultValue": false,
@@ -1521,7 +1521,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "9fd8af3cc2df4db084838952d12e0d86",
+          "Id": "cc270f9924774b99b1f62f8aeab1fdfc",
           "Name": "contextGeomList",
           "Description": "Geometry to calculate distance to.\n\nGeometry[]",
           "UsingDefaultValue": false,
@@ -1530,25 +1530,25 @@
           "KeepListStructure": false
         },
         {
-          "Id": "359fde30bfda4c9d92e0674fdc2fc800",
+          "Id": "ae65a1de146947d99a952f2d1c40af4a",
           "Name": "startColor",
-          "Description": "Color of start of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 255, 255)",
+          "Description": "Color of start of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 0, 115)",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "1e0db66b475845359a9cc676a1a32184",
+          "Id": "67a07d14f35740c79939aac9112b135b",
           "Name": "endColor",
-          "Description": "Color of end of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 0, 115)",
+          "Description": "Color of end of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 255, 255)",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "658c348efe2143c287ffb2d0a3f4fedd",
+          "Id": "f67d481d423149aa9d6e59ab3b89feaa",
           "Name": "resolution",
           "Description": "Distance between sampling points.\n\ndouble\nDefault value : 3",
           "UsingDefaultValue": true,
@@ -1557,7 +1557,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "fc9350c581c449ce89d112ee87ac6b3d",
+          "Id": "40cf7adf76c94b64b3b8197334f605f9",
           "Name": "maxDistance",
           "Description": "Maximum distance to search.\n\ndouble\nDefault value : 50",
           "UsingDefaultValue": true,
@@ -1568,7 +1568,7 @@
       ],
       "Outputs": [
         {
-          "Id": "f7eaeafa86b0442f81d1495c39b48846",
+          "Id": "284fb89138c348b0bcefccacd8ec2dc6",
           "Name": "pointList",
           "Description": "Sampling points.",
           "UsingDefaultValue": false,
@@ -1577,7 +1577,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "7a816271bdcc47ef87d48391d3fe7675",
+          "Id": "c93a7195022b4a47933b6c744623193f",
           "Name": "distanceList",
           "Description": "Distance from each sampling point along surface normal to the closest context geometry.",
           "UsingDefaultValue": false,
@@ -1586,7 +1586,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "6c36e55fb063421c8b14f23929814fb2",
+          "Id": "ae0ecd4912b446aab025617ca216a6ee",
           "Name": "geometryColor",
           "Description": "Colored surfaces mapping view distance.",
           "UsingDefaultValue": false,
@@ -1596,16 +1596,16 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Calculates line of sight distances from a grid of points on a surface.\n\nSite.ViewDistance (surface: Surface, contextGeomList: Geometry[], startColor: Color = DSCore.Color.ByARGB(255, 255, 255, 255), endColor: Color = DSCore.Color.ByARGB(255, 255, 0, 115), resolution: double = 3, maxDistance: double = 50): var[]..[]"
+      "Description": "Calculates line of sight distances from a grid of points on a surface.\n\nSiteAnalysis.ViewDistance (surface: Surface, contextGeomList: Geometry[], startColor: Color = DSCore.Color.ByARGB(255, 255, 0, 115), endColor: Color = DSCore.Color.ByARGB(255, 255, 255, 255), resolution: double = 3, maxDistance: double = 50): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.DeconstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
-      "Id": "fc3e14ba5bb848bea50d30c62f54567d",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Building.DeconstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
+      "Id": "d258ef2a2e904a82a6291c388c4269f8",
       "Inputs": [
         {
-          "Id": "743a665dc60a48459b2e14a3ec7fe1b4",
+          "Id": "b509b1565b094aaa99e88883342a6d7a",
           "Name": "solid",
           "Description": "Building solid.\n\nTopology",
           "UsingDefaultValue": false,
@@ -1614,7 +1614,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "c9a7db520c0346468a32c103f9726629",
+          "Id": "989e29d3c47f4a66ae5c2db8029539b1",
           "Name": "angleThreshold",
           "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45",
           "UsingDefaultValue": true,
@@ -1625,7 +1625,7 @@
       ],
       "Outputs": [
         {
-          "Id": "36d9b5e67a0f4e57ab54a38357fa9258",
+          "Id": "015d424f70334660a1d03be996d21cf7",
           "Name": "verticalSrfList",
           "Description": "Vertical surfaces.",
           "UsingDefaultValue": false,
@@ -1634,7 +1634,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "7694978a07644be7b90007e8097388b6",
+          "Id": "c0cec52b110941c78f18702e2b8f8732",
           "Name": "horizontalSrfList",
           "Description": "Horizontal surfaces.",
           "UsingDefaultValue": false,
@@ -1710,13 +1710,8 @@
     },
     {
       "Start": "75367696125e42c9a491a2043d3fe107",
-      "End": "d434a393f6ae4ecf8779c8680fb3723d",
-      "Id": "eb5b2503e54a46809ca745a3951561fb"
-    },
-    {
-      "Start": "75367696125e42c9a491a2043d3fe107",
-      "End": "fc9350c581c449ce89d112ee87ac6b3d",
-      "Id": "6a71342cb34c462594ed6c9b261dec73"
+      "End": "40cf7adf76c94b64b3b8197334f605f9",
+      "Id": "8c5bff78f9624d00a9e860210dd37033"
     },
     {
       "Start": "834bf73ca30a4beb91786603526422d2",
@@ -1880,8 +1875,8 @@
     },
     {
       "Start": "318a62bacdb646b7ad2579e6a8176bb8",
-      "End": "743a665dc60a48459b2e14a3ec7fe1b4",
-      "Id": "1b805f7670fc41cfbc2de66a039d87c3"
+      "End": "b509b1565b094aaa99e88883342a6d7a",
+      "Id": "a3f25c47c15f4a969ff9f5bcbc973b06"
     },
     {
       "Start": "f78bf99d74c6463496fc9bf6262bf87c",
@@ -1895,8 +1890,8 @@
     },
     {
       "Start": "e0670f39879d4833af6cef3b42f53049",
-      "End": "658c348efe2143c287ffb2d0a3f4fedd",
-      "Id": "7140455b4d1e42ada9613beb58c60321"
+      "End": "f67d481d423149aa9d6e59ab3b89feaa",
+      "Id": "549fa06acc8c438cba6f09464835bd75"
     },
     {
       "Start": "a4da75d3b46247b6bb72ca19228c875e",
@@ -1920,8 +1915,8 @@
     },
     {
       "Start": "0604bbd5e14b480592d319e9d2c84da9",
-      "End": "9fd8af3cc2df4db084838952d12e0d86",
-      "Id": "835a0412ba82443b96439036708e80a6"
+      "End": "cc270f9924774b99b1f62f8aeab1fdfc",
+      "Id": "d8a557179c35456e86525ae857d8f803"
     },
     {
       "Start": "cc0f303a092d42f59b344e6d8727a311",
@@ -1954,24 +1949,29 @@
       "Id": "089531ebf48f4bafaccb9a6ec6252ace"
     },
     {
-      "Start": "7a816271bdcc47ef87d48391d3fe7675",
+      "Start": "284fb89138c348b0bcefccacd8ec2dc6",
+      "End": "d434a393f6ae4ecf8779c8680fb3723d",
+      "Id": "1793eab2d0d246cdaf7f2146d2a55a19"
+    },
+    {
+      "Start": "c93a7195022b4a47933b6c744623193f",
       "End": "9ec0aacc77e74c2098298aa726b89eac",
-      "Id": "0dd094099d54485b813ba56e844968ff"
+      "Id": "7376b844427c4875bcc80e5ffc5890f6"
     },
     {
-      "Start": "36d9b5e67a0f4e57ab54a38357fa9258",
+      "Start": "015d424f70334660a1d03be996d21cf7",
+      "End": "e2e4c1b4a9104a05a2f1d4a417d2bf28",
+      "Id": "ec25e86bf7e747f1a6dd1a4ebfd21306"
+    },
+    {
+      "Start": "015d424f70334660a1d03be996d21cf7",
       "End": "58d5303ab4ff4248a0e4649616af34a3",
-      "Id": "837c11618eb346d4b1220975c210eec8"
+      "Id": "c9709fd132594728b2fa0449e6e90171"
     },
     {
-      "Start": "36d9b5e67a0f4e57ab54a38357fa9258",
-      "End": "cb73014def784d0dad303a2002c96faa",
-      "Id": "9a9ecfe3829f46168f30a031f367c467"
-    },
-    {
-      "Start": "7694978a07644be7b90007e8097388b6",
+      "Start": "c0cec52b110941c78f18702e2b8f8732",
       "End": "1e8d0db8ba0b47d7bf053b123fac1ee9",
-      "Id": "77e0a73b60a743488fb4858839eb6dc0"
+      "Id": "2a644985f0d54eaba07e919652135665"
     }
   ],
   "Dependencies": [],
@@ -1982,7 +1982,7 @@
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
       "Version": "2.0.2.6826",
-      "RunType": "Automatic",
+      "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
@@ -2245,8 +2245,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -14.163195771609139,
-        "Y": 1179.973696298711
+        "X": -46.242072689274664,
+        "Y": 1190.1806116816044
       },
       {
         "ShowGeometry": true,
@@ -2285,8 +2285,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 275.39710256423916,
-        "Y": 1179.7241878460375
+        "X": 243.31822564657364,
+        "Y": 1189.9311032289309
       },
       {
         "ShowGeometry": true,
@@ -2295,8 +2295,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 19.086139992276003,
-        "Y": 1321.211605965342
+        "X": -12.992736925389522,
+        "Y": 1331.4185213482353
       },
       {
         "ShowGeometry": true,
@@ -2305,8 +2305,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -85.185179288325116,
-        "Y": 1382.3296450940159
+        "X": -117.26405620599064,
+        "Y": 1392.5365604769092
       },
       {
         "ShowGeometry": true,
@@ -2405,28 +2405,28 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 950.854370282156,
-        "Y": 1257.4954569386457
+        "X": 918.77549336449044,
+        "Y": 1267.7023723215391
       },
       {
         "ShowGeometry": true,
-        "Name": "Site.ViewDistance",
-        "Id": "48417bd2f0d049cb8bf41028fb4dd0c1",
+        "Name": "SiteAnalysis.ViewDistance",
+        "Id": "3b7ed3315a1d4685a167fd80b02f2152",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1966.9616549770235,
-        "Y": 892.32164824392726
+        "X": 1971.4756145235979,
+        "Y": 641.11750143717938
       },
       {
-        "ShowGeometry": false,
+        "ShowGeometry": true,
         "Name": "Building.DeconstructFacadeShell",
-        "Id": "fc3e14ba5bb848bea50d30c62f54567d",
+        "Id": "d258ef2a2e904a82a6291c388c4269f8",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 578.24236976073007,
-        "Y": 1181.8843928209412
+        "X": 538.02540428115742,
+        "Y": 1327.1128383464008
       }
     ],
     "Annotations": [
@@ -2445,13 +2445,13 @@
           "d493cb7f532d46f7bb5cda412c1d1b27"
         ],
         "Left": -696.88254839366073,
-        "Top": 343.78555836136826,
-        "Width": 323.28372440951085,
+        "Top": 344.11889169470157,
+        "Width": 322.95039107617754,
         "Height": 970.13063194466793,
         "FontSize": 36.0,
         "InitialTop": 397.11889169470157,
         "InitialHeight": 994.13063194466793,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFE8F7AD"
       },
       {
@@ -2464,14 +2464,14 @@
           "8453b33e5e1844ee91a54ab7df0cd76c",
           "5399a04fccd94ac5b4a26b9eb9450209"
         ],
-        "Left": -95.185179288325116,
-        "Top": 1126.3908545127042,
-        "Width": 1238.0395495704811,
-        "Height": 348.93879058131165,
+        "Left": -127.26405620599064,
+        "Top": 1136.9311032289309,
+        "Width": 1237.0395495704811,
+        "Height": 348.60545724797839,
         "FontSize": 36.0,
-        "InitialTop": 1179.7241878460375,
-        "InitialHeight": 347.85654153580413,
-        "TextblockHeight": 43.333333333333336,
+        "InitialTop": 1189.9311032289309,
+        "InitialHeight": 347.60545724797839,
+        "TextblockHeight": 43.0,
         "Background": "#FFFFB8D8"
       },
       {
@@ -2503,13 +2503,13 @@
           "53224d06717741dfa29ba868da2a001b"
         ],
         "Left": -93.3428458600099,
-        "Top": 81.376806202641973,
-        "Width": 1901.8075977680437,
-        "Height": 937.90976416797741,
+        "Top": 81.710139535975316,
+        "Width": 1901.140931101377,
+        "Height": 937.576430834644,
         "FontSize": 36.0,
         "InitialTop": 134.71013953597532,
         "InitialHeight": 910.576430834644,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFFFB8D8"
       },
       {
@@ -2522,18 +2522,18 @@
           "7cc72e8cd58c42afb2c2878de3e52933"
         ],
         "Left": 2459.6665234892166,
-        "Top": 772.83697666941487,
-        "Width": 926.69494026810776,
-        "Height": 340.81440933073384,
+        "Top": 773.17031000274824,
+        "Width": 927.028273601441,
+        "Height": 340.48107599740047,
         "FontSize": 36.0,
         "InitialTop": 826.17031000274824,
         "InitialHeight": 313.48107599740047,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFA4E1FF"
       }
     ],
-    "X": -1085.9708301216253,
-    "Y": -341.94692600055447,
-    "Zoom": 0.84565493535498182
+    "X": -365.90795739918531,
+    "Y": 77.105508324327985,
+    "Zoom": 0.35047945092965155
   }
 }
