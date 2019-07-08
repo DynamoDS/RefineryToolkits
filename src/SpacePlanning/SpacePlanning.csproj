@@ -16,6 +16,7 @@
     <StartProgram>C:\Program Files\Dynamo\Dynamo Core\2\DynamoSandbox.exe</StartProgram>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,10 +42,6 @@
   <ItemGroup>
     <Reference Include="Analysis, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\Analysis.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CoreNodeModels, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
@@ -126,9 +123,6 @@
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -174,9 +168,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Net.Http">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml">
@@ -234,12 +225,12 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{a528fcd0-0855-409c-88e0-e36e6a718fd3}</Project>
       <Name>Core</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\SpacePlanning.Graphs\SpacePlanning.Graphs.csproj">
       <Project>{e7aec112-deea-4d3e-a125-386cf8d93eac}</Project>
       <Name>SpacePlanning.Graphs</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +241,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
+    <!--Clean .NET system dlls-->
+    <ItemGroup>
+      <DllFilesToDelete Include="$(TargetDir)System.*.dll" />
+      <MicrosoftFilesToDelete Include="$(TargetDir)Microsoft.*.dll" />
+    </ItemGroup>
+    <Delete Files="@(DllFilesToDelete)" />
+    <Delete Files="@(MicrosoftFilesToDelete)" />
+    <Delete Files="$(TargetDir)netstandard.dll" />
+    <Message Importance="High" Text="Deleted [@(DllFilesToDelete->Count())] .NET system .dlls and [@(MicrosoftFilesToDelete->Count())] Microsoft .dlls " />
     <!--Defining folders to copy-->
     <ItemGroup>
       <SourceDlls Include="$(TargetDir)*.dll" />
@@ -264,9 +264,12 @@
     <Copy SourceFiles="@(SourceXmls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourcePkg)" DestinationFolder="$(TargetDir)$(ProjectName)" />
     <Copy SourceFiles="@(SourceSamples)" DestinationFolder="$(TargetDir)$(ProjectName)\extra" />
+    <Message Importance="High" Text="++++++++++++++++++++++++++++++++++++++" />
+    <Message Importance="High" Text="Built to $(TargetDir)$(ProjectName)" />
     <ItemGroup>
       <SourcePackage Include="$(TargetDir)\$(ProjectName)\**\*" />
     </ItemGroup>
+    <!--Deploy to Dynamo as a package-->
     <PropertyGroup>
       <!--Copy to Dynamo sandbox for testing -->
       <DeployFolder Condition="'$(Configuration)' == 'Debug'">$(AppData)\Dynamo\Dynamo Core\2.0\packages\$(ProjectName)</DeployFolder>
@@ -275,6 +278,10 @@
       <!--Copy to release folder for publishing -->
       <DeployFolder Condition="'$(Configuration)' == 'Release'">$(SolutionDir)\..\release packages\$(ProjectName)</DeployFolder>
     </PropertyGroup>
+    <!--Delete previously deployed packages first -->
+    <RemoveDir Directories="$(DeployFolder)" />
     <Copy SourceFiles="@(SourcePackage)" DestinationFolder="$(DeployFolder)\%(RecursiveDir)" />
+    <Message Importance="High" Text="++++++++++++++++++++++++++++++++++++++" />
+    <Message Importance="High" Text="Deployed to $(DeployFolder)" />
   </Target>
 </Project>
