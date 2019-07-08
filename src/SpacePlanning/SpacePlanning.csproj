@@ -39,6 +39,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugRevit|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugRevit\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\Autodesk.RefineryToolkits.SpacePlanning.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Analysis, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\Analysis.dll</HintPath>
@@ -242,6 +252,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <!--Clean .NET system dlls-->
+    <Message Importance="High" Text="+++++++++++++++++++++++++++ $(ProjectName)" />
+    <Message Importance="High" Text="Config : $(Configuration)" />
     <ItemGroup>
       <DllFilesToDelete Include="$(TargetDir)System.*.dll" />
       <MicrosoftFilesToDelete Include="$(TargetDir)Microsoft.*.dll" />
@@ -249,7 +261,7 @@
     <Delete Files="@(DllFilesToDelete)" />
     <Delete Files="@(MicrosoftFilesToDelete)" />
     <Delete Files="$(TargetDir)netstandard.dll" />
-    <Message Importance="High" Text="Deleted [@(DllFilesToDelete->Count())] .NET system .dlls and [@(MicrosoftFilesToDelete->Count())] Microsoft .dlls " />
+    <Message Importance="High" Text="Deleted [@(DllFilesToDelete-&gt;Count())] .NET system .dlls and [@(MicrosoftFilesToDelete-&gt;Count())] Microsoft .dlls " />
     <!--Defining folders to copy-->
     <ItemGroup>
       <SourceDlls Include="$(TargetDir)*.dll" />
@@ -264,12 +276,11 @@
     <Copy SourceFiles="@(SourceXmls)" DestinationFolder="$(TargetDir)$(ProjectName)\bin\" />
     <Copy SourceFiles="@(SourcePkg)" DestinationFolder="$(TargetDir)$(ProjectName)" />
     <Copy SourceFiles="@(SourceSamples)" DestinationFolder="$(TargetDir)$(ProjectName)\extra" />
-    <Message Importance="High" Text="++++++++++++++++++++++++++++++++++++++" />
-    <Message Importance="High" Text="Built to $(TargetDir)$(ProjectName)" />
+    <Message Importance="High" Text="Built $(ProjectName) to $(TargetDir)$(ProjectName)" />
+    <!--Deploy to Dynamo as a package-->
     <ItemGroup>
       <SourcePackage Include="$(TargetDir)\$(ProjectName)\**\*" />
     </ItemGroup>
-    <!--Deploy to Dynamo as a package-->
     <PropertyGroup>
       <!--Copy to Dynamo sandbox for testing -->
       <DeployFolder Condition="'$(Configuration)' == 'Debug'">$(AppData)\Dynamo\Dynamo Core\2.0\packages\$(ProjectName)</DeployFolder>
@@ -280,8 +291,9 @@
     </PropertyGroup>
     <!--Delete previously deployed packages first -->
     <RemoveDir Directories="$(DeployFolder)" />
+    <!--Then deploy the new version of the package -->
     <Copy SourceFiles="@(SourcePackage)" DestinationFolder="$(DeployFolder)\%(RecursiveDir)" />
+    <Message Importance="High" Text="Deployed $(ProjectName) package to $(DeployFolder)" />
     <Message Importance="High" Text="++++++++++++++++++++++++++++++++++++++" />
-    <Message Importance="High" Text="Deployed to $(DeployFolder)" />
   </Target>
 </Project>
