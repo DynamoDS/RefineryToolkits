@@ -12,11 +12,170 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.ByOutlineArea@Autodesk.DesignScript.Geometry.Curve[],double,double",
-      "Id": "e851639a35d644b9b2a389dc126b2553",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Analyze.SiteAnalysis.ClashTest@Autodesk.DesignScript.Geometry.Solid,Autodesk.DesignScript.Geometry.Solid",
+      "Id": "810843e2ec1c42fdbbdd4141022116b7",
       "Inputs": [
         {
-          "Id": "36350a61d805403181af96809954ccc1",
+          "Id": "ff1bd6676b0f423cadb50b6ce9a5c113",
+          "Name": "buildingSolid",
+          "Description": "Building solid from the generator.\n\nSolid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "22e275da7336493aa1e36946c804476c",
+          "Name": "siteSolid",
+          "Description": "Site boundary volume.\n\nSolid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2bf9fd42b6514af8847ba253531989e4",
+          "Name": "buildingInside",
+          "Description": "Volume of building inside of site boundary.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "34a6d5077c4c437ba8709ccfce6f89f0",
+          "Name": "buildingOutside",
+          "Description": "Volume of building outside of site boundary.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b2b39f5a025943d4a5f2f283429dc90a",
+          "Name": "intersects",
+          "Description": "Does the building mass intersect with the site boundary?",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "603fdb8c25d745f88249ec935e9161f3",
+          "Name": "percentOutside",
+          "Description": "Percent of building volume that is outside the site boundary.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Tests site boundary against building mass.\n\nSiteAnalysis.ClashTest (buildingSolid: Solid, siteSolid: Solid): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Analyze.SiteAnalysis.ViewDistance@Autodesk.DesignScript.Geometry.Surface,Autodesk.DesignScript.Geometry.Geometry[],DSCore.Color,DSCore.Color,double,double",
+      "Id": "6293a5c255f74acbbdadea12d89d217a",
+      "Inputs": [
+        {
+          "Id": "d36061f018b24de398749afae2eb58ed",
+          "Name": "surface",
+          "Description": "Surface, such as building's facade, to search from.\n\nSurface",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8ff659be937b47718d195b78900b1fe8",
+          "Name": "contextGeomList",
+          "Description": "Geometry to calculate distance to.\n\nGeometry[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "88e47695fae64ef3823f2d8c9be5e9ee",
+          "Name": "startColor",
+          "Description": "Color of start of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 0, 115)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "28bde28352404255882bfdd023130d04",
+          "Name": "endColor",
+          "Description": "Color of end of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 255, 255)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2343b6ca25834554a95093683e87cafc",
+          "Name": "resolution",
+          "Description": "Distance between sampling points.\n\ndouble\nDefault value : 3",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0d99391d64814c9c9c9b0643d1bc769e",
+          "Name": "maxDistance",
+          "Description": "Maximum distance to search.\n\ndouble\nDefault value : 50",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9f27130d47fe4ce6b59a92c800e98fe3",
+          "Name": "pointList",
+          "Description": "Sampling points.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "99bae95445064b5e8258cab37b9e0c5f",
+          "Name": "distanceList",
+          "Description": "Distance from each sampling point along surface normal to the closest context geometry.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fc256489c6994eb08f2e0e6f55e63823",
+          "Name": "geometryColor",
+          "Description": "Colored surfaces mapping view distance.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Calculates line of sight distances from a grid of points on a surface.\n\nSiteAnalysis.ViewDistance (surface: Surface, contextGeomList: Geometry[], startColor: Color = DSCore.Color.ByARGB(255, 255, 0, 115), endColor: Color = DSCore.Color.ByARGB(255, 255, 255, 255), resolution: double = 3, maxDistance: double = 50): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Building.ByOutlineArea@Autodesk.DesignScript.Geometry.Curve[],double,double",
+      "Id": "1ad272f9f8954c8e97c9f48d6ce6c9df",
+      "Inputs": [
+        {
+          "Id": "8981041ab46e411987bc852967c6c9ed",
           "Name": "edgeLoopCrvList",
           "Description": "Closed curve boundaries of building. All curves after first will be treated as holes.\n\nCurve[]",
           "UsingDefaultValue": false,
@@ -25,16 +184,16 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b2930b50ee324d348e4bc05882cbf149",
+          "Id": "34391396f89245b1b9057448b40b9ef9",
           "Name": "buildingArea",
-          "Description": "Target gross building area.\n\ndouble\nDefault value : 1000",
+          "Description": "Target gross building area.\n\ndouble\nDefault value : 10000",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "ad9f77fd637b49bfbbf75b9bb036433c",
+          "Id": "95d3c13dc3c942ebb7c95d923904d447",
           "Name": "floorHeight",
           "Description": "Height of the floors.\n\ndouble\nDefault value : 3",
           "UsingDefaultValue": true,
@@ -45,7 +204,7 @@
       ],
       "Outputs": [
         {
-          "Id": "ce1866429c46414aa0b74b403f66d88e",
+          "Id": "eaf8f3f5321646bc8692759723ec2a81",
           "Name": "buildingSolid",
           "Description": "Building volume.",
           "UsingDefaultValue": false,
@@ -54,7 +213,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2f6d5539828d4812a15ee350baa76579",
+          "Id": "6688865fd8aa4cc78b9ea565bd72770f",
           "Name": "floorSrfList",
           "Description": "Building floor surfaces.",
           "UsingDefaultValue": false,
@@ -63,7 +222,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "43f6e08aa8d64f6bba3ceb6f08ef889b",
+          "Id": "e2edccf0f5d143169a8e5ad04418c16c",
           "Name": "floorElevationList",
           "Description": "Elevation of each floor in building.",
           "UsingDefaultValue": false,
@@ -72,7 +231,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "33b3aec97b4f43a2a71ba8586a5afca1",
+          "Id": "4b20e4cee42a4ba3a58c34f09b181bf3",
           "Name": "topPlane",
           "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
           "UsingDefaultValue": false,
@@ -81,7 +240,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "faef5383e9e44002a5a522fe7911dd70",
+          "Id": "57312cbe22da4c7bb683009b22606fea",
           "Name": "buildingVolume",
           "Description": "Volume of entire building solid.",
           "UsingDefaultValue": false,
@@ -90,7 +249,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "78bfd671294a40f689b0f30caade7cd0",
+          "Id": "0dbf9eb231f347a9be4e91146454389f",
           "Name": "grossFloorArea",
           "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
           "UsingDefaultValue": false,
@@ -99,7 +258,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "3777837467c44866b622c438002ddded",
+          "Id": "e4bad67893b348a1a79d3922a89e433f",
           "Name": "totalFacadeArea",
           "Description": "Combined area of all facades (vertical surfaces).",
           "UsingDefaultValue": false,
@@ -109,16 +268,16 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Generates a building solid from base curves and target gross area.\n\nBuilding.ByOutlineArea (edgeLoopCrvList: Curve[], buildingArea: double = 1000, floorHeight: double = 3): var[]..[]"
+      "Description": "Generates a building solid from base curves and target gross area.\n\nBuilding.ByOutlineArea (edgeLoopCrvList: Curve[], buildingArea: double = 10000, floorHeight: double = 3): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.ByOutlineFloors@Autodesk.DesignScript.Geometry.Curve[],int,double",
-      "Id": "5fa4278a1e874ea3af624d0ebac3a142",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Building.ByOutlineFloors@Autodesk.DesignScript.Geometry.Curve[],int,double",
+      "Id": "67c98801c5904f549a419e9007b22762",
       "Inputs": [
         {
-          "Id": "9b5ddca7a75947d29b10cc97371d7d2e",
+          "Id": "45207614354e407a974301a2e95298fd",
           "Name": "edgeLoopCrvList",
           "Description": "Closed curve boundaries of building. All curves after first will be treated as holes.\n\nCurve[]",
           "UsingDefaultValue": false,
@@ -127,7 +286,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "35072d32746e4135a0690a878388219d",
+          "Id": "67fa8c693d8947e591a108eae6c772c6",
           "Name": "floorCount",
           "Description": "Target gross building area.\n\nint\nDefault value : 10",
           "UsingDefaultValue": true,
@@ -136,7 +295,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "3543353dac814cc09e92055ccd973402",
+          "Id": "dfdfc3818ca24e509873d7e067076934",
           "Name": "floorHeight",
           "Description": "Height of the floors.\n\ndouble\nDefault value : 3",
           "UsingDefaultValue": true,
@@ -147,7 +306,7 @@
       ],
       "Outputs": [
         {
-          "Id": "1bde60072e324667b518e136f9070ba5",
+          "Id": "6c252823b33b495085103d0a12732744",
           "Name": "buildingSolid",
           "Description": "Building volume.",
           "UsingDefaultValue": false,
@@ -156,7 +315,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "480859dede034dd8b6cfed78e214b051",
+          "Id": "f31c0b70aef14878af1568573f138074",
           "Name": "floorSrfList",
           "Description": "Building floor surfaces.",
           "UsingDefaultValue": false,
@@ -165,7 +324,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f5d404f998c741669a003ec6a248d4ff",
+          "Id": "623d65b372dc4338af67484748719940",
           "Name": "floorElevationList",
           "Description": "Elevation of each floor in building.",
           "UsingDefaultValue": false,
@@ -174,7 +333,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a14943cac8e8472aaca6f43f5138d304",
+          "Id": "d9d7a7e159a94761837c894eda30000c",
           "Name": "topPlane",
           "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
           "UsingDefaultValue": false,
@@ -183,7 +342,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "063e898f37384d218613d815fdd1b4bd",
+          "Id": "0d623fc947db44fe87feb51b89b3611d",
           "Name": "buildingVolume",
           "Description": "Volume of entire building solid.",
           "UsingDefaultValue": false,
@@ -192,7 +351,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "03509e9aa0754a8ebb83bdf9c3ee93d1",
+          "Id": "3554b17e289e4225abcde1945016ebff",
           "Name": "grossFloorArea",
           "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
           "UsingDefaultValue": false,
@@ -201,7 +360,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e2bbf4d85d1c485eac8281708635cc62",
+          "Id": "eba1030669a14206835a37a7abc595cc",
           "Name": "totalFacadeArea",
           "Description": "Combined area of all facades (vertical surfaces).",
           "UsingDefaultValue": false,
@@ -216,11 +375,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.ByTypeArea@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,double,double,bool,bool,double,double,double",
-      "Id": "c4b89e85bc964aad81a15a1987fe31c9",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Building.ByTypeArea@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,double,double,bool,bool,double,double,double",
+      "Id": "ae1060b17e364f00be5a17d73823f89e",
       "Inputs": [
         {
-          "Id": "b11f288710f94a828d18f829f7b61add",
+          "Id": "2c2d5f76fbd44b28be078a773ce8c4f5",
           "Name": "basePlane",
           "Description": "The building base plane.\n\nPlane\nDefault value : Autodesk.DesignScript.Geometry.Plane.XY()",
           "UsingDefaultValue": true,
@@ -229,7 +388,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "75664fb9acf74a01ae5805890493d76e",
+          "Id": "ce20922d7257471fb5cfe29a0b7fb9a8",
           "Name": "typeStr",
           "Description": "Building type name (\"U\", \"L\", \"H\", \"O\", or \"D\").\n\nstring\nDefault value : \"L\"",
           "UsingDefaultValue": true,
@@ -238,7 +397,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a7efdeedfab84256a168b7b8522396d8",
+          "Id": "fb43964e68284e3e8423c0bd431e2ef3",
           "Name": "length",
           "Description": "Overall building length.\n\ndouble\nDefault value : 50",
           "UsingDefaultValue": true,
@@ -247,7 +406,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b5b72b35377f496787677d145925f381",
+          "Id": "788ae1a5ec934ec4b90566d554224af0",
           "Name": "width",
           "Description": "Overall building width.\n\ndouble\nDefault value : 40",
           "UsingDefaultValue": true,
@@ -256,7 +415,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f23bc17a09dd4e06b0dea8ef813d7a3c",
+          "Id": "cc9994ef9d2d4e4cb14ef4a0da776064",
           "Name": "depth",
           "Description": "Building depth.\n\ndouble\nDefault value : 25",
           "UsingDefaultValue": true,
@@ -265,7 +424,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "384b0522dd9d4052978564f93a52a54c",
+          "Id": "a27af6a3106f47cda7c59725718fcea0",
           "Name": "buildingArea",
           "Description": "Target gross building area.\n\ndouble\nDefault value : 10000",
           "UsingDefaultValue": true,
@@ -274,7 +433,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "df9cd0d34101497c8d088be6824920ab",
+          "Id": "dedf8cb27f5b4be294013b3d0c2d736e",
           "Name": "floorHeight",
           "Description": "Height of the floors.\n\ndouble\nDefault value : 9",
           "UsingDefaultValue": true,
@@ -283,7 +442,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "cdbd67d42c92418991bedbb36d0c41fc",
+          "Id": "1f6a1f0cdc6e48989fe21ed1f959cc29",
           "Name": "curvedBool",
           "Description": "Should sides of building be curved or faceted?\n\nbool\nDefault value : false",
           "UsingDefaultValue": true,
@@ -292,7 +451,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a725bc9a5af244ac8a7df0e6f4095c9d",
+          "Id": "1e39e50503ba452b989ba4f2faf3f4c6",
           "Name": "createCoreBool",
           "Description": "Create core volumes and subtractions?\n\nbool\nDefault value : true",
           "UsingDefaultValue": true,
@@ -301,7 +460,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b822f0f9163d4e07aaaf992aa02ec0d4",
+          "Id": "b6363702b829476196befd9b6e1b2447",
           "Name": "hallwayToDepth",
           "Description": "Core sizing logic: ratio between building depth and width of hallways on either side of core.\n\ndouble\nDefault value : 0.1",
           "UsingDefaultValue": true,
@@ -310,7 +469,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b854cc8646de4118be9cf53bff9bae3a",
+          "Id": "ea6b7e310d33458b83c620bfbe4a827e",
           "Name": "coreSizeFactorFloors",
           "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 4",
           "UsingDefaultValue": true,
@@ -319,7 +478,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "23ebb35abb474d6c973e449a75537a0d",
+          "Id": "009cf4af93c743409cf2594f337cae1b",
           "Name": "coreSizeFactorArea",
           "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 0.1",
           "UsingDefaultValue": true,
@@ -330,7 +489,7 @@
       ],
       "Outputs": [
         {
-          "Id": "891ab7f84d444a2c8466975b5963c5dc",
+          "Id": "e2a5192d7fa34c13b95f88c6cae7511a",
           "Name": "buildingSolid",
           "Description": "Building volume.",
           "UsingDefaultValue": false,
@@ -339,7 +498,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "ae249d0e752b4923bc1e1ab757e0c4a0",
+          "Id": "5d02739f33d3438bad8e1eacb3cbcdab",
           "Name": "floorSrfList",
           "Description": "Building floor surfaces.",
           "UsingDefaultValue": false,
@@ -348,7 +507,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "d15f9c2b74894df3b4af6da0c3ccdc6d",
+          "Id": "a79d458d1c474247a1cb81d4c23912ec",
           "Name": "netFloorSrfList",
           "Description": "Building floor surfaces with core removed.",
           "UsingDefaultValue": false,
@@ -357,7 +516,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "7f7b8328997b43dfb3854eeff0bdb17c",
+          "Id": "3159b73a8d034da6bcfcc5a6b189523a",
           "Name": "floorElevationList",
           "Description": "Elevation of each floor in building.",
           "UsingDefaultValue": false,
@@ -366,7 +525,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "1c842fc70c954a5c818bff0c97854937",
+          "Id": "b7ad09b89a8e4b9fa644dab498b7db08",
           "Name": "coreSolidList",
           "Description": "Building core volumes.",
           "UsingDefaultValue": false,
@@ -375,7 +534,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "76f9f05db36a4e39b0b1e3c8a42c899d",
+          "Id": "995d4689e805489b8db52e52a08a3a31",
           "Name": "topPlane",
           "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
           "UsingDefaultValue": false,
@@ -384,7 +543,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "de20281d4bf94978aed3de9f54018fe3",
+          "Id": "5eefd04f702f40c7b0fc8616cb8d28aa",
           "Name": "buildingVolume",
           "Description": "Volume of entire building solid.",
           "UsingDefaultValue": false,
@@ -393,7 +552,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "258d77eb01374f2c9ddabdd562afb9cb",
+          "Id": "44b7bcfd756f4113a854adac3c3b6886",
           "Name": "grossFloorArea",
           "Description": "Combined area of all floors. Will be greater than or equal to input buildingArea.",
           "UsingDefaultValue": false,
@@ -402,7 +561,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a8e5816c0a2842f2a2968f184787215d",
+          "Id": "17fbccaad5334683b6a9406f3bf4b52e",
           "Name": "netFloorArea",
           "Description": "Combined area of all floors with core removed.",
           "UsingDefaultValue": false,
@@ -411,7 +570,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "fae872559c424ba79741463e869efa6e",
+          "Id": "56bbc75f4b164dbd8a3b9d5b8297f3f6",
           "Name": "totalFacadeArea",
           "Description": "Combined area of all facades (vertical surfaces).",
           "UsingDefaultValue": false,
@@ -426,11 +585,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.ByTypeFloors@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,int,double,bool,bool,double,double,double",
-      "Id": "7ca0ce14d00c4b53a58ae0f9853b7180",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Building.ByTypeFloors@Autodesk.DesignScript.Geometry.Plane,string,double,double,double,int,double,bool,bool,double,double,double",
+      "Id": "61c6a81934ec4f91882e5e0e82f471bd",
       "Inputs": [
         {
-          "Id": "b688aca5e95646eb95a037209498608e",
+          "Id": "de643dfeeae64425849eedce54e1ce38",
           "Name": "basePlane",
           "Description": "The building base plane.\n\nPlane\nDefault value : Autodesk.DesignScript.Geometry.Plane.XY()",
           "UsingDefaultValue": true,
@@ -439,7 +598,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "94a245f3a2084163bd1013603e674625",
+          "Id": "9b4d1a1eda4d4d50a6f0a0250b55e2f8",
           "Name": "typeStr",
           "Description": "Building type (U, L, H, O, or D).\n\nstring\nDefault value : \"L\"",
           "UsingDefaultValue": true,
@@ -448,7 +607,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "805ab223b491454590ec6efefa0cefa6",
+          "Id": "b30a8deccbda4c45a1d09a07768672b1",
           "Name": "length",
           "Description": "Overall building length.\n\ndouble\nDefault value : 50",
           "UsingDefaultValue": true,
@@ -457,7 +616,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "dc497e1289104d6da995e26b761eedf1",
+          "Id": "2cd646c098f04caab35378e3960d6777",
           "Name": "width",
           "Description": "Overall building width.\n\ndouble\nDefault value : 40",
           "UsingDefaultValue": true,
@@ -466,7 +625,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "8e32857a0a8540d8a1ac5295a046fbf3",
+          "Id": "6e02792c7a344186b18add688d4b62e1",
           "Name": "depth",
           "Description": "Building depth.\n\ndouble\nDefault value : 25",
           "UsingDefaultValue": true,
@@ -475,7 +634,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b9a72369eac448049019c117db014fea",
+          "Id": "c72e31093ab64059820b0dbb7aa5d865",
           "Name": "floorCount",
           "Description": "Number of building floors.\n\nint\nDefault value : 10",
           "UsingDefaultValue": true,
@@ -484,7 +643,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "ef3334e007904f5d9773a56003317008",
+          "Id": "214c7981862c4001b29c6a80938058b0",
           "Name": "floorHeight",
           "Description": "Height of the floors.\n\ndouble\nDefault value : 9",
           "UsingDefaultValue": true,
@@ -493,7 +652,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "592f64c0ee164f7e85cfca6e09d01a63",
+          "Id": "d433af4840c3412dbbf36e91cbabf427",
           "Name": "curvedBool",
           "Description": "Should sides of building be curved or faceted?\n\nbool\nDefault value : false",
           "UsingDefaultValue": true,
@@ -502,7 +661,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e73a7d4eb4f54db3912e5dbe2d6e8c79",
+          "Id": "452c5c11e2af4d9593999cc8d7e76fdb",
           "Name": "createCoreBool",
           "Description": "Create core volumes and subtractions?\n\nbool\nDefault value : true",
           "UsingDefaultValue": true,
@@ -511,7 +670,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "80f16219ad6d41d48e28c13e2b967476",
+          "Id": "0489286a5b034b699b64eb36d3528728",
           "Name": "hallwayToDepth",
           "Description": "Core sizing logic: ratio between building depth and width of hallways on either side of core.\n\ndouble\nDefault value : 0.1",
           "UsingDefaultValue": true,
@@ -520,7 +679,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a74267d3f3714842a3f2ca1498cb424e",
+          "Id": "5c22d91848ed4eab9fab23350a80a610",
           "Name": "coreSizeFactorFloors",
           "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 4",
           "UsingDefaultValue": true,
@@ -529,7 +688,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "cbcb239e08ad41dc8825837b3e18dae0",
+          "Id": "0305edf1818e45e290530f670422008a",
           "Name": "coreSizeFactorArea",
           "Description": "Core sizing logic: Add\n\ndouble\nDefault value : 0.1",
           "UsingDefaultValue": true,
@@ -540,7 +699,7 @@
       ],
       "Outputs": [
         {
-          "Id": "04e705bdbe1b4641af602889a2d15117",
+          "Id": "d4bf976e20074cc3890c0257848ff571",
           "Name": "buildingSolid",
           "Description": "Building volume.",
           "UsingDefaultValue": false,
@@ -549,7 +708,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "0de657e2190a4d6489e59b379af58e33",
+          "Id": "5e06dafcba0845959884ae764bb810c6",
           "Name": "floorSrfList",
           "Description": "Building floor surfaces.",
           "UsingDefaultValue": false,
@@ -558,7 +717,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "c7c39dd2768c4e3bb68d1e0c91100002",
+          "Id": "4e9131b9e7cc4e40964d62f1ddde15ac",
           "Name": "netFloorSrfList",
           "Description": "Building floor surfaces with core removed.",
           "UsingDefaultValue": false,
@@ -567,7 +726,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "8b975128cf354b0cbb811c87345412e9",
+          "Id": "80cf7eb83ea74b5fb6affdb05e357016",
           "Name": "floorElevationList",
           "Description": "Elevation of each floor in building.",
           "UsingDefaultValue": false,
@@ -576,7 +735,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2218674eb5b241d480d36d19488ba6bc",
+          "Id": "0c93b5b140814ca1b47d0ad6d79c8b69",
           "Name": "coreSolidList",
           "Description": "Building core volumes.",
           "UsingDefaultValue": false,
@@ -585,7 +744,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f5de477f24314364b06d611f192b5bdd",
+          "Id": "80cc525073b3408fa4aa3fead18056eb",
           "Name": "topPlane",
           "Description": "A plane at the top of the building volume. Use this for additional volumes to create a stacked building.",
           "UsingDefaultValue": false,
@@ -594,7 +753,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "12ebca019ae84377940a7e2f6b71fb14",
+          "Id": "3f68f352bda14a2eb10ef0ef0a35bc73",
           "Name": "buildingVolume",
           "Description": "Volume of entire building solid.",
           "UsingDefaultValue": false,
@@ -603,7 +762,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e303862b4cc04eb8bb8a7e338e7d90fb",
+          "Id": "4e1b61ba9ea34f3fb252f03232ad9ee8",
           "Name": "grossFloorArea",
           "Description": "Combined area of all floors. Will be at least equal to BldgArea.",
           "UsingDefaultValue": false,
@@ -612,7 +771,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "04ad78752bba4d7c896fece75b600be4",
+          "Id": "d83567b7ef7b4479adfa4327c124f6ab",
           "Name": "netFloorArea",
           "Description": "Combined area of all floors with core removed.",
           "UsingDefaultValue": false,
@@ -621,7 +780,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f70595e6b90344f69d4b4725403eee95",
+          "Id": "24496fb10f15461ebbb44b25a511f14e",
           "Name": "totalFacadeArea",
           "Description": "Combined area of all facades (vertical surfaces).",
           "UsingDefaultValue": false,
@@ -636,11 +795,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.GetSurfaceLoops@Autodesk.DesignScript.Geometry.Surface",
-      "Id": "ba698db885eb4099893e53782f4e7403",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Building.GetSurfaceLoops@Autodesk.DesignScript.Geometry.Surface",
+      "Id": "ae7b3823ba8c41b3a1e33d8a2dafee2e",
       "Inputs": [
         {
-          "Id": "e313d53a36c94f75bf58e77c817f0e34",
+          "Id": "82d91cf95de543769de7e02fa682eb8f",
           "Name": "surface",
           "Description": "The surface.\n\nSurface",
           "UsingDefaultValue": false,
@@ -651,7 +810,7 @@
       ],
       "Outputs": [
         {
-          "Id": "5dd6fb76c8754501b527217a666762a7",
+          "Id": "42cfea143c7243c8b92b7cde307c7ed8",
           "Name": "edgeCrvList",
           "Description": "Edges of surface.",
           "UsingDefaultValue": false,
@@ -666,11 +825,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.SelectBuildingType@int",
-      "Id": "48ba619ec9f44742ab1fa750ac0ff4d7",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Building.SelectBuildingType@int",
+      "Id": "71285bafe1174756a54cf8cf09a3a93c",
       "Inputs": [
         {
-          "Id": "5395f017986d4986849104a8ca9524ab",
+          "Id": "5ced5dc56013463180b4905df9e672dc",
           "Name": "shapeIndex",
           "Description": "Index of building type to select from list of possible types.\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
@@ -681,7 +840,7 @@
       ],
       "Outputs": [
         {
-          "Id": "88cc595e0544449ea1f8c9cecca946d5",
+          "Id": "403db26d49384842aa99c993f9b706fe",
           "Name": "buildingTypeStr",
           "Description": "Name of building type. One of \"U\", \"L\", \"H\", \"O\", or \"D\".",
           "UsingDefaultValue": false,
@@ -696,11 +855,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Building.DeconstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
-      "Id": "14cba2efe27a437392fb9b4fa4286482",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Building.DeconstructFacadeShell@Autodesk.DesignScript.Geometry.Topology,double",
+      "Id": "c51d21567d7040ea9e08faa998d9d9ce",
       "Inputs": [
         {
-          "Id": "b57b93010ab84380b4fc13fe709c094d",
+          "Id": "b3e82614acd541c5a080f986be1d47e6",
           "Name": "solid",
           "Description": "Building solid.\n\nTopology",
           "UsingDefaultValue": false,
@@ -709,7 +868,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "31d09a8bbd4d423b819ffc71b51a08e0",
+          "Id": "2ae17dbcd40d498583638d3c80441b80",
           "Name": "angleThreshold",
           "Description": "Threshold for classification. 0 (more vertical surfaces) - 90 (more horizontal surfaces).\n\ndouble\nDefault value : 45",
           "UsingDefaultValue": true,
@@ -720,7 +879,7 @@
       ],
       "Outputs": [
         {
-          "Id": "0375226456e9413ba7aad237254fff4f",
+          "Id": "2dd551d49ea049b5b9aeb314a5ac434e",
           "Name": "verticalSrfList",
           "Description": "Vertical surfaces.",
           "UsingDefaultValue": false,
@@ -729,7 +888,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "9adc9ff5b2854e93a2ed8284cef919f6",
+          "Id": "b7aeeaf8b5304e1384f792e5ba32753b",
           "Name": "horizontalSrfList",
           "Description": "Horizontal surfaces.",
           "UsingDefaultValue": false,
@@ -744,98 +903,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Revit.CreateRevitFloors@Autodesk.DesignScript.Geometry.Surface[][],Revit.Elements.FloorType,string",
-      "Id": "bd5d98e6040f4ce5a41250a543e42590",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Site.VolumeByOutlineSetback@Autodesk.DesignScript.Geometry.Curve,double,double",
+      "Id": "44739082dd3440b48bcca3ae559a5a57",
       "Inputs": [
         {
-          "Id": "81335583107848889503a2f3a06c7670",
-          "Name": "srfList",
-          "Description": "Floor surfaces.\n\nSurface[][]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "4342b0d366604531a654f1fa124f2f4d",
-          "Name": "floorType",
-          "Description": "Type of created Revit floors.\n\nFloorType",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "96b53e189f7d41a396a6b81b8c3d2911",
-          "Name": "levelPrefixStr",
-          "Description": "Prefix for names of created Revit levels.\n\nstring\nDefault value : \"Dynamo Level\"",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "d3a394a73d064608a353ff96c70fa84b",
-          "Name": "floorElementList",
-          "Description": "Revit floor elements.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Creates Revit floors from building floor surfaces.\n\nRevit.CreateRevitFloors (srfList: Surface[][], floorType: FloorType, levelPrefixStr: string = \"Dynamo Level\"): Floor[][]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Revit.CreateRevitMass@Autodesk.DesignScript.Geometry.Solid,Revit.Elements.Category",
-      "Id": "0ff8e16c10fc4db791f581bef1335c53",
-      "Inputs": [
-        {
-          "Id": "473f0148dc12403c8b8a71f841a8bd72",
-          "Name": "BuildingSolid",
-          "Description": "The building volume.\n\nSolid",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "cba7868b926642a78e61a0cd3c5316b6",
-          "Name": "Category",
-          "Description": "A category for the mass.\n\nCategory",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "544b23080ffd487884e23e2ba35b14ca",
-          "Name": "RevitBuilding",
-          "Description": "Revit DirectShape element.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Creates a Revit mass as a direct shape.\n\nRevit.CreateRevitMass (BuildingSolid: Solid, Category: Category): DirectShape"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Site.VolumeByOutlineSetback@Autodesk.DesignScript.Geometry.Curve,double,double",
-      "Id": "86495906876e4a248d27995c24921585",
-      "Inputs": [
-        {
-          "Id": "08624ffcc1054a60bed4a4b1d322e6d6",
+          "Id": "d56234a3d9f442d6be9d406cdc0290d6",
           "Name": "siteOutline",
           "Description": "Site boundary, from Revit.\n\nCurve",
           "UsingDefaultValue": false,
@@ -844,7 +916,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "1c01b1f7cb50499fac4108e5a2239852",
+          "Id": "01d68d8c310b4421968eda6975be5916",
           "Name": "setback",
           "Description": "Site setback distance.\n\ndouble\nDefault value : 0",
           "UsingDefaultValue": true,
@@ -853,7 +925,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "bf1ddb28c89d475eb99a0f901a7b529f",
+          "Id": "1c39549cb6b04f1da0172d4247c92e96",
           "Name": "heightLimit",
           "Description": "Maximum building height.\n\ndouble\nDefault value : 100",
           "UsingDefaultValue": true,
@@ -864,7 +936,7 @@
       ],
       "Outputs": [
         {
-          "Id": "00b9fa08437b42d591be11ece25e8195",
+          "Id": "04a3100a4ef8433d97ee5069d42ebe01",
           "Name": "siteSolid",
           "Description": "Allowable volume for building mass.",
           "UsingDefaultValue": false,
@@ -873,7 +945,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "11a054339b1d47cb96a2d8caa31b12e2",
+          "Id": "f46375c4183d423a9914dff9fffe9d5f",
           "Name": "siteOffset",
           "Description": "Allowable footprint for building mass.",
           "UsingDefaultValue": false,
@@ -888,22 +960,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Site.ClashTest@Autodesk.DesignScript.Geometry.Solid,Autodesk.DesignScript.Geometry.Solid",
-      "Id": "8b608a1d621b4fc5ac291698c90f9455",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingSandbox.Generate.Site.ContextByElement@Autodesk.DesignScript.Geometry.PolySurface",
+      "Id": "834dd7317b1b4b25b5c84f05280bca87",
       "Inputs": [
         {
-          "Id": "6bbf31cd3adb42cea8c2e609c39cf375",
-          "Name": "buildingSolid",
-          "Description": "Building solid from the generator.\n\nSolid",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "91962d1a08ac4b6e9746ee81aa5bdb55",
-          "Name": "siteSolid",
-          "Description": "Site boundary volume.\n\nSolid",
+          "Id": "b2840a3ee77b451aa85fcd7735f18c75",
+          "Name": "polysurface",
+          "Description": "Referenced site element.\n\nPolySurface",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -912,64 +975,7 @@
       ],
       "Outputs": [
         {
-          "Id": "c28186e9793b445d84be451514c88ea1",
-          "Name": "buildingInside",
-          "Description": "Volume of building inside of site boundary.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "36e8fdcd04c7493a8923f0e3a96544c7",
-          "Name": "buildingOutside",
-          "Description": "Volume of building outside of site boundary.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "11b5265f1a9b4218a03a473292b2bf76",
-          "Name": "intersects",
-          "Description": "Does the building mass intersect with the site boundary?",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "e033adc39c9d47e8b5a7398560ef8d84",
-          "Name": "percentOutside",
-          "Description": "Percent of building volume that is outside the site boundary.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Tests site boundary against building mass.\n\nSite.ClashTest (buildingSolid: Solid, siteSolid: Solid): var[]..[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Site.ContextByElement@Autodesk.DesignScript.Geometry.PolySurface",
-      "Id": "1942e06613e64d6da27fab87e4be152c",
-      "Inputs": [
-        {
-          "Id": "69681a14bbde4b318d852fa382690401",
-          "Name": "revitSite",
-          "Description": "Referenced site element (usually a selected mass).\n\nPolySurface",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "99936e0ac97c462ea296b10d0b7b22e4",
+          "Id": "f5dfadf3f45741399d769df82f8f35f4",
           "Name": "solidList",
           "Description": "Individual solids in site geometry.",
           "UsingDefaultValue": false,
@@ -978,7 +984,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e717cadb83cf425cb1937a23a25c2495",
+          "Id": "50cd4a24ebfa4948b2e4078cdb61497d",
           "Name": "boundingBoxList",
           "Description": "Bounding box for each element.",
           "UsingDefaultValue": false,
@@ -987,7 +993,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2a35e12aadab4cdabb553edaeb52a496",
+          "Id": "8b743c9a418843289fe697a55bd38a28",
           "Name": "heightList",
           "Description": "Height of each element.",
           "UsingDefaultValue": false,
@@ -997,63 +1003,36 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Gets site components from Revit element.\n\nSite.ContextByElement (revitSite: PolySurface): var[]..[]"
+      "Description": "Gets site components from polysurface (e.g. Revit mass).\n\nSite.ContextByElement (polysurface: PolySurface): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GenerativeToolkit.Site.ViewDistance@Autodesk.DesignScript.Geometry.Surface,Autodesk.DesignScript.Geometry.Geometry[],DSCore.Color,DSCore.Color,double,double",
-      "Id": "a6244331e07a4293960742d977ccf2b4",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingRevit.Integrate.Revit.CreateRevitFloors@Autodesk.DesignScript.Geometry.Surface[][],Revit.Elements.FloorType,string",
+      "Id": "8c1ea3b6f2dc4e0d94706ba17adb77f4",
       "Inputs": [
         {
-          "Id": "34e6e97d39614d4699be2b53bb3346d1",
-          "Name": "surface",
-          "Description": "Surface, such as building's facade, to search from.\n\nSurface",
+          "Id": "7cb9bd1180444563833eed85fefed699",
+          "Name": "srfList",
+          "Description": "Floor surfaces.\n\nSurface[][]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "a2a23ec778834e229c2e1e42385c062c",
-          "Name": "contextGeomList",
-          "Description": "Geometry to calculate distance to.\n\nGeometry[]",
+          "Id": "b393e2c8675f48209c260f13b3c34cf4",
+          "Name": "floorType",
+          "Description": "Type of created Revit floors.\n\nFloorType",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "d0f9d52ee63945e790d2c821cc836356",
-          "Name": "startColor",
-          "Description": "Color of start of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 0, 115)",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "83a1fe095af84d30928451dcfdc8fb1f",
-          "Name": "endColor",
-          "Description": "Color of end of preview color range.\n\nColor\nDefault value : DSCore.Color.ByARGB(255, 255, 255, 255)",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "1570eb0298294f80956f3492b3d60f45",
-          "Name": "resolution",
-          "Description": "Distance between sampling points.\n\ndouble\nDefault value : 3",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "a10e2b626cb74d9e8c8e545b9d12d64a",
-          "Name": "maxDistance",
-          "Description": "Maximum distance to search.\n\ndouble\nDefault value : 50",
+          "Id": "4f3e787be94747eeb306477f3cf3016c",
+          "Name": "levelPrefixStr",
+          "Description": "Prefix for names of created Revit levels.\n\nstring\nDefault value : \"Dynamo Level\"",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1062,27 +1041,9 @@
       ],
       "Outputs": [
         {
-          "Id": "4c89066db58940b4a2ea7ef6cf096c15",
-          "Name": "pointList",
-          "Description": "Sampling points.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "179bc72e8f2f488bba61a78be7b5bd42",
-          "Name": "distanceList",
-          "Description": "Distance from each sampling point along surface normal to the closest context geometry.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "e7e6fa9b5d2a471eaaca6fb1a6b3f315",
-          "Name": "geometryColor",
-          "Description": "Colored surfaces mapping view distance.",
+          "Id": "eda452e16e62499c8d6f083a4a8dde44",
+          "Name": "floorElementList",
+          "Description": "Revit floor elements.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1090,7 +1051,46 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Calculates line of sight distances from a grid of points on a surface.\n\nSite.ViewDistance (surface: Surface, contextGeomList: Geometry[], startColor: Color = DSCore.Color.ByARGB(255, 255, 0, 115), endColor: Color = DSCore.Color.ByARGB(255, 255, 255, 255), resolution: double = 3, maxDistance: double = 50): var[]..[]"
+      "Description": "Creates Revit floors from building floor surfaces.\n\nRevit.CreateRevitFloors (srfList: Surface[][], floorType: FloorType, levelPrefixStr: string = \"Dynamo Level\"): Floor[][]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.MassingRevit.Integrate.Revit.CreateRevitMass@Autodesk.DesignScript.Geometry.Solid,Revit.Elements.Category",
+      "Id": "c7debbba0329414ea1c483e45802747f",
+      "Inputs": [
+        {
+          "Id": "aaaef18eb5144695a79bf6d2ab2ff0ef",
+          "Name": "BuildingSolid",
+          "Description": "The building volume.\n\nSolid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "eddd474e92224888ba3965b29e3fbe1b",
+          "Name": "Category",
+          "Description": "A category for the mass.\n\nCategory",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b892392a9cd84934854a110a58244869",
+          "Name": "RevitBuilding",
+          "Description": "Revit DirectShape element.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates a Revit mass as a direct shape.\n\nRevit.CreateRevitMass (BuildingSolid: Solid, Category: Category): DirectShape"
     }
   ],
   "Connectors": [],
@@ -1120,138 +1120,138 @@
     "NodeViews": [
       {
         "ShowGeometry": true,
-        "Name": "Building.ByOutlineArea",
-        "Id": "e851639a35d644b9b2a389dc126b2553",
+        "Name": "SiteAnalysis.ClashTest",
+        "Id": "810843e2ec1c42fdbbdd4141022116b7",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 831.17013775909084,
-        "Y": 245.45308142387864
+        "X": 956.8775749235067,
+        "Y": 897.996600653974
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "SiteAnalysis.ViewDistance",
+        "Id": "6293a5c255f74acbbdadea12d89d217a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1696.0298817523624,
+        "Y": 902.18974123415592
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Building.ByOutlineArea",
+        "Id": "1ad272f9f8954c8e97c9f48d6ce6c9df",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 634.30142150907886,
+        "Y": 92.142595742420156
       },
       {
         "ShowGeometry": true,
         "Name": "Building.ByOutlineFloors",
-        "Id": "5fa4278a1e874ea3af624d0ebac3a142",
+        "Id": "67c98801c5904f549a419e9007b22762",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1164.6178092685182,
-        "Y": 245.45308142387864
+        "X": 999.772681273525,
+        "Y": 92.1425957424202
       },
       {
         "ShowGeometry": true,
         "Name": "Building.ByTypeArea",
-        "Id": "c4b89e85bc964aad81a15a1987fe31c9",
+        "Id": "ae1060b17e364f00be5a17d73823f89e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1498.0654807779456,
-        "Y": 245.45308142387864
+        "X": 1369.6759828958848,
+        "Y": 92.142595742420156
       },
       {
         "ShowGeometry": true,
         "Name": "Building.ByTypeFloors",
-        "Id": "7ca0ce14d00c4b53a58ae0f9853b7180",
+        "Id": "61c6a81934ec4f91882e5e0e82f471bd",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1856.1798189540395,
-        "Y": 245.45308142387864
+        "X": 1762.3632635892877,
+        "Y": 92.142595742420156
       },
       {
         "ShowGeometry": true,
         "Name": "Building.GetSurfaceLoops",
-        "Id": "ba698db885eb4099893e53782f4e7403",
+        "Id": "ae7b3823ba8c41b3a1e33d8a2dafee2e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2214.2941571301335,
-        "Y": 245.45308142387864
+        "X": 2155.0505442826907,
+        "Y": 92.142595742420156
       },
       {
         "ShowGeometry": true,
         "Name": "Building.SelectBuildingType",
-        "Id": "48ba619ec9f44742ab1fa750ac0ff4d7",
+        "Id": "71285bafe1174756a54cf8cf09a3a93c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2457.7418286395609,
-        "Y": 245.45308142387864
+        "X": 2432.7378249760936,
+        "Y": 92.142595742420156
       },
       {
         "ShowGeometry": true,
         "Name": "Building.DeconstructFacadeShell",
-        "Id": "14cba2efe27a437392fb9b4fa4286482",
+        "Id": "c51d21567d7040ea9e08faa998d9d9ce",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2751.1895001489884,
-        "Y": 245.45308142387864
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Revit.CreateRevitFloors",
-        "Id": "bd5d98e6040f4ce5a41250a543e42590",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 823.93558878170518,
-        "Y": 694.04718195946816
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Revit.CreateRevitMass",
-        "Id": "0ff8e16c10fc4db791f581bef1335c53",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1131.3320224377565,
-        "Y": 693.84258228215481
+        "X": 2759.4251056694966,
+        "Y": 92.142595742420156
       },
       {
         "ShowGeometry": true,
         "Name": "Site.VolumeByOutlineSetback",
-        "Id": "86495906876e4a248d27995c24921585",
+        "Id": "44739082dd3440b48bcca3ae559a5a57",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 824.51581344103226,
-        "Y": 866.0942610326581
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Site.ClashTest",
-        "Id": "8b608a1d621b4fc5ac291698c90f9455",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1082.8385757889346,
-        "Y": 866.0942610326581
+        "X": 634.30142150907886,
+        "Y": 902.18974123415592
       },
       {
         "ShowGeometry": true,
         "Name": "Site.ContextByElement",
-        "Id": "1942e06613e64d6da27fab87e4be152c",
+        "Id": "834dd7317b1b4b25b5c84f05280bca87",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1389.1613381368368,
-        "Y": 866.0942610326581
+        "X": 1327.4537283379345,
+        "Y": 902.18974123415592
       },
       {
         "ShowGeometry": true,
-        "Name": "Site.ViewDistance",
-        "Id": "a6244331e07a4293960742d977ccf2b4",
+        "Name": "Revit.CreateRevitFloors",
+        "Id": "8c1ea3b6f2dc4e0d94706ba17adb77f4",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1672.1507671514057,
-        "Y": 866.0942610326581
+        "X": 991.33818988124017,
+        "Y": 623.53241087386766
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Revit.CreateRevitMass",
+        "Id": "c7debbba0329414ea1c483e45802747f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 625.866930116794,
+        "Y": 623.53241087386732
       }
     ],
     "Annotations": [],
-    "X": -559.52719867409451,
-    "Y": 51.930909340567013,
-    "Zoom": 0.71550155946751415
+    "X": 95.920690075643677,
+    "Y": 264.82120530660649,
+    "Zoom": 0.31534856480613305
   }
 }
