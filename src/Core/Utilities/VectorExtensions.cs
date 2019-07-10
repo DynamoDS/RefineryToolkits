@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autodesk.RefineryToolkits.Core.Geometry.Extensions
+namespace Autodesk.RefineryToolkits.Core.Utillites
 {
     [IsVisibleInDynamoLibrary(false)]
     public static class VectorExtension

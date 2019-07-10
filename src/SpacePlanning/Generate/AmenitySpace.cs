@@ -2,7 +2,7 @@
 using Autodesk.DesignScript.Runtime;
 using System.Collections.Generic;
 using System.Linq;
-using Autodesk.RefineryToolkits.Core.Geometry.Extensions;
+using Autodesk.RefineryToolkits.Core.Utillites;
 using Dynamo.Graph.Nodes;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate

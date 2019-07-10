@@ -165,11 +165,11 @@
     <Compile Include="Geometry\Vector.cs" />
     <Compile Include="Geometry\Vertex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Geometry\Extensions\CurveExtension.cs" />
-    <Compile Include="Geometry\Extensions\LineExtension.cs" />
-    <Compile Include="Geometry\Extensions\PointExtension.cs" />
-    <Compile Include="Geometry\Extensions\SurfaceExtension.cs" />
-    <Compile Include="Geometry\Extensions\VectorExtension.cs" />
+    <Compile Include="Utilities\CurveExtensions.cs" />
+    <Compile Include="Utilities\LineExtensions.cs" />
+    <Compile Include="Utilities\PointExtensions.cs" />
+    <Compile Include="Utilities\SurfaceExtensions.cs" />
+    <Compile Include="Utilities\VectorExtensions.cs" />
     <Compile Include="Utilities\ListExtensions.cs" />
     <Compile Include="Utilities\NumericExtensions.cs" />
   </ItemGroup>

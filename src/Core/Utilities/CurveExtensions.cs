@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autodesk.RefineryToolkits.Core.Geometry;
 
-namespace Autodesk.RefineryToolkits.Core.Geometry.Extensions
+namespace Autodesk.RefineryToolkits.Core.Utillites
 {
     [IsVisibleInDynamoLibrary(false)]
     public static class CurveExtension
