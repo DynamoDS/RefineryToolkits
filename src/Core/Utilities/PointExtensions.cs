@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DSGeom = Autodesk.DesignScript.Geometry;
 
-namespace Autodesk.RefineryToolkits.Core.Geometry.Extensions
+namespace Autodesk.RefineryToolkits.Core.Utillites
 {
     [IsVisibleInDynamoLibrary(false)]
     public static class PointExtension

@@ -1,6 +1,5 @@
 ﻿using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
-using Autodesk.RefineryToolkits.Core.Geometry.Extensions;
 using Autodesk.RefineryToolkits.Core.Utillites;
 using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
 using Dynamo.Graph.Nodes;

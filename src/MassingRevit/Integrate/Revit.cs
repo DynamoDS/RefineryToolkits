@@ -18,7 +18,7 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
     /// <summary>
     /// Revit description.
     /// </summary>
-    public static class RevitNodes
+    public static class Revit
     {
         internal static Document Document => DocumentManager.Instance.CurrentDBDocument;
 
