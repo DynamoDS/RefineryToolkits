@@ -39,7 +39,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
 
         /// <summary>
         /// Returns the minimum point from a list of points. Minimum is 
-        /// evaulated by the point with minimum Y, then X and finally Z coordinate.
+        /// evaluated by the point with minimum Y, then X and finally Z coordinate.
         /// </summary>
         /// <param name="points">List of points</param>
         /// <returns name="minPoint">Minimum Point</returns>
@@ -52,6 +52,23 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
                 .ThenBy(p => p.Z)
                 .ToList()
                 .First();
+        }
+
+        /// <summary>
+        /// Returns the maximum point from a list of points. Maximum is 
+        /// evaluated by the point with maximum Y, then X and finally Z coordinate.
+        /// </summary>
+        /// <param name="points">List of points</param>
+        /// <returns name="minPoint">Maximum Point</returns>
+        public static Point MaximumPoint(List<Point> points)
+        {
+            //TODO: Implement a better way of selecting the maximum point.
+            return points
+                .OrderBy(p => p.Y)
+                .ThenBy(p => p.X)
+                .ThenBy(p => p.Z)
+                .ToList()
+                .Last();
         }
 
         /// <summary>
