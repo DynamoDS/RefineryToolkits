@@ -9,7 +9,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
     public static class AdjacencyPreference
     {
-       
+
         /// <summary>
         /// Returns the geometric median point of a list of points.
         /// The geometric median is the point minimizing the sum of distances to the sample points
@@ -30,7 +30,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 {
                     return FermatPoint(points);
                 }
-
             }
             // Else If 4 points return wither the point inside the convex hull
             // or the crossing point of the diagonals of the quadrilateral
@@ -43,10 +42,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 }
                 else
                 {
-                    Line lineAC = Line.ByStartPointEndPoint(convexHull[0], convexHull[2]);
-                    Line lineBD = Line.ByStartPointEndPoint(convexHull[1], convexHull[3]);
+                    var lineAC = Line.ByStartPointEndPoint(convexHull[0], convexHull[2]);
+                    var lineBD = Line.ByStartPointEndPoint(convexHull[1], convexHull[3]);
 
-                    Point point = lineAC.Intersect(lineBD).First() as Point;
+                    var point = lineAC.Intersect(lineBD).First() as Point;
                     lineAC.Dispose();
                     lineBD.Dispose();
 
@@ -56,7 +55,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             }
             // Else return the point that minimizes the distance to the sample points
             // https://www.geeksforgeeks.org/geometric-median/
-            List<Point> testPoints = new List<Point>
+            var testPoints = new List<Point>
             {
                 Point.ByCoordinates(-1.0,0.0),
                 Point.ByCoordinates(0.0,1.0),
@@ -64,7 +63,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 Point.ByCoordinates(0.0,-1.0)
             };
 
-            int n = points.Count;
+            var n = points.Count;
             Point commonPoint = CommonPointByPoints(testPoints, points, n);
 
             return commonPoint;
@@ -92,7 +91,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             double currentY = 0;
             //Point currentPoint = Point.ByCoordinates(0,0);
 
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
             {
                 currentX += points[i].X;
                 currentY += points[i].Y;
@@ -108,16 +107,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             // minimum_distance becomes sum of 
             // all distances from MidPoint to 
             // all given points 
-            double minimumDistance = DistanceSum(Point.ByCoordinates(currentX, currentY), points, n);
+            var minimumDistance = DistanceSum(Point.ByCoordinates(currentX, currentY), points, n);
 
-            int k = 0;
+            var k = 0;
             while (k < n)
             {
-                for (int i = 0; i < n; i++)
+                for (var i = 0; i < n; i++)
                 {
                     if (i != k)
                     {
-                        double newDistance = DistanceSum(points[i], points, n);
+                        var newDistance = DistanceSum(points[i], points, n);
                         if (newDistance < minimumDistance)
                         {
                             minimumDistance = newDistance;
@@ -129,28 +128,28 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 k++;
             }
 
-            int flag = 0;
+            var flag = 0;
 
             // Lowest Limit till which we are going 
             // to run the main while loop 
             // Lower the Limit higher the accuracy 
-            double lowerLimit = 0.001;
+            var lowerLimit = 0.001;
             // Test loop for approximation starts here 
             while (testDistance > lowerLimit)
             {
                 flag = 0;
 
                 // Loop for iterating over all 4 neighbours 
-                for (int i = 0; i < 4; i++)
+                for (var i = 0; i < 4; i++)
                 {
                     // Finding Neighbours done 
-                    double newX = currentX + (double)testDistance * testPoints[i].X;
-                    double newY = currentY + (double)testDistance * testPoints[i].Y;
+                    var newX = currentX + (double)testDistance * testPoints[i].X;
+                    var newY = currentY + (double)testDistance * testPoints[i].Y;
 
                     // New sum of Euclidean distances 
                     // from the neighbor to the given 
                     // data points 
-                    double newDistance = DistanceSum(Point.ByCoordinates(newX, newY), points, n);
+                    var newDistance = DistanceSum(Point.ByCoordinates(newX, newY), points, n);
 
                     if (newDistance < minimumDistance)
                     {
@@ -189,10 +188,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             int n)
         {
             double sum = 0;
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
             {
-                double distx = Math.Abs(points[i].X - point.X);
-                double disty = Math.Abs(points[i].Y - point.Y);
+                var distx = Math.Abs(points[i].X - point.X);
+                var disty = Math.Abs(points[i].Y - point.Y);
                 sum += Math.Sqrt((distx * distx) + (disty * disty));
             }
 
@@ -200,31 +199,31 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         }
 
         /// <summary>
-        /// if points are triangle with angel bigger than or equal to 120, return vertex at that angle
+        /// If points are triangle with angle bigger than or equal to 120, return vertex at that angle
         /// </summary>
         /// <param name="A"></param>
         /// <param name="B"></param>
         /// <param name="C"></param>
-        /// <returns>vertex at angle than or equal to 120</returns>
+        /// <returns>Vertex at angle than or equal to 120</returns>
         private static Point VertexAtAngle(
             Point A,
             Point B,
             Point C)
         {
             // Square of lengths be a2, b2, c2 
-            double a2 = LengthSquare(B, C);
-            double b2 = LengthSquare(A, C);
-            double c2 = LengthSquare(A, B);
+            var a2 = LengthSquare(B, C);
+            var b2 = LengthSquare(A, C);
+            var c2 = LengthSquare(A, B);
 
             // lenght of sides be a, b, c 
-            double a = Math.Sqrt(a2);
-            double b = Math.Sqrt(b2);
-            double c = Math.Sqrt(c2);
+            var a = Math.Sqrt(a2);
+            var b = Math.Sqrt(b2);
+            var c = Math.Sqrt(c2);
 
             // From Cosine law 
-            double alpha = Math.Acos((b2 + c2 - a2) / (2 * b * c));
-            double betta = Math.Acos((a2 + c2 - b2) / (2 * a * c));
-            double gamma = Math.Acos((a2 + b2 - c2) / (2 * a * b));
+            var alpha = Math.Acos((b2 + c2 - a2) / (2 * b * c));
+            var betta = Math.Acos((a2 + c2 - b2) / (2 * a * c));
+            var gamma = Math.Acos((a2 + b2 - c2) / (2 * a * b));
 
             // Converting to degree 
             alpha = Math.Ceiling(alpha * 180 / Math.PI);
@@ -257,8 +256,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             Point pt1,
             Point pt2)
         {
-            double xDiff = pt1.X - pt2.X;
-            double yDiff = pt1.Y - pt2.Y;
+            var xDiff = pt1.X - pt2.X;
+            var yDiff = pt1.Y - pt2.Y;
             return xDiff * xDiff + yDiff * yDiff;
         }
 
@@ -269,27 +268,33 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns>common point of a triangle with angles bigger than 120</returns>
         private static Point FermatPoint(List<Point> points)
         {
-            List<Point> sortedPoints = points.OrderBy(pt => pt.Y).Reverse().ToList();
+            var sortedPoints = points.OrderBy(pt => pt.Y).Reverse().ToList();
 
             Vector vectorAB = Vector.ByTwoPoints(sortedPoints[0], sortedPoints[1]).Rotate(Vector.ZAxis(), 90);
             Vector vectorAC = Vector.ByTwoPoints(sortedPoints[2], sortedPoints[0]).Rotate(Vector.ZAxis(), 90);
 
-            Point midpointAB = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[1].X) / 2, (sortedPoints[0].Y + sortedPoints[1].Y) / 2);
-            Point midpointAC = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[2].X) / 2, (sortedPoints[0].Y + sortedPoints[2].Y) / 2);
+            var midpointAB = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[1].X) / 2, (sortedPoints[0].Y + sortedPoints[1].Y) / 2);
+            var midpointAC = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[2].X) / 2, (sortedPoints[0].Y + sortedPoints[2].Y) / 2);
 
-            double sideABLength = Math.Sqrt(Math.Pow((sortedPoints[0].X - sortedPoints[1].X), 2) + Math.Pow((sortedPoints[0].Y - sortedPoints[1].Y), 2));
-            double sideACLength = Math.Sqrt(Math.Pow((sortedPoints[0].X - sortedPoints[2].X), 2) + Math.Pow((sortedPoints[0].Y - sortedPoints[2].Y), 2));
+            var sideABLength = Math.Sqrt(Math.Pow((sortedPoints[0].X - sortedPoints[1].X), 2) + Math.Pow((sortedPoints[0].Y - sortedPoints[1].Y), 2));
+            var sideACLength = Math.Sqrt(Math.Pow((sortedPoints[0].X - sortedPoints[2].X), 2) + Math.Pow((sortedPoints[0].Y - sortedPoints[2].Y), 2));
 
-            double equilateralLengthAB = (sideABLength * Math.Sqrt(3)) / 2;
-            double equilateralLengthAC = (sideACLength * Math.Sqrt(3)) / 2;
+            var equilateralLengthAB = (sideABLength * Math.Sqrt(3)) / 2;
+            var equilateralLengthAC = (sideACLength * Math.Sqrt(3)) / 2;
 
-            Point equilateralTopPointAB = midpointAB.Translate(vectorAB, equilateralLengthAB) as Point;
-            Point equilateralTopPointAC = midpointAC.Translate(vectorAC, equilateralLengthAC) as Point;
+            var equilateralTopPointAB = midpointAB.Translate(vectorAB, equilateralLengthAB) as Point;
+            var equilateralTopPointAC = midpointAC.Translate(vectorAC, equilateralLengthAC) as Point;
 
-            Line lineABC = Line.ByStartPointEndPoint(equilateralTopPointAB, sortedPoints[2]);
-            Line lineACB = Line.ByStartPointEndPoint(equilateralTopPointAC, sortedPoints[1]);
+            var lineABC = Line.ByStartPointEndPoint(equilateralTopPointAB, sortedPoints[2]);
+            var lineACB = Line.ByStartPointEndPoint(equilateralTopPointAC, sortedPoints[1]);
 
-            Point fermatPt = lineABC.Intersect(lineACB)[0] as Point;
+            var fermatPt = lineABC.Intersect(lineACB)[0] as Point;
+
+            // dispose of all intermediate Dynamo geometry
+            midpointAB.Dispose();
+            midpointAC.Dispose();
+            lineABC.Dispose();
+            lineACB.Dispose();
 
             return fermatPt;
         }
@@ -302,15 +307,17 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         private static List<Point> ConvexHull(List<Point> points)
         {
             var vertices = new Vertex[points.Count];
-            for (int i = 0; i < points.Count; i++)
+            for (var i = 0; i < points.Count; i++)
             {
                 vertices[i] = new Vertex(points[i].X, points[i].Y);
             }
 
-            var convexHull = MIConvexHull.ConvexHull.Create(vertices).Result.Points.ToList();
+            var convexHull = MIConvexHull.ConvexHull.Create(vertices);
+            if (convexHull.Result == null) throw new ArgumentOutOfRangeException("Could not create convex hull, check your points are not co-linear.");
+            var hullPoints = convexHull.Result.Points.ToList();
 
-            List<Point> convexHullPoints = new List<Point>();
-            foreach (Vertex vertex in convexHull)
+            var convexHullPoints = new List<Point>();
+            foreach (Vertex vertex in hullPoints)
             {
                 convexHullPoints.Add(Point.ByCoordinates(vertex.Position[0], vertex.Position[1]));
             }
@@ -325,7 +332,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         {
             public Vertex(double x, double y)
             {
-                Position = new double[2] { x, y };
+                this.Position = new double[2] { x, y };
             }
 
             public double[] Position { get; set; }

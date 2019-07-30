@@ -25,7 +25,6 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
 
         #region Public Methods
 
-
         /// <summary>
         /// Returns the mid point between two points.
         /// </summary>
@@ -47,7 +46,12 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         public static Point MinimumPoint(List<Point> points)
         {
             //TODO: Implement a better way of selecting the minimum point.
-            return points.OrderBy(p => p.Y).ThenBy(p => p.X).ThenBy(p => p.Z).ToList().First();
+            return points
+                .OrderBy(p => p.Y)
+                .ThenBy(p => p.X)
+                .ThenBy(p => p.Z)
+                .ToList()
+                .First();
         }
 
         /// <summary>
@@ -61,8 +65,10 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             List<Point> points)
         {
             //TODO: Add angle offet input
-            List<Point> ordered = points.OrderBy(p => RadAngle(centre, p)).ThenBy(p => centre.DistanceTo(p)).ToList();
-            return ordered;
+            return points
+                .OrderBy(p => RadAngle(centre, p))
+                .ThenBy(p => centre.DistanceTo(p))
+                .ToList();
         }
 
         /// <summary>
@@ -79,6 +85,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             Vertex e = ToVertex(end);
             return Vertex.ArcRadAngle(c, s, e);
         }
+
         #endregion
 
         #region Internal Methods
