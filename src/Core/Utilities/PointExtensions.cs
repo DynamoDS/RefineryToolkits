@@ -1,4 +1,5 @@
 ﻿using Autodesk.DesignScript.Runtime;
+using Autodesk.RefineryToolkits.Core.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,32 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
     [IsVisibleInDynamoLibrary(false)]
     public static class PointExtension
     {
-      
+        /// <summary>
+        /// Checks if a list of points are co-linear, meaning they can all sit on the same line.
+        /// </summary>
+        /// <param name="pointList">The list of points to check.</param>
+        /// <search>colinear</search>
+        public static bool AreColinear(this List<DSGeom.Point> pointList)
+        {
+            if (pointList == null)
+                throw new ArgumentNullException(nameof(pointList));
 
-        #region CompareCoincidental
+            int n = pointList.Count;
+            if (n < 3) return true;
+
+            int startIndex = 1;
+            var referenceVector = Vector.ByTwoVertices(pointList[0].ToVertex(), pointList[1].ToVertex());
+
+            for (var i = startIndex; i < n; i++)
+            {
+                var currentVector = Vector.ByTwoVertices(pointList[i].ToVertex(), pointList[i+1].ToVertex());
+                var crossProduct = referenceVector.Cross(currentVector);
+                if (crossProduct.X != 0 || crossProduct.Y != 0 || crossProduct.Z != 0) return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Compare a point against another to see if it is the same
         /// </summary>
@@ -44,9 +68,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                 return false;
             }
         }
-        #endregion
 
-        #region MoveAlongCurve
         /// <summary>
         /// Move a point or list of points along a curve based on a parameter witin a range
         /// </summary>
@@ -88,9 +110,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
 
             }
         }
-        #endregion
 
-        #region RandomlyMoveAlongCurve
         /// <summary>
         /// Randomly move a point or list of points along a curve within a given percentage range.
         /// </summary>
@@ -135,7 +155,5 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
 
             }
         }
-        #endregion
-
     }
 }
