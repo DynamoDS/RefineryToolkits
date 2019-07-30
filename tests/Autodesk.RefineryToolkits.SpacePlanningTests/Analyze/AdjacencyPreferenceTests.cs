@@ -1,12 +1,8 @@
-﻿using Autodesk.RefineryToolkits.SpacePlanning.Analyze;
+﻿using Autodesk.DesignScript.Geometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServices;
-using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
 {
@@ -18,9 +14,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         /// </summary>
         [Test]
         public void GeometricMedianReturnVertexAtAngleEqualToOrAbove120OnObtuseTriangleTest()
-        { 
+        {
             // Create sample points that makes a Obtuse triangle
-            List<Point> samplePoints = new List<Point>
+            var samplePoints = new List<Point>
             {
                 Point.ByCoordinates(0,0),
                 Point.ByCoordinates(10,5),
@@ -50,7 +46,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void GeometricMedianReturnsFermatPointOnAcuteTriangleTest()
         {
             // Create sample points that makes a Acute triangle
-            List<Point> samplePoints = new List<Point>
+            var samplePoints = new List<Point>
             {
                 Point.ByCoordinates(5,5),
                 Point.ByCoordinates(9.5,4.2),
@@ -62,7 +58,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             Point fermatPoint = AdjacencyPreference.GeometricMedian(samplePoints);
 
             // Create vectors from the fermat point to two arbitrary points in the sample points list.
-            List<Vector> vectors = new List<Vector>
+            var vectors = new List<Vector>
             {
                 Vector.ByTwoPoints(fermatPoint, samplePoints[0]),
                 Vector.ByTwoPoints(fermatPoint, samplePoints[1]),
@@ -70,10 +66,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
 
             // Getting the angle between the two vectors just created.
             // This angle should always be 120 degrees in a Acute triangle.
-            double testAngle = vectors[0].AngleWithVector(vectors[1]);
+            var testAngle = vectors[0].AngleWithVector(vectors[1]);
 
             // Checking if the angle is equal to 120 degrees.
-            Assert.AreEqual(120.0, Math.Round(testAngle,1));
+            Assert.AreEqual(120.0, Math.Round(testAngle, 1));
 
             // Dispose unused geometry
             samplePoints.ForEach(p => p.Dispose());
@@ -89,7 +85,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void GeometricMedianReturnsThePointInsideTriangleFormedByRemainingPointsOnConcaveQuadrilateralTest()
         {
             // Create sample points that makes a Concave Quadrilateral
-            List<Point> samplePoints = new List<Point>
+            var samplePoints = new List<Point>
             {
                 //Point inside triangle formed by remaining 3 points
                 Point.ByCoordinates(7,8),
@@ -113,5 +109,27 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             geometricMedianPoint.Dispose();
         }
 
+        [Test]
+        public void GeometricMedianCalculatesForSymmetricalPointsOnLine()
+        {
+            // Create sample points that are colinear and symmetrical to geometric median point
+            var samplePoints = new List<Point>
+            {
+                Point.ByCoordinates(260,600),
+                Point.ByCoordinates(285,600),
+                Point.ByCoordinates(310,600),
+                Point.ByCoordinates(335,600)
+            };
+            Point geometricMedianPoint = AdjacencyPreference.GeometricMedian(samplePoints);
+
+            // Check if both X and Y of the geometric median is the same as X and Y of the 
+            // midpoint on the line
+            Assert.AreEqual(297.5, geometricMedianPoint.X);
+            Assert.AreEqual(600, geometricMedianPoint.Y);
+
+            // Dispose unused geometry.
+            samplePoints.ForEach(p => p.Dispose());
+            geometricMedianPoint.Dispose();
+        }
     }
 }
