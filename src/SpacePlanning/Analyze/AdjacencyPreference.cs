@@ -1,15 +1,16 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
+using Autodesk.RefineryToolkits.Core.Utillites;
 using MIConvexHull;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
     public static class AdjacencyPreference
     {
-
         /// <summary>
         /// Returns the geometric median point of a list of points.
         /// The geometric median is the point minimizing the sum of distances to the sample points
@@ -18,27 +19,38 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns>Point that minimizes the distance to all other points</returns>
         public static Point GeometricMedian(List<Point> points)
         {
+            var n = points.Count;
+
             // If 3 points return either the vertex at the angle >= 120
             // or the Fermat point
-            if (points.Count == 3)
+            if (n == 3)
             {
-                if (VertexAtAngle(points[0], points[1], points[2]) != null)
-                {
-                    return VertexAtAngle(points[0], points[1], points[2]);
-                }
-                else
-                {
-                    return FermatPoint(points);
-                }
+                var vertexAtAngle = VertexAtAngle(points[0], points[1], points[2]);
+                return vertexAtAngle ?? FermatPoint(points);
             }
-            // Else If 4 points return wither the point inside the convex hull
+            // If 4 points return 
+            // the midpoint when points are colinear
+            // or either the point inside the convex hull
             // or the crossing point of the diagonals of the quadrilateral
-            if (points.Count == 4)
+            if (n == 4)
             {
+                // when points are colinear, return the mid point of the line formed by all points
+                if (points.AreColinear())
+                {
+                    Point min = GTGeom.Points.MinimumPoint(points);
+                    Point max = GTGeom.Points.MaximumPoint(points);
+                    Point mid = GTGeom.Points.MidPoint(min, max);
+                    min.Dispose();
+                    max.Dispose();
+
+                    return mid;
+                }
+
                 List<Point> convexHull = ConvexHull(points);
                 if (convexHull.Count == 3)
                 {
-                    return points.Where(p => !convexHull.Any(p2 => p2.X == p.X)).First();
+                    return points
+                        .First(p => !convexHull.Any(p2 => p2.X == p.X));
                 }
                 else
                 {
@@ -51,8 +63,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 
                     return point;
                 }
-
             }
+
             // Else return the point that minimizes the distance to the sample points
             // https://www.geeksforgeeks.org/geometric-median/
             var testPoints = new List<Point>
@@ -63,8 +75,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 Point.ByCoordinates(0.0,-1.0)
             };
 
-            var n = points.Count;
             Point commonPoint = CommonPointByPoints(testPoints, points, n);
+            testPoints.ForEach(x => x.Dispose());
 
             return commonPoint;
         }
@@ -83,7 +95,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             List<Point> points,
             int n)
         {
-
             // Assume test_distance to be 1000 
             double testDistance = 1000;
 
@@ -133,7 +144,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             // Lowest Limit till which we are going 
             // to run the main while loop 
             // Lower the Limit higher the accuracy 
-            var lowerLimit = 0.001;
+            const double lowerLimit = 0.001;
             // Test loop for approximation starts here 
             while (testDistance > lowerLimit)
             {
@@ -143,8 +154,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 for (var i = 0; i < 4; i++)
                 {
                     // Finding Neighbours done 
-                    var newX = currentX + (double)testDistance * testPoints[i].X;
-                    var newY = currentY + (double)testDistance * testPoints[i].Y;
+                    var newX = currentX + ((double)testDistance * testPoints[i].X);
+                    var newY = currentY + ((double)testDistance * testPoints[i].Y);
 
                     // New sum of Euclidean distances 
                     // from the neighbor to the given 
@@ -258,7 +269,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         {
             var xDiff = pt1.X - pt2.X;
             var yDiff = pt1.Y - pt2.Y;
-            return xDiff * xDiff + yDiff * yDiff;
+            return (xDiff * xDiff) + (yDiff * yDiff);
         }
 
         /// <summary>
@@ -276,11 +287,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             var midpointAB = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[1].X) / 2, (sortedPoints[0].Y + sortedPoints[1].Y) / 2);
             var midpointAC = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[2].X) / 2, (sortedPoints[0].Y + sortedPoints[2].Y) / 2);
 
-            var sideABLength = Math.Sqrt(Math.Pow((sortedPoints[0].X - sortedPoints[1].X), 2) + Math.Pow((sortedPoints[0].Y - sortedPoints[1].Y), 2));
-            var sideACLength = Math.Sqrt(Math.Pow((sortedPoints[0].X - sortedPoints[2].X), 2) + Math.Pow((sortedPoints[0].Y - sortedPoints[2].Y), 2));
+            var sideABLength = Math.Sqrt(Math.Pow(sortedPoints[0].X - sortedPoints[1].X, 2) + Math.Pow(sortedPoints[0].Y - sortedPoints[1].Y, 2));
+            var sideACLength = Math.Sqrt(Math.Pow(sortedPoints[0].X - sortedPoints[2].X, 2) + Math.Pow(sortedPoints[0].Y - sortedPoints[2].Y, 2));
 
-            var equilateralLengthAB = (sideABLength * Math.Sqrt(3)) / 2;
-            var equilateralLengthAC = (sideACLength * Math.Sqrt(3)) / 2;
+            var equilateralLengthAB = sideABLength * Math.Sqrt(3) / 2;
+            var equilateralLengthAC = sideACLength * Math.Sqrt(3) / 2;
 
             var equilateralTopPointAB = midpointAB.Translate(vectorAB, equilateralLengthAB) as Point;
             var equilateralTopPointAC = midpointAC.Translate(vectorAC, equilateralLengthAC) as Point;
@@ -312,7 +323,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 vertices[i] = new Vertex(points[i].X, points[i].Y);
             }
 
-            var convexHull = MIConvexHull.ConvexHull.Create(vertices);
+            ConvexHullCreationResult<Vertex, DefaultConvexFace<Vertex>> convexHull = MIConvexHull.ConvexHull.Create(vertices);
             if (convexHull.Result == null) throw new ArgumentOutOfRangeException("Could not create convex hull, check your points are not co-linear.");
             var hullPoints = convexHull.Result.Points.ToList();
 
@@ -337,7 +348,5 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 
             public double[] Position { get; set; }
         }
-
     }
-
 }
