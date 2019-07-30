@@ -28,7 +28,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
             int startIndex = 1;
             var referenceVector = Vector.ByTwoVertices(pointList[0].ToVertex(), pointList[1].ToVertex());
 
-            for (var i = startIndex; i < n; i++)
+            for (var i = startIndex; i < n-1; i++)
             {
                 var currentVector = Vector.ByTwoVertices(pointList[i].ToVertex(), pointList[i+1].ToVertex());
                 var crossProduct = referenceVector.Cross(currentVector);
