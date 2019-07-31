@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassingRevit", "MassingRevi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassingSandbox", "MassingSandbox\MassingSandbox.csproj", "{89DF56A1-A27B-43D9-9D70-B650B2DB4B64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTests", "CoreTests\CoreTests.csproj", "{EAD8B721-EF82-4CCD-B994-90D918312EE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTests", "..\tests\Autodesk.RefineryToolkits.CoreTests\CoreTests.csproj", "{EAD8B721-EF82-4CCD-B994-90D918312EE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

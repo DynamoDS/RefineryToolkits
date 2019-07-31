@@ -55,11 +55,11 @@ namespace Autodesk.RefineryToolkits.Core.Utillites.Tests
         {
             var colinear = this.ColinearPoints.AreColinear();
             Assert.IsTrue(colinear);
-            Assert.AreEqual(3, ColinearPoints.Count);
+            Assert.AreEqual(4, ColinearPoints.Count);
         }
 
         [Test]
-        public void Colinear_CanIdentify5Points()
+        public void Colinear_CanIdentify6Points()
         {
             // Arrange
             var fivePoints = new List<Point>(this.ColinearPoints);
@@ -71,7 +71,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites.Tests
 
             // Assert
             Assert.IsTrue(colinear);
-            Assert.AreEqual(5, fivePoints.Count);
+            Assert.AreEqual(6, fivePoints.Count);
         }
 
 
