@@ -1,5 +1,6 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
+using Autodesk.RefineryToolkits.Core.Geometry;
 using Autodesk.RefineryToolkits.Core.Utillites;
 using MIConvexHull;
 using System;
@@ -86,9 +87,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <summary>
         /// returns the geometric median of a list of points bigger than 4 and smaller than 3
         /// </summary>
-        /// <param name="testPoints"></param>
-        /// <param name="points"></param>
-        /// <param name="n"></param>
         /// <returns>geometric median of a list of points bigger than 4 and smaller than 3</returns>
         private static Point CommonPointByPoints(
             List<Point> testPoints,
@@ -279,16 +277,27 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns>common point of a triangle with angles bigger than 120</returns>
         private static Point FermatPoint(List<Point> points)
         {
-            var sortedPoints = points.OrderBy(pt => pt.Y).Reverse().ToList();
+            var sortedPoints = points
+                .OrderBy(pt => pt.Y)
+                .ThenBy(pt => pt.X)
+                .Reverse()
+                .ToList();
 
-            Vector vectorAB = Vector.ByTwoPoints(sortedPoints[0], sortedPoints[1]).Rotate(Vector.ZAxis(), 90);
-            Vector vectorAC = Vector.ByTwoPoints(sortedPoints[2], sortedPoints[0]).Rotate(Vector.ZAxis(), 90);
+            Point pointA = sortedPoints[0];
+            Point pointB = sortedPoints[1];
+            Point pointC = sortedPoints[2];
 
-            var midpointAB = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[1].X) / 2, (sortedPoints[0].Y + sortedPoints[1].Y) / 2);
-            var midpointAC = Point.ByCoordinates((sortedPoints[0].X + sortedPoints[2].X) / 2, (sortedPoints[0].Y + sortedPoints[2].Y) / 2);
+            var orient = GTGeom.Vertex.Orientation(pointA.ToVertex(), pointB.ToVertex(), pointC.ToVertex());
+            var angleForRotation = orient == -1 ? 90 : 270;
 
-            var sideABLength = Math.Sqrt(Math.Pow(sortedPoints[0].X - sortedPoints[1].X, 2) + Math.Pow(sortedPoints[0].Y - sortedPoints[1].Y, 2));
-            var sideACLength = Math.Sqrt(Math.Pow(sortedPoints[0].X - sortedPoints[2].X, 2) + Math.Pow(sortedPoints[0].Y - sortedPoints[2].Y, 2));
+            DesignScript.Geometry.Vector vectorAB = DesignScript.Geometry.Vector.ByTwoPoints(pointA, pointB).Rotate(DesignScript.Geometry.Vector.ZAxis(), angleForRotation);
+            DesignScript.Geometry.Vector vectorAC = DesignScript.Geometry.Vector.ByTwoPoints(pointC, pointA).Rotate(DesignScript.Geometry.Vector.ZAxis(), angleForRotation);
+
+            var midpointAB = Point.ByCoordinates((pointA.X + pointB.X) / 2, (pointA.Y + pointB.Y) / 2);
+            var midpointAC = Point.ByCoordinates((pointA.X + pointC.X) / 2, (pointA.Y + pointC.Y) / 2);
+
+            var sideABLength = Math.Sqrt(Math.Pow(pointA.X - pointB.X, 2) + Math.Pow(pointA.Y - pointB.Y, 2));
+            var sideACLength = Math.Sqrt(Math.Pow(pointA.X - pointC.X, 2) + Math.Pow(pointA.Y - pointC.Y, 2));
 
             var equilateralLengthAB = sideABLength * Math.Sqrt(3) / 2;
             var equilateralLengthAC = sideACLength * Math.Sqrt(3) / 2;
@@ -296,18 +305,30 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             var equilateralTopPointAB = midpointAB.Translate(vectorAB, equilateralLengthAB) as Point;
             var equilateralTopPointAC = midpointAC.Translate(vectorAC, equilateralLengthAC) as Point;
 
-            var lineABC = Line.ByStartPointEndPoint(equilateralTopPointAB, sortedPoints[2]);
-            var lineACB = Line.ByStartPointEndPoint(equilateralTopPointAC, sortedPoints[1]);
+            // we clumsily handle which point to draw median line to
+            var lineABtoC = Line.ByStartPointEndPoint(equilateralTopPointAB, pointC);
+            var lineACtoB = Line.ByStartPointEndPoint(equilateralTopPointAC, pointB);
 
-            var fermatPt = lineABC.Intersect(lineACB)[0] as Point;
+            var lineABtoB = Line.ByStartPointEndPoint(equilateralTopPointAB, pointB);
+            var lineACtoC = Line.ByStartPointEndPoint(equilateralTopPointAC, pointC);
+
+            var fermatPt = lineABtoC
+                .Intersect(lineACtoB)
+                .FirstOrDefault() as Point;
+
+            var fermat2 = lineABtoB
+                .Intersect(lineACtoC)
+                .FirstOrDefault() as Point;
 
             // dispose of all intermediate Dynamo geometry
+            equilateralTopPointAB.Dispose();
+            equilateralTopPointAC.Dispose();
             midpointAB.Dispose();
             midpointAC.Dispose();
-            lineABC.Dispose();
-            lineACB.Dispose();
+            lineABtoC.Dispose();
+            lineACtoB.Dispose();
 
-            return fermatPt;
+            return fermatPt ?? fermat2;
         }
 
         /// <summary>
