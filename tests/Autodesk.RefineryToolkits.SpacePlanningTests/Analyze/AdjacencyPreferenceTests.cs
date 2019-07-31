@@ -110,26 +110,46 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         }
 
         [Test]
-        public void GeometricMedianCalculatesForSymmetricalPointsOnLine()
+        public void GeometricMedianCalculatesForPointsOnLine()
         {
             // Create sample points that are colinear and symmetrical to geometric median point
-            var samplePoints = new List<Point>
+            var sample4Points = new List<Point>
             {
                 Point.ByCoordinates(260,600),
                 Point.ByCoordinates(285,600),
                 Point.ByCoordinates(310,600),
                 Point.ByCoordinates(335,600)
             };
-            Point geometricMedianPoint = AdjacencyPreference.GeometricMedian(samplePoints);
+           
+            // also check situations when we have more than 4 points and they are not symmetrical
+            // note we have to duplicate points declaration due to LibG
+            var sample6Points = new List<Point>
+            {
+                Point.ByCoordinates(250,600),
+                Point.ByCoordinates(255,600),
+                Point.ByCoordinates(285,600),
+                Point.ByCoordinates(310,600),
+                Point.ByCoordinates(335,600),
+                Point.ByCoordinates(350,600)
+            };
 
-            // Check if both X and Y of the geometric median is the same as X and Y of the 
-            // midpoint on the line
-            Assert.AreEqual(297.5, geometricMedianPoint.X);
-            Assert.AreEqual(600, geometricMedianPoint.Y);
+            // compute geometric median for both cases
+            Point geometricMedian4Point = AdjacencyPreference.GeometricMedian(sample4Points);
+            Point geometricMedian6Point = AdjacencyPreference.GeometricMedian(sample6Points);
+
+            // Check if both X and Y of the geometric median is the same 
+            // as X and Y of the midpoint on the line
+            Assert.AreEqual(297.5, geometricMedian4Point.X);
+            Assert.AreEqual(600, geometricMedian4Point.Y);
+
+            Assert.AreEqual(297.5, geometricMedian6Point.X);
+            Assert.AreEqual(600, geometricMedian6Point.Y);
 
             // Dispose unused geometry.
-            samplePoints.ForEach(p => p.Dispose());
-            geometricMedianPoint.Dispose();
+            sample4Points.ForEach(p => p.Dispose());
+            sample6Points.ForEach(p => p.Dispose());
+            geometricMedian4Point.Dispose();
+            geometricMedian6Point.Dispose();
         }
     }
 }
