@@ -1,0 +1,858 @@
+{
+  "Uuid": "1a9efeb3-3c66-452c-b53d-1b7f52455cd4",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "geometric median test",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "[\nPoint.ByCoordinates(260,600),\nPoint.ByCoordinates(285,600),\nPoint.ByCoordinates(310,600),\nPoint.ByCoordinates(335,600)\n];",
+      "Id": "3a969fa5767c49778dc6d12a7632c51c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e73c0c91f7c24cf8b6d51dff6adb4b3e",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "Id": "a6f2bf7b4ceb494ca8b6b6a8e1ea8689",
+      "Inputs": [
+        {
+          "Id": "b3fd61126c384b17806088d4f56aa7e5",
+          "Name": "points",
+          "Description": "List of sample points\n\nPoint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "37269a6bfc584bea95a93825ba577011",
+          "Name": "Point",
+          "Description": "Point that minimizes the distance to all other points",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "[\nPoint.ByCoordinates(250,600),\nPoint.ByCoordinates(260,600),\nPoint.ByCoordinates(285,600),\nPoint.ByCoordinates(310,600),\nPoint.ByCoordinates(335,600),\nPoint.ByCoordinates(345,600)\n];",
+      "Id": "4a12ce8f9f324d9aa7e4118e83855cea",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "35f3edd96fc6496d88b44350c88e8122",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "Id": "5c0778541e0446209b66362f0e2ace2c",
+      "Inputs": [
+        {
+          "Id": "6a3b5023714840c6bb75372387733275",
+          "Name": "points",
+          "Description": "List of sample points\n\nPoint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "39246a8320e44058b67db49b050cefa0",
+          "Name": "Point",
+          "Description": "Point that minimizes the distance to all other points",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "Id": "f461f29e3ee4466bbee61f0362c2feda",
+      "Inputs": [
+        {
+          "Id": "0a91b738e81545ac98d7a8fbe7004817",
+          "Name": "points",
+          "Description": "List of sample points\n\nPoint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d26523ffb97e4e509399e67f134ab80b",
+          "Name": "Point",
+          "Description": "Point that minimizes the distance to all other points",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "[\nPoint.ByCoordinates(10,0),\nPoint.ByCoordinates(0,0),\nPoint.ByCoordinates(5,8.66)\n];\n\n// result should be\nPoint.ByCoordinates(5,2.887);",
+      "Id": "52ffa714078244aba2ad4c7150655637",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "02eef261a9ba42329a72a3c3150ee33d",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f14b3369db074f32bc1fe93be0e51ecc",
+          "Name": "",
+          "Description": "Value of expression at line 8",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "Id": "e35849d9b77c4e22abcb206f09586c59",
+      "Inputs": [
+        {
+          "Id": "e43cbf18051741508dbea0d9add838ed",
+          "Name": "points",
+          "Description": "List of sample points\n\nPoint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3ef962c7bd464e4f922c3c228066ae36",
+          "Name": "Point",
+          "Description": "Point that minimizes the distance to all other points",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "[\nPoint.ByCoordinates(5,5),\nPoint.ByCoordinates(9.5,4.2),\nPoint.ByCoordinates(8,3)\n];\n\n// result should be\nPoint.ByCoordinates(7.997,3.311);",
+      "Id": "2b76074dd2aa4e5794eb9103695496c3",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ac1a1587d58f49c08cfce70971af8c5c",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "514169b797e343a7abb07e6cfb4c9f5d",
+          "Name": "",
+          "Description": "Value of expression at line 8",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Polygon.Center",
+      "Id": "99d8687d3d9a417f8bba40b15d2a3839",
+      "Inputs": [
+        {
+          "Id": "af08ff5622034d588626a37ab7bcf62f",
+          "Name": "polygon",
+          "Description": "Autodesk.DesignScript.Geometry.Polygon",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4da04cc6021a4bb4bda2137e303dbea4",
+          "Name": "Point",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns average point of corners of polygon\n\nPolygon.Center ( ): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Polygon.ByPoints@Autodesk.DesignScript.Geometry.Point[]",
+      "Id": "4761532a7bdf459dbd0b4cd127851654",
+      "Inputs": [
+        {
+          "Id": "2fcbe9edddc447529798b75304289911",
+          "Name": "points",
+          "Description": "Point[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2a3817a374d04df6ac880d4d76198c15",
+          "Name": "Polygon",
+          "Description": "Polygon",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Construct a Polygon Curve by connecting Points.\n\nPolygon.ByPoints (points: Point[]): Polygon"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Polygon.Center",
+      "Id": "eb5e72aa6efc42ef9cd68f3300615f77",
+      "Inputs": [
+        {
+          "Id": "8d7b4707dc234f13a96531989bac0778",
+          "Name": "polygon",
+          "Description": "Autodesk.DesignScript.Geometry.Polygon",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "eb72fc5a876641d9b22f90e1d2bd26ee",
+          "Name": "Point",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns average point of corners of polygon\n\nPolygon.Center ( ): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Polygon.ByPoints@Autodesk.DesignScript.Geometry.Point[]",
+      "Id": "fcb12a7068fe4cd9bb816a8ddf65b189",
+      "Inputs": [
+        {
+          "Id": "7bb31308c731428682ec027bcccaa4d8",
+          "Name": "points",
+          "Description": "Point[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7350a6a204354de8a44429c9a4b84de0",
+          "Name": "Polygon",
+          "Description": "Polygon",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Construct a Polygon Curve by connecting Points.\n\nPolygon.ByPoints (points: Point[]): Polygon"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "Id": "5a353a7d1f0b43e9a0f99675c4f2b87d",
+      "Inputs": [
+        {
+          "Id": "66d6ad8b9850420885a0c96fea74beee",
+          "Name": "points",
+          "Description": "List of sample points\n\nPoint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "379659d1ece045a688981ed1312fb66c",
+          "Name": "Point",
+          "Description": "Point that minimizes the distance to all other points",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "[\nPoint.ByCoordinates(70,20),\nPoint.ByCoordinates(95,12),\nPoint.ByCoordinates(130,-18)\n];\n\n// result should be\nPoint.ByCoordinates(95,12);",
+      "Id": "0f64c677707f4b59b1809b439838e298",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5d2dd2ca6aae41e49eaaef0791c63323",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c618a244964d4055bea6cb19ba67798d",
+          "Name": "",
+          "Description": "Value of expression at line 8",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "4ba34e9877184344bf4bed155bb59a8b",
+      "Inputs": [
+        {
+          "Id": "2545ca18978640c1a6372246b7c08d7c",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e5df2f84e1f343e0bcd768aa6be4c196",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Polygon.ByPoints@Autodesk.DesignScript.Geometry.Point[]",
+      "Id": "87da5850f1144ac192fd2fbc12c715c8",
+      "Inputs": [
+        {
+          "Id": "887c533b55d54b7d813cc27e31a0279a",
+          "Name": "points",
+          "Description": "Point[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3019cf40b0544e6e8fd8d02e40633fe6",
+          "Name": "Polygon",
+          "Description": "Polygon",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Construct a Polygon Curve by connecting Points.\n\nPolygon.ByPoints (points: Point[]): Polygon"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e73c0c91f7c24cf8b6d51dff6adb4b3e",
+      "End": "b3fd61126c384b17806088d4f56aa7e5",
+      "Id": "fdf98e809281466a9113814c491560a2"
+    },
+    {
+      "Start": "35f3edd96fc6496d88b44350c88e8122",
+      "End": "6a3b5023714840c6bb75372387733275",
+      "Id": "d7b7c970bd794e4182f61881024a00fe"
+    },
+    {
+      "Start": "02eef261a9ba42329a72a3c3150ee33d",
+      "End": "0a91b738e81545ac98d7a8fbe7004817",
+      "Id": "2c9f57910e434dc8a3bf1d9f210f2899"
+    },
+    {
+      "Start": "02eef261a9ba42329a72a3c3150ee33d",
+      "End": "2fcbe9edddc447529798b75304289911",
+      "Id": "5a41db1b1567460a9dfd8856b38cde85"
+    },
+    {
+      "Start": "ac1a1587d58f49c08cfce70971af8c5c",
+      "End": "e43cbf18051741508dbea0d9add838ed",
+      "Id": "68985e1a6f1a4a86859b3f20af9de61f"
+    },
+    {
+      "Start": "ac1a1587d58f49c08cfce70971af8c5c",
+      "End": "7bb31308c731428682ec027bcccaa4d8",
+      "Id": "c333f4aa769a40439390dc2fc73f907f"
+    },
+    {
+      "Start": "2a3817a374d04df6ac880d4d76198c15",
+      "End": "af08ff5622034d588626a37ab7bcf62f",
+      "Id": "fd66d1c7d7ee4c87bfc453dc5dc91f3f"
+    },
+    {
+      "Start": "7350a6a204354de8a44429c9a4b84de0",
+      "End": "8d7b4707dc234f13a96531989bac0778",
+      "Id": "2cbbfca691494b63977a0d743bec783a"
+    },
+    {
+      "Start": "5d2dd2ca6aae41e49eaaef0791c63323",
+      "End": "66d6ad8b9850420885a0c96fea74beee",
+      "Id": "8c729d88dfc2478aa8f6bd67bcaf37cb"
+    },
+    {
+      "Start": "5d2dd2ca6aae41e49eaaef0791c63323",
+      "End": "887c533b55d54b7d813cc27e31a0279a",
+      "Id": "474b495a046244e2a50304e640842e07"
+    },
+    {
+      "Start": "c618a244964d4055bea6cb19ba67798d",
+      "End": "2545ca18978640c1a6372246b7c08d7c",
+      "Id": "b19f65a4a61342f8b07b31537ca12729"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 50.170084327775655,
+      "EyeY": 147.96294025201732,
+      "EyeZ": 187.42333339456113,
+      "LookX": 9.2207410059816759,
+      "LookY": -131.12341887566086,
+      "LookZ": -196.29937735465319,
+      "UpX": 0.017069582072737649,
+      "UpY": 0.93147973892614644,
+      "UpZ": -0.36339252240235909
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "4 points on line",
+        "Id": "3a969fa5767c49778dc6d12a7632c51c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 584.63037909479647,
+        "Y": 576.11882724390307
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "AdjacencyPreference.GeometricMedian",
+        "Id": "a6f2bf7b4ceb494ca8b6b6a8e1ea8689",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 953.96371242812972,
+        "Y": 571.9054939105697
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "6 points on line",
+        "Id": "4a12ce8f9f324d9aa7e4118e83855cea",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 582.02736933431584,
+        "Y": 838.6503180916153
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "AdjacencyPreference.GeometricMedian",
+        "Id": "5c0778541e0446209b66362f0e2ace2c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 951.36070266764909,
+        "Y": 834.43698475828194
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "AdjacencyPreference.GeometricMedian",
+        "Id": "f461f29e3ee4466bbee61f0362c2feda",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 955.5877650576258,
+        "Y": 1192.7452611870624
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Equilateral triangle",
+        "Id": "52ffa714078244aba2ad4c7150655637",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 586.25443172429243,
+        "Y": 1196.9585945203958
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "AdjacencyPreference.GeometricMedian",
+        "Id": "e35849d9b77c4e22abcb206f09586c59",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 953.204514196404,
+        "Y": 1505.0058379536995
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Acute triangle",
+        "Id": "2b76074dd2aa4e5794eb9103695496c3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 583.87118086307066,
+        "Y": 1509.2191712870329
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Polygon.Center",
+        "Id": "99d8687d3d9a417f8bba40b15d2a3839",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1293.6396223286943,
+        "Y": 1193.19247126683
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Polygon.ByPoints",
+        "Id": "4761532a7bdf459dbd0b4cd127851654",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 978.13883154349651,
+        "Y": 1315.3594391943502
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Polygon.Center",
+        "Id": "eb5e72aa6efc42ef9cd68f3300615f77",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1259.2320395263287,
+        "Y": 1631.9779022623491
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Polygon.ByPoints",
+        "Id": "fcb12a7068fe4cd9bb816a8ddf65b189",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 984.26750947626761,
+        "Y": 1628.9802756392792
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "AdjacencyPreference.GeometricMedian",
+        "Id": "5a353a7d1f0b43e9a0f99675c4f2b87d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 950.463585608102,
+        "Y": 1849.20656347831
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Acute triangle",
+        "Id": "0f64c677707f4b59b1809b439838e298",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 581.130252274769,
+        "Y": 1853.41989681164
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "4ba34e9877184344bf4bed155bb59a8b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1245.7977301541578,
+        "Y": 1911.8762299251159
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Polygon.ByPoints",
+        "Id": "87da5850f1144ac192fd2fbc12c715c8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 954.52201009498367,
+        "Y": 1979.8581414176065
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "b862018bcc184449aefd0715fb02c466",
+        "Title": "4 colinear points",
+        "Nodes": [
+          "3a969fa5767c49778dc6d12a7632c51c",
+          "a6f2bf7b4ceb494ca8b6b6a8e1ea8689"
+        ],
+        "Left": 574.63037909479647,
+        "Top": 518.57216057723633,
+        "Width": 647.33333333333326,
+        "Height": 229.88000000000008,
+        "FontSize": 36.0,
+        "InitialTop": 571.9054939105697,
+        "InitialHeight": 149.21333333333337,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "cb90257a1ec54673a8218c4751c4c050",
+        "Title": "6 colinear points",
+        "Nodes": [
+          "4a12ce8f9f324d9aa7e4118e83855cea",
+          "5c0778541e0446209b66362f0e2ace2c"
+        ],
+        "Left": 572.02736933431584,
+        "Top": 781.10365142494857,
+        "Width": 647.33333333333326,
+        "Height": 265.21333333333337,
+        "FontSize": 36.0,
+        "InitialTop": 834.43698475828194,
+        "InitialHeight": 149.21333333333337,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a48339ce8a3b477481cd787859c1a715",
+        "Title": "Equilateral triangle",
+        "Nodes": [
+          "f461f29e3ee4466bbee61f0362c2feda",
+          "52ffa714078244aba2ad4c7150655637",
+          "99d8687d3d9a417f8bba40b15d2a3839",
+          "4761532a7bdf459dbd0b4cd127851654",
+          "486f2a0053f34ac4a1b1b3effcec185f"
+        ],
+        "Left": 576.25443172429243,
+        "Top": 1086.80422986942,
+        "Width": 926.7185239377352,
+        "Height": 321.55520932493027,
+        "FontSize": 36.0,
+        "InitialTop": 1140.1375632027532,
+        "InitialHeight": 320.221875991597,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFFF7BAC"
+      },
+      {
+        "Id": "3188a1c2b02a4e00bb167902e1566ba7",
+        "Title": "Acute triangle",
+        "Nodes": [
+          "e35849d9b77c4e22abcb206f09586c59",
+          "2b76074dd2aa4e5794eb9103695496c3",
+          "eb5e72aa6efc42ef9cd68f3300615f77",
+          "fcb12a7068fe4cd9bb816a8ddf65b189",
+          "2027fb443a214c0faf66ff2536c4ab3d"
+        ],
+        "Left": 573.87118086307066,
+        "Top": 1451.6725046203662,
+        "Width": 894.69419199659137,
+        "Height": 273.30539764198284,
+        "FontSize": 36.0,
+        "InitialTop": 1505.0058379536995,
+        "InitialHeight": 271.97206430864958,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFFF7BAC"
+      },
+      {
+        "Id": "026336f6fa9c4c9e86f8b1f840cb0cc4",
+        "Title": "Obtuse triangle",
+        "Nodes": [
+          "5a353a7d1f0b43e9a0f99675c4f2b87d",
+          "0f64c677707f4b59b1809b439838e298",
+          "078e62de00254c5da4273f32060c03e8",
+          "4ba34e9877184344bf4bed155bb59a8b",
+          "87da5850f1144ac192fd2fbc12c715c8"
+        ],
+        "Left": 571.130252274769,
+        "Top": 1795.8732301449768,
+        "Width": 974.66747787938891,
+        "Height": 276.98491127262969,
+        "FontSize": 36.0,
+        "InitialTop": 1849.20656347831,
+        "InitialHeight": 271.97206430865,
+        "TextblockHeight": 43.333333333333336,
+        "Background": "#FFFF7BAC"
+      },
+      {
+        "Id": "486f2a0053f34ac4a1b1b3effcec185f",
+        "Title": "These should be the same point\r\n(minus rounding errors)",
+        "Nodes": [],
+        "Left": 1178.537476430155,
+        "Top": 1140.1375632027532,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "2027fb443a214c0faf66ff2536c4ab3d",
+        "Title": "These should NOT be the same point\r\n(minus rounding errors)",
+        "Nodes": [],
+        "Left": 1247.1409851773774,
+        "Top": 1548.2828264174734,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "078e62de00254c5da4273f32060c03e8",
+        "Title": "These should be the same point\r\n(no rounding errors)",
+        "Nodes": [],
+        "Left": 1258.15097190279,
+        "Top": 1851.23080600095,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -214.21413877256219,
+    "Y": -132.61921868921814,
+    "Zoom": 0.57603370357712247
+  }
+}

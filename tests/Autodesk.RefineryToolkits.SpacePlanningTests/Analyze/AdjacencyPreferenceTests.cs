@@ -1,4 +1,5 @@
 ﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.RefineryToolkits.Core.Utillites;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -120,7 +121,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
                 Point.ByCoordinates(310,600),
                 Point.ByCoordinates(335,600)
             };
-           
+            var expectedPoint = Point.ByCoordinates(297.5, 600);
+
             // also check situations when we have more than 4 points and they are not symmetrical
             // note we have to duplicate points declaration due to LibG
             var sample6Points = new List<Point>
@@ -139,11 +141,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
 
             // Check if both X and Y of the geometric median is the same 
             // as X and Y of the midpoint on the line
-            Assert.AreEqual(297.5, geometricMedian4Point.X);
-            Assert.AreEqual(600, geometricMedian4Point.Y);
-
-            Assert.AreEqual(297.5, geometricMedian6Point.X);
-            Assert.AreEqual(600, geometricMedian6Point.Y);
+            Assert.AreEqual(expectedPoint, geometricMedian4Point);
+            Assert.AreEqual(expectedPoint, geometricMedian6Point);
 
             // Dispose unused geometry.
             sample4Points.ForEach(p => p.Dispose());
@@ -151,5 +150,32 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             geometricMedian4Point.Dispose();
             geometricMedian6Point.Dispose();
         }
+
+        [Test]
+        public void GeometricMedianCalculatesForTriangle()
+        {
+            // Create sample points that are colinear and symmetrical to geometric median point
+            var trianglePoints = new List<Point>
+            {
+                Point.ByCoordinates(10,0),
+                Point.ByCoordinates(0,0),
+                Point.ByCoordinates(5,8.66)
+            };
+            var expectedPoint = Point.ByCoordinates(5, 2.8867513459);
+
+            // compute geometric median
+            Point geometricMedianTriangle = AdjacencyPreference.GeometricMedian(trianglePoints);
+
+            // Check if both X and Y of the geometric median is the same 
+            // as X and Y of the midpoint on the line
+            Assert.IsTrue(expectedPoint.X.AlmostEqualTo(geometricMedianTriangle.X));
+            Assert.IsTrue(expectedPoint.Y.AlmostEqualTo(geometricMedianTriangle.Y));
+            Assert.IsTrue(expectedPoint.Z.AlmostEqualTo(geometricMedianTriangle.Z));
+
+            // Dispose unused geometry.
+            trianglePoints.ForEach(p => p.Dispose());
+            geometricMedianTriangle.Dispose();
+        }
+
     }
 }
