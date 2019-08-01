@@ -11,7 +11,7 @@ There are currently 2 packages included in the toolkit, each focusing on enablin
 The toolkit offers a range of nodes that help with general space-planning workflows in Dynamo and Revit.  
 ![Space Planning Toolkit package nodes](docs/images/SpacePlanningToolkit.png)
 
-[For more information on the SpacePlanningToolkit](src/SpacePlanning/README)
+[For more information on the SpacePlanningToolkit](src/SpacePlanning)
 
 ## Massing Toolkit
 optimization & design option generation
