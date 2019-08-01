@@ -17,9 +17,9 @@ The toolkit offers a range of nodes that help with general space-planning workfl
 optimization & design option generation
 ![Massing Toolkit package nodes](docs/images/MassingToolkit.png)
 
-[For more information on the MassingToolkit](src/MassingSandbox/README)
+[For more information on the MassingToolkit](src/MassingSandbox)
 
-[For more information on the MassingToolkit for Revit](src/MassingRevit/README)
+[For more information on the MassingToolkit for Revit](src/MassingRevit)
 
 # Getting Started
 
