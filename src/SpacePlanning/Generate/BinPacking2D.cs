@@ -37,25 +37,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         #endregion
 
         #region Public Methods
-        /// <summary>
-        /// Packs a sample list of Rectangles in a bin Rectangle
-        /// </summary>
-        /// <param name="rects"> list of Rectangles to Pack</param>
-        /// <param name="bin"> Rectangle to pack into</param>
-        /// <param name="placementMethod"> Method for choosing where to place the next rectangle</param>
-        /// <returns>List of packed rectangles</returns>
-        [NodeCategory("Create")]
-        [MultiReturn(new[] { packedItemsOutputPort2D, indicesOutputPort2D, remainingItemsOutputPort2D })]
-        public static Dictionary<string, object> Pack2D(
+        private static Dictionary<string, object> Pack2D(
             List<Rectangle> rects,
             Rectangle bin,
             PlacementMethods placementMethod)
         {
-            freeRectangles = new List<FreeRectangle>();
-            packedRectangles = new List<Rectangle>();
-            remainRectangles = new List<Rectangle>();
-            packedIndices = new List<int>();
-
             // Initialize freeRectangles
             freeRectangles.Add(new FreeRectangle
             {
@@ -80,6 +66,49 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                 {remainingItemsOutputPort2D,remainRectangles}
             };
             return newOutput;
+        }
+
+        /// <summary>
+        /// Packs a list of Rectangles in a set of bins (Rectangles).
+        /// Algorithm sequentially packs rectangles in each bin (order as provided) until there is nothing left to pack or it run out of bins.
+        /// </summary>
+        /// <param name="rects">List of rectangles to pack.</param>
+        /// <param name="bins">List of rectangles to pack into. </param>
+        /// <param name="placementMethod">Method for choosing where to place the next rectangle when packing.</param>
+        /// <returns>List of packed rectangles for each of the bins provided, the indeces of rectangles packed and any items that have not been packed.</returns>
+        [NodeCategory("Create")]
+        [MultiReturn(new[] { packedItemsOutputPort2D, indicesOutputPort2D, remainingItemsOutputPort2D })]
+        public static Dictionary<string, object> Pack2DAcrossBins(
+            List<Rectangle> rects,
+            List<Rectangle> bins,
+            PlacementMethods placementMethod)
+        {
+            freeRectangles = new List<FreeRectangle>();
+            packedRectangles = new List<Rectangle>();
+            remainRectangles = new List<Rectangle>();
+
+            var remainingRects = new List<Rectangle>(rects);
+            var packedRects = new List<List<Rectangle>>();
+            var packIndices = new List<List<int>>();
+
+            for (int i = 0; i < bins.Count; i++)
+            {
+                var bin = bins[i];
+
+                var packResult = Pack2D(remainingRects, bin, placementMethod);
+                packedRects.Add((List<Rectangle>)packResult[packedItemsOutputPort2D]);
+                packIndices.Add((List<int>)packResult[indicesOutputPort2D]);
+
+                // update remaining rects
+                remainingRects = new List<Rectangle>((List<Rectangle>)packResult[remainingItemsOutputPort2D]);
+            }
+
+            return new Dictionary<string, object>
+            {
+                {packedItemsOutputPort2D, packedRects},
+                {indicesOutputPort2D, packIndices},
+                {remainingItemsOutputPort2D, remainingRects}
+            };
         }
 
         /// <summary>
