@@ -64,6 +64,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             return newOutput;
         }
 
+        #region Private helper methods
+
         private static List<Item> ItemsFromCuboids(List<Cuboid> cuboids)
         {
             List<Item> items = new List<Item>();
@@ -107,5 +109,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             }
             return cuboids;
         }
+        
+        #endregion
     }
 }
