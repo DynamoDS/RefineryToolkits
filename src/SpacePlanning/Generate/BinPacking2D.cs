@@ -9,9 +9,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 {
     public static partial class BinPacking
     {
-        private const string packedItemsOutputPort2D = "packedRectangles";
-        private const string indicesOutputPort2D = "packedIndices";
-        private const string remainingItemsOutputPort2D = "remainRectangles";
+        private const string packedItemsOutputPort2D = "Packed Rectangles";
+        private const string indicesOutputPort2D = "Packed Indices";
+        private const string remainingItemsOutputPort2D = "Remaining Rectangles";
+
+        #region Private classes
 
         private class FreeRectangle
         {
@@ -23,54 +25,34 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             public bool rotate;
             public double area()
             {
-                return width * height;
+                return this.width * this.height;
             }
         }
 
-        #region Private Variables
+        private class PackResult
+        {
+            public List<FreeRectangle> FreeRectangles;
+            public List<Rectangle> PackedRectangles;
+            public List<Rectangle> RemainRectangles;
+            public List<int> PackedIndices;
 
-        private static List<FreeRectangle> freeRectangles;
-        private static List<Rectangle> packedRectangles;
-        private static List<Rectangle> remainRectangles;
-        private static List<int> packedIndices;
+            public PackResult()
+            {
+                this.FreeRectangles = new List<FreeRectangle>();
+                this.PackedRectangles = new List<Rectangle>();
+                this.RemainRectangles = new List<Rectangle>();
+                this.PackedIndices = new List<int>();
+            }
+        }
 
         #endregion
 
         #region Public Methods
-        private static Dictionary<string, object> Pack2D(
-            List<Rectangle> rects,
-            Rectangle bin,
-            PlacementMethods placementMethod)
-        {
-            // Initialize freeRectangles
-            freeRectangles.Add(new FreeRectangle
-            {
-                width = bin.Width,
-                height = bin.Height,
-                xPos = bin.StartPoint.X - bin.Width,
-                yPos = bin.StartPoint.Y
-            });
-
-            int idx = 0;
-            foreach (var rect in rects)
-            {
-                PlaceItem(rect, placementMethod, idx);
-                idx++;
-            }
-
-            Dictionary<string, object> newOutput;
-            newOutput = new Dictionary<string, object>
-            {
-                {packedItemsOutputPort2D,packedRectangles},
-                {indicesOutputPort2D,packedIndices},
-                {remainingItemsOutputPort2D,remainRectangles}
-            };
-            return newOutput;
-        }
 
         /// <summary>
-        /// Packs a list of Rectangles in a set of bins (Rectangles).
+        /// Packs a list of Rectangles in a set of bins (Rectangles too).
         /// Algorithm sequentially packs rectangles in each bin (order as provided) until there is nothing left to pack or it run out of bins.
+        /// You can safely use this with a single bin as well.
         /// </summary>
         /// <param name="rects">List of rectangles to pack.</param>
         /// <param name="bins">List of rectangles to pack into. </param>
@@ -78,29 +60,27 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <returns>List of packed rectangles for each of the bins provided, the indeces of rectangles packed and any items that have not been packed.</returns>
         [NodeCategory("Create")]
         [MultiReturn(new[] { packedItemsOutputPort2D, indicesOutputPort2D, remainingItemsOutputPort2D })]
-        public static Dictionary<string, object> Pack2DAcrossBins(
+        public static Dictionary<string, object> Pack2D(
             List<Rectangle> rects,
             List<Rectangle> bins,
             PlacementMethods placementMethod)
         {
-            freeRectangles = new List<FreeRectangle>();
-            packedRectangles = new List<Rectangle>();
-            remainRectangles = new List<Rectangle>();
-
+            // we need to keep track of packed items across bins
+            // and then aggregate results, hence the lists external to PackResult objects
             var remainingRects = new List<Rectangle>(rects);
             var packedRects = new List<List<Rectangle>>();
             var packIndices = new List<List<int>>();
 
-            for (int i = 0; i < bins.Count; i++)
+            for (var i = 0; i < bins.Count; i++)
             {
-                var bin = bins[i];
+                Rectangle bin = bins[i];
 
-                var packResult = Pack2D(remainingRects, bin, placementMethod);
-                packedRects.Add((List<Rectangle>)packResult[packedItemsOutputPort2D]);
-                packIndices.Add((List<int>)packResult[indicesOutputPort2D]);
+                PackResult packResult = PackRectanglesInBin(remainingRects, bin, placementMethod);
+                packedRects.Add(packResult.PackedRectangles);
+                packIndices.Add(packResult.PackedIndices);
 
                 // update remaining rects
-                remainingRects = new List<Rectangle>((List<Rectangle>)packResult[remainingItemsOutputPort2D]);
+                remainingRects = new List<Rectangle>(packResult.RemainRectangles);
             }
 
             return new Dictionary<string, object>
@@ -112,8 +92,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         }
 
         /// <summary>
-        /// Placement methods
+        /// Placement methods for packing rectangles in a bin.
         /// </summary>
+        [IsVisibleInDynamoLibrary(false)]
         public enum PlacementMethods
         {
             /// <summary>
@@ -121,11 +102,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             /// Packs next rectangle into the free area where the length of the longer leftover side is minimized. 
             /// </summary>
             BestShortSideFits,
+
             /// <summary>
             /// Best Long Side Fits:
             /// Packs next rectangle into the free area where the length of the shorter leftover side is minimized.  
             /// </summary>
             BestLongSideFits,
+
             /// <summary>
             /// Best Area Fits:
             /// Picks the free area that is smallest in area to place the next rectangle into.
@@ -136,6 +119,31 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         #endregion
 
         #region Private Methods
+        private static PackResult PackRectanglesInBin(
+            List<Rectangle> rects,
+            Rectangle bin,
+            PlacementMethods placementMethod)
+        {
+            var packResult = new PackResult();
+
+            // Initialize freeRectangle
+            packResult.FreeRectangles.Add(new FreeRectangle
+            {
+                width = bin.Width,
+                height = bin.Height,
+                xPos = bin.StartPoint.X - bin.Width,
+                yPos = bin.StartPoint.Y
+            });
+
+            var idx = 0;
+            foreach (Rectangle rect in rects)
+            {
+                PlaceItem(packResult, rect, placementMethod, idx);
+                idx++;
+            }
+
+            return packResult;
+        }
 
         /// <summary>
         /// Find best freerectangle and place next rectangle
@@ -143,12 +151,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="item"></param>
         /// <param name="placementMethod"></param>
         /// <param name="idx"></param>
-        private static void PlaceItem(
+        private static PackResult PlaceItem(
+            PackResult packResult,
             Rectangle item,
             PlacementMethods placementMethod,
             int idx)
         {
-            FreeRectangle f = BestFreeRect(item, placementMethod);
+            FreeRectangle f = BestFreeRect(item, placementMethod, packResult);
 
             if (f != null)
             {
@@ -156,16 +165,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                 {
                     item = Rotate(item);
                 }
-                CoordinateSystem newCS = CoordinateSystem.ByOrigin(f.xPos, f.yPos);
-                CoordinateSystem originCS = CoordinateSystem.ByOrigin(item.StartPoint.X - item.Width, item.StartPoint.Y);
-                Rectangle placedRect = (Rectangle)item.Transform(originCS, newCS);
-                packedRectangles.Add(placedRect);
-                SplitFreeRectangle(f, placedRect);
-                packedIndices.Add(idx);
-                freeRectangles.Remove(f);
+                var newCS = CoordinateSystem.ByOrigin(f.xPos, f.yPos);
+                var originCS = CoordinateSystem.ByOrigin(item.StartPoint.X - item.Width, item.StartPoint.Y);
+                var placedRect = (Rectangle)item.Transform(originCS, newCS);
+                packResult.PackedRectangles.Add(placedRect);
+                SplitFreeRectangle(packResult, f, placedRect);
+                packResult.PackedIndices.Add(idx);
+                packResult.FreeRectangles.Remove(f);
 
                 List<double> itemBounds = RectBounds(placedRect);
-                RemoveOverlaps(itemBounds);
+                RemoveOverlaps(packResult, itemBounds);
 
                 // Dispose Dynamo geometry
                 newCS.Dispose();
@@ -173,28 +182,32 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             }
             else
             {
-                remainRectangles.Add(item);
+                packResult.RemainRectangles.Add(item);
             }
+            return packResult;
         }
 
         /// <summary>
-        /// Chooses the best free rectangle based on the placement method
+        /// Chooses the best free rectangle for an item based on the placement method. 
+        /// Rectangles are formed from the leftover free space in the bin.
         /// </summary>
-        /// <param name="item"></param>
-        /// <param name="placementMethod"></param>
-        /// <returns>free rectangle with best score</returns>
+        /// <param name="item">The rectangle to place</param>
+        /// <param name="placementMethod">The placement method</param>
+        /// <param name="packResult">The bin packing result to investigate.</param>
+        /// <returns>The free rectangle with best score</returns>
         private static FreeRectangle BestFreeRect(
             Rectangle item,
-            PlacementMethods placementMethod)
+            PlacementMethods placementMethod,
+            PackResult packResult)
         {
-            List<FreeRectangle> fRects = new List<FreeRectangle>();
-            foreach (var fRect in freeRectangles)
+            var fRects = new List<FreeRectangle>();
+            foreach (FreeRectangle fRect in packResult.FreeRectangles)
             {
                 FreeRectangle chosenFreeRect;
-                List<FreeRectangle> fitsItem = new List<FreeRectangle>();
+                var fitsItem = new List<FreeRectangle>();
                 if (ItemFits(fRect, item, false))
                 {
-                    FreeRectangle newFree = new FreeRectangle
+                    var newFree = new FreeRectangle
                     {
                         xPos = fRect.xPos,
                         yPos = fRect.yPos,
@@ -218,7 +231,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                 }
                 if (ItemFits(fRect, item, true))
                 {
-                    FreeRectangle newFree = new FreeRectangle
+                    var newFree = new FreeRectangle
                     {
                         xPos = fRect.xPos,
                         yPos = fRect.yPos,
@@ -371,27 +384,28 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             FreeRectangle f,
             Rectangle item)
         {
-            double freeFArea = f.area();
-            double rectArea = item.Width * item.Height;
+            var freeFArea = f.area();
+            var rectArea = item.Width * item.Height;
             return freeFArea - rectArea;
         }
 
         /// <summary>
-        /// Split the free area into freeRectangles
+        /// Split the free area into free rectangles
         /// </summary>
         /// <param name="fRect"></param>
         /// <param name="item"></param>
         private static void SplitFreeRectangle(
+            PackResult packResult,
             FreeRectangle fRect,
             Rectangle item)
         {
             if (item.Width < fRect.width)
             {
-                double fW = fRect.width - item.Width;
-                double fH = fRect.height;
-                double fX = fRect.xPos + item.Width;
-                double fY = fRect.yPos;
-                freeRectangles.Add(new FreeRectangle
+                var fW = fRect.width - item.Width;
+                var fH = fRect.height;
+                var fX = fRect.xPos + item.Width;
+                var fY = fRect.yPos;
+                packResult.FreeRectangles.Add(new FreeRectangle
                 {
                     width = fW,
                     height = fH,
@@ -401,11 +415,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             }
             if (item.Height < fRect.height)
             {
-                double fW = fRect.width;
-                double fH = fRect.height - item.Height;
-                double fX = fRect.xPos;
-                double fY = fRect.yPos + item.Height;
-                freeRectangles.Add(new FreeRectangle
+                var fW = fRect.width;
+                var fH = fRect.height - item.Height;
+                var fX = fRect.xPos;
+                var fY = fRect.yPos + item.Height;
+                packResult.FreeRectangles.Add(new FreeRectangle
                 {
                     width = fW,
                     height = fH,
@@ -422,10 +436,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <returns>rectangle boundary points</returns>
         private static List<double> RectBounds(Rectangle rect)
         {
-            double BottomLeftX = rect.StartPoint.X - rect.Width;
-            double BottomLeftY = rect.StartPoint.Y;
-            double TopRightX = rect.StartPoint.X;
-            double TopRightY = rect.StartPoint.Y + rect.Height;
+            var BottomLeftX = rect.StartPoint.X - rect.Width;
+            var BottomLeftY = rect.StartPoint.Y;
+            var TopRightX = rect.StartPoint.X;
+            var TopRightY = rect.StartPoint.Y + rect.Height;
             return new List<double> { BottomLeftX, BottomLeftY, TopRightX, TopRightY };
         }
 
@@ -433,10 +447,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// Remove overlap of free areas
         /// </summary>
         /// <param name="itemBounds"></param>
-        private static void RemoveOverlaps(List<double> itemBounds)
+        private static void RemoveOverlaps(PackResult packResult, List<double> itemBounds)
         {
-            List<FreeRectangle> freeRects = new List<FreeRectangle>();
-            foreach (var rect in freeRectangles)
+            var freeRects = new List<FreeRectangle>();
+            foreach (var rect in packResult.FreeRectangles)
             {
                 if (RectangleOverlaps(rect, itemBounds))
                 {
@@ -449,8 +463,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                     freeRects.Add(rect);
                 }
             }
-            freeRectangles = freeRects;
-            RemoveEncapsulated();
+            packResult.FreeRectangles = freeRects;
+            RemoveEncapsulated(packResult);
         }
 
         /// <summary>
@@ -464,10 +478,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             FreeRectangle f1,
             List<double> rectBounds)
         {
-            double f1BottomLeftX = f1.xPos;
-            double f1BottomLeftY = f1.yPos;
-            double f1TopRightX = f1.xPos + f1.width;
-            double f1TopRightY = f1.yPos + f1.height;
+            var f1BottomLeftX = f1.xPos;
+            var f1BottomLeftY = f1.yPos;
+            var f1TopRightX = f1.xPos + f1.width;
+            var f1TopRightY = f1.yPos + f1.height;
 
             // If one rectangle is on left side of other  
             if (f1TopRightY <= rectBounds[1] || f1BottomLeftY >= rectBounds[3])
@@ -496,19 +510,19 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         {
             // return bottom left x,y and top left x,y
 
-            double x1 = f1.xPos;
-            double y1 = f1.yPos;
-            double x2 = f1.xPos + f1.width;
-            double y2 = f1.yPos + f1.height;
-            double x3 = rectBounds[0];
-            double y3 = rectBounds[1];
-            double x4 = rectBounds[2];
-            double y4 = rectBounds[3];
+            var x1 = f1.xPos;
+            var y1 = f1.yPos;
+            var x2 = f1.xPos + f1.width;
+            var y2 = f1.yPos + f1.height;
+            var x3 = rectBounds[0];
+            var y3 = rectBounds[1];
+            var x4 = rectBounds[2];
+            var y4 = rectBounds[3];
 
-            double overlapBotLeftX = x1 > x3 ? x1 : x3;
-            double overlapBotLeftY = y1 > y3 ? y1 : y3;
-            double overlapTopRightX = x2 < x4 ? x2 : x4;
-            double overlapTopRightY = y2 < y4 ? y2 : y4;
+            var overlapBotLeftX = x1 > x3 ? x1 : x3;
+            var overlapBotLeftY = y1 > y3 ? y1 : y3;
+            var overlapTopRightX = x2 < x4 ? x2 : x4;
+            var overlapTopRightY = y2 < y4 ? y2 : y4;
 
             return new List<double> { overlapBotLeftX, overlapBotLeftY, overlapTopRightX, overlapTopRightY };
         }
@@ -523,16 +537,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             FreeRectangle f1,
             List<double> overlapBound)
         {
-            double F1x = f1.xPos;
-            double F1y = f1.yPos;
+            var F1x = f1.xPos;
+            var F1y = f1.yPos;
 
             // Bottom left x,y and top right x,y of overlap
-            double overlapBotLeftX = overlapBound[0];
-            double overlapBotLeftY = overlapBound[1];
-            double overlapTopRightX = overlapBound[2];
-            double overlapTopRightY = overlapBound[3];
+            var overlapBotLeftX = overlapBound[0];
+            var overlapBotLeftY = overlapBound[1];
+            var overlapTopRightX = overlapBound[2];
+            var overlapTopRightY = overlapBound[3];
 
-            List<FreeRectangle> newFreeRects = new List<FreeRectangle>();
+            var newFreeRects = new List<FreeRectangle>();
             // Left side
             if (overlapBotLeftX > F1x)
             {
@@ -592,7 +606,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             FreeRectangle f1,
             FreeRectangle f2)
         {
-            int precsion = 2;
+            var precsion = 2;
             if (Math.Round(f2.xPos, precsion) < Math.Round(f1.xPos, precsion) || Math.Round(f2.xPos, precsion) > Math.Round(f1.xPos + f1.width, precsion))
             {
                 return false;
@@ -615,21 +629,21 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <summary>
         /// If FreeRectangle is fully encapsulated, remove it.
         /// </summary>
-        private static void RemoveEncapsulated()
+        private static void RemoveEncapsulated(PackResult packResult)
         {
-            for (int i = 0; i < freeRectangles.Count; i++)
+            for (var i = 0; i < packResult.FreeRectangles.Count; i++)
             {
-                for (int j = i + 1; j < freeRectangles.Count; j++)
+                for (var j = i + 1; j < packResult.FreeRectangles.Count; j++)
                 {
-                    if (IsEncapsulated(freeRectangles[j], freeRectangles[i]))
+                    if (IsEncapsulated(packResult.FreeRectangles[j], packResult.FreeRectangles[i]))
                     {
-                        freeRectangles.Remove(freeRectangles[i]);
+                        packResult.FreeRectangles.Remove(packResult.FreeRectangles[i]);
                         i -= 1;
                         break;
                     }
-                    if (IsEncapsulated(freeRectangles[i], freeRectangles[j]))
+                    if (IsEncapsulated(packResult.FreeRectangles[i], packResult.FreeRectangles[j]))
                     {
-                        freeRectangles.Remove(freeRectangles[j]);
+                        packResult.FreeRectangles.Remove(packResult.FreeRectangles[j]);
                         j -= 1;
                     }
                 }

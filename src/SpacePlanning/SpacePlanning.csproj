@@ -229,6 +229,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Generate\BinPacking\" />
     <Folder Include="Integrate\" />
   </ItemGroup>
   <ItemGroup>
