@@ -21,7 +21,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Rectangle.ByWidthLength(12,22)
             };
 
-            Dictionary<string, object> result = BinPacking.Pack2D(items, bins, BinPacking.PlacementMethods.BestShortSideFits);
+            Dictionary<string, object> result = BinPacking.Pack2D(items, bins, PlacementMethods.BestShortSideFits);
             Assert.IsTrue(result.Keys.Contains("packedRectangles"));
             Assert.IsTrue(result.Keys.Contains("remainRectangles"));
             Assert.IsTrue(result.Keys.Contains("packedIndices"));
@@ -50,7 +50,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Rectangle.ByWidthLength(15,15)
             };
 
-            Dictionary<string, object> result = BinPacking.Pack2D(items, bins, BinPacking.PlacementMethods.BestShortSideFits);
+            Dictionary<string, object> result = BinPacking.Pack2D(items, bins, PlacementMethods.BestShortSideFits);
             Assert.IsTrue(result.Keys.Contains("packedRectangles"));
             Assert.IsTrue(result.Keys.Contains("remainRectangles"));
             Assert.IsTrue(result.Keys.Contains("packedIndices"));
@@ -83,7 +83,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Rectangle.ByWidthLength(15,15)
             };
 
-            Dictionary<string, object> result = BinPacking.Pack2D(items, bins, BinPacking.PlacementMethods.BestShortSideFits);
+            Dictionary<string, object> result = BinPacking.Pack2D(items, bins, PlacementMethods.BestShortSideFits);
             Assert.IsTrue(result.Keys.Contains("packedRectangles"));
             Assert.IsTrue(result.Keys.Contains("remainRectangles"));
             Assert.IsTrue(result.Keys.Contains("packedIndices"));
@@ -97,6 +97,5 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             var packedIndices = (List<int>)result["packedIndices"];
             Assert.AreEqual(packedIndices, new List<int> { 0, 1, 2, 3, 4, 5 });
         }
-
     }
 }

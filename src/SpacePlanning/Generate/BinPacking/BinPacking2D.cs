@@ -39,14 +39,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
             for (var i = 0; i < bins.Count; i++)
             {
-                Rectangle bin = bins[i];
+                var packer = new BinPacker2D(bins[i]);
 
-                BinPacker2D packResult = PackRectanglesInBin(remainingRects, bin, placementMethod);
-                packedRects.Add(packResult.PackedRectangles);
-                packIndices.Add(packResult.PackedIndices);
+                packer.PackRectangles(remainingRects, placementMethod);
+                packedRects.Add(packer.PackedRectangles);
+                packIndices.Add(packer.PackedIndices);
 
                 // update remaining rects
-                remainingRects = new List<Rectangle>(packResult.RemainRectangles);
+                remainingRects = new List<Rectangle>(packer.RemainRectangles);
             }
 
             return new Dictionary<string, object>
