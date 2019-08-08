@@ -20,45 +20,77 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// Algorithm sequentially packs rectangles in each bin (order as provided) until there is nothing left to pack or it run out of bins.
         /// You can safely use this with a single bin as well.
         /// </summary>
-        /// <param name="rects">List of rectangles to pack.</param>
+        /// <param name="rectangles">List of rectangles to pack.</param>
         /// <param name="bins">List of rectangles to pack into. </param>
-        /// <param name="placementMethod">Method for choosing where to place the next rectangle when packing.</param>
+        /// <param name="packingMethod">Method for choosing where to place the next rectangle when packing.</param>
         /// <returns>List of packed rectangles for each of the bins provided, the indeces of rectangles packed and any items that have not been packed.</returns>
-        [NodeCategory("Create")]
         [MultiReturn(new[] { packedItemsOutputPort2D, indicesOutputPort2D, remainingItemsOutputPort2D })]
         public static Dictionary<string, object> Pack2D(
-            List<Rectangle> rects,
+            List<Rectangle> rectangles,
             List<Rectangle> bins,
-            PlacementMethods placementMethod)
+            RectanglePackingStrategy packingMethod)
         {
-            // we need to keep track of packed items across bins
-            // and then aggregate results, hence the lists external to BinPacker objects
-            var remainingRects = new List<Rectangle>(rects);
-            var packedRects = new List<List<Rectangle>>();
-            var packIndices = new List<List<int>>();
+            //// we need to keep track of packed items across bins
+            //// and then aggregate results, hence the lists external to BinPacker objects
+            //var remainingRects = new List<Rectangle>(rectangles);
+            //var packedRects = new List<List<Rectangle>>();
+            //var packIndices = new List<List<int>>();
 
-            for (var i = 0; i < bins.Count; i++)
-            {
-                var packer = new BinPacker2D(bins[i]);
+            //for (var i = 0; i < bins.Count; i++)
+            //{
+            //    var packer = new BinPacker2D(bins[i]);
 
-                packer.PackRectangles(remainingRects, placementMethod);
-                packedRects.Add(packer.PackedRectangles);
-                packIndices.Add(packer.PackedIndices);
+            //    packer.PackRectanglesInBin(remainingRects, packingMethod);
+            //    packedRects.Add(packer.PackedRectangles);
+            //    packIndices.Add(packer.PackedIndices);
 
-                // update remaining rects
-                remainingRects = new List<Rectangle>(packer.RemainRectangles);
-            }
+            //    // update remaining rects
+            //    remainingRects = new List<Rectangle>(packer.RemainRectangles);
+            //}
+
+            //return new Dictionary<string, object>
+            //{
+            //    {packedItemsOutputPort2D, packedRects},
+            //    {indicesOutputPort2D, packIndices},
+            //    {remainingItemsOutputPort2D, remainingRects}
+            //};
+            var results = BinPacker2D.PackRectanglesAcrossBins(rectangles, bins, packingMethod);
+            return results.ToDictionary();
+        }
+
+        /// <summary>
+        /// Packs next rectangle into the free area where the length of the longer leftover side is minimized
+        /// </summary>
+        public static RectanglePackingStrategy BestShortSideFitsStrategy => RectanglePackingStrategy.BestShortSideFits;
+
+        /// <summary>
+        /// Packs next rectangle into the free area where the length of the shorter leftover side is minimized.  
+        /// </summary>
+        public static RectanglePackingStrategy BestLongSideFitsStrategy => RectanglePackingStrategy.BestLongSideFits;
+
+        /// <summary>
+        /// Picks the free area that is smallest in area to place the next rectangle into.
+        /// </summary>
+        public static RectanglePackingStrategy BestAreaFitsStrategy => RectanglePackingStrategy.BestAreaFits;
+
+        /// <summary>
+        /// Formats a list of BinPacker2D results to a dictionary for use in Dynamo multi-return nodes 
+        /// </summary>
+        /// <param name="packers">The list of packing results to convert.</param>
+        /// <returns>A dictionary with 3 items: packed, remaining and indices for each BinPacker2D result, as lists.</returns>
+        private static Dictionary<string, object> ToDictionary(this List<BinPacker2D> packers)
+        {
+            var packedRects = packers.Select(x => x.PackedRectangles).ToList();
+            var remainRects = packers.Select(x => x.RemainRectangles).ToList();
+            var packedIndices = packers.Select(x => x.PackedIndices).ToList();
 
             return new Dictionary<string, object>
             {
                 {packedItemsOutputPort2D, packedRects},
-                {indicesOutputPort2D, packIndices},
-                {remainingItemsOutputPort2D, remainingRects}
+                {indicesOutputPort2D, packedIndices},
+                {remainingItemsOutputPort2D, remainRects}
             };
         }
 
-        public static PlacementMethods BestShortSideFits => PlacementMethods.BestShortSideFits;
-        public static PlacementMethods BestLongSideFits => PlacementMethods.BestLongSideFits;
-        public static PlacementMethods BestAreaFits => PlacementMethods.BestAreaFits;
     }
 }

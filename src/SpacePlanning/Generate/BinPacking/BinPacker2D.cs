@@ -12,6 +12,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
     [IsVisibleInDynamoLibrary(false)]
     public class BinPacker2D
     {
+        #region Properties
         private List<FreeRectangle> FreeRectangles;
 
         /// <summary>
@@ -28,6 +29,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// The indices of the rectangles that have been packed from the input list of rectangles.
         /// </summary>
         public List<int> PackedIndices { get; }
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Construct an empty 2D bin packer
@@ -46,83 +50,78 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="bin">The rectangle to use as a bin when packing.</param>
         public BinPacker2D(Rectangle bin) : this()
         {
-            // Initialize freeRectangle
             this.InitialiseBinFromRectangle(bin);
         }
 
-        public void PackRectangles(
-            List<Rectangle> rects,
-            PlacementMethods placementMethod)
-        {
-            if (this.FreeRectangles.Count == 0) throw new ArgumentNullException("Bin has not been initialised");
-            if (rects.Count == 0) throw new ArgumentNullException(nameof(rects));
+        #endregion
 
-            var idx = 0;
-            foreach (Rectangle rect in rects)
-            {
-                this.PlaceItem(rect, placementMethod, idx);
-                idx++;
-            }
-        }
-
+        /// <summary>
+        /// Pack a list of supplied rectangles into the supplied bin.
+        /// </summary>
+        /// <param name="rectangles">The rectangles to pack.</param>
+        /// <param name="placementMethod">The method to use when packing.</param>
+        /// <param name="bins">The bin to pack into, clearing any previously initialised bin.</param>
         public void PackRectanglesInBin(
-            List<Rectangle> rects,
-            PlacementMethods placementMethod,
+            List<Rectangle> rectangles,
+            RectanglePackingStrategy placementMethod,
             Rectangle bin)
         {
             this.InitialiseBinFromRectangle(bin);
-            this.PackRectangles(rects, placementMethod);
+            this.PackRectanglesInBin(rectangles, placementMethod);
         }
-
-        #region Instance Helper Methods
 
         /// <summary>
-        /// Chooses the best free rectangle for an item based on the placement method. 
-        /// Rectangles are formed from the leftover free space in the bin.
+        /// Pack a list of supplied rectangles into the already initialised bin.
         /// </summary>
-        /// <param name="item">The rectangle to place</param>
-        /// <param name="placementMethod">The placement method</param>
-        /// <param name="this">The bin packing result to investigate.</param>
-        /// <returns>The free rectangle with best score</returns>
-        private FreeRectangle BestFreeRect(
-            Rectangle item,
-            PlacementMethods placementMethod)
+        /// <param name="rectangles">The rectangles to pack.</param>
+        /// <param name="placementMethod">The method to use when packing.</param>
+        public void PackRectanglesInBin(
+            List<Rectangle> rectangles,
+            RectanglePackingStrategy placementMethod
+            )
         {
-            var fRects = new List<FreeRectangle>();
-            foreach (FreeRectangle fRect in this.FreeRectangles)
+            if (this.FreeRectangles.Count == 0) throw new InvalidOperationException("Bin has not been initialised");
+            if (rectangles.Count == 0) throw new ArgumentNullException(nameof(rectangles));
+
+            for (int i = 0; i < rectangles.Count; i++)
             {
-                FreeRectangle chosenFreeRect;
-                var fitsItem = new List<FreeRectangle>
-                {
-                    ScoreByPlacementMethod(item, placementMethod, fRect, true),
-                    ScoreByPlacementMethod(item, placementMethod, fRect, false)
-                };
-                if (fitsItem.Count == 1)
-                {
-                    chosenFreeRect = fitsItem[0];
-                    fRect.score = chosenFreeRect.score;
-                    fRect.rotate = chosenFreeRect.rotate;
-                    fRects.Add(fRect);
-                }
-                else if (fitsItem.Count == 2)
-                {
-                    // Choose free rect with smallest score
-                    chosenFreeRect = fitsItem.Aggregate((f1, f2) => f1.score < f2.score ? f1 : f2);
-                    fRect.score = chosenFreeRect.score;
-                    fRect.rotate = chosenFreeRect.rotate;
-                    fRects.Add(fRect);
-                }
-            }
-            if (fRects.Count > 0)
-            {
-                // Choose free rect with smallest score
-                return fRects.Aggregate((f1, f2) => f1.score < f2.score ? f1 : f2);
-            }
-            else
-            {
-                return null;
+                // skip already placed rectangles
+                var rect = rectangles[i];
+                if (rect == null) continue;
+
+                var placed = this.PlaceItem(rect, placementMethod, i);
+                if (placed) rectangles[i] = null;
             }
         }
+
+        public static List<BinPacker2D> PackRectanglesAcrossBins(
+            List<Rectangle> rectangles,
+            List<Rectangle> bins,
+            RectanglePackingStrategy packingStrategy)
+        {
+            // we need to keep track of packed items across bins
+            // and then aggregate results, hence the lists external to BinPacker object
+            var remainingRects = new List<Rectangle>(rectangles);
+            var packedRects = new List<List<Rectangle>>();
+            var packIndices = new List<List<int>>();
+            var packers = new List<BinPacker2D>();
+
+            for (var i = 0; i < bins.Count; i++)
+            {
+                var packer = new BinPacker2D(bins[i]);
+
+                packer.PackRectanglesInBin(remainingRects, packingStrategy);
+                packers.Add(packer);
+                //packedRects.Add(packer.PackedRectangles);
+                //packIndices.Add(packer.PackedIndices);
+
+                // update remaining rects
+                //remainingRects = new List<Rectangle>(packer.RemainRectangles);
+            }
+            return packers;
+        }
+
+        #region Packing helper methods
 
         private void InitialiseBinFromRectangle(Rectangle bin)
         {
@@ -136,22 +135,22 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         }
 
         /// <summary>
-        /// Find best freerectangle and place next rectangle
+        /// Find best free rectangle and place next rectangle
         /// </summary>
         /// <param name="item"></param>
         /// <param name="placementMethod"></param>
-        /// <param name="idx"></param>
-        private void PlaceItem(
+        /// <param name="itemIndex"></param>
+        private bool PlaceItem(
             Rectangle item,
-            PlacementMethods placementMethod,
-            int idx)
+            RectanglePackingStrategy placementMethod,
+            int itemIndex)
         {
-            FreeRectangle freeRect = this.BestFreeRect(item, placementMethod);
+            FreeRectangle freeRect = this.GetBestFreeRectangle(item, placementMethod);
 
             if (freeRect == null)
             {
                 this.RemainRectangles.Add(item);
-                return;
+                return false;
             }
 
             // translate rectangle to correct orientation and position
@@ -162,9 +161,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
             // place rectangle and update 
             this.PackedRectangles.Add(placedRect);
-            this.SplitFreeRectangle(freeRect, placedRect);
-            this.PackedIndices.Add(idx);
+            this.PackedIndices.Add(itemIndex);
             this.FreeRectangles.Remove(freeRect);
+
+            // update remaining free space
+            this.SplitFreeRectangle(freeRect, placedRect);
 
             List<double> itemBounds = RectBounds(placedRect);
             this.RemoveOverlaps(itemBounds);
@@ -172,6 +173,60 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             // Dispose Dynamo geometry
             newCS.Dispose();
             originCS.Dispose();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Chooses the best free rectangle for an item based on the placement method. 
+        /// Rectangles are formed from the leftover free space in the bin.
+        /// </summary>
+        /// <param name="item">The rectangle to place</param>
+        /// <param name="placementMethod">The placement method</param>
+        /// <param name="this">The bin packing result to investigate.</param>
+        /// <returns>The free rectangle with best score</returns>
+        private FreeRectangle GetBestFreeRectangle(
+            Rectangle item,
+            RectanglePackingStrategy placementMethod)
+        {
+            var freeRectangles = new List<FreeRectangle>();
+            for (int i = 0; i < this.FreeRectangles.Count; i++)
+            {
+                var fRect = this.FreeRectangles[i];
+
+                FreeRectangle chosenFreeRect;
+                var fitsItem = new List<FreeRectangle>
+                {
+                    ScoreRectanglePlacementInBin(item, placementMethod, fRect, true),
+                    ScoreRectanglePlacementInBin(item, placementMethod, fRect, false)
+                };
+                fitsItem.RemoveAll(x => x == null);
+
+                if (fitsItem.Count == 1)
+                {
+                    chosenFreeRect = fitsItem[0];
+                    fRect.score = chosenFreeRect.score;
+                    fRect.rotate = chosenFreeRect.rotate;
+                    freeRectangles.Add(fRect);
+                }
+                else if (fitsItem.Count == 2)
+                {
+                    // Choose free rect with smallest score
+                    chosenFreeRect = fitsItem.Aggregate((f1, f2) => f1.score < f2.score ? f1 : f2);
+                    fRect.score = chosenFreeRect.score;
+                    fRect.rotate = chosenFreeRect.rotate;
+                    freeRectangles.Add(fRect);
+                }
+            }
+            if (freeRectangles.Count > 0)
+            {
+                // Choose free rect with smallest score
+                return freeRectangles.Aggregate((f1, f2) => f1.score < f2.score ? f1 : f2);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -261,27 +316,22 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             this.RemoveEncapsulated();
         }
 
-        #endregion
-
-        #region Static helper methods
-
-        private static FreeRectangle ScoreByPlacementMethod(Rectangle item, PlacementMethods placementMethod, FreeRectangle fRect, bool rotate)
+        private static FreeRectangle ScoreRectanglePlacementInBin(Rectangle item, RectanglePackingStrategy placementMethod, FreeRectangle fRect, bool rotate)
         {
-            var itemFits = ItemFits(fRect, item, rotate);
-            if (!itemFits) return null;
+            if (!ItemFits(fRect, item, rotate)) return null;
 
-            //var newFree = new FreeRectangle
-            //{
-            //    xPos = fRect.xPos,
-            //    yPos = fRect.yPos,
-            //    height = fRect.height,
-            //    width = fRect.width,
-            //    rotate = itemFits,
-            //};
-            fRect.rotate = itemFits;
-            fRect.score = Score(fRect, item, placementMethod);
+            // TODO : we're doing un-necessary allocations in some cases, duplicating the fRect
+            var newFree = new FreeRectangle
+            {
+                xPos = fRect.xPos,
+                yPos = fRect.yPos,
+                height = fRect.height,
+                width = fRect.width,
+                rotate = rotate,
+            };
+            newFree.score = Score(newFree, item, placementMethod);
 
-            return fRect;
+            return newFree;
         }
 
         /// <summary>
@@ -494,21 +544,21 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         #region Scoring methods
 
         private static double Score(
-            FreeRectangle f,
+            FreeRectangle freeRect,
             Rectangle item,
-            PlacementMethods placementMethod)
+            RectanglePackingStrategy placementMethod)
         {
-            if (placementMethod == PlacementMethods.BestShortSideFits)
+            if (placementMethod == RectanglePackingStrategy.BestShortSideFits)
             {
-                return BSSF_Score(f, item);
+                return BSSF_Score(freeRect, item);
             }
-            else if (placementMethod == PlacementMethods.BestLongSideFits)
+            else if (placementMethod == RectanglePackingStrategy.BestLongSideFits)
             {
-                return BLSF_Score(f, item);
+                return BLSF_Score(freeRect, item);
             }
-            else if (placementMethod == PlacementMethods.BestAreaFits)
+            else if (placementMethod == RectanglePackingStrategy.BestAreaFits)
             {
-                return BAF_Score(f, item);
+                return BAF_Score(freeRect, item);
             }
             return 0;
         }
@@ -516,24 +566,24 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <summary>
         /// Scoring Method for best short side fits
         /// </summary>
-        /// <param name="f"></param>
+        /// <param name="freeRect"></param>
         /// <param name="item"></param>
         /// <returns>Score of Best Short Side Fits</returns>
         private static double BSSF_Score(
-            FreeRectangle f,
+            FreeRectangle freeRect,
             Rectangle item)
         {
             double widthDifference;
             double heightDifference;
-            if (f.rotate)
+            if (freeRect.rotate)
             {
-                widthDifference = f.width - item.Height;
-                heightDifference = f.height - item.Width;
+                widthDifference = freeRect.width - item.Height;
+                heightDifference = freeRect.height - item.Width;
             }
             else
             {
-                widthDifference = f.width - item.Width;
-                heightDifference = f.height - item.Height;
+                widthDifference = freeRect.width - item.Width;
+                heightDifference = freeRect.height - item.Height;
             }
 
             return new List<double> { widthDifference, heightDifference }.Min();
@@ -542,24 +592,24 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <summary>
         /// Scoring Method for Best Long Side Fits
         /// </summary>
-        /// <param name="f"></param>
+        /// <param name="freeRect"></param>
         /// <param name="item"></param>
         /// <returns>Score of Best Long Side Fits</returns>
         private static double BLSF_Score(
-            FreeRectangle f,
+            FreeRectangle freeRect,
             Rectangle item)
         {
             double widthDifference;
             double heightDifference;
-            if (f.rotate)
+            if (freeRect.rotate)
             {
-                widthDifference = f.width - item.Height;
-                heightDifference = f.height - item.Width;
+                widthDifference = freeRect.width - item.Height;
+                heightDifference = freeRect.height - item.Width;
             }
             else
             {
-                widthDifference = f.width - item.Width;
-                heightDifference = f.height - item.Height;
+                widthDifference = freeRect.width - item.Width;
+                heightDifference = freeRect.height - item.Height;
             }
 
             return new List<double> { widthDifference, heightDifference }.Max();
@@ -568,20 +618,21 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <summary>
         /// Scoring Method for Best Area Fits
         /// </summary>
-        /// <param name="f"></param>
+        /// <param name="freeRect"></param>
         /// <param name="item"></param>
         /// <returns>Score of Best Area Fits</returns>
         private static double BAF_Score(
-            FreeRectangle f,
+            FreeRectangle freeRect,
             Rectangle item)
         {
-            var freeFArea = f.area();
+            var freeFArea = freeRect.area();
             var rectArea = item.Width * item.Height;
             return freeFArea - rectArea;
         }
 
         #endregion
 
+        #region Helper classes
         private class FreeRectangle
         {
             public double width;
@@ -596,5 +647,32 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                 return this.width * this.height;
             }
         }
+        #endregion
     }
+
+    /// <summary>
+    /// Placement methods for packing rectangles in a bin.
+    /// </summary>
+    [IsVisibleInDynamoLibrary(false)]
+    public enum RectanglePackingStrategy
+    {
+        /// <summary>
+        /// Best Short Side Fits:
+        /// Packs next rectangle into the free area where the length of the longer leftover side is minimized. 
+        /// </summary>
+        BestShortSideFits,
+
+        /// <summary>
+        /// Best Long Side Fits:
+        /// Packs next rectangle into the free area where the length of the shorter leftover side is minimized.  
+        /// </summary>
+        BestLongSideFits,
+
+        /// <summary>
+        /// Best Area Fits:
+        /// Picks the free area that is smallest in area to place the next rectangle into.
+        /// </summary>
+        BestAreaFits
+    }
+
 }
