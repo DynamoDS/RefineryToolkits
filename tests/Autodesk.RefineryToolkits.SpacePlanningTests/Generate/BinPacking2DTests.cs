@@ -117,14 +117,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Assert.IsTrue(result.Keys.Contains(indicesOutputPort));
 
             var packedRectangles = (List<List<Rectangle>>)result[packedOutputPort];
-            Assert.AreEqual(3, packedRectangles.Count);
-            Assert.AreEqual(4, packedRectangles.Sum(x => x.Count));
+            Assert.AreEqual(3, packedRectangles.Count); // 3 bins were packed
+            Assert.AreEqual(4, packedRectangles.Sum(x => x.Count)); // the number of rectangles packed is 4
 
             var remainItems = (List<Rectangle>)result[remainOutputPort];
-            Assert.AreEqual(2, remainItems.Count);
+            Assert.AreEqual(2, remainItems.Count); // 2 rectangles were not packed
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
-            Assert.AreEqual(packedIndices, expectedIndices);
+            CollectionAssert.AreEqual(packedIndices, expectedIndices); // the rectangles were packed in the order and grouping expected
         }
 
         [Test]

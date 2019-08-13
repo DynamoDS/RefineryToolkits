@@ -81,8 +81,12 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         private static Dictionary<string, object> ToDictionary(this List<BinPacker2D> packers)
         {
             var packedRects = packers.Select(x => x.PackedRectangles).ToList();
-            var remainRects = packers.Select(x => x.RemainRectangles).ToList();
             var packedIndices = packers.Select(x => x.PackedIndices).ToList();
+
+            // we only need the remaining rectangles from the last bin packing result
+            // since the same list of remaining rectangles is used sequentially to pack all bins.
+            // using all lists of remaining rects would just show us the progression of what remained after each pack
+            var remainRects = packers.LastOrDefault()?.RemainRectangles;
 
             return new Dictionary<string, object>
             {

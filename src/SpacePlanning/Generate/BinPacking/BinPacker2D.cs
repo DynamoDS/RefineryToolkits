@@ -112,11 +112,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
                 packer.PackRectanglesInBin(remainingRects, packingStrategy);
                 packers.Add(packer);
-                //packedRects.Add(packer.PackedRectangles);
-                //packIndices.Add(packer.PackedIndices);
-
-                // update remaining rects
-                //remainingRects = new List<Rectangle>(packer.RemainRectangles);
+                packedRects.Add(packer.PackedRectangles);
+                packIndices.Add(packer.PackedIndices);
             }
             return packers;
         }
