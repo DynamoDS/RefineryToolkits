@@ -30,30 +30,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             List<Rectangle> bins,
             RectanglePackingStrategy packingMethod)
         {
-            //// we need to keep track of packed items across bins
-            //// and then aggregate results, hence the lists external to BinPacker objects
-            //var remainingRects = new List<Rectangle>(rectangles);
-            //var packedRects = new List<List<Rectangle>>();
-            //var packIndices = new List<List<int>>();
-
-            //for (var i = 0; i < bins.Count; i++)
-            //{
-            //    var packer = new BinPacker2D(bins[i]);
-
-            //    packer.PackRectanglesInBin(remainingRects, packingMethod);
-            //    packedRects.Add(packer.PackedRectangles);
-            //    packIndices.Add(packer.PackedIndices);
-
-            //    // update remaining rects
-            //    remainingRects = new List<Rectangle>(packer.RemainRectangles);
-            //}
-
-            //return new Dictionary<string, object>
-            //{
-            //    {packedItemsOutputPort2D, packedRects},
-            //    {indicesOutputPort2D, packIndices},
-            //    {remainingItemsOutputPort2D, remainingRects}
-            //};
             var results = BinPacker2D.PackRectanglesAcrossBins(rectangles, bins, packingMethod);
             return results.ToDictionary();
         }
