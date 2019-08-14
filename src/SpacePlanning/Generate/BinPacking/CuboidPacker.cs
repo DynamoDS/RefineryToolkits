@@ -85,8 +85,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         }
 
         public List<IPacker<Cuboid, Cuboid>> PackMultipleContainers(
-            List<Cuboid> containers,
-            List<Cuboid> items)
+            List<Cuboid> items,
+            List<Cuboid> containers)
         {
             return this.PackMultipleContainersWithStats(items, containers)
                 .Select(x=>x as IPacker<Cuboid,Cuboid>)
