@@ -144,8 +144,7 @@
     <Compile Include="Analyze\IsovistTests.cs" />
     <Compile Include="Analyze\OpenessTests.cs" />
     <Compile Include="Analyze\PathFindingTests.cs" />
-    <Compile Include="Analyze\ViewsToOutsideTests.cs" />
-    <Compile Include="Analyze\VisiblePointsTests.cs" />
+    <Compile Include="Analyze\VisibilityTests.cs" />
     <Compile Include="Explore\ColorsTests.cs" />
     <Compile Include="Generate\AmenitySpaceTests.cs" />
     <Compile Include="Generate\PackingRectanglesTests.cs" />

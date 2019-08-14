@@ -210,7 +210,7 @@
     <Compile Include="Analyze\PathFinding.cs" />
     <Compile Include="Analyze\SpaceNavigation.cs" />
     <Compile Include="Analyze\RepresentableGraph.cs" />
-    <Compile Include="Analyze\VisiblePoints.cs" />
+    <Compile Include="Analyze\Visibility.cs" />
     <Compile Include="Explore\ColorRange.cs" />
     <Compile Include="Generate\AmenitySpace.cs" />
     <Compile Include="Generate\Packers\CuboidPacker.cs" />
