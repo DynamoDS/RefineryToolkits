@@ -27,7 +27,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="graph">Graph</param>
         /// <returns>Visibility Graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public bool IsVisibilityGraph() => this.GetType() == typeof(Visibility);
+        public bool IsVisibilityGraph() => this.GetType() == typeof(RepresentableGraph);
 
         #endregion
 
@@ -168,9 +168,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             IRenderPackage package,
             TessellationParameters parameters)
         {
-            if (this.GetType() == typeof(Visibility))
+            if (this.GetType() == typeof(RepresentableGraph))
             {
-                Visibility visGraph = this as Visibility;
+                RepresentableGraph visGraph = this as RepresentableGraph;
                 if (visGraph.Factors != null && visGraph.colorRange != null)
                 {
                     visGraph.TessellateVisibilityGraph(package, parameters);

@@ -1,11 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Autodesk.DesignScript.Geometry;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServices;
-using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
 {
@@ -20,19 +18,19 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [SetUp]
         public void BeforeTest()
         {
-            boundary = Rectangle.ByWidthLength(50, 50) as Polygon;
-            obstacles = Rectangle.ByWidthLength(15, 15) as Polygon;
+            this.boundary = Rectangle.ByWidthLength(50, 50) as Polygon;
+            this.obstacles = Rectangle.ByWidthLength(15, 15) as Polygon;
 
-            samplePoints = new List<Point>();
+            this.samplePoints = new List<Point>();
             foreach (int n in Enumerable.Range(16, 10))
             {
                 foreach (int i in Enumerable.Range(-25, 10))
                 {
-                    samplePoints.Add(Point.ByCoordinates(n, i));
+                    this.samplePoints.Add(Point.ByCoordinates(n, i));
                 }
             }
 
-            origin = Point.ByCoordinates(-20, -2);
+            this.origin = Point.ByCoordinates(-20, -2);
         }
 
         /// <summary>
@@ -41,7 +39,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [Test]
         public void VisiblePointsDicionaryOutputTest()
         {
-            var result = Visibility.OfPointsFromOrigin(origin, samplePoints, new List<Polygon> { boundary }, new List<Polygon> { obstacles });
+            var result = Visibility.OfPointsFromOrigin(
+                this.origin,
+                this.samplePoints,
+                new List<Polygon> { this.boundary },
+                new List<Polygon> { this.obstacles });
 
             Assert.IsTrue(result.Keys.Contains("score"));
             Assert.IsTrue(result.Keys.Contains("visiblePoints"));
@@ -55,12 +57,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [Test]
         public void FromOriginTest()
         {
-            
-            var result = Visibility.OfPointsFromOrigin(origin, samplePoints, new List<Polygon> { boundary }, new List<Polygon> { obstacles });
+
+            var result = Visibility.OfPointsFromOrigin(
+                this.origin,
+                this.samplePoints,
+                new List<Polygon> { this.boundary },
+                new List<Polygon> { this.obstacles });
 
             var visiblePointsScore = (double)result["score"];
 
-            Assert.AreEqual(0.57, Math.Round(visiblePointsScore,2));
+            Assert.AreEqual(0.57, Math.Round(visiblePointsScore, 2));
         }
     }
 }

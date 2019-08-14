@@ -1,12 +1,8 @@
-﻿using NUnit.Framework;
-using Autodesk.RefineryToolkits.SpacePlanning.Analyze;
-using System;
+﻿using Autodesk.DesignScript.Geometry;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServices;
-using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
 {
@@ -20,9 +16,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [SetUp]
         public void BeforeTest()
         {
-            boundaryPoly = new List<Polygon> { Rectangle.ByWidthLength(20, 20) as Polygon };
-            lines = boundaryPoly[0].Explode().Cast<Curve>().ToList();
-            origin = Point.ByCoordinates(0, 0);
+            this.boundaryPoly = new List<Polygon> { Rectangle.ByWidthLength(20, 20) as Polygon };
+            this.lines = this.boundaryPoly[0].Explode().Cast<Curve>().ToList();
+            this.origin = Point.ByCoordinates(0, 0);
         }
 
         /// <summary>
@@ -30,15 +26,19 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         /// </summary>
         [Test]
         public void ViewsToOutsideDictionaryOutputTest()
-        {       
+        {
 
-            // Result of ViewsToOutside.ByLineSegments
-            var result = ViewsToOutside.ByLineSegments(lines,origin,boundaryPoly,new List<Polygon> { });
+            // Result of Visibility.OfLinesFromOrigin
+            var result = Visibility.OfLinesFromOrigin(
+                this.origin,
+                this.lines,
+                this.boundaryPoly,
+                new List<Polygon> { });
 
             // Check if output of node is a Dictionary that contains both the
             // "score" and "segments" key
             Assert.IsTrue(result.Keys.Contains("score"));
-            Assert.IsTrue(result.Keys.Contains("segments"));      
+            Assert.IsTrue(result.Keys.Contains("segments"));
         }
 
         /// <summary>
@@ -47,8 +47,12 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [Test]
         public void CheckIfOutputScoreIsCorrectWithNoObstrutions()
         {
-            // Result of ViewsToOutside.ByLineSegments
-            var result = ViewsToOutside.ByLineSegments(lines, origin, boundaryPoly, new List<Polygon> { });
+            // Result of Visibility.OfLinesFromOrigin
+            var result = Visibility.OfLinesFromOrigin(
+                this.origin,
+                this.lines,
+                this.boundaryPoly,
+                new List<Polygon> { });
 
             // Check if the score output is 1.0
             // as there are no obstacles blocking the views to outside
@@ -63,14 +67,18 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void CheckIfViewsToOutsideDetectsObstaclesInLayout()
         {
             Polygon internalPoly = Rectangle.ByWidthLength(5, 5) as Polygon;
-            Point newOrigin = origin.Translate(10) as Point;
-            // Result of ViewsToOutside.ByLineSegments
-            var result = ViewsToOutside.ByLineSegments(lines, newOrigin, boundaryPoly, new List<Polygon> { internalPoly });
+            Point newOrigin = this.origin.Translate(10) as Point;
+            // Result of Visibility.OfLinesFromOrigin
+            var result = Visibility.OfLinesFromOrigin(
+                newOrigin,
+                this.lines,
+                this.boundaryPoly,
+                new List<Polygon> { internalPoly });
 
             var viewScore = (double)result["score"];
             Assert.AreNotEqual(1.0, viewScore);
         }
 
-            
+
     }
 }

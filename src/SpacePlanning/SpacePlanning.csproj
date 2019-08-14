@@ -201,7 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyze\AdjacencyPreference.cs" />
-    <Compile Include="Analyze\Base.cs" />
+    <Compile Include="Analyze\BaseGraph.cs" />
     <Compile Include="Analyze\Buzz.cs" />
     <Compile Include="Analyze\Daylight.cs" />
     <Compile Include="Analyze\Isovist.cs" />
@@ -209,7 +209,7 @@
     <Compile Include="Analyze\Productivity.cs" />
     <Compile Include="Analyze\PathFinding.cs" />
     <Compile Include="Analyze\SpaceNavigation.cs" />
-    <Compile Include="Analyze\VisibilityGraph.cs" />
+    <Compile Include="Analyze\RepresentableGraph.cs" />
     <Compile Include="Analyze\VisiblePoints.cs" />
     <Compile Include="Explore\ColorRange.cs" />
     <Compile Include="Generate\AmenitySpace.cs" />
