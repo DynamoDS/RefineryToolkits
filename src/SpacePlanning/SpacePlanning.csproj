@@ -209,8 +209,7 @@
     <Compile Include="Analyze\Productivity.cs" />
     <Compile Include="Analyze\PathFinding.cs" />
     <Compile Include="Analyze\SpaceNavigation.cs" />
-    <Compile Include="Analyze\ViewsToOutside.cs" />
-    <Compile Include="Analyze\Visibility.cs" />
+    <Compile Include="Analyze\VisibilityGraph.cs" />
     <Compile Include="Analyze\VisiblePoints.cs" />
     <Compile Include="Explore\ColorRange.cs" />
     <Compile Include="Generate\AmenitySpace.cs" />

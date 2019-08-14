@@ -15,29 +15,35 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         private const string geometryOutputPortViews = "segments";
 
         /// <summary>
-        /// Calculates the visible points out of a list of sample points from a given origin.
+        /// Calculates the visibility of a set of points, from a given origin point.
         /// Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.
         /// </summary>
-        /// <param name="origin">Origin point to measure from</param>
+        /// <param name="origin">Origin point to measure visibility from.</param>
         /// <param name="points">Sample points</param>
         /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
         /// <param name="obstacles">List of Polygons representing internal obstructions</param>
         /// <returns>precentages of the amount of visible points</returns>
         [MultiReturn(new[] { scoreOutputPort, geometryOutputPort })]
-        public static Dictionary<string, object> FromOrigin(
-            DSGeom.Point origin,
-            List<DSGeom.Point> points,
-            List<DSGeom.Polygon> boundary,
-            [DefaultArgument("[]")] List<DSGeom.Polygon> obstacles)
+        public static Dictionary<string, object> OfPointsFromOrigin(
+            Point origin,
+            List<Point> points,
+            List<Polygon> boundary,
+            [DefaultArgument("[]")] List<Polygon> obstacles = null)
         {
-            DSGeom.Polygon isovist = IsovistPolygon(boundary, obstacles, origin);
+            if (origin is null)
+                throw new ArgumentNullException(nameof(origin));
+            if (points is null || points.Count == 0)
+                throw new ArgumentNullException(nameof(points));
+            if (obstacles == null) obstacles = new List<Polygon>();
+
+            Polygon isovist = IsovistPolygon(origin, obstacles, boundary);
             GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(isovist.Points.Select(p => GTGeom.Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
 
-            List<DSGeom.Point> visPoints = new List<DSGeom.Point>();
+            var visPoints = new List<Point>();
             double totalPoints = points.Count;
             double visibilityAmount = 0;
 
-            foreach (DSGeom.Point point in points)
+            foreach (Point point in points)
             {
                 GTGeom.Vertex vertex = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
@@ -62,22 +68,22 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.
         /// </summary>
         /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
-        /// <param name="internals">List of Polygons representing internal obstructions</param>
-        /// <param name="viewSegments">Line segments representing the views to outside</param>
+        /// <param name="obstacles">List of Polygons representing internal obstructions</param>
+        /// <param name="targetLines">Line segments representing the views to outside</param>
         /// <param name="origin">Origin point to measure from</param>
         /// <returns>precentage of 360 view that is to the outside</returns>
         [MultiReturn(new[] { scoreOutputPort, geometryOutputPortViews })]
-        public static Dictionary<string, object> ByLineSegments(
-            List<Curve> viewSegments,
+        public static Dictionary<string, object> OfLinesFromOrigin(
             Point origin,
+            List<Curve> targetLines,
             List<Polygon> boundary,
-            [DefaultArgument("[]")] List<Polygon> internals)
+            [DefaultArgument("[]")] List<Polygon> obstacles)
         {
-            Surface isovist = Isovist.FromPoint(boundary, internals, origin);
+            Surface isovist = Isovist.FromPoint(boundary, obstacles, origin);
 
             List<Curve> lines = new List<Curve>();
             double outsideViewAngles = 0;
-            foreach (Curve segment in viewSegments)
+            foreach (Curve segment in targetLines)
             {
                 Geometry[] intersectSegment = isovist.Intersect(segment);
                 if (intersectSegment != null)
@@ -108,10 +114,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         }
 
         #region Helpers
-        private static DSGeom.Polygon IsovistPolygon(
-            List<DSGeom.Polygon> boundary,
-            List<DSGeom.Polygon> obstacles,
-            DSGeom.Point point)
+        private static Polygon IsovistPolygon(
+            Point point,
+            List<Polygon> obstacles,
+            List<Polygon> boundary)
         {
             var baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstacles);
 

@@ -18,11 +18,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
     /// <summary>
     /// Representation of a Graph.
-    /// Graph contains a Dictionary where
     /// </summary>
     public class Graph : ICloneable
     {
-        #region Variables
+        #region Properties
 
         /// <summary>
         /// GUID to verify uniqueness of graph when cloned
@@ -61,7 +60,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         #endregion
 
-        #region Internal Constructors
+        #region Constructors
         public Graph()
         {
             edges = new List<Edge>();
@@ -319,24 +318,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         #region Override Methods
         //TODO: Improve overriding equality methods as per http://www.loganfranken.com/blog/687/overriding-equals-in-c-part-1/
-
-        /// <summary>
-        /// Customizing the render of Vertex
-        /// </summary>
-        /// <param name="package"></param>
-        /// <param name="parameters"></param>
-        //[IsVisibleInDynamoLibrary(false)]
-        //public void Tessellate(IRenderPackage package, TessellationParameters parameters)
-        //{
-        //    foreach(Vertex v in vertices)
-        //    {
-        //        v.Tessellate(package, parameters);
-        //    }
-        //    foreach(gEdge e in edges)
-        //    {
-        //        e.Tessellate(package, parameters);
-        //    }
-        //}
 
         /// <summary>
         /// Implementation of IClonable interface

@@ -1,5 +1,4 @@
-﻿#region namespaces
-using Autodesk.DesignScript.Interfaces;
+﻿using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
 using Dynamo.Graph.Nodes;
@@ -8,25 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using DSGeom = Autodesk.DesignScript.Geometry;
 using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
-#endregion
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
-
     /// <summary>
     /// Representation of a Graph.
     /// </summary>
     [IsVisibleInDynamoLibrary(false)]
     public class BaseGraph : IGraphicItem
     {
-        #region Internal Properties
+        #region Properties
         internal Graph graph { get; set; }
-        internal DSCore.Color edgeDefaultColour = DSCore.Color.ByARGB(255, 150, 200, 255);
-        internal DSCore.Color vertexDefaultColour = DSCore.Color.ByARGB(255, 75, 125, 180);
-
-        #endregion
-
-        #region Public Properties
+        private DSCore.Color edgeDefaultColour = DSCore.Color.ByARGB(255, 150, 200, 255);
+        private DSCore.Color vertexDefaultColour = DSCore.Color.ByARGB(255, 75, 125, 180);
 
         /// <summary>
         /// Checks if the input is a Visibility or Base graph.
@@ -35,38 +28,38 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns>Visibility Graph</returns>
         [IsVisibleInDynamoLibrary(false)]
         [NodeCategory("Query")]
-        public static bool IsVisibilityGraph(BaseGraph graph)
-        {
-            return graph.GetType() == typeof(VisibilityGraph);
-        }
+        public bool IsVisibilityGraph() => this.GetType() == typeof(VisibilityGraph);
 
         #endregion
 
-        #region Internal Constructors
-        internal BaseGraph() { }
+        #region Constructors
+        internal BaseGraph()
+        {
+            graph = new Graph();
+        }
 
         internal BaseGraph(List<GTGeom.Polygon> gPolygons)
         {
             graph = new Graph(gPolygons);
         }
-        #endregion
-
-        #region Public Constructors
 
         /// <summary>
         /// Creates a Graph by a set of boundary and internal polygons.
         /// </summary>
         /// <param name="boundaries">Boundary polygons</param>
-        /// <param name="internals">Internal polygons</param>
+        /// <param name="obstacles">Internal polygons</param>
         /// <returns name="baseGraph">Base graph</returns>
         [IsVisibleInDynamoLibrary(false)]
         public static BaseGraph ByBoundaryAndInternalPolygons(
             List<DSGeom.Polygon> boundaries,
-            [DefaultArgument("[]")]List<DSGeom.Polygon> internals)
+            [DefaultArgument("[]")]List<DSGeom.Polygon> obstacles)
         {
-            if (boundaries == null) throw new NullReferenceException("boundaryPolygons");
-            if (internals == null) throw new NullReferenceException("internalPolygons");
-            List<GTGeom.Polygon> input = new List<GTGeom.Polygon>();
+            if (boundaries is null)
+                throw new ArgumentNullException(nameof(boundaries));
+            if (obstacles is null)
+                throw new ArgumentNullException(nameof(obstacles));
+
+            var input = new List<GTGeom.Polygon>();
             foreach (DSGeom.Polygon pol in boundaries)
             {
                 var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
@@ -74,7 +67,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 input.Add(gPol);
             }
 
-            foreach (DSGeom.Polygon pol in internals)
+            foreach (DSGeom.Polygon pol in obstacles)
             {
                 var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
                 GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, false);
@@ -84,7 +77,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             return new BaseGraph(input);
         }
 
-
         /// <summary>
         /// Creates a graph by a set of closed polygons
         /// </summary>
@@ -93,7 +85,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         [IsVisibleInDynamoLibrary(false)]
         public static BaseGraph ByPolygons(List<DSGeom.Polygon> polygons)
         {
-            if (polygons == null) throw new NullReferenceException("polygons");
+            if (polygons is null || polygons.Count == 0)
+                throw new ArgumentNullException(nameof(polygons));
             List<GTGeom.Polygon> input = new List<GTGeom.Polygon>();
             foreach (DSGeom.Polygon pol in polygons)
             {
@@ -113,11 +106,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         [IsVisibleInDynamoLibrary(false)]
         public static BaseGraph ByLines(List<DSGeom.Line> lines)
         {
-            if (lines == null) throw new NullReferenceException("lines");
-            BaseGraph g = new BaseGraph()
-            {
-                graph = new Graph()
-            };
+            if (lines is null || lines.Count == 0)
+                throw new ArgumentNullException(nameof(lines));
+            var g = new BaseGraph();
 
             foreach (DSGeom.Line line in lines)
             {
@@ -131,6 +122,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         #endregion
 
         #region Override Methods
+
         /// <summary>
         /// Override of ToString Method
         /// </summary>
@@ -174,13 +166,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             IRenderPackage package,
             TessellationParameters parameters)
         {
-            foreach (GTGeom.Vertex v in graph.vertices)
+            for (var i = 0; i < graph.vertices.Count; i++)
             {
+                var v = graph.vertices[i];
                 AddColouredVertex(package, v, vertexDefaultColour);
             }
 
-            foreach (GTGeom.Edge e in graph.edges)
+            for (var i = 0; i < graph.edges.Count; i++)
             {
+                var e = graph.edges[i];
                 AddColouredEdge(package, e, edgeDefaultColour);
             }
         }
@@ -207,6 +201,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 
             package.AddLineStripVertexCount(2);
         }
+
         #endregion
     }
 }
