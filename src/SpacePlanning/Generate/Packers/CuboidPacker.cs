@@ -1,12 +1,14 @@
 ﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using CromulentBisgetti.ContainerPacking.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
+namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 {
-    public class BinPacker3D
+    [IsVisibleInDynamoLibrary(false)]
+    public class CuboidPacker : IPacker<Cuboid, Cuboid>
     {
         #region Properties & constants
 
@@ -15,11 +17,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         private const string BinNotInitialised = "Bin has not been initialised";
         private Container bin;
 
-        public List<Cuboid> PackedCuboids { get; private set; }
+        public List<Cuboid> PackedItems { get; private set; }
 
         public List<int> PackedIndices { get; private set; }
 
-        public List<Cuboid> RemainingCuboids { get; private set; }
+        public List<Cuboid> RemainingItems { get; private set; }
 
         public double PercentContainerVolumePacked { get; private set; }
 
@@ -27,21 +29,27 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
         #endregion
 
-        public BinPacker3D()
+        #region Constructors
+
+        public CuboidPacker()
         {
-            this.PackedCuboids = new List<Cuboid>();
+            this.PackedItems = new List<Cuboid>();
             this.PackedIndices = new List<int>();
-            this.RemainingCuboids = new List<Cuboid>();
+            this.RemainingItems = new List<Cuboid>();
             this.bin = null;
         }
 
-        public BinPacker3D(Cuboid bin, int id) :this()
+        public CuboidPacker(Cuboid bin, int id) : this()
         {
             if (bin is null)
                 throw new ArgumentNullException(nameof(bin));
 
             this.bin = ContainerFromCuboid(bin, id);
         }
+
+        #endregion
+
+        #region Packing methods
 
         private void PackItems(List<Item> items)
         {
@@ -58,57 +66,80 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             if (packingResult == null) throw new InvalidOperationException(PackingFailed);
 
             // record results in this packer instance
-            this.PackedCuboids = CuboidsFromItems(packingResult.PackedItems);
-            this.RemainingCuboids = CuboidsFromItems(packingResult.UnpackedItems);
+            this.PackedItems = CuboidsFromItems(packingResult.PackedItems);
+            this.RemainingItems = CuboidsFromItems(packingResult.UnpackedItems);
             this.PackedIndices = IdsFromItems(packingResult.PackedItems);
             this.PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
             this.PercentItemVolumePacked = decimal.ToDouble(packingResult.PercentItemVolumePacked);
         }
 
-        public void PackCuboids(List<Cuboid> cuboids)
+        public void PackOneContainer(List<Cuboid> items, Cuboid container)
         {
-            if (cuboids.Count == 0) throw new ArgumentNullException(nameof(cuboids));
+            if (items.Count == 0)
+                throw new ArgumentNullException(nameof(items));
+            if (container is null)
+                throw new ArgumentNullException(nameof(container));
+
+            this.bin = ContainerFromCuboid(container, 0);
 
             // convert cuboids to items and containers so packing library can process them
-            var itemsToPack = ItemsFromCuboids(cuboids);
+            var itemsToPack = ItemsFromCuboids(items);
 
             this.PackItems(itemsToPack);
         }
 
-        public static List<BinPacker3D> PackCuboidsAcrossBins(
-            List<Cuboid> bins,
-            List<Cuboid> cuboids)
+        public List<IPacker<Cuboid, Cuboid>> PackMultipleContainers(
+            List<Cuboid> items,
+            List<Cuboid> containers)
         {
-            if (bins == null || bins.Count == 0)
-                throw new ArgumentNullException(nameof(bins));
+            return this.PackMultipleContainersWithStats(items, containers)
+                .Select(x=>x as IPacker<Cuboid,Cuboid>)
+                .ToList();
+        }
 
-            if (cuboids == null || cuboids.Count == 0)
-                throw new ArgumentNullException(nameof(cuboids));
+        /// <summary>
+        /// Packs the supplied items across the supplied containers and returns packing results and expanded statistics about packing performance.
+        /// </summary>
+        /// <param name="items">The items to pack.</param>
+        /// <param name="containers">The containers to pack into.</param>
+        /// <returns>Packing results and expanded statistics about packing performance.</returns>
+        public List<CuboidPacker> PackMultipleContainersWithStats(
+            List<Cuboid> items,
+            List<Cuboid> containers)
+        {
+            if (containers == null || containers.Count == 0)
+                throw new ArgumentNullException(nameof(containers));
+
+            if (items == null || items.Count == 0)
+                throw new ArgumentNullException(nameof(items));
 
             // we need to keep track of packed items across bins
             // and then aggregate results, hence the lists external to BinPacker object
-            var remainingItems = new List<Item>(ItemsFromCuboids(cuboids));
-            var packers = new List<BinPacker3D>();
+            var remainingItems = new List<Item>(ItemsFromCuboids(items));
+            var packers = new List<CuboidPacker>();
 
-            for (var i = 0; i < bins.Count; i++)
+            for (var i = 0; i < containers.Count; i++)
             {
                 // pack items
-                var currentBin = bins[i];
-                var packer = new BinPacker3D(currentBin, i);
+                var currentBin = containers[i];
+                var packer = new CuboidPacker(currentBin, i);
                 packer.PackItems(remainingItems);
-
-                // record results
-                packers.Add(packer);
 
                 // update list of remaining items to pack
                 RemovePackedItemsById(remainingItems, packer);
+
+                // record results
+                packers.Add(packer);
             }
+
             return packers;
         }
 
+        #endregion
+
         #region Helpers
 
-        private static void RemovePackedItemsById(List<Item> items, BinPacker3D packer)
+        private static void RemovePackedItemsById(List<Item> items, CuboidPacker packer)
         {
             items.RemoveAll(x => packer.PackedIndices.Contains(x.ID));
         }

@@ -148,8 +148,8 @@
     <Compile Include="Analyze\VisiblePointsTests.cs" />
     <Compile Include="Explore\ColorsTests.cs" />
     <Compile Include="Generate\AmenitySpaceTests.cs" />
-    <Compile Include="Generate\BinPacking2DTests.cs" />
-    <Compile Include="Generate\BinPacking3DTests.cs" />
+    <Compile Include="Generate\PackingRectanglesTests.cs" />
+    <Compile Include="Generate\PackingCuboidsTests.cs" />
     <Compile Include="Generate\DeskLayoutTests.cs" />
     <Compile Include="Generate\SurfaceDivision2DTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

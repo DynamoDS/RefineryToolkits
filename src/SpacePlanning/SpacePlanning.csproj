@@ -214,11 +214,11 @@
     <Compile Include="Analyze\VisiblePoints.cs" />
     <Compile Include="Explore\ColorRange.cs" />
     <Compile Include="Generate\AmenitySpace.cs" />
-    <Compile Include="Generate\BinPacking\BinPacker3D.cs" />
-    <Compile Include="Generate\BinPacking\BinPacking2D.cs" />
-    <Compile Include="Generate\BinPacking\BinPacking3D.cs" />
+    <Compile Include="Generate\Packers\CuboidPacker.cs" />
+    <Compile Include="Generate\Packing.cs" />
+    <Compile Include="Generate\Packers\IPacker.cs" />
     <Compile Include="Generate\DeskLayout.cs" />
-    <Compile Include="Generate\BinPacking\BinPacker2D.cs" />
+    <Compile Include="Generate\Packers\RectanglePacker.cs" />
     <Compile Include="Generate\SurfaceDivision2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rank\SeededShuffle.cs" />
