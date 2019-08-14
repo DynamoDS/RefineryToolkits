@@ -17,7 +17,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         private Polygon internalPolygon;
         private Point originPoint;
         private Point destination;
-        private VisibilityGraph visibilityGraph;
+        private Visibility visibilityGraph;
         private Dictionary<string, object> result;
 
         [SetUp]

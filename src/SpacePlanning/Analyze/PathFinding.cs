@@ -26,7 +26,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns name="length">Length of path</returns>
         [MultiReturn(new[] { graphOutputPort, lengthOutputPort })]
         public static Dictionary<string, object> ShortestPath(
-            VisibilityGraph visGraph,
+            Visibility visGraph,
             Point origin,
             Point destination)
         {
@@ -38,11 +38,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             var gOrigin = GTGeom.Vertex.ByCoordinates(origin.X, origin.Y, origin.Z);
             var gDestination = GTGeom.Vertex.ByCoordinates(destination.X, destination.Y, destination.Z);
 
-            var visibilityGraph = visGraph.graph as Graphs.VisibilityGraph;
+            var visibilityGraph = visGraph.graph as VisibilityGraph;
 
             var baseGraph = new BaseGraph()
             {
-                graph = Graphs.VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination)
+                graph = VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination)
             };
 
             return new Dictionary<string, object>()
@@ -58,12 +58,12 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="boundary"></param>
         /// <param name="internals"></param>
         /// <returns name = "visGraph">VisibilityGraph for use in ShortestPath</returns>
-        public static VisibilityGraph CreateVisibilityGraph(
+        public static Visibility CreateVisibilityGraph(
             List<DSGeom.Polygon> boundary,
             List<DSGeom.Polygon> internals)
         {
             var graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
-            var visGraph = VisibilityGraph.ByBaseGraph(graph);
+            var visGraph = Visibility.ByBaseGraph(graph);
 
             return visGraph;
         }

@@ -40,7 +40,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 
             GTGeom.Vertex origin = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            List<GTGeom.Vertex> vertices = Graphs.VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            List<GTGeom.Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<DSGeom.Point> points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
 
             var polygon = DSGeom.Polygon.ByPoints(points);

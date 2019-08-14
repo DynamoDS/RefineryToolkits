@@ -1,6 +1,7 @@
 ﻿using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.RefineryToolkits.Core.Utillites;
+using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
 using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
     /// Representation of a Graph.
     /// </summary>
     [IsVisibleInDynamoLibrary(false)]
-    public class VisibilityGraph : BaseGraph
+    public class Visibility : BaseGraph
     {
         private const string graphOutput = "visGraph";
         private const string factorsOutput = "factors";
@@ -25,9 +26,18 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 
         #endregion
 
-        #region Constructors
+        #region Public Properties
 
-        internal VisibilityGraph() { }
+
+        #endregion
+
+        #region Internal Constructors
+
+        internal Visibility() { }
+
+        #endregion
+
+        #region Public Constructors
 
         /// <summary>
         /// Computes the Visibility Graph from a base graph using Lee's algorithm.
@@ -37,17 +47,19 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// polygons and at least one is not convex/concave to its polygon.</param>
         /// <returns name="visGraph">Visibility graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public static VisibilityGraph ByBaseGraph(BaseGraph baseGraph, bool reduced = true)
+        public static Visibility ByBaseGraph(BaseGraph baseGraph, bool reduced = true)
         {
             if (baseGraph == null) throw new ArgumentNullException("graph");
-            var visGraph = new Graphs.VisibilityGraph(baseGraph.graph, reduced, true);
-            var visibilityGraph = new VisibilityGraph()
+            var visGraph = new VisibilityGraph(baseGraph.graph, reduced, true);
+            var visibilityGraph = new Visibility()
             {
                 graph = visGraph
             };
 
             return visibilityGraph;
+
         }
+
 
         #endregion
 
@@ -62,18 +74,18 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns name="visGraph">Connected VisibilityGraph</returns>
         [NodeCategory("Actions")]
         [IsVisibleInDynamoLibrary(false)]
-        public static VisibilityGraph ConnectGraphs(List<VisibilityGraph> visibilityGraphs, List<DSGeom.Line> lines)
+        public static Visibility ConnectGraphs(List<Visibility> visibilityGraphs, List<DSGeom.Line> lines)
         {
             if (visibilityGraphs == null) throw new ArgumentNullException("visibilityGraphs");
 
             List<VisibilityGraph> visGraphs = visibilityGraphs.Select(vg => (VisibilityGraph)vg.graph).ToList();
-            var mergedGraph = Graphs.VisibilityGraph.Merge((List<Graphs.VisibilityGraph>)visGraphs);
+            VisibilityGraph mergedGraph = VisibilityGraph.Merge(visGraphs);
 
             var edges = lines.Select(l => l.ToEdge()).ToList();
 
-            return new VisibilityGraph()
+            return new Visibility()
             {
-                graph = Graphs.VisibilityGraph.AddEdges(mergedGraph, edges)
+                graph = VisibilityGraph.AddEdges(mergedGraph, edges)
             };
         }
 
@@ -89,15 +101,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         [NodeCategory("Query")]
         [MultiReturn(new[] { graphOutput, factorsOutput })]
         public static Dictionary<string, object> Connectivity(
-            VisibilityGraph visGraph,
+            Visibility visGraph,
             [DefaultArgument("null")] List<DSCore.Color> colours,
             [DefaultArgument("null")] List<double> indices)
         {
             if (visGraph == null) throw new ArgumentNullException("visGraph");
 
-            var visibilityGraph = visGraph.graph as Graphs.VisibilityGraph;
+            VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
 
-            VisibilityGraph graph = new VisibilityGraph()
+            Visibility graph = new Visibility()
             {
                 graph = visibilityGraph,
                 Factors = visibilityGraph.ConnectivityFactor()
@@ -122,7 +134,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 {factorsOutput, graph.Factors }
             };
         }
-
         #endregion
 
         #region Override Methods
@@ -142,29 +153,33 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             //}
 
             package.RequiresPerVertexColoration = true;
-            var rangeColors = this.colorRange.Values.ToList();
+            var rangeColors = colorRange.Values.ToList();
             for (var i = 0; i < base.graph.edges.Count; i++)
             {
                 var e = base.graph.edges[i];
-                var factor = this.Factors[i];
+                var factor = Factors[i];
                 DSCore.Color color;
 
-                if (factor <= this.colorRange.First().Key)
+                if (factor <= colorRange.First().Key)
                 {
-                    color = this.colorRange.First().Value;
+                    color = colorRange.First().Value;
                 }
-                else if (factor >= this.colorRange.Last().Key)
+                else if (factor >= colorRange.Last().Key)
                 {
-                    color = this.colorRange.Last().Value;
+                    color = colorRange.Last().Value;
                 }
                 else
                 {
-                    int index = this.colorRange.Keys.ToList().BisectIndex(factor);
+                    int index = colorRange.Keys.ToList().BisectIndex(factor);
 
-                    color = DSCore.Color.Lerp(rangeColors[index - 1], rangeColors[index], this.Factors[i]);
+                    color = DSCore.Color.Lerp(rangeColors[index - 1], rangeColors[index], Factors[i]);
                 }
+
+
                 AddColouredEdge(package, e, color);
             }
+
+
         }
         #endregion
     }
