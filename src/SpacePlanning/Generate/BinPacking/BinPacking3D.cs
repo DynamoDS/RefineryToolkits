@@ -28,7 +28,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             List<Cuboid> bins,
             List<Cuboid> items)
         {
-            List<BinPacker3D> packingResult = BinPacker3D.PackCuboidsAcrossBins(bins, items);
+            var packer = new CuboidPacker();
+            var packingResult = packer.PackItemsInContainers(bins, items);
             return packingResult.ToDictionary();
         }
 
@@ -37,15 +38,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// </summary>
         /// <param name="packers">The list of packing results to convert.</param>
         /// <returns>A dictionary with 3 items: packed, remaining and indices for each BinPacker3D result, as lists.</returns>
-        private static Dictionary<string, object> ToDictionary(this List<BinPacker3D> packers)
+        private static Dictionary<string, object> ToDictionary(this List<CuboidPacker> packers)
         {
-            var packedCuboids = packers.Select(x => x.PackedCuboids).ToList();
+            var packedCuboids = packers.Select(x => x.PackedItems).ToList();
             var packedIndices = packers.Select(x => x.PackedIndices).ToList();
             var percentContainerVolumePacked = packers.Select(x => x.PercentContainerVolumePacked).ToList();
             var percentItemVolumePacked = packers.Select(x => x.PercentItemVolumePacked).ToList();
 
             // we only need the remaining rectangles from the last bin packing result
-            var remainCuboids = packers.LastOrDefault()?.RemainingCuboids;
+            var remainCuboids = packers.LastOrDefault()?.RemainingItems;
 
             return new Dictionary<string, object>
             {
