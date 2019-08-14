@@ -88,12 +88,18 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             List<Cuboid> containers,
             List<Cuboid> items)
         {
-            return this.PackItemsInContainers(items, containers)
+            return this.PackMultipleContainersWithStats(items, containers)
                 .Select(x=>x as IPacker<Cuboid,Cuboid>)
                 .ToList();
         }
 
-        public List<CuboidPacker> PackItemsInContainers(
+        /// <summary>
+        /// Packs the supplied items across the supplied containers and returns packing results and expanded statistics about packing performance.
+        /// </summary>
+        /// <param name="items">The items to pack.</param>
+        /// <param name="containers">The containers to pack into.</param>
+        /// <returns>Packing results and expanded statistics about packing performance.</returns>
+        public List<CuboidPacker> PackMultipleContainersWithStats(
             List<Cuboid> items,
             List<Cuboid> containers)
         {

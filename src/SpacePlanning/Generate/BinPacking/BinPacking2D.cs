@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 {
-    public static partial class BinPacking
+    public static class BinPacking
     {
-        private const string packedItemsOutputPort2D = "Packed Rectangles";
-        private const string indicesOutputPort2D = "Packed Indices";
-        private const string remainingItemsOutputPort2D = "Remaining Rectangles";
+        private const string packedItemsOutputPort = "Packed Items";
+        private const string indicesOutputPort = "Packed Indices";
+        private const string remainingItemsOutputPort = "Remaining Items";
+        private const string percentContainerVolumePackedPort = "% Container Volume Packed";
+        private const string percentItemVolumePackedPort = "% Item Volume Packed";
 
         /// <summary>
         /// Packs a list of Rectangles in a set of bins (Rectangles too).
@@ -24,8 +26,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="bins">List of rectangles to pack into. </param>
         /// <param name="packingMethod">Method for choosing where to place the next rectangle when packing.</param>
         /// <returns>List of packed rectangles for each of the bins provided, the indeces of rectangles packed and any items that have not been packed.</returns>
-        [MultiReturn(new[] { packedItemsOutputPort2D, indicesOutputPort2D, remainingItemsOutputPort2D })]
-        public static Dictionary<string, object> Pack2D(
+        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
+        public static Dictionary<string, object> PackRectangles(
             List<Rectangle> rectangles,
             List<Rectangle> bins,
             RectanglePackingStrategy packingMethod)
@@ -35,7 +37,25 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             return results.ToDictionary();
         }
 
-        #region Strategies
+        /// <summary>
+        /// Packs a sample list of Cuboids in a bin Cuboid
+        /// </summary>
+        /// <param name="bins">Cuboid to pack sample Cuboids into</param>
+        /// <param name="items">List of Cuboids to pack</param>
+        /// <returns name="packedItems">Packed Cuboids</returns>
+        /// <returns name="packedIndices">Indices of packed items</returns>
+        /// <returns name="remainItems">Cubiods that didn't get packed</returns>
+        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
+        public static Dictionary<string, object> PackCuboids(
+            List<Cuboid> bins,
+            List<Cuboid> items)
+        {
+            var packer = new CuboidPacker();
+            var packingResult = packer.PackMultipleContainersWithStats(bins, items);
+            return packingResult.ToDictionary();
+        }
+
+        #region Strategy enums as nodes
 
         /// <summary>
         /// Packs next rectangle into the free area where the length of the longer leftover side is minimized
@@ -54,6 +74,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
         #endregion
 
+        #region Dictionary formatters
+
         /// <summary>
         /// Formats a list of BinPacker2D results to a dictionary for use in Dynamo multi-return nodes 
         /// </summary>
@@ -71,10 +93,37 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
             return new Dictionary<string, object>
             {
-                {packedItemsOutputPort2D, packedRects},
-                {indicesOutputPort2D, packedIndices},
-                {remainingItemsOutputPort2D, remainRects}
+                {packedItemsOutputPort, packedRects},
+                {indicesOutputPort, packedIndices},
+                {remainingItemsOutputPort, remainRects}
             };
         }
+
+        /// <summary>
+        /// Formats a list of BinPacker3D results to a dictionary for use in Dynamo multi-return nodes 
+        /// </summary>
+        /// <param name="packers">The list of packing results to convert.</param>
+        /// <returns>A dictionary with 3 items: packed, remaining and indices for each BinPacker3D result, as lists.</returns>
+        private static Dictionary<string, object> ToDictionary(this List<CuboidPacker> packers)
+        {
+            var packedCuboids = packers.Select(x => x.PackedItems).ToList();
+            var packedIndices = packers.Select(x => x.PackedIndices).ToList();
+            var percentContainerVolumePacked = packers.Select(x => x.PercentContainerVolumePacked).ToList();
+            var percentItemVolumePacked = packers.Select(x => x.PercentItemVolumePacked).ToList();
+
+            // we only need the remaining rectangles from the last bin packing result
+            var remainCuboids = packers.LastOrDefault()?.RemainingItems;
+
+            return new Dictionary<string, object>
+            {
+                { packedItemsOutputPort, packedCuboids},
+                { indicesOutputPort, packedIndices},
+                { remainingItemsOutputPort, remainCuboids},
+                { percentContainerVolumePackedPort, percentContainerVolumePacked},
+                { percentItemVolumePackedPort, percentItemVolumePacked}
+            };
+        }
+
+        #endregion
     }
 }
