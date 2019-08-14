@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
+namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 {
     /// <summary>
-    /// Represents an algorithm capable of performing 2D bin packing.
+    /// Represents an algorithm capable of packing rectangles inside an outer rectangle.
     /// </summary>
     [IsVisibleInDynamoLibrary(false)]
     public class RectanglePacker : IPacker<Rectangle, Rectangle>

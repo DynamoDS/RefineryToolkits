@@ -1,57 +1,58 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
-using Dynamo.Graph.Nodes;
-using System;
+using Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 {
-    public static class BinPacking
+    public static class Packing
     {
         private const string packedItemsOutputPort = "Packed Items";
         private const string indicesOutputPort = "Packed Indices";
         private const string remainingItemsOutputPort = "Remaining Items";
         private const string percentContainerVolumePackedPort = "% Container Volume Packed";
-        private const string percentItemVolumePackedPort = "% Item Volume Packed";
+        private const string percentItemVolumePackedPort = "% Items Volume Packed";
 
         /// <summary>
-        /// Packs a list of Rectangles in a set of bins (Rectangles too).
-        /// Algorithm sequentially packs rectangles in each bin (order as provided) until there is nothing left to pack or it run out of bins.
-        /// You can safely use this with a single bin as well.
+        /// Packs a list of items (Rectangles) into a set of containers (Rectangles too).
+        /// Algorithm sequentially packs rectangles in each container (order as provided) until there is nothing left to pack or it run out of bins.
+        /// You can safely use this with a single container as well.
         /// </summary>
-        /// <param name="rectangles">List of rectangles to pack.</param>
-        /// <param name="bins">List of rectangles to pack into. </param>
-        /// <param name="packingMethod">Method for choosing where to place the next rectangle when packing.</param>
-        /// <returns>List of packed rectangles for each of the bins provided, the indeces of rectangles packed and any items that have not been packed.</returns>
+        /// <param name="items">List of items (rectangles) to pack.</param>
+        /// <param name="containers">List of containers (rectangles) to pack into. </param>
+        /// <param name="strategy">Method for choosing where to place the next rectangle when packing.
+        /// Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy</param>
+        /// <returns>List of packed rectangles for each of the containers provided, the indices of rectangles packed and any items that have not been packed.</returns>
         [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
         public static Dictionary<string, object> PackRectangles(
-            List<Rectangle> rectangles,
-            List<Rectangle> bins,
-            RectanglePackingStrategy packingMethod)
+            List<Rectangle> items,
+            List<Rectangle> containers,
+            [DefaultArgument("RectanglePackingStrategy.BestAreaFits")] RectanglePackingStrategy strategy)
         {
             var packer = new RectanglePacker();
-            var results = packer.PackMultipleContainers(rectangles, bins, packingMethod);
+            var results = packer.PackMultipleContainers(items, containers, strategy);
             return results.ToDictionary();
         }
 
         /// <summary>
-        /// Packs a sample list of Cuboids in a bin Cuboid
+        /// Packs a list of items (Cuboids) into a set of containers (Cuboids too).
+        /// When supplying multiple containers, it sequentially packs each until no space is left, before moving on to next container.
         /// </summary>
-        /// <param name="bins">Cuboid to pack sample Cuboids into</param>
         /// <param name="items">List of Cuboids to pack</param>
-        /// <returns name="packedItems">Packed Cuboids</returns>
-        /// <returns name="packedIndices">Indices of packed items</returns>
-        /// <returns name="remainItems">Cubiods that didn't get packed</returns>
+        /// <param name="containers">Cuboid to pack sample Cuboids into</param>
+        /// <returns name="Packed Items">The cuboids that were packed.</returns>
+        /// <returns name="Packed Indices">Indices of packed cuboids for correlation to input items list.</returns>
+        /// <returns name="Remaining Items">Cuboids that didn't get packed.</returns>
+        /// <returns name="% Container Volume Packed">Metric : percentage of each container volume that was packed.</returns>
+        /// <returns name="% Item Volume Packed">Metric : percentage expressing how much of total items volume was packed in each container.</returns>
         [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
         public static Dictionary<string, object> PackCuboids(
-            List<Cuboid> bins,
-            List<Cuboid> items)
+            List<Cuboid> items,
+            List<Cuboid> containers)
         {
             var packer = new CuboidPacker();
-            var packingResult = packer.PackMultipleContainersWithStats(bins, items);
+            var packingResult = packer.PackMultipleContainersWithStats(items, containers);
             return packingResult.ToDictionary();
         }
 
@@ -81,7 +82,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// </summary>
         /// <param name="packers">The list of packing results to convert.</param>
         /// <returns>A dictionary with 3 items: packed, remaining and indices for each BinPacker2D result, as lists.</returns>
-        private static Dictionary<string, object> ToDictionary(this List<IPacker<Rectangle,Rectangle>> packers)
+        private static Dictionary<string, object> ToDictionary(this List<IPacker<Rectangle, Rectangle>> packers)
         {
             var packedRects = packers.Select(x => x.PackedItems).ToList();
             var packedIndices = packers.Select(x => x.PackedIndices).ToList();

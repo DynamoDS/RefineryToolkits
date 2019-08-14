@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
+namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 {
     [IsVisibleInDynamoLibrary(false)]
     public class CuboidPacker : IPacker<Cuboid, Cuboid>
@@ -29,6 +29,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
         #endregion
 
+        #region Constructors
+
         public CuboidPacker()
         {
             this.PackedItems = new List<Cuboid>();
@@ -44,6 +46,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
             this.bin = ContainerFromCuboid(bin, id);
         }
+
+        #endregion
 
         #region Packing methods
 

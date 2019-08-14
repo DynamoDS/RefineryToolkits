@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
+namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 {
     public interface IPacker<TItem, TContainer>
     {

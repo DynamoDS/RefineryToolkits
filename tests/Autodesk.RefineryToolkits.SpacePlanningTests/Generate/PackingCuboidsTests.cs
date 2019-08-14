@@ -11,7 +11,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
     public partial class PackingTests : GeometricTestBase
     {
         private const string percentContainerVolumePackedPort = "% Container Volume Packed";
-        private const string percentItemVolumePackedPort = "% Item Volume Packed";
+        private const string percentItemVolumePackedPort = "% Items Volume Packed";
 
         private List<string> expectedNodeOutputDictionaryKeys = new List<string>
         {

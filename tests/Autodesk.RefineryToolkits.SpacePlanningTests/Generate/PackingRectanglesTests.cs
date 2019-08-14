@@ -1,4 +1,5 @@
 ﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using TestServices;
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 {
     [TestFixture]
-    public partial class PackingTests : GeometricTestBase
+    public partial class PackingTests
     {
         private const string packedItemsOutputPort = "Packed Items";
         private const string remainingItemsOutputPort = "Remaining Items";
@@ -26,8 +27,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Rectangle.ByWidthLength(12,22)
             };
 
-            var expectedIndices = new List<List<int>>();
-            expectedIndices.Add(new List<int> { 0, 1, 2, 3 });
+            var expectedIndices = new List<List<int>>
+            {
+                new List<int> { 0, 1, 2, 3 }
+            };
 
             // Act
             Dictionary<string, object> result = Packing.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
@@ -62,8 +65,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Rectangle.ByWidthLength(12,22),
                 Rectangle.ByWidthLength(15,15)
             };
-            var expectedIndices = new List<List<int>>();
-            expectedIndices.Add(new List<int> { 0, 1, 2, 4 });
+            var expectedIndices = new List<List<int>>
+            {
+                new List<int> { 0, 1, 2, 4 }
+            };
 
             // Act
             Dictionary<string, object> result = Packing.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
