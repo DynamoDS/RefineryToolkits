@@ -1047,7 +1047,7 @@
       },
       {
         "Id": "b6183195cae14a8cbd6fb5778a363c07",
-        "Title": "GENERATIVE TOOLKIT\r\nOpeness",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nOpeness",
         "Nodes": [
           "9b089276b94543cd847c91f3a3a5bf48",
           "bc798ca37d9441faac523de764e0d527",
@@ -1215,7 +1215,7 @@
       },
       {
         "Id": "f6599cc2bc13465c8538c62856b4873a",
-        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2018",
+        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
         "Left": -785.94497250716722,
         "Top": -196.18223980066898,
@@ -1229,7 +1229,7 @@
       },
       {
         "Id": "f410eb5507fa4001a0987f3e80c29c9a",
-        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the Generative Toolkits Openess Node. \r\n\r\nThe Node returns the openess score of any surface. The score is calculated by checking how much of the object parameter is enclosed by any input obstacle. A tolerance can be set to check for intersection with elements with a fixed distance to the object.\r\n\r\nFor example this can be used in a desk layout workflow to optimize the placement of desks, bu either minimizing or mazimizing the openess score.",
+        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the REFINERY SPACE PLANNING TOOLKITs Openess Node. \r\n\r\nThe Node returns the openess score of any surface. The score is calculated by checking how much of the object parameter is enclosed by any input obstacle. A tolerance can be set to check for intersection with elements with a fixed distance to the object.\r\n\r\nFor example this can be used in a desk layout workflow to optimize the placement of desks, bu either minimizing or mazimizing the openess score.",
         "Nodes": [],
         "Left": -785.94497250716722,
         "Top": -95.295454512640845,

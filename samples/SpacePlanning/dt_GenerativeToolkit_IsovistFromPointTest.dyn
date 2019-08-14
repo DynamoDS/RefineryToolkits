@@ -767,7 +767,7 @@
       },
       {
         "Id": "eced7bae4fac49c1889a3e0bef922e46",
-        "Title": "GENERATIVE TOOLKIT\r\nIsovist from Point",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nIsovist from Point",
         "Nodes": [
           "2ad63b2bc17b415b81037385ef86985e",
           "4c3322fcaa074ac9aae4a6176e757186",
@@ -935,7 +935,7 @@
       },
       {
         "Id": "54ee9198a3854477b548c5079bba853b",
-        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2018",
+        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
         "Left": -1474.6891497796416,
         "Top": 491.29041318631687,
@@ -949,7 +949,7 @@
       },
       {
         "Id": "5a2b1a0ca0c841658bc05cd4d4cefbdc",
-        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the Isovist node from the Generative Toolkit packages.",
+        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the Isovist node from the REFINERY SPACE PLANNING TOOLKIT package.",
         "Nodes": [],
         "Left": -1474.6891497796416,
         "Top": 592.177198474345,
