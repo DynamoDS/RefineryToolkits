@@ -30,7 +30,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             expectedIndices.Add(new List<int> { 0, 1, 2, 3 });
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
+            Dictionary<string, object> result = Packing.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
 
             // Assert
             Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
@@ -66,7 +66,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             expectedIndices.Add(new List<int> { 0, 1, 2, 4 });
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
+            Dictionary<string, object> result = Packing.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
 
             // Assert
             Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
@@ -109,7 +109,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             };
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
+            Dictionary<string, object> result = Packing.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
 
             // Assert
             Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
@@ -155,9 +155,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             };
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
-            Dictionary<string, object> result2 = BinPacking.PackRectangles(items, bins2, RectanglePackingStrategy.BestShortSideFits);
-            Dictionary<string, object> result3 = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
+            Dictionary<string, object> result = Packing.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
+            Dictionary<string, object> result2 = Packing.PackRectangles(items, bins2, RectanglePackingStrategy.BestShortSideFits);
+            Dictionary<string, object> result3 = Packing.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
 
             // Assert
             Assert.IsTrue(result3.Keys.Contains(packedItemsOutputPort));

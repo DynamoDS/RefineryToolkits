@@ -51,7 +51,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             var expectedPercentageItemVolumePacked = 70.06;
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackCuboids(items, bin);
+            Dictionary<string, object> result = Packing.PackCuboids(items, bin);
 
             // Assert
             // Check if the result is a dictionary that contains the expected output port keys
@@ -98,7 +98,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             };
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackCuboids(items, bins);
+            Dictionary<string, object> result = Packing.PackCuboids(items, bins);
 
             // Assert
             // Checks if the right amount of items has been packed
@@ -135,7 +135,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             };
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackCuboids(items, bins);
+            Dictionary<string, object> result = Packing.PackCuboids(items, bins);
 
             // Assert
             // Checks if the right amount of items has been packed
