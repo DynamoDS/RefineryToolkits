@@ -21,9 +21,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// </summary>
         /// <param name="items">List of items (rectangles) to pack.</param>
         /// <param name="containers">List of containers (rectangles) to pack into. </param>
-        /// <param name="strategy">Method for choosing where to place the next rectangle when packing.
+        /// <param name="strategy">(optional) Method for choosing where to place the next rectangle when packing.
         /// Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy</param>
-        /// <returns>List of packed rectangles for each of the containers provided, the indices of rectangles packed and any items that have not been packed.</returns>
+        /// <returns name="Packed Items">List of packed rectangles for each of the containers provided.</returns>
+        /// <returns name="Packed Indices">Indices of packed rectangles for correlation to input items list.</returns>
+        /// <returns name="Remaining Items">Items (rectangles) that didn't get packed.</returns>
         [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
         public static Dictionary<string, object> PackRectangles(
             List<Rectangle> items,
@@ -40,7 +42,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// When supplying multiple containers, it sequentially packs each until no space is left, before moving on to next container.
         /// </summary>
         /// <param name="items">List of Cuboids to pack</param>
-        /// <param name="containers">Cuboid to pack sample Cuboids into</param>
+        /// <param name="containers">Set of Cuboids to pack into.</param>
         /// <returns name="Packed Items">The cuboids that were packed.</returns>
         /// <returns name="Packed Indices">Indices of packed cuboids for correlation to input items list.</returns>
         /// <returns name="Remaining Items">Cuboids that didn't get packed.</returns>
