@@ -1,4 +1,5 @@
 ﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using CromulentBisgetti.ContainerPacking.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 {
+    [IsVisibleInDynamoLibrary(false)]
     public class BinPacker3D
     {
         #region Properties & constants
@@ -35,7 +37,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             this.bin = null;
         }
 
-        public BinPacker3D(Cuboid bin, int id) :this()
+        public BinPacker3D(Cuboid bin, int id) : this()
         {
             if (bin is null)
                 throw new ArgumentNullException(nameof(bin));
