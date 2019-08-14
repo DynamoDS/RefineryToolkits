@@ -10,20 +10,21 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
     /// Represents an algorithm capable of performing 2D bin packing.
     /// </summary>
     [IsVisibleInDynamoLibrary(false)]
-    public class BinPacker2D
+    public class RectanglePacker : IPacker<Rectangle, Rectangle>
     {
-        #region Properties
+        #region Properties & constants
+        private const RectanglePackingStrategy DEFAULT_PACKING_STRATEGY = RectanglePackingStrategy.BestAreaFits;
         private List<FreeRectangle> FreeRectangles;
 
         /// <summary>
         /// The rectangles that have been packed into the bin.
         /// </summary>
-        public List<Rectangle> PackedRectangles { get; }
+        public List<Rectangle> PackedItems { get; }
 
         /// <summary>
         /// The rectangles that could not be packed and are outside the bin.
         /// </summary>
-        public List<Rectangle> RemainRectangles { get; }
+        public List<Rectangle> RemainingItems { get; }
 
         /// <summary>
         /// The indices of the rectangles that have been packed from the input list of rectangles.
@@ -36,11 +37,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <summary>
         /// Construct an empty 2D bin packer
         /// </summary>
-        public BinPacker2D()
+        public RectanglePacker()
         {
             this.FreeRectangles = new List<FreeRectangle>();
-            this.PackedRectangles = new List<Rectangle>();
-            this.RemainRectangles = new List<Rectangle>();
+            this.PackedItems = new List<Rectangle>();
+            this.RemainingItems = new List<Rectangle>();
             this.PackedIndices = new List<int>();
         }
 
@@ -48,71 +49,95 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// Construct a 2D bin packer for the specified bin
         /// </summary>
         /// <param name="bin">The rectangle to use as a bin when packing.</param>
-        public BinPacker2D(Rectangle bin) : this()
+        public RectanglePacker(Rectangle bin) : this()
         {
             this.InitialiseBinFromRectangle(bin);
         }
 
         #endregion
 
+        #region Packing methods
+
         /// <summary>
         /// Pack a list of supplied rectangles into the supplied bin.
         /// </summary>
-        /// <param name="rectangles">The rectangles to pack.</param>
-        /// <param name="placementMethod">The method to use when packing.</param>
-        /// <param name="bins">The bin to pack into, clearing any previously initialised bin.</param>
-        public void PackRectanglesInBin(
-            List<Rectangle> rectangles,
-            RectanglePackingStrategy placementMethod,
-            Rectangle bin)
+        /// <param name="items">The rectangles to pack.</param>
+        /// <param name="container">The bin to pack into, clearing any previously initialised bin.</param>
+        public void PackOneContainer(
+            List<Rectangle> items,
+            Rectangle container)
         {
-            this.InitialiseBinFromRectangle(bin);
-            this.PackRectanglesInBin(rectangles, placementMethod);
+            this.PackOneContainer(items, container, DEFAULT_PACKING_STRATEGY);
         }
 
         /// <summary>
-        /// Pack a list of supplied rectangles into the already initialised bin.
+        /// Pack a list of supplied rectangles into the supplied bin.
         /// </summary>
-        /// <param name="rectangles">The rectangles to pack.</param>
-        /// <param name="placementMethod">The method to use when packing.</param>
-        public void PackRectanglesInBin(
-            List<Rectangle> rectangles,
-            RectanglePackingStrategy placementMethod
-            )
+        /// <param name="items">The rectangles to pack.</param>
+        /// <param name="container">The container to pack into, clearing any previously initialised bin.</param>
+        /// <param name="packingStrategy">The method to use when packing.</param>
+        public void PackOneContainer(
+            List<Rectangle> items,
+            Rectangle container,
+            RectanglePackingStrategy packingStrategy)
         {
-            if (this.FreeRectangles.Count == 0) throw new InvalidOperationException("Bin has not been initialised");
-            if (rectangles.Count == 0) throw new ArgumentNullException(nameof(rectangles));
+            this.InitialiseBinFromRectangle(container);
 
-            for (int i = 0; i < rectangles.Count; i++)
+            if (this.FreeRectangles.Count == 0) throw new InvalidOperationException("Bin has not been initialised");
+            if (items.Count == 0) throw new ArgumentNullException(nameof(items));
+
+            for (int i = 0; i < items.Count; i++)
             {
                 // skip already placed rectangles
-                var rect = rectangles[i];
+                var rect = items[i];
                 if (rect == null) continue;
 
-                var placed = this.PlaceItem(rect, placementMethod, i);
-                if (placed) rectangles[i] = null;
+                var placed = this.PlaceItem(rect, packingStrategy, i);
+                if (placed) items[i] = null;
             }
         }
 
-        public static List<BinPacker2D> PackRectanglesAcrossBins(
-            List<Rectangle> rectangles,
-            List<Rectangle> bins,
+        /// <summary>
+        /// Pack a list of supplied rectangles into the supplied containers.
+        /// </summary>
+        /// <param name="items">The rectangles to pack.</param>
+        /// <param name="containers">The containers to pack into, clearing any previously initialised bin.</param>
+        /// <returns>The list of packing results for each container.</returns>
+        public List<IPacker<Rectangle, Rectangle>> PackMultipleContainers(
+            List<Rectangle> items,
+            List<Rectangle> containers)
+        {
+            return this.PackMultipleContainers(items, containers, DEFAULT_PACKING_STRATEGY);
+        }
+
+        /// <summary>
+        /// Pack a list of supplied rectangles into the supplied containers.
+        /// </summary>
+        /// <param name="items">The rectangles to pack.</param>
+        /// <param name="containers">The containers to pack into, clearing any previously initialised bin.</param>
+        /// <param name="packingStrategy">The method to use when packing.</param>
+        /// <returns>The list of packing results for each container.</returns>
+        public List<IPacker<Rectangle,Rectangle>> PackMultipleContainers(
+            List<Rectangle> items,
+            List<Rectangle> containers,
             RectanglePackingStrategy packingStrategy)
         {
-            // we need to keep track of packed items across bins
+            // we need to keep track of packed items across containers
             // and then aggregate results, hence the lists external to BinPacker object
-            var remainingRects = new List<Rectangle>(rectangles);
-            var packers = new List<BinPacker2D>();
+            var remainingRects = new List<Rectangle>(items);
+            var packers = new List<IPacker<Rectangle, Rectangle>>();
 
-            for (var i = 0; i < bins.Count; i++)
+            for (var i = 0; i < containers.Count; i++)
             {
-                var packer = new BinPacker2D(bins[i]);
+                var packer = new RectanglePacker();
 
-                packer.PackRectanglesInBin(remainingRects, packingStrategy);
-                packers.Add(packer);
+                packer.PackOneContainer(remainingRects, containers[i], packingStrategy);
+                packers.Add(packer as IPacker<Rectangle,Rectangle>);
             }
             return packers;
         }
+
+        #endregion
 
         #region Packing helper methods
 
@@ -142,7 +167,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
             if (freeRect == null)
             {
-                this.RemainRectangles.Add(item);
+                this.RemainingItems.Add(item);
                 return false;
             }
 
@@ -153,7 +178,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             var placedRect = (Rectangle)item.Transform(originCS, newCS);
 
             // place rectangle and update 
-            this.PackedRectangles.Add(placedRect);
+            this.PackedItems.Add(placedRect);
             this.PackedIndices.Add(itemIndex);
             this.FreeRectangles.Remove(freeRect);
 
