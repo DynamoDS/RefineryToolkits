@@ -20,22 +20,23 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="origin">Origin point to measure visibility from.</param>
         /// <param name="points">The points to measure visibility to.</param>
         /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
-        /// <param name="obstacles">List of Polygons representing internal obstructions</param>
-        /// <returns>precentages of the amount of visible points</returns>
+        /// <param name="obstructions">List of Polygons representing internal obstructions</param>
+        /// <returns name="Percentage visible">The percentage of target Points that are visible from the origin point.</returns>
+        /// <returns name="Visible items">The specific Points that are visible from the origin point.</returns>
         [MultiReturn(new[] { percentageVisibleOutputPort, visibleItemsOutputPort })]
         public static Dictionary<string, object> OfPointsFromOrigin(
             Point origin,
             List<Point> points,
             List<Polygon> boundary,
-            [DefaultArgument("[]")] List<Polygon> obstacles = null)
+            [DefaultArgument("[]")] List<Polygon> obstructions = null)
         {
             if (origin is null)
                 throw new ArgumentNullException(nameof(origin));
             if (points is null || points.Count == 0)
                 throw new ArgumentNullException(nameof(points));
-            if (obstacles == null) obstacles = new List<Polygon>();
+            if (obstructions == null) obstructions = new List<Polygon>();
 
-            Polygon isovist = IsovistPolygon(origin, obstacles, boundary);
+            Polygon isovist = IsovistPolygon(origin, obstructions, boundary);
             GTGeom.Polygon isovistPolygon = GTGeom.Polygon.ByVertices(isovist.Points.Select(p => GTGeom.Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
 
             var visiblePoints = new List<Point>();
@@ -66,43 +67,39 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 
 
         /// <summary>
-        /// Calculates the view to outside from a given point based on a 360 degree ratio.
-        /// Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.
+        /// Calculates the visibility of target Lines from a given point based on a 360 degree view range.
+        /// Returns the percentage of 360 view from origin point that target lines are visible from and the target lines that are visible.
         /// </summary>
         /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
-        /// <param name="obstacles">List of Polygons representing internal obstructions</param>
+        /// <param name="obstructions">List of Polygons representing internal obstructions</param>
         /// <param name="targetLines">Line segments representing the views to outside</param>
         /// <param name="origin">Origin point to measure from</param>
-        /// <returns>precentage of 360 view that is to the outside</returns>
+        /// <returns name="Percentage visible">The percentage of 360 view from origin point that target lines are visible from.</returns>
+        /// <returns name="Visible items">The specific Lines that are visible from the origin point.</returns>
         [MultiReturn(new[] { percentageVisibleOutputPort, visibleItemsOutputPort })]
         public static Dictionary<string, object> OfLinesFromOrigin(
             Point origin,
             List<Curve> targetLines,
             List<Polygon> boundary,
-            [DefaultArgument("[]")] List<Polygon> obstacles)
+            [DefaultArgument("[]")] List<Polygon> obstructions)
         {
-            Surface isovist = Isovist.FromPoint(boundary, obstacles, origin);
+            Surface isovist = Isovist.FromPoint(boundary, obstructions, origin);
 
             List<Curve> lines = new List<Curve>();
             double outsideViewAngles = 0;
             foreach (Curve segment in targetLines)
             {
                 Geometry[] intersectSegment = isovist.Intersect(segment);
-                if (intersectSegment != null)
+                if (intersectSegment == null) continue;
+
+                foreach (Curve seg in intersectSegment)
                 {
-                    foreach (Curve seg in intersectSegment)
-                    {
-                        lines.Add(seg);
-                        var vec1 = Vector.ByTwoPoints(origin, seg.StartPoint);
-                        var vec2 = Vector.ByTwoPoints(origin, seg.EndPoint);
-                        outsideViewAngles += vec1.AngleWithVector(vec2);
-                        vec1.Dispose();
-                        vec2.Dispose();
-                    }
-                }
-                else
-                {
-                    continue;
+                    lines.Add(seg);
+                    var vec1 = Vector.ByTwoPoints(origin, seg.StartPoint);
+                    var vec2 = Vector.ByTwoPoints(origin, seg.EndPoint);
+                    outsideViewAngles += vec1.AngleWithVector(vec2);
+                    vec1.Dispose();
+                    vec2.Dispose();
                 }
             }
             isovist.Dispose();
@@ -140,6 +137,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 points.Add(originPoint);
                 polygon = DSGeom.Polygon.ByPoints(points);
             }
+            points.ForEach(x => x.Dispose());
+
             return polygon;
         }
 
