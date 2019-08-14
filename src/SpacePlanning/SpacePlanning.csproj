@@ -217,6 +217,7 @@
     <Compile Include="Generate\BinPacking\BinPacker3D.cs" />
     <Compile Include="Generate\BinPacking\BinPacking2D.cs" />
     <Compile Include="Generate\BinPacking\BinPacking3D.cs" />
+    <Compile Include="Generate\BinPacking\IPacker.cs" />
     <Compile Include="Generate\DeskLayout.cs" />
     <Compile Include="Generate\BinPacking\BinPacker2D.cs" />
     <Compile Include="Generate\SurfaceDivision2D.cs" />
