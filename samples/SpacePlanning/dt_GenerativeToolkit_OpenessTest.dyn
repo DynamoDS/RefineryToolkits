@@ -2,7 +2,7 @@
   "Uuid": "9b475e34-a870-453c-b18e-2a8426cc5ba8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_OpenessTest",
+  "Name": "dt_Refinery Toolkit_OpenessTest",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -1030,7 +1030,7 @@
       },
       {
         "Id": "ef2f643066fe49fe8e072308e59c92e7",
-        "Title": "GenerativeToolkit - Openess",
+        "Title": "Refinery Toolkit - Openess",
         "Nodes": [
           "04f27d96ffbc4da0a853b7dfe8c104d3",
           "c89c7d34431f4abea728d97a905c035d"
@@ -1145,7 +1145,7 @@
       },
       {
         "Id": "f0fb99fc48d84ae09b975aae5d56c566",
-        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nGenerativeToolkit",
+        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -472.70934536510322,
         "Top": -287.05082979893484,
@@ -1187,7 +1187,7 @@
       },
       {
         "Id": "9b089276b94543cd847c91f3a3a5bf48",
-        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nGenerative Design Toolkit",
+        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -785.94497250716722,
         "Top": -376.868837642735,
