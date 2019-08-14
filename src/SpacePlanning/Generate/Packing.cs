@@ -46,7 +46,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <returns name="Remaining Items">Cuboids that didn't get packed.</returns>
         /// <returns name="% Container Volume Packed">Metric : percentage of each container volume that was packed.</returns>
         /// <returns name="% Item Volume Packed">Metric : percentage expressing how much of total items volume was packed in each container.</returns>
-        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
+        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort, percentContainerVolumePackedPort, percentItemVolumePackedPort })]
         public static Dictionary<string, object> PackCuboids(
             List<Cuboid> items,
             List<Cuboid> containers)
@@ -104,7 +104,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// Formats a list of BinPacker3D results to a dictionary for use in Dynamo multi-return nodes 
         /// </summary>
         /// <param name="packers">The list of packing results to convert.</param>
-        /// <returns>A dictionary with 3 items: packed, remaining and indices for each BinPacker3D result, as lists.</returns>
+        /// <returns>A dictionary with 5 items: packed items, their indices, remaining items and 2 packing performance metrics.</returns>
         private static Dictionary<string, object> ToDictionary(this List<CuboidPacker> packers)
         {
             var packedCuboids = packers.Select(x => x.PackedItems).ToList();
