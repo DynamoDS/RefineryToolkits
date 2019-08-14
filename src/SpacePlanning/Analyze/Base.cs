@@ -37,7 +37,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         [NodeCategory("Query")]
         public static bool IsVisibilityGraph(BaseGraph graph)
         {
-            return graph.GetType() == typeof(Visibility);
+            return graph.GetType() == typeof(VisibilityGraph);
         }
 
         #endregion
@@ -150,9 +150,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             IRenderPackage package,
             TessellationParameters parameters)
         {
-            if (this.GetType() == typeof(Visibility))
+            if (this.GetType() == typeof(VisibilityGraph))
             {
-                Visibility visGraph = this as Visibility;
+                VisibilityGraph visGraph = this as VisibilityGraph;
                 if (visGraph.Factors != null && visGraph.colorRange != null)
                 {
                     visGraph.TessellateVisibilityGraph(package, parameters);

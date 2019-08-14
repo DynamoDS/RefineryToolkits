@@ -29,7 +29,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         /// Check views to outside dictionary output is correct
         /// </summary>
         [Test]
-        public void ViewsToOutsideDicionaryOutputTest()
+        public void ViewsToOutsideDictionaryOutputTest()
         {       
 
             // Result of ViewsToOutside.ByLineSegments
