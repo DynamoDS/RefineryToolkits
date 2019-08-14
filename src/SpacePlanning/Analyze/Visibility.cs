@@ -83,7 +83,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             List<Polygon> boundary,
             [DefaultArgument("[]")] List<Polygon> obstructions)
         {
-            Surface isovist = Isovist.FromPoint(boundary, obstructions, origin);
+            Surface isovist = Isovist.FromPoint(origin, boundary, obstructions);
 
             List<Curve> lines = new List<Curve>();
             double outsideViewAngles = 0;

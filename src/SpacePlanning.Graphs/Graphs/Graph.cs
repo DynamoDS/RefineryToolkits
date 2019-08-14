@@ -1,6 +1,5 @@
 ﻿/***************************************************************************************
-* This code is originally created by Alvaro Alvaro Ortega Pickmans, and is available
-* in his Graphical Packages
+* This code was originally created by Alvaro Ortega Pickmans
 * Title: Graphical
 * Author: Alvaro Ortega Pickmans
 * Date: 2017

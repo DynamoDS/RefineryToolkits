@@ -1,39 +1,39 @@
-﻿using Autodesk.DesignScript.Runtime;
+﻿/***************************************************************************************
+* This code was originally created by Alvaro Ortega Pickmans
+* Title: Graphical
+* Author: Alvaro Ortega Pickmans
+* Date: 2017
+* Availability: https://github.com/alvpickmans/Graphical
+*
+***************************************************************************************/
+
+using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
 using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSGeom = Autodesk.DesignScript.Geometry;
 using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
     public static class Isovist
     {
-        /***************************************************************************************
-        * Title: Graphical
-        * Author: Alvaro Ortega Pickmans
-        * Date: 2017
-        * Availability: https://github.com/alvpickmans/Graphical
-        *
-        ***************************************************************************************/
-
         /// <summary>
-        /// Returns a surface representing the Isovist area visible from 
-        /// the given point.
+        /// Returns a surface representing the Isovist area visible from the given point.
         /// </summary>
-        /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
-        /// <param name="internals">List of Polygons representing internal obstructions</param>
         /// <param name="point">Origin point</param>
-        /// <returns name="isovist">Surface representing the isovist area</returns>
+        /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
+        /// <param name="obstructions">List of Polygons representing internal obstructions</param>
+        /// <returns name="Isovist">Surface representing the isovist area</returns>
         [NodeCategory("Actions")]
-        public static DSGeom.Surface FromPoint(
-            List<DSGeom.Polygon> boundary,
-            [DefaultArgument("[]")] List<DSGeom.Polygon> internals,
-            DSGeom.Point point)
+        public static Surface FromPoint(
+            Point point,
+            List<Polygon> boundary,
+            [DefaultArgument("[]")] List<Polygon> obstructions)
         {
-            BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
+            var baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstructions);
 
             if (baseGraph == null) throw new ArgumentNullException("graph");
             if (point == null) throw new ArgumentNullException("point");
@@ -41,18 +41,18 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             GTGeom.Vertex origin = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
             List<GTGeom.Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
-            List<DSGeom.Point> points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
+            var points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
 
-            var polygon = DSGeom.Polygon.ByPoints(points);
+            var polygon = Polygon.ByPoints(points);
 
             // if polygon is self intersecting, make new polygon
             if (polygon.SelfIntersections().Length > 0)
             {
                 points.Add(point);
-                polygon = DSGeom.Polygon.ByPoints(points);
-
+                polygon = Polygon.ByPoints(points);
             }
-            DSGeom.Surface surface = DSGeom.Surface.ByPatch(polygon);
+
+            var surface = Surface.ByPatch(polygon);
             polygon.Dispose();
             points.ForEach(p => p.Dispose());
 
