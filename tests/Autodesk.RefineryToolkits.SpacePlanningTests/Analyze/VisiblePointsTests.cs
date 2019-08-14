@@ -41,7 +41,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [Test]
         public void VisiblePointsDicionaryOutputTest()
         {
-            var result = VisiblePoints.FromOrigin(origin, samplePoints, new List<Polygon> { boundary }, new List<Polygon> { obstacles });
+            var result = Visibility.FromOrigin(origin, samplePoints, new List<Polygon> { boundary }, new List<Polygon> { obstacles });
 
             Assert.IsTrue(result.Keys.Contains("score"));
             Assert.IsTrue(result.Keys.Contains("visiblePoints"));
@@ -56,7 +56,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void FromOriginTest()
         {
             
-            var result = VisiblePoints.FromOrigin(origin, samplePoints, new List<Polygon> { boundary }, new List<Polygon> { obstacles });
+            var result = Visibility.FromOrigin(origin, samplePoints, new List<Polygon> { boundary }, new List<Polygon> { obstacles });
 
             var visiblePointsScore = (double)result["score"];
 

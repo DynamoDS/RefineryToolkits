@@ -1,5 +1,4 @@
 ﻿using Autodesk.DesignScript.Runtime;
-using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
-    public static class VisiblePoints
+    public static class Visibility
     {
         private const string scoreOutputPort = "score";
         private const string geometryOutputPort = "visiblePoints";
@@ -60,7 +59,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             List<DSGeom.Polygon> obstacles,
             DSGeom.Point point)
         {
-            BaseGraph baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstacles);
+            var baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstacles);
 
             if (baseGraph == null)
             {
@@ -72,9 +71,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 throw new ArgumentNullException("point");
             }
 
-            GTGeom.Vertex origin = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
+            var origin = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            List<GTGeom.Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            List<GTGeom.Vertex> vertices = Graphs.VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
             List<DSGeom.Point> points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
 
             var polygon = DSGeom.Polygon.ByPoints(points);
