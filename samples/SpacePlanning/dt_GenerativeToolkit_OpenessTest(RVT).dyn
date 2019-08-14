@@ -2,7 +2,7 @@
   "Uuid": "6ee2cf30-fc12-4570-84f8-ed61c4d38022",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_OpenessTest(RVT)",
+  "Name": "dt_Refinery Toolkit_OpenessTest(RVT)",
   "ElementResolver": {
     "ResolutionMap": {
       "Autodesk.Geometry": {
@@ -2051,7 +2051,7 @@
       },
       {
         "Id": "fa1927ff9df840c0a0192eafd777d58f",
-        "Title": "GenerativeToolkit - Openess From Point",
+        "Title": "Refinery Toolkit - Openess From Point",
         "Nodes": [
           "1919b5b3fa534025816ee74a74f1b8d3",
           "4dba5b18950e49cabddfd1c964599319"

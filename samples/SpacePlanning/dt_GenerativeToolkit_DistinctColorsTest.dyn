@@ -2,7 +2,7 @@
   "Uuid": "f2239355-fd9c-45e2-82d6-8175715e2464",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_DistinctColorsTest",
+  "Name": "dt_Refinery Toolkit_DistinctColorsTest",
   "ElementResolver": {
     "ResolutionMap": {
       "Color": {
@@ -593,7 +593,7 @@
       },
       {
         "Id": "764718ed5037470f9beeae035d130545",
-        "Title": "GenerativeToolkit - Create Distinct colors (Max 19 colors)",
+        "Title": "Refinery Toolkit - Create Distinct colors (Max 19 colors)",
         "Nodes": [
           "1d8e47a5392f41fab1add1459b4515b6"
         ],
@@ -741,7 +741,7 @@
       },
       {
         "Id": "32fabe6c199f40e7ba5fe50c1c9efa9b",
-        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nGenerativeToolkit",
+        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": 1195.745272508364,
         "Top": 204.71057578915156,
@@ -783,7 +783,7 @@
       },
       {
         "Id": "68109c6bb49b4686bdddd82892757a77",
-        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nGenerative Design Toolkit",
+        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": 882.5096453663,
         "Top": 114.8925679453514,
@@ -825,7 +825,7 @@
       },
       {
         "Id": "536debc66c184a22a2311895a8a27d12",
-        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis workflow shows how to use the ContrastyColorRange node in the GenerativeToolkit",
+        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis workflow shows how to use the ContrastyColorRange node in the Refinery Toolkit",
         "Nodes": [],
         "Left": 882.5096453663,
         "Top": 396.46595107544556,

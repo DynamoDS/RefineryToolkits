@@ -2,7 +2,7 @@
   "Uuid": "4e8d8f9b-66ba-4e98-9257-aadb88b62eaf",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_AllNodes",
+  "Name": "dt_Refinery Toolkit_AllNodes",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -1250,7 +1250,7 @@
       },
       {
         "Id": "8b179604499a448c86cfab31f20faaa8",
-        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nGenerativeToolkit",
+        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -627.20740760168292,
         "Top": 182.47374169251998,
@@ -1292,7 +1292,7 @@
       },
       {
         "Id": "f22effec3a4742a1b98d1dd471c7efc6",
-        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nGenerative Design Toolkit",
+        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -940.44303474374692,
         "Top": 92.655733848719819,
@@ -1334,7 +1334,7 @@
       },
       {
         "Id": "a771a1d4ad2f4382a3d34ae03fd443b4",
-        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis is an index graph showing all the available nodes in the GenerativeToolkit packages. For example workflows of the nodes see the extra folder of the package.",
+        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis is an index graph showing all the available nodes in the Refinery Toolkit packages. For example workflows of the nodes see the extra folder of the package.",
         "Nodes": [],
         "Left": -940.44303474374692,
         "Top": 374.229116978814,
