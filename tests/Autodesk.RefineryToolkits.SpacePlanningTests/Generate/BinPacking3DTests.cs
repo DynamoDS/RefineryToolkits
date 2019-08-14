@@ -1,23 +1,38 @@
-﻿using NUnit.Framework;
-using Autodesk.RefineryToolkits.SpacePlanning.Generate;
+﻿using Autodesk.DesignScript.Geometry;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServices;
-using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 {
     [TestFixture()]
     public class BinPacking3DTests : GeometricTestBase
     {
-        [Test()]
-        public void PackTest()
+        private const string packedItemsOutputPort3D = "Packed Items";
+        private const string indicesOutputPort3D = "Packed Indices";
+        private const string remainingItemsOutputPort3D = "Remaining Items";
+        private const string percentContainerVolumePackedPort = "% Container Volume Packed";
+        private const string percentItemVolumePackedPort = "% Item Volume Packed";
+
+        private List<string> expectedNodeOutputDictionaryKeys = new List<string>
         {
-            Cuboid bin = Cuboid.ByLengths(400, 500, 300);
-            List<Cuboid> items = new List<Cuboid>
+            packedItemsOutputPort3D,
+            indicesOutputPort3D,
+            remainingItemsOutputPort3D,
+            percentContainerVolumePackedPort,
+            percentItemVolumePackedPort
+        };
+
+        [Test()]
+        public void OneBin_CanPackWithLeftovers()
+        {
+            // Arrange
+            var bin = new List<Cuboid> {
+                Cuboid.ByLengths(400, 500, 300)
+            };
+            var items = new List<Cuboid>
             {
                 Cuboid.ByLengths(100, 200, 100),
                 Cuboid.ByLengths(200, 200, 250),
@@ -29,24 +44,116 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Cuboid.ByLengths(200, 150, 200),
                 Cuboid.ByLengths(250, 200, 300)
             };
+            var expectedIndices = new List<List<int>> {
+                new List<int>{ 3, 7, 6, 8, 1 }
+            };
+            var expectedPackedContainerVolumes = new List<List<int>> {
+                new List<int>{ 3, 7, 6, 8, 1 }
+            };
+            var expectedPercentageContainerVolumePacked = 91.67;
+            var expectedPercentageItemVolumePacked = 70.06;
 
-            // Check if the result is a dictionary that contains the keys
-            // "packedItems", "remainItems" and "packedIndices"
-            var result = BinPacking.Pack3D(bin, items);
-            Assert.IsTrue(result.Keys.Contains("packedItems"));
-            Assert.IsTrue(result.Keys.Contains("remainItems"));
-            Assert.IsTrue(result.Keys.Contains("packedIndices"));
+            // Act
+            Dictionary<string, object> result = BinPacking.Pack3D(bin, items);
+
+            // Assert
+            // Check if the result is a dictionary that contains the expected output port keys
+            CollectionAssert.AreEqual(result.Keys, expectedNodeOutputDictionaryKeys);
+
+            // extract results from dictionary
+            var actualPackeditems = (List<List<Cuboid>>)result[packedItemsOutputPort3D];
+            var actualRemainItems = (List<Cuboid>)result[remainingItemsOutputPort3D];
+            var actualPackedIndices = (List<List<int>>)result[indicesOutputPort3D];
+            var actualPercentContVol = (result[percentContainerVolumePackedPort] as IEnumerable<double>).First();
+            var actualPercentItemVol = (result[percentItemVolumePackedPort] as IEnumerable<double>).First();
 
             // Checks if the right amount of items has been packed
-            var packeditems = (List<Cuboid>)result["packedItems"];
-            Assert.AreEqual(5, packeditems.Count);
+            Assert.AreEqual(1, actualPackeditems.Count); // the number of bins this was packed into is 1
+            Assert.AreEqual(5, actualPackeditems.Sum(x => x.Count)); // total number of packed cuboids is 5
+            Assert.AreEqual(4, actualRemainItems.Count);
 
-            var remainItems = (List<Cuboid>)result["remainItems"];
-            Assert.AreEqual(4, remainItems.Count);
+            // Check the packing percentages are correct
+            Assert.AreEqual(expectedPercentageContainerVolumePacked, Math.Round(actualPercentContVol, 2));
+            Assert.AreEqual(expectedPercentageItemVolumePacked, Math.Round(actualPercentItemVol, 2));
 
             // Checks that the right items has been packed
-            var packedIndices = (List<int>)result["packedIndices"];
-            Assert.AreEqual(packedIndices, new List<int> { 3, 7, 6, 8, 1 });
+            Assert.AreEqual(1, actualPackedIndices.Count); // the number of bins this was packed into is 1
+            CollectionAssert.AreEqual(actualPackedIndices, expectedIndices);
         }
+
+        [Test()]
+        public void MultiBin_CanPackWithLeftovers()
+        {
+            // Arrange
+            var bins = new List<Cuboid> {
+                Cuboid.ByLengths(100, 100, 200), // holds 2 of items below
+                Cuboid.ByLengths(100, 200, 100)  // holds 2 of items below
+            };
+            var items = new List<Cuboid>();
+            for (int i = 0; i < 6; i++)
+            {
+                items.Add(Cuboid.ByLengths(100, 100, 100));
+            }
+
+            var expectedIndices = new List<List<int>> {
+                new List<int>{ 0, 1 },
+                new List<int>{ 2, 3 }
+            };
+
+            // Act
+            Dictionary<string, object> result = BinPacking.Pack3D(bins, items);
+
+            // Assert
+            // Checks if the right amount of items has been packed
+            var packeditems = (List<List<Cuboid>>)result[packedItemsOutputPort3D];
+            Assert.AreEqual(2, packeditems.Count); // the number of bins this was packed into is 2
+            Assert.AreEqual(4, packeditems.Sum(x => x.Count)); // total number of packed cuboids is 4
+
+            var remainItems = (List<Cuboid>)result[remainingItemsOutputPort3D];
+            Assert.AreEqual(2, remainItems.Count);
+
+            // Checks that the right items has been packed
+            var packedIndices = (List<List<int>>)result[indicesOutputPort3D];
+            Assert.AreEqual(2, packedIndices.Count); // the number of bins this was packed into is 2
+            CollectionAssert.AreEqual(packedIndices, expectedIndices);
+        }
+
+        [Test()]
+        public void MultiBin_CanPackWithNoLeftovers()
+        {
+            // Arrange
+            var bins = new List<Cuboid> {
+                Cuboid.ByLengths(100, 100, 200), // holds 2 of items below
+                Cuboid.ByLengths(100, 200, 100)  // holds 2 of items below
+            };
+            var items = new List<Cuboid>();
+            for (int i = 0; i < 4; i++)
+            {
+                items.Add(Cuboid.ByLengths(100, 100, 100));
+            }
+
+            var expectedIndices = new List<List<int>> {
+                new List<int>{ 0, 1 },
+                new List<int>{ 2, 3 }
+            };
+
+            // Act
+            Dictionary<string, object> result = BinPacking.Pack3D(bins, items);
+
+            // Assert
+            // Checks if the right amount of items has been packed
+            var packeditems = (List<List<Cuboid>>)result[packedItemsOutputPort3D];
+            Assert.AreEqual(2, packeditems.Count); // the number of bins this was packed into is 2
+            Assert.AreEqual(4, packeditems.Sum(x => x.Count)); // total number of packed cuboids is 4
+
+            var remainItems = (List<Cuboid>)result[remainingItemsOutputPort3D];
+            Assert.AreEqual(0, remainItems.Count);
+
+            // Checks that the right items has been packed
+            var packedIndices = (List<List<int>>)result[indicesOutputPort3D];
+            Assert.AreEqual(2, packedIndices.Count); // the number of bins this was packed into is 2
+            CollectionAssert.AreEqual(packedIndices, expectedIndices);
+        }
+
     }
 }
