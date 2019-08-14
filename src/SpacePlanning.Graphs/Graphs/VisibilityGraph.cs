@@ -612,8 +612,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         #endregion
 
-
-
         public new object Clone()
         {
             VisibilityGraph newGraph = new VisibilityGraph()

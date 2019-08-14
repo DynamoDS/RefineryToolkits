@@ -27,7 +27,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="graph">Graph</param>
         /// <returns>Visibility Graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        [NodeCategory("Query")]
         public bool IsVisibilityGraph() => this.GetType() == typeof(Visibility);
 
         #endregion
@@ -60,19 +59,27 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 throw new ArgumentNullException(nameof(obstacles));
 
             var input = new List<GTGeom.Polygon>();
-            foreach (DSGeom.Polygon pol in boundaries)
-            {
-                var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, true);
-                input.Add(gPol);
-            }
+            input.AddRange(FromDynamoPolygons(boundaries, true));
+            input.AddRange(FromDynamoPolygons(obstacles, false));
+            //for (var i = 0; i < boundaries.Count; i++)
+            //{
+            //    var boundary = boundaries[i];
+            //    var vertices = boundary.Points
+            //        .Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z))
+            //        .ToList();
+            //    GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, true);
+            //    input.Add(gPol);
+            //}
 
-            foreach (DSGeom.Polygon pol in obstacles)
-            {
-                var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, false);
-                input.Add(gPol);
-            }
+            //for (var i = 0; i < obstacles.Count; i++)
+            //{
+            //    var obstacle = obstacles[i];
+            //    var vertices = obstacle.Points
+            //        .Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z))
+            //        .ToList();
+            //    GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, false);
+            //    input.Add(gPol);
+            //}
 
             return new BaseGraph(input);
         }
@@ -88,12 +95,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             if (polygons is null || polygons.Count == 0)
                 throw new ArgumentNullException(nameof(polygons));
             List<GTGeom.Polygon> input = new List<GTGeom.Polygon>();
-            foreach (DSGeom.Polygon pol in polygons)
-            {
-                var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
-                GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, false);
-                input.Add(gPol);
-            }
+            input.AddRange(FromDynamoPolygons(polygons, false));
+            //foreach (DSGeom.Polygon pol in polygons)
+            //{
+            //    var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
+            //    GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, false);
+            //    input.Add(gPol);
+            //}
 
             return new BaseGraph(input);
         }
@@ -110,8 +118,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 throw new ArgumentNullException(nameof(lines));
             var g = new BaseGraph();
 
-            foreach (DSGeom.Line line in lines)
+            for (var i = 0; i < lines.Count; i++)
             {
+                var line = lines[i];
                 GTGeom.Vertex start = GTGeom.Points.ToVertex(line.StartPoint);
                 GTGeom.Vertex end = GTGeom.Points.ToVertex(line.EndPoint);
                 g.graph.AddEdge(GTGeom.Edge.ByStartVertexEndVertex(start, end));
@@ -119,6 +128,23 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             return g;
         }
 
+        #endregion
+
+        #region Helpers
+
+        private static List<GTGeom.Polygon> FromDynamoPolygons(List<DSGeom.Polygon> polygons, bool external)
+        {
+            var gtPolygons = new List<GTGeom.Polygon>();
+            for (var i = 0; i < polygons.Count; i++)
+            {
+                var vertices = polygons[i].Points
+                    .Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z))
+                    .ToList();
+                GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, external);
+                gtPolygons.Add(gPol);
+            }
+            return gtPolygons;
+        }
         #endregion
 
         #region Override Methods
