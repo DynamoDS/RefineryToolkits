@@ -102,8 +102,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             // we need to keep track of packed items across bins
             // and then aggregate results, hence the lists external to BinPacker object
             var remainingRects = new List<Rectangle>(rectangles);
-            var packedRects = new List<List<Rectangle>>();
-            var packIndices = new List<List<int>>();
             var packers = new List<BinPacker2D>();
 
             for (var i = 0; i < bins.Count; i++)
@@ -112,8 +110,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
                 packer.PackRectanglesInBin(remainingRects, packingStrategy);
                 packers.Add(packer);
-                packedRects.Add(packer.PackedRectangles);
-                packIndices.Add(packer.PackedIndices);
             }
             return packers;
         }
