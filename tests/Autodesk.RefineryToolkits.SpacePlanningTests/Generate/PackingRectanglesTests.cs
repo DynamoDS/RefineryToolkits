@@ -7,14 +7,14 @@ using TestServices;
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 {
     [TestFixture]
-    public class BinPacking2DTests : GeometricTestBase
+    public partial class PackingTests : GeometricTestBase
     {
-        private const string packedOutputPort = "Packed Rectangles";
-        private const string remainOutputPort = "Remaining Rectangles";
+        private const string packedItemsOutputPort = "Packed Items";
+        private const string remainingItemsOutputPort = "Remaining Items";
         private const string indicesOutputPort = "Packed Indices";
 
         [Test]
-        public void OneBin_CanPackWithNoLeftovers()
+        public void Rectangles_OneBin_CanPackWithNoLeftovers()
         {
             // Arrange
             var bins = new List<Rectangle> { Rectangle.ByWidthLength(50, 50) };
@@ -33,15 +33,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Dictionary<string, object> result = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
 
             // Assert
-            Assert.IsTrue(result.Keys.Contains(packedOutputPort));
-            Assert.IsTrue(result.Keys.Contains(remainOutputPort));
+            Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
+            Assert.IsTrue(result.Keys.Contains(remainingItemsOutputPort));
             Assert.IsTrue(result.Keys.Contains(indicesOutputPort));
 
-            var packedRectangles = (List<List<Rectangle>>)result[packedOutputPort];
+            var packedRectangles = (List<List<Rectangle>>)result[packedItemsOutputPort];
             Assert.AreEqual(1, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.First().Count);
 
-            var remainItems = (List<Rectangle>)result[remainOutputPort];
+            var remainItems = (List<Rectangle>)result[remainingItemsOutputPort];
             Assert.AreEqual(0, remainItems.Count);
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -49,7 +49,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
         }
 
         [Test]
-        public void OneBin_CanPackAndHaveLeftovers()
+        public void Rectangles_OneBin_CanPackAndHaveLeftovers()
         {
             // Arrange
             var bins = new List<Rectangle> { Rectangle.ByWidthLength(50, 50) };
@@ -69,15 +69,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Dictionary<string, object> result = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
 
             // Assert
-            Assert.IsTrue(result.Keys.Contains(packedOutputPort));
-            Assert.IsTrue(result.Keys.Contains(remainOutputPort));
+            Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
+            Assert.IsTrue(result.Keys.Contains(remainingItemsOutputPort));
             Assert.IsTrue(result.Keys.Contains(indicesOutputPort));
 
-            var packedRectangles = (List<List<Rectangle>>)result[packedOutputPort];
+            var packedRectangles = (List<List<Rectangle>>)result[packedItemsOutputPort];
             Assert.AreEqual(1, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.First().Count);
 
-            var remainItems = (List<Rectangle>)result[remainOutputPort];
+            var remainItems = (List<Rectangle>)result[remainingItemsOutputPort];
             Assert.AreEqual(2, remainItems.Count);
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -85,7 +85,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
         }
 
         [Test]
-        public void MultiBin_CanPackAndHaveLeftovers()
+        public void Rectangles_MultiBin_CanPackAndHaveLeftovers()
         {
             // Arrange
             var bins = new List<Rectangle> {
@@ -112,15 +112,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Dictionary<string, object> result = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
 
             // Assert
-            Assert.IsTrue(result.Keys.Contains(packedOutputPort));
-            Assert.IsTrue(result.Keys.Contains(remainOutputPort));
+            Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
+            Assert.IsTrue(result.Keys.Contains(remainingItemsOutputPort));
             Assert.IsTrue(result.Keys.Contains(indicesOutputPort));
 
-            var packedRectangles = (List<List<Rectangle>>)result[packedOutputPort];
+            var packedRectangles = (List<List<Rectangle>>)result[packedItemsOutputPort];
             Assert.AreEqual(3, packedRectangles.Count); // 3 bins were packed
             Assert.AreEqual(4, packedRectangles.Sum(x => x.Count)); // the number of rectangles packed is 4
 
-            var remainItems = (List<Rectangle>)result[remainOutputPort];
+            var remainItems = (List<Rectangle>)result[remainingItemsOutputPort];
             Assert.AreEqual(2, remainItems.Count); // 2 rectangles were not packed
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -131,7 +131,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
         /// <summary>
         /// Checks that the packing process can be run several times without exceptions.
         /// </summary>
-        public void MultiBin_PackingCanRunSeveralTimes()
+        public void Rectangles_MultiBin_PackingCanRunSeveralTimes()
         {
             // Arrange
             var bins = new List<Rectangle> {
@@ -160,17 +160,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Dictionary<string, object> result3 = BinPacking.PackRectangles(items, bins, RectanglePackingStrategy.BestShortSideFits);
 
             // Assert
-            Assert.IsTrue(result3.Keys.Contains(packedOutputPort));
-            Assert.IsTrue(result3.Keys.Contains(remainOutputPort));
+            Assert.IsTrue(result3.Keys.Contains(packedItemsOutputPort));
+            Assert.IsTrue(result3.Keys.Contains(remainingItemsOutputPort));
             Assert.IsTrue(result3.Keys.Contains(indicesOutputPort));
 
-            var packedRectangles = (List<List<Rectangle>>)result3[packedOutputPort];
+            var packedRectangles = (List<List<Rectangle>>)result3[packedItemsOutputPort];
             Assert.AreEqual(3, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.Sum(x => x.Count));
 
-            var remainItems = (List<Rectangle>)result3[remainOutputPort];
+            var remainItems = (List<Rectangle>)result3[remainingItemsOutputPort];
             Assert.AreEqual(2, remainItems.Count);
         }
-
     }
 }

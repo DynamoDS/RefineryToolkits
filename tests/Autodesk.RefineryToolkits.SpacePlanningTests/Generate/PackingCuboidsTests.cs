@@ -8,25 +8,22 @@ using TestServices;
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 {
     [TestFixture()]
-    public class BinPacking3DTests : GeometricTestBase
+    public partial class PackingTests : GeometricTestBase
     {
-        private const string packedItemsOutputPort3D = "Packed Items";
-        private const string indicesOutputPort3D = "Packed Indices";
-        private const string remainingItemsOutputPort3D = "Remaining Items";
         private const string percentContainerVolumePackedPort = "% Container Volume Packed";
         private const string percentItemVolumePackedPort = "% Item Volume Packed";
 
         private List<string> expectedNodeOutputDictionaryKeys = new List<string>
         {
-            packedItemsOutputPort3D,
-            indicesOutputPort3D,
-            remainingItemsOutputPort3D,
+            packedItemsOutputPort,
+            indicesOutputPort,
+            remainingItemsOutputPort,
             percentContainerVolumePackedPort,
             percentItemVolumePackedPort
         };
 
         [Test()]
-        public void OneBin_CanPackWithLeftovers()
+        public void Cuboids_OneBin_CanPackWithLeftovers()
         {
             // Arrange
             var bin = new List<Cuboid> {
@@ -54,16 +51,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             var expectedPercentageItemVolumePacked = 70.06;
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackCuboids(bin, items);
+            Dictionary<string, object> result = BinPacking.PackCuboids(items, bin);
 
             // Assert
             // Check if the result is a dictionary that contains the expected output port keys
             CollectionAssert.AreEqual(result.Keys, expectedNodeOutputDictionaryKeys);
 
             // extract results from dictionary
-            var actualPackeditems = (List<List<Cuboid>>)result[packedItemsOutputPort3D];
-            var actualRemainItems = (List<Cuboid>)result[remainingItemsOutputPort3D];
-            var actualPackedIndices = (List<List<int>>)result[indicesOutputPort3D];
+            var actualPackeditems = (List<List<Cuboid>>)result[packedItemsOutputPort];
+            var actualRemainItems = (List<Cuboid>)result[remainingItemsOutputPort];
+            var actualPackedIndices = (List<List<int>>)result[indicesOutputPort];
             var actualPercentContVol = (result[percentContainerVolumePackedPort] as IEnumerable<double>).First();
             var actualPercentItemVol = (result[percentItemVolumePackedPort] as IEnumerable<double>).First();
 
@@ -82,7 +79,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
         }
 
         [Test()]
-        public void MultiBin_CanPackWithLeftovers()
+        public void Cuboids_MultiBin_CanPackWithLeftovers()
         {
             // Arrange
             var bins = new List<Cuboid> {
@@ -101,25 +98,25 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             };
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackCuboids(bins, items);
+            Dictionary<string, object> result = BinPacking.PackCuboids(items, bins);
 
             // Assert
             // Checks if the right amount of items has been packed
-            var packeditems = (List<List<Cuboid>>)result[packedItemsOutputPort3D];
+            var packeditems = (List<List<Cuboid>>)result[packedItemsOutputPort];
             Assert.AreEqual(2, packeditems.Count); // the number of bins this was packed into is 2
             Assert.AreEqual(4, packeditems.Sum(x => x.Count)); // total number of packed cuboids is 4
 
-            var remainItems = (List<Cuboid>)result[remainingItemsOutputPort3D];
+            var remainItems = (List<Cuboid>)result[remainingItemsOutputPort];
             Assert.AreEqual(2, remainItems.Count);
 
             // Checks that the right items has been packed
-            var packedIndices = (List<List<int>>)result[indicesOutputPort3D];
+            var packedIndices = (List<List<int>>)result[indicesOutputPort];
             Assert.AreEqual(2, packedIndices.Count); // the number of bins this was packed into is 2
             CollectionAssert.AreEqual(packedIndices, expectedIndices);
         }
 
         [Test()]
-        public void MultiBin_CanPackWithNoLeftovers()
+        public void Cuboids_MultiBin_CanPackWithNoLeftovers()
         {
             // Arrange
             var bins = new List<Cuboid> {
@@ -138,19 +135,19 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             };
 
             // Act
-            Dictionary<string, object> result = BinPacking.PackCuboids(bins, items);
+            Dictionary<string, object> result = BinPacking.PackCuboids(items, bins);
 
             // Assert
             // Checks if the right amount of items has been packed
-            var packeditems = (List<List<Cuboid>>)result[packedItemsOutputPort3D];
+            var packeditems = (List<List<Cuboid>>)result[packedItemsOutputPort];
             Assert.AreEqual(2, packeditems.Count); // the number of bins this was packed into is 2
             Assert.AreEqual(4, packeditems.Sum(x => x.Count)); // total number of packed cuboids is 4
 
-            var remainItems = (List<Cuboid>)result[remainingItemsOutputPort3D];
+            var remainItems = (List<Cuboid>)result[remainingItemsOutputPort];
             Assert.AreEqual(0, remainItems.Count);
 
             // Checks that the right items has been packed
-            var packedIndices = (List<List<int>>)result[indicesOutputPort3D];
+            var packedIndices = (List<List<int>>)result[indicesOutputPort];
             Assert.AreEqual(2, packedIndices.Count); // the number of bins this was packed into is 2
             CollectionAssert.AreEqual(packedIndices, expectedIndices);
         }
