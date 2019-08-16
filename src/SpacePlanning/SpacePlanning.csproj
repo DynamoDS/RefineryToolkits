@@ -204,7 +204,6 @@
     <Compile Include="Analyze\BaseGraph.cs" />
     <Compile Include="Analyze\Buzz.cs" />
     <Compile Include="Analyze\Daylight.cs" />
-    <Compile Include="Analyze\Isovist.cs" />
     <Compile Include="Analyze\Openess.cs" />
     <Compile Include="Analyze\Productivity.cs" />
     <Compile Include="Analyze\PathFinding.cs" />

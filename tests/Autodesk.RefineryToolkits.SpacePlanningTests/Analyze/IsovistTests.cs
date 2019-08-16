@@ -34,7 +34,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             Point originPoint = layoutPolygon.Center();
 
             // Create isovist form the origin point
-            Surface isovist = Isovist.FromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { layoutPolygon });
+            Surface isovist = Visibility.IsovistFromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { layoutPolygon });
             
             // Checks if the area of the isovist is equal to the area of the layout
             // as there are no obstructions the entire layout should be visible from the origin point
@@ -54,7 +54,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             Point originPoint = Point.ByCoordinates(3,3);
 
             // Create isovist form the origin point
-            Surface isovist = Isovist.FromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { internals });
+            Surface isovist = Visibility.IsovistFromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { internals });
 
             // Checks that the area returned by the isovist is not equal to the area of the layout
             // and that the isovist does not intersect the midpoint of the obstacle.
@@ -75,7 +75,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             // Create origin point
             Point originPoint = Point.ByCoordinates(0, 0);
 
-            Assert.Throws<ApplicationException>(() => Isovist.FromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { internals }));
+            Assert.Throws<ApplicationException>(() => Visibility.IsovistFromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { internals }));
 
         }
     }
