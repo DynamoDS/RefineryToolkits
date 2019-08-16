@@ -13,8 +13,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
     public static class Adjacency
     {
         /// <summary>
-        /// Returns the geometric median point of a list of points.
-        /// The geometric median is the point minimizing the sum of distances to the sample points
+        /// Returns the geometric median point of a list of points, 
+        /// which is the point minimizing the sum of distances to all supplied points.
         /// </summary>
         /// <param name="points">List of points to compute geometric median for.</param>
         /// <returns>Point that minimizes the distance to all other points</returns>

@@ -15,15 +15,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         private const string lengthOutputPort = "Length";
 
         /// <summary>
-        /// Returns the shortest path between two points. 
-        /// Works by computing a visibility graph and then finding shortest path on graph.
+        /// Returns the shortest path between two points, in 2D only. 
+        /// Works by computing a visibility graph and then finding shortest path on graph with Dijkstra's algorithm.
         /// </summary>
-        /// <param name="startPoint">Origin point</param>
+        /// <param name="startPoint">Start point</param>
         /// <param name="endPoint">Destination point</param>
         /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
         /// <param name="obstructions">List of Polygons representing internal obstructions</param>
-        /// <returns name="path">Graph representing the shortest path</returns>
-        /// <returns name="length">Length of path</returns>
+        /// <returns name="path">Set of lines representing the shortest path</returns>
+        /// <returns name="length">Length of path.</returns>
         [MultiReturn(new[] { pathOutputPort, lengthOutputPort })]
         public static Dictionary<string, object> ShortestPath(
             Point startPoint,
