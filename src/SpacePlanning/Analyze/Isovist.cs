@@ -21,12 +21,12 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
     public static class Isovist
     {
         /// <summary>
-        /// Returns a surface representing the Isovist area visible from the given point.
+        /// Returns a surface representing the area visible from the given point.
         /// </summary>
-        /// <param name="point">Origin point</param>
+        /// <param name="point">Origin or observation point</param>
         /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
         /// <param name="obstructions">List of Polygons representing internal obstructions</param>
-        /// <returns name="Isovist">Surface representing the isovist area</returns>
+        /// <returns name="Isovist">Surface representing the isovist area, meaning the area visible from observation point.</returns>
         [NodeCategory("Actions")]
         public static Surface FromPoint(
             Point point,
