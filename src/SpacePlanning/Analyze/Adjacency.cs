@@ -10,15 +10,15 @@ using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
-    public static class AdjacencyPreference
+    public static class Adjacency
     {
         /// <summary>
-        /// Returns the geometric median point of a list of points.
-        /// The geometric median is the point minimizing the sum of distances to the sample points
+        /// Returns the geometric median point of a list of points, 
+        /// which is the point minimizing the sum of distances to all supplied points.
         /// </summary>
-        /// <param name="points">List of sample points</param>
+        /// <param name="points">List of points to compute geometric median for.</param>
         /// <returns>Point that minimizes the distance to all other points</returns>
-        public static Point GeometricMedian(List<Point> points)
+        public static Point GeometricMedianOfPoints(List<Point> points)
         {
             var n = points.Count;
 
@@ -152,8 +152,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 for (var i = 0; i < 4; i++)
                 {
                     // Finding Neighbours done 
-                    var newX = currentX + ((double)testDistance * testPoints[i].X);
-                    var newY = currentY + ((double)testDistance * testPoints[i].Y);
+                    var newX = currentX + (testDistance * testPoints[i].X);
+                    var newY = currentY + (testDistance * testPoints[i].Y);
 
                     // New sum of Euclidean distances 
                     // from the neighbor to the given 

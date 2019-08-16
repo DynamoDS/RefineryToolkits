@@ -9,46 +9,56 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
     public static class Openess
     {
         /// <summary>
-        /// gives a openess score from 0-1 based on how enclosed a Surface is. 
+        /// Calculates an openess percentage based on how enclosed a Surface is. 
         /// </summary>
         /// <param name="surface">Surface of object to check</param>
-        /// <param name="tolerance">Takes into account objects that are a given distance away</param>
-        /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
-        /// <param name="obstacles">List of Polygons representing obstacles that might enclose the object to check</param>
-        /// <returns>Score from 0-1, 1 being totally enclosed and 0 being totally open</returns>
+        /// <param name="searchDistance">(optional) Only takes into account objects that are this given max distance away.</param>
+        /// <param name="boundary">(optional) Polygon(s) enclosing all obstacle Polygons</param>
+        /// <param name="obstructions">(optional) List of Polygons representing obstacles that might enclose the object to check</param>
+        /// <returns>Percentage of openess, from 0 being totally enclosed and 100 being totally open.</returns>
         public static double FromSurface(
             Surface surface,
-            [DefaultArgument("0.0")] double tolerance,
+            [DefaultArgument("0.0")] double searchDistance,
             [DefaultArgument("[]")] List<Polygon> boundary,
-            [DefaultArgument("[]")] List<Polygon> obstacles)
+            [DefaultArgument("[]")] List<Polygon> obstructions)
         {
-            List<Curve> perimeterCrvs = surface.OffsetPerimeterCurves(tolerance)["outsetCrvs"].ToList();
+            List<Curve> perimeterCrvs = surface.OffsetPerimeterCurves(searchDistance)["outsetCrvs"].ToList();
             List<Polygon> intersectionPolygons = new List<Polygon>();
             intersectionPolygons.AddRange(boundary);
-            intersectionPolygons.AddRange(obstacles);
+            intersectionPolygons.AddRange(obstructions);
 
             double perimeterLength = surface.Perimeter;
             double openessScore = 0;
-            foreach (Curve crv in perimeterCrvs)
-            {
-                foreach (Polygon poly in intersectionPolygons)
-                {
-                    if (crv.DoesIntersect(poly))
-                    {
-                        try
-                        {
-                            List<Curve> intersections = crv.Intersect(poly).Cast<Curve>().ToList();
-                            intersections.ForEach(c => openessScore += c.Length / perimeterLength);
-                        }
-                        catch (System.InvalidCastException)
-                        {
-                            continue;
-                        }
 
+            for (var i = 0; i < perimeterCrvs.Count; i++)
+            {
+                var crv = perimeterCrvs[i];
+                for (var j = 0; j < intersectionPolygons.Count; j++)
+                {
+                    var poly = intersectionPolygons[j];
+                    if (!crv.DoesIntersect(poly)) continue;
+
+                    try
+                    {
+                        List<Curve> intersections = crv.Intersect(poly).Cast<Curve>().ToList();
+                        for (int k = 0; k < intersections.Count; k++)
+                        {
+                            var intersection = intersections[k];
+                            openessScore += intersection.Length / perimeterLength;
+                            intersection.Dispose();
+                        }                       
+                    }
+                    catch (System.InvalidCastException)
+                    {
+                        continue;
                     }
                 }
             }
-            return openessScore;
+            // openessScore 0 means totally open and 100 means totally enclosed
+            // that does not make sense with node name, so we flip it
+            var invertedScore = 1 - openessScore;
+
+            return invertedScore * 100;
         }
     }
 }

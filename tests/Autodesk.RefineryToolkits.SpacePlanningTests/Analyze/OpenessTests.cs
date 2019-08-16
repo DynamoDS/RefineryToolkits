@@ -1,5 +1,4 @@
 ﻿using Autodesk.DesignScript.Geometry;
-using Autodesk.RefineryToolkits.Core.Utillites;
 using NUnit.Framework;
 using System.Collections.Generic;
 using TestServices;
@@ -30,8 +29,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             // Calculate openess score
             var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
 
-            // Check of score equals 0.25, as the entire left side is blocked by the obstacle
-            Assert.AreEqual(0.25, openessScore);
+            // Check of score equals 75%, as the entire left side is blocked by the obstacle
+            Assert.AreEqual(75d, openessScore);
 
             // Dispose unused geometry
             obstacle.Dispose();
@@ -51,8 +50,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             // Calculate openess score
             var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
 
-            // Check of score equals 0.25, as the entire right side is blocked by the obstacle
-            Assert.AreEqual(0.25, openessScore);
+            // Check of score equals 75%, as the entire right side is blocked by the obstacle
+            Assert.AreEqual(75d, openessScore);
 
             // Dispose unused geometry
             obstacle.Dispose();
@@ -72,8 +71,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             // Calculate openess score
             var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
 
-            // Check of score equals 0.25, as the entire top is blocked by the obstacle
-            Assert.AreEqual(0.25, openessScore);
+            // Check of score equals 75%, as the entire top is blocked by the obstacle
+            Assert.AreEqual(75d, openessScore);
 
             // Dispose unused geometry
             obstacle.Dispose();
@@ -93,8 +92,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             // Calculate openess score
             var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
 
-            // Check of score equals 0.25, as the entire bottom is blocked by the obstacle
-            Assert.AreEqual(0.25, openessScore);
+            // Check of score equals 75%, as the entire bottom is blocked by the obstacle
+            Assert.AreEqual(75d, openessScore);
 
             // Dispose unused geometry
             obstacle.Dispose();
@@ -119,8 +118,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             // Calculate openess score
             var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, obstaclePolygons);
 
-            // Check if score equals 0.50, as the entire right and left side is blocked by the obstacles
-            Assert.AreEqual(0.50, openessScore);
+            // Check if score equals 50%, as the entire right and left side is blocked by the obstacles
+            Assert.AreEqual(50d, openessScore);
 
             // Dispose unused geometry
             obstaclePolygons.ForEach(poly => poly.Dispose());

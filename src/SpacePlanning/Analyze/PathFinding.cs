@@ -1,7 +1,6 @@
 ﻿using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
-using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,57 +11,62 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
     public static class PathFinding
     {
-        private const string graphOutputPort = "path";
-        private const string lengthOutputPort = "length";
+        private const string pathOutputPort = "Path";
+        private const string lengthOutputPort = "Length";
 
         /// <summary>
-        /// Returns a graph representing the shortest path 
-        /// between two points on a given Visibility Graph.
+        /// Returns the shortest path between two points, in 2D only. 
+        /// Works by computing a visibility graph and then finding shortest path on graph with Dijkstra's algorithm.
         /// </summary>
-        /// <param name="visGraph">Visibility Graph</param>
-        /// <param name="origin">Origin point</param>
-        /// <param name="destination">Destination point</param>
-        /// <returns name="path">Graph representing the shortest path</returns>
-        /// <returns name="length">Length of path</returns>
-        [MultiReturn(new[] { graphOutputPort, lengthOutputPort })]
+        /// <param name="startPoint">Start point</param>
+        /// <param name="endPoint">Destination point</param>
+        /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
+        /// <param name="obstructions">List of Polygons representing internal obstructions</param>
+        /// <returns name="path">Set of lines representing the shortest path</returns>
+        /// <returns name="length">Length of path.</returns>
+        [MultiReturn(new[] { pathOutputPort, lengthOutputPort })]
         public static Dictionary<string, object> ShortestPath(
-            RepresentableGraph visGraph,
-            Point origin,
-            Point destination)
+            Point startPoint,
+            Point endPoint,
+            List<Polygon> boundary,
+            List<Polygon> obstructions)
         {
+            if (startPoint is null)
+                throw new ArgumentNullException(nameof(startPoint));
+            if (endPoint is null)
+                throw new ArgumentNullException(nameof(endPoint));
+            if (boundary is null)
+                throw new ArgumentNullException(nameof(boundary));
+            if (obstructions is null)
+                throw new ArgumentNullException(nameof(obstructions));
 
-            if (visGraph == null) throw new ArgumentNullException("visibility");
-            if (origin == null) throw new ArgumentNullException("origin");
-            if (destination == null) throw new ArgumentNullException("destination");
+            var gOrigin = GTGeom.Vertex.ByCoordinates(startPoint.X, startPoint.Y, startPoint.Z);
+            var gDestination = GTGeom.Vertex.ByCoordinates(endPoint.X, endPoint.Y, endPoint.Z);
 
-            var gOrigin = GTGeom.Vertex.ByCoordinates(origin.X, origin.Y, origin.Z);
-            var gDestination = GTGeom.Vertex.ByCoordinates(destination.X, destination.Y, destination.Z);
-
+            // compute visibility graph
+            var visGraph = CreateVisibilityGraph(boundary, obstructions);
+            if (visGraph is null) throw new InvalidOperationException("Failed to create visibility graph.");
             var visibilityGraph = visGraph.graph as VisibilityGraph;
 
-            var baseGraph = new BaseGraph()
-            {
-                graph = VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination)
-            };
+            var graph = VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination);
 
             return new Dictionary<string, object>()
             {
-                {graphOutputPort, baseGraph },
-                {lengthOutputPort, baseGraph.graph.edges.Select(e => e.Length).Sum() }
+                {pathOutputPort, LinesFromGraph(graph) },
+                {lengthOutputPort, graph.edges.Select(e => e.Length).Sum() }
             };
         }
 
         /// <summary>
         /// Returns a VisibilityGraph which is used as input for ShortestPath
         /// </summary>
-        /// <param name="boundary"></param>
-        /// <param name="internals"></param>
         /// <returns name = "visGraph">VisibilityGraph for use in ShortestPath</returns>
+        [IsVisibleInDynamoLibrary(false)]
         public static RepresentableGraph CreateVisibilityGraph(
             List<DSGeom.Polygon> boundary,
-            List<DSGeom.Polygon> internals)
+            List<DSGeom.Polygon> obstructions)
         {
-            var graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, internals);
+            var graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstructions);
             var visGraph = RepresentableGraph.ByBaseGraph(graph);
 
             return visGraph;
@@ -72,12 +76,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// Returns the input graph as a list of lines
         /// </summary>
         /// <returns name="lines">List of lines representing the graph.</returns>
-        [NodeCategory("Query")]
-        public static List<Line> Lines(BaseGraph path)
+        [IsVisibleInDynamoLibrary(false)]
+        public static List<Line> LinesFromGraph(Graph graph)
         {
-            List<Line> lines = new List<Line>();
-            foreach (GTGeom.Edge edge in path.graph.edges)
+            var lines = new List<Line>();
+            for (var i = 0; i < graph.edges.Count; i++)
             {
+                var edge = graph.edges[i];
                 var start = GTGeom.Points.ToPoint(edge.StartVertex);
                 var end = GTGeom.Points.ToPoint(edge.EndVertex);
                 lines.Add(Line.ByStartPointEndPoint(start, end));

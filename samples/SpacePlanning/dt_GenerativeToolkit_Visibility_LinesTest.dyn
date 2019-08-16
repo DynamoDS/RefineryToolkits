@@ -2,7 +2,7 @@
   "Uuid": "9b475e34-a870-453c-b18e-2a8426cc5ba8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_Refinery Toolkit_Visibility_LinesTest",
+  "Name": "dt_GenerativeToolkit_Visibility_LinesTest",
   "ElementResolver": {
     "ResolutionMap": {
       "DSCore.List": {
@@ -1067,7 +1067,7 @@
         {
           "Id": "a8c2601e9d6149ce9b7d69113ec4b958",
           "Name": "Percentage visible",
-          "Description": "The percentage of 360 view from origin point that target lines are visible from.",
+          "Description": "The total percentage of 360 view from origin point that target lines are visible from.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1075,6 +1075,15 @@
         },
         {
           "Id": "408e29a8a7d14f8285cbff214ecad873",
+          "Name": "Visibility percentages",
+          "Description": "The percentage of 360 view from origin point that each target lines are visible from.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f0b1c89ccdd64296b6fc08c6ba17a2b1",
           "Name": "Visible items",
           "Description": "The specific Lines that are visible from the origin point.",
           "UsingDefaultValue": false,
@@ -1084,7 +1093,36 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Calculates the visibility of target Lines from a given point based on a 360 degree view range. Returns the percentage of 360 view from origin point that target lines are visible from and the visible lines themselves.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
+      "Description": "Calculates the visibility of target Lines from a given point based on a 360 degree view range. Returns the percentage of 360 view from origin point that target lines are visible from and the target lines that are visible.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "8792a35e068442049b07fd19eecbb8be",
+      "Inputs": [
+        {
+          "Id": "38da62dfc3b44cecb20a283ae40b66a9",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c4d1f98f40fb487da04f60c3af1088fb",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
     }
   ],
   "Connectors": [
@@ -1280,13 +1318,18 @@
     },
     {
       "Start": "408e29a8a7d14f8285cbff214ecad873",
-      "End": "8d126c648d9747cba8b8b2ff4f942be3",
-      "Id": "9d135a81d4e84c909b8aed9d5ea766fb"
+      "End": "38da62dfc3b44cecb20a283ae40b66a9",
+      "Id": "6c422799d6ae46f38c9ea5c70ac5384e"
     },
     {
-      "Start": "408e29a8a7d14f8285cbff214ecad873",
+      "Start": "f0b1c89ccdd64296b6fc08c6ba17a2b1",
+      "End": "8d126c648d9747cba8b8b2ff4f942be3",
+      "Id": "d791545a96fe411596402f47203aae83"
+    },
+    {
+      "Start": "f0b1c89ccdd64296b6fc08c6ba17a2b1",
       "End": "a5c292f2a80f44148b93e555c068533e",
-      "Id": "16da998c1f044fa6a57f15394645f2d1"
+      "Id": "8a75fa4245374d74a13e41501c407d6a"
     }
   ],
   "Dependencies": [],
@@ -1572,6 +1615,16 @@
         "Excluded": false,
         "X": 2396.6882615707782,
         "Y": 327.25665254682383
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Percentages visible for each line",
+        "Id": "8792a35e068442049b07fd19eecbb8be",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2920.1366352210694,
+        "Y": 277.94317430747446
       }
     ],
     "Annotations": [
@@ -1640,14 +1693,15 @@
         "Title": "Refinery Toolkit\r\nVisibility of Lines",
         "Nodes": [
           "03cb791fd14e40818a32a9dc2d804b09",
-          "38d406e5f1c74739afd5df054febd87f"
+          "38d406e5f1c74739afd5df054febd87f",
+          "8792a35e068442049b07fd19eecbb8be"
         ],
         "Left": 2386.6882615707782,
-        "Top": 182.69541147914498,
-        "Width": 512.1392526570271,
-        "Height": 315.56124106767885,
+        "Top": 181.27650764080778,
+        "Width": 754.78170698362453,
+        "Height": 353.66666666666669,
         "FontSize": 36.0,
-        "InitialTop": 279.36207814581167,
+        "InitialTop": 277.94317430747446,
         "InitialHeight": 192.89457440101216,
         "TextblockHeight": 86.666666666666671,
         "Background": "#FFC1D676"
@@ -1887,8 +1941,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -708.13809612721559,
-    "Y": 165.66202420122414,
-    "Zoom": 0.51884747776421425
+    "X": -1156.5090224369299,
+    "Y": 142.62332558123296,
+    "Zoom": 0.50924755625869056
   }
 }

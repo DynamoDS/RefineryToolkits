@@ -2,7 +2,7 @@
   "Uuid": "a83758a3-1dbb-4e2f-8644-0dc0b2bb961d",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_Refinery Toolkit_GeometricMedianTest",
+  "Name": "dt_GenerativeToolkit_GeometricMedianTest",
   "ElementResolver": {
     "ResolutionMap": {
       "DesignScript.Point": {
@@ -72,13 +72,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Adjacency.GeometricMedianOfPoints@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "48ac742b5ae64288b59eb53874bffc60",
       "Inputs": [
         {
           "Id": "83833e18a09d4a30b86648399fad09ac",
           "Name": "points",
-          "Description": "List of sample points\n\nPoint[]",
+          "Description": "List of points to compute geometric median for.\n\nPoint[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -97,7 +97,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -416,13 +416,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Adjacency.GeometricMedianOfPoints@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "20b78854c6e949dfb95ee81461712a78",
       "Inputs": [
         {
           "Id": "eff77d8388d94e6c922f5c728a84399e",
           "Name": "points",
-          "Description": "List of sample points\n\nPoint[]",
+          "Description": "List of points to compute geometric median for.\n\nPoint[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -441,7 +441,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -514,13 +514,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Adjacency.GeometricMedianOfPoints@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "73ba1130f5654484b1a1e833da764e97",
       "Inputs": [
         {
           "Id": "9c3aecb1b12e4fbc9b48740bf1d461d3",
           "Name": "points",
-          "Description": "List of sample points\n\nPoint[]",
+          "Description": "List of points to compute geometric median for.\n\nPoint[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -539,7 +539,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -612,13 +612,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Adjacency.GeometricMedianOfPoints@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "27e7124fe5d34217afb2a14a91437e9b",
       "Inputs": [
         {
           "Id": "faa72eaa8ba545ef8154b45cd123fc89",
           "Name": "points",
-          "Description": "List of sample points\n\nPoint[]",
+          "Description": "List of points to compute geometric median for.\n\nPoint[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -637,7 +637,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -710,13 +710,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.AdjacencyPreference.GeometricMedian@Autodesk.DesignScript.Geometry.Point[]",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Adjacency.GeometricMedianOfPoints@Autodesk.DesignScript.Geometry.Point[]",
       "Id": "196c84e76ced4f92baeb4fee741cf0eb",
       "Inputs": [
         {
           "Id": "cbb850c8a5e8489ba8ee230155a6302e",
           "Name": "points",
-          "Description": "List of sample points\n\nPoint[]",
+          "Description": "List of points to compute geometric median for.\n\nPoint[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -735,7 +735,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacencyPreference.GeometricMedian (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "CoreNodeModels.CreateList, CoreNodeModels",
@@ -851,7 +851,7 @@
         {
           "Id": "d38a9f8a79b2486e8dfa7f9496059d00",
           "Name": "geometry",
-          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
+          "Description": "Geometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -860,7 +860,7 @@
         {
           "Id": "44730cd356c840ff886d013026bbc5e4",
           "Name": "color",
-          "Description": "The color.\n\nColor",
+          "Description": "Color",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -871,7 +871,7 @@
         {
           "Id": "fa4fd460257e49ff994641e0568d1582",
           "Name": "GeometryColor",
-          "Description": "A Display object.",
+          "Description": "GeometryColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -879,7 +879,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1033,7 +1033,7 @@
         {
           "Id": "0ca29a14de304d45ac56f3f058738f2b",
           "Name": "geometry",
-          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
+          "Description": "Geometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1042,7 +1042,7 @@
         {
           "Id": "b89d60657bf544dfad318177e293d6cc",
           "Name": "color",
-          "Description": "The color.\n\nColor",
+          "Description": "Color",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1053,7 +1053,7 @@
         {
           "Id": "751f180eec514ebcbf5d42645adeccdf",
           "Name": "GeometryColor",
-          "Description": "A Display object.",
+          "Description": "GeometryColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1061,7 +1061,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1215,7 +1215,7 @@
         {
           "Id": "9f3cd23248634ddf9c60a8037c23b2a8",
           "Name": "geometry",
-          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
+          "Description": "Geometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1224,7 +1224,7 @@
         {
           "Id": "43937371175f43e5b4b982d25d640bd2",
           "Name": "color",
-          "Description": "The color.\n\nColor",
+          "Description": "Color",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1235,7 +1235,7 @@
         {
           "Id": "86cfbeb606df4efebbc5e89bfa7a5ac0",
           "Name": "GeometryColor",
-          "Description": "A Display object.",
+          "Description": "GeometryColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1243,7 +1243,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1397,7 +1397,7 @@
         {
           "Id": "f740a493be1342cd8b61d732bc0385d7",
           "Name": "geometry",
-          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
+          "Description": "Geometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1406,7 +1406,7 @@
         {
           "Id": "37f3084cf996426990b6ebd3042965a7",
           "Name": "color",
-          "Description": "The color.\n\nColor",
+          "Description": "Color",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1417,7 +1417,7 @@
         {
           "Id": "e276f7f1f7524cbaa1746a9aed20ada8",
           "Name": "GeometryColor",
-          "Description": "A Display object.",
+          "Description": "GeometryColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1425,7 +1425,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1579,7 +1579,7 @@
         {
           "Id": "42ddc6b1516a4cfd82a059eb4e2bd273",
           "Name": "geometry",
-          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
+          "Description": "Geometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1588,7 +1588,7 @@
         {
           "Id": "1e4e51575fef459eae04d1d24138efe9",
           "Name": "color",
-          "Description": "The color.\n\nColor",
+          "Description": "Color",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1599,7 +1599,7 @@
         {
           "Id": "1d21dface8e3487984028dd84895cbd7",
           "Name": "GeometryColor",
-          "Description": "A Display object.",
+          "Description": "GeometryColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1607,7 +1607,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -2382,21 +2382,21 @@
       "ScaleFactor": 100.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.3.0.4794",
+      "Version": "2.0.2.6826",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": 63.005015844046767,
-      "EyeY": 80.558478652429557,
-      "EyeZ": 56.650505477196873,
-      "LookX": -5.2834301460923854,
-      "LookY": -87.9890510121139,
-      "LookZ": -70.093424998352972,
-      "UpX": -0.047302078117967522,
-      "UpY": 0.77714596145699011,
-      "UpZ": -0.62754017241675308
+      "EyeX": 74.271110323455332,
+      "EyeY": 109.05947296041752,
+      "EyeZ": -2.817673116875266,
+      "LookX": 0.99246561843210657,
+      "LookY": -111.03532551239746,
+      "LookZ": -18.79487857031619,
+      "UpX": 0.048891927668046974,
+      "UpY": 0.37460659341592761,
+      "UpZ": -0.92589388138071937
     },
     "NodeViews": [
       {
@@ -2411,13 +2411,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "AdjacencyPreference.GeometricMedian",
+        "Name": "Adjacency.GeometricMedianOfPoints",
         "Id": "48ac742b5ae64288b59eb53874bffc60",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4804.4721661210033,
-        "Y": -1212.6147740402416
+        "X": 4831.1705538599572,
+        "Y": -1218.3358571271601
       },
       {
         "ShowGeometry": true,
@@ -2521,13 +2521,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "AdjacencyPreference.GeometricMedian",
+        "Name": "Adjacency.GeometricMedianOfPoints",
         "Id": "20b78854c6e949dfb95ee81461712a78",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4796.47600723451,
-        "Y": -892.36189641134172
+        "X": 4838.43061653858,
+        "Y": -919.06028415029539
       },
       {
         "ShowGeometry": true,
@@ -2551,13 +2551,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "AdjacencyPreference.GeometricMedian",
+        "Name": "Adjacency.GeometricMedianOfPoints",
         "Id": "73ba1130f5654484b1a1e833da764e97",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4790.4848030005523,
-        "Y": -593.08235112552779
+        "X": 4832.4394123046222,
+        "Y": -619.78073886448146
       },
       {
         "ShowGeometry": true,
@@ -2581,13 +2581,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "AdjacencyPreference.GeometricMedian",
+        "Name": "Adjacency.GeometricMedianOfPoints",
         "Id": "27e7124fe5d34217afb2a14a91437e9b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4770.8616192650288,
-        "Y": -234.61909588995684
+        "X": 4812.8162285690987,
+        "Y": -261.3174836289104
       },
       {
         "ShowGeometry": true,
@@ -2611,13 +2611,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "AdjacencyPreference.GeometricMedian",
+        "Name": "Adjacency.GeometricMedianOfPoints",
         "Id": "196c84e76ced4f92baeb4fee741cf0eb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4780.0807544237232,
-        "Y": 53.111107739960516
+        "X": 4822.0353637277931,
+        "Y": 26.412720001006846
       },
       {
         "ShowGeometry": true,
@@ -2913,13 +2913,13 @@
           "05942dc1f6a341f197c386277a5efc44"
         ],
         "Left": 3697.8245717639707,
-        "Top": -1353.3875353408439,
-        "Width": 1024.808460920684,
-        "Height": 264.42666666666651,
+        "Top": -1353.7208686741772,
+        "Width": 1024.1417942540174,
+        "Height": 264.09333333333308,
         "FontSize": 36.0,
         "InitialTop": -1300.3875353408439,
         "InitialHeight": 253.42666666666651,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -2931,13 +2931,13 @@
           "54b9bb99b2ea4e948668bb4e3706116c"
         ],
         "Left": 4301.1057344882438,
-        "Top": -1052.7136812130611,
-        "Width": 450.34157124360991,
-        "Height": 259.70729246790108,
+        "Top": -1053.0470145463946,
+        "Width": 451.34157124361025,
+        "Height": 260.04062580123457,
         "FontSize": 36.0,
         "InitialTop": -999.71368121306125,
         "InitialHeight": 258.70729246790108,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -2949,13 +2949,13 @@
           "bc4569c5798b4e8abd378744a73176c0"
         ],
         "Left": 4292.97750265486,
-        "Top": -753.72105769372138,
-        "Width": 399.0,
-        "Height": 259.24366920608804,
+        "Top": -754.05439102705475,
+        "Width": 398.33333333333337,
+        "Height": 259.57700253942141,
         "FontSize": 36.0,
         "InitialTop": -700.72105769372138,
         "InitialHeight": 258.24366920608804,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -2967,13 +2967,13 @@
           "cd922f3535394c6bbed3123111f89314"
         ],
         "Left": 4286.48771823651,
-        "Top": -478.22734867795009,
-        "Width": 423.0,
-        "Height": 348.8223423210311,
+        "Top": -477.56068201128346,
+        "Width": 422.33333333333337,
+        "Height": 348.15567565436447,
         "FontSize": 36.0,
         "InitialTop": -338.22734867795009,
         "InitialHeight": 260.8223423210311,
-        "TextblockHeight": 130.0,
+        "TextblockHeight": 129.33333333333334,
         "Background": "#FFB9F9E1"
       },
       {
@@ -2985,93 +2985,33 @@
           "f6d5b98102e4420388278b440daba198"
         ],
         "Left": 4275.4053266426235,
-        "Top": -106.62091982745267,
-        "Width": 423.0,
-        "Height": 263.11934726369316,
+        "Top": -106.95425316078601,
+        "Width": 422.33333333333337,
+        "Height": 263.45268059702653,
         "FontSize": 36.0,
         "InitialTop": -53.620919827452667,
         "InitialHeight": 262.11934726369316,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
-        "Id": "8350bca81c9748f39d85bfb049116714",
-        "Title": "Refinery Toolkit - Geometric Median",
+        "Id": "a0dba852e4cd428fa4f9a9a8645a3a7e",
+        "Title": "Refinery Toolkit - Geometric Median\r\n",
         "Nodes": [
+          "48ac742b5ae64288b59eb53874bffc60",
+          "196c84e76ced4f92baeb4fee741cf0eb",
+          "27e7124fe5d34217afb2a14a91437e9b",
+          "73ba1130f5654484b1a1e833da764e97",
           "20b78854c6e949dfb95ee81461712a78"
         ],
-        "Left": 4786.47600723451,
-        "Top": -1032.3618964113416,
-        "Width": 285.61333333333334,
-        "Height": 232.99999999999989,
+        "Left": 4802.8162285690987,
+        "Top": -1401.0025237938269,
+        "Width": 289.61438796948096,
+        "Height": 1520.4152437948337,
         "FontSize": 36.0,
-        "InitialTop": -892.36189641134172,
+        "InitialTop": -1218.3358571271601,
         "InitialHeight": 145.0,
-        "TextblockHeight": 130.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "bc210ec9e0de4b718f8f4ff0b7fff786",
-        "Title": "Refinery Toolkit - Geometric Median",
-        "Nodes": [
-          "73ba1130f5654484b1a1e833da764e97"
-        ],
-        "Left": 4780.4848030005523,
-        "Top": -733.08235112552779,
-        "Width": 285.61333333333334,
-        "Height": 233.0,
-        "FontSize": 36.0,
-        "InitialTop": -593.08235112552779,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 130.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "b76a0b3d507d4dcc8f202b46944c80c9",
-        "Title": "Refinery Toolkit - Geometric Median",
-        "Nodes": [
-          "27e7124fe5d34217afb2a14a91437e9b"
-        ],
-        "Left": 4760.8616192650288,
-        "Top": -374.61909588995684,
-        "Width": 285.61333333333334,
-        "Height": 233.0,
-        "FontSize": 36.0,
-        "InitialTop": -234.61909588995684,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 130.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "ba67ff4d00de40f689de053cda20ed62",
-        "Title": "Refinery Toolkit - Geometric Median",
-        "Nodes": [
-          "196c84e76ced4f92baeb4fee741cf0eb"
-        ],
-        "Left": 4770.0807544237232,
-        "Top": -86.888892260039484,
-        "Width": 285.61333333333334,
-        "Height": 233.0,
-        "FontSize": 36.0,
-        "InitialTop": 53.111107739960516,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 130.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "a0dba852e4cd428fa4f9a9a8645a3a7e",
-        "Title": "Refinery Toolkit - Geometric Median",
-        "Nodes": [
-          "48ac742b5ae64288b59eb53874bffc60"
-        ],
-        "Left": 4794.4721661210033,
-        "Top": -1352.6147740402416,
-        "Width": 285.61333333333334,
-        "Height": 233.0,
-        "FontSize": 36.0,
-        "InitialTop": -1212.6147740402416,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 130.0,
+        "TextblockHeight": 172.66666666666666,
         "Background": "#FFC1D676"
       },
       {
@@ -3083,13 +3023,13 @@
           "5642239d86e8485e967dd160af7f664a"
         ],
         "Left": 6588.0194238200238,
-        "Top": -618.88248545686849,
-        "Width": 548.796445228465,
-        "Height": 323.41302654626975,
+        "Top": -619.21581879020187,
+        "Width": 548.46311189513165,
+        "Height": 323.74635987960312,
         "FontSize": 36.0,
         "InitialTop": -565.88248545686849,
         "InitialHeight": 322.41302654626975,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFC1D676"
       },
       {
@@ -3105,13 +3045,13 @@
           "3b696a6e5f9c4e229b4e2f6f212c6c8c"
         ],
         "Left": 2515.8349410506539,
-        "Top": -1109.2445115787136,
-        "Width": 632.23562714206719,
-        "Height": 609.57338313009416,
+        "Top": -1166.9111782453804,
+        "Width": 631.90229380873393,
+        "Height": 666.90671646342753,
         "FontSize": 48.0,
         "InitialTop": -984.24451157871363,
         "InitialHeight": 421.57338313009416,
-        "TextblockHeight": 115.0,
+        "TextblockHeight": 172.66666666666666,
         "Background": "#FFFFFFFF"
       },
       {
@@ -3123,7 +3063,7 @@
         "Left": 3152.2915989669891,
         "Top": -985.02973001813075,
         "Width": 314.0,
-        "Height": 146.0,
+        "Height": 146.66666666666669,
         "FontSize": 14.0,
         "InitialTop": -955.02973001813075,
         "InitialHeight": 140.0,
@@ -3139,7 +3079,7 @@
         "Left": 3152.2915989669891,
         "Top": -828.67664565450514,
         "Width": 314.0,
-        "Height": 146.0,
+        "Height": 146.66666666666669,
         "FontSize": 14.0,
         "InitialTop": -798.67664565450514,
         "InitialHeight": 140.0,
@@ -3172,13 +3112,13 @@
           "2e8b346952ef4eec870773605e73329b"
         ],
         "Left": 5198.6412120315281,
-        "Top": -1475.7116840973438,
+        "Top": -1476.045017430677,
         "Width": 772.0,
-        "Height": 358.00000000000023,
+        "Height": 358.33333333333348,
         "FontSize": 36.0,
         "InitialTop": -1422.7116840973438,
         "InitialHeight": 295.85333333333347,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -3193,13 +3133,13 @@
           "6880eb2004b945e684ef1a31fd4bdcef"
         ],
         "Left": 5198.6847394765609,
-        "Top": -1098.1827278249214,
+        "Top": -1098.5160611582546,
         "Width": 1156.0,
-        "Height": 358.0,
+        "Height": 358.33333333333326,
         "FontSize": 36.0,
         "InitialTop": -1045.1827278249214,
         "InitialHeight": 295.85333333333335,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -3212,13 +3152,13 @@
           "7f02894094bb43bbb9c7ded08dfedceb"
         ],
         "Left": 5202.3198656859358,
-        "Top": -732.27004444409181,
+        "Top": -732.60337777742518,
         "Width": 772.0,
-        "Height": 358.0,
+        "Height": 358.33333333333337,
         "FontSize": 36.0,
         "InitialTop": -679.27004444409181,
         "InitialHeight": 295.85333333332983,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -3233,13 +3173,13 @@
           "87d3c18537be400882157db96308b559"
         ],
         "Left": 5194.4334517956,
-        "Top": -356.019130994628,
+        "Top": -356.35246432796129,
         "Width": 1156.0,
-        "Height": 360.0,
+        "Height": 360.33333333333326,
         "FontSize": 36.0,
         "InitialTop": -303.019130994628,
         "InitialHeight": 297.8533333333333,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -3252,13 +3192,13 @@
           "611274c33a22445dbc885bf668d601f4"
         ],
         "Left": 5198.7109555706647,
-        "Top": 16.21831819446453,
+        "Top": 15.884984861131194,
         "Width": 772.0,
-        "Height": 357.99999999999994,
+        "Height": 358.33333333333326,
         "FontSize": 36.0,
         "InitialTop": 69.21831819446453,
         "InitialHeight": 295.85333333332994,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -3402,8 +3342,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -2515.2431659452345,
-    "Y": 1331.0899880605778,
-    "Zoom": 1.1729514768649369
+    "X": -1512.0160824210975,
+    "Y": 678.10959664688562,
+    "Zoom": 0.41114781853938659
   }
 }
