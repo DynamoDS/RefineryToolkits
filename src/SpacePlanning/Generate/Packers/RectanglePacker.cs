@@ -24,7 +24,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         /// <summary>
         /// The rectangles that could not be packed and are outside the bin.
         /// </summary>
-        public List<Rectangle> RemainingItems { get; }
+        public List<int> RemainingIndices { get; }
 
         /// <summary>
         /// The indices of the rectangles that have been packed from the input list of rectangles.
@@ -41,7 +41,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         {
             this.FreeRectangles = new List<FreeRectangle>();
             this.PackedItems = new List<Rectangle>();
-            this.RemainingItems = new List<Rectangle>();
+            this.RemainingIndices = new List<int>();
             this.PackedIndices = new List<int>();
         }
 
@@ -167,7 +167,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
             if (freeRect == null)
             {
-                this.RemainingItems.Add(item);
+                this.RemainingIndices.Add(itemIndex);
                 return false;
             }
 

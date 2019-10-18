@@ -10,7 +10,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
     {
         private const string packedItemsOutputPort = "Packed Items";
         private const string indicesOutputPort = "Packed Indices";
-        private const string remainingItemsOutputPort = "Remaining Items";
+        private const string remainingIndicesOutputPort = "Remaining Indices";
         private const string percentContainerVolumePackedPort = "% Container Volume Packed";
         private const string percentItemVolumePackedPort = "% Items Volume Packed";
 
@@ -26,7 +26,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <returns name="Packed Items">List of packed rectangles for each of the containers provided.</returns>
         /// <returns name="Packed Indices">Indices of packed rectangles for correlation to input items list.</returns>
         /// <returns name="Remaining Items">Items (rectangles) that didn't get packed.</returns>
-        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort })]
+        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingIndicesOutputPort })]
         public static Dictionary<string, object> PackRectangles(
             List<Rectangle> items,
             List<Rectangle> containers,
@@ -48,7 +48,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <returns name="Remaining Items">Cuboids that didn't get packed.</returns>
         /// <returns name="% Container Volume Packed">Metric : percentage of each container volume that was packed.</returns>
         /// <returns name="% Item Volume Packed">Metric : percentage expressing how much of total items volume was packed in each container.</returns>
-        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingItemsOutputPort, percentContainerVolumePackedPort, percentItemVolumePackedPort })]
+        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingIndicesOutputPort, percentContainerVolumePackedPort, percentItemVolumePackedPort })]
         public static Dictionary<string, object> PackCuboids(
             List<Cuboid> items,
             List<Cuboid> containers)
@@ -92,13 +92,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             // we only need the remaining rectangles from the last bin packing result
             // since the same list of remaining rectangles is used sequentially to pack all bins.
             // using all lists of remaining rects would just show us the progression of what remained after each pack
-            var remainRects = packers.LastOrDefault()?.RemainingItems;
+            var remainIndices = packers.LastOrDefault()?.RemainingIndices;
 
             return new Dictionary<string, object>
             {
                 {packedItemsOutputPort, packedRects},
                 {indicesOutputPort, packedIndices},
-                {remainingItemsOutputPort, remainRects}
+                {remainingIndicesOutputPort, remainIndices}
             };
         }
 
@@ -115,13 +115,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             var percentItemVolumePacked = packers.Select(x => x.PercentItemVolumePacked).ToList();
 
             // we only need the remaining rectangles from the last bin packing result
-            var remainCuboids = packers.LastOrDefault()?.RemainingItems;
+            var remainIndices = packers.LastOrDefault()?.RemainingIndices;
 
             return new Dictionary<string, object>
             {
                 { packedItemsOutputPort, packedCuboids},
                 { indicesOutputPort, packedIndices},
-                { remainingItemsOutputPort, remainCuboids},
+                { remainingIndicesOutputPort, remainIndices},
                 { percentContainerVolumePackedPort, percentContainerVolumePacked},
                 { percentItemVolumePackedPort, percentItemVolumePacked}
             };

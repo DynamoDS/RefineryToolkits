@@ -6,7 +6,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
     {
         List<int> PackedIndices { get; }
         List<TItem> PackedItems { get; }
-        List<TItem> RemainingItems { get; }
+        List<int> RemainingIndices { get; }
 
         void PackOneContainer(
             List<TItem> items,
