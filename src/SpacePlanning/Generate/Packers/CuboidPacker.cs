@@ -21,7 +21,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
         public List<int> PackedIndices { get; private set; }
 
-        public List<Cuboid> RemainingItems { get; private set; }
+        public List<int> RemainingIndices { get; private set; }
 
         public double PercentContainerVolumePacked { get; private set; }
 
@@ -35,7 +35,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         {
             this.PackedItems = new List<Cuboid>();
             this.PackedIndices = new List<int>();
-            this.RemainingItems = new List<Cuboid>();
+            this.RemainingIndices = new List<int>();
             this.bin = null;
         }
 
@@ -67,7 +67,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
             // record results in this packer instance
             this.PackedItems = CuboidsFromItems(packingResult.PackedItems);
-            this.RemainingItems = CuboidsFromItems(packingResult.UnpackedItems);
+            this.RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
             this.PackedIndices = IdsFromItems(packingResult.PackedItems);
             this.PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
             this.PercentItemVolumePacked = decimal.ToDouble(packingResult.PercentItemVolumePacked);
@@ -174,7 +174,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         private static Cuboid CuboidFromItem(Item item)
         {
             var lowPoint = Point.ByCoordinates(Convert.ToDouble(item.CoordX), Convert.ToDouble(item.CoordZ), Convert.ToDouble(item.CoordY));
-            Point highPoint = lowPoint.Add(Vector.ByCoordinates(Convert.ToDouble(item.Dim1), Convert.ToDouble(item.Dim2), Convert.ToDouble(item.Dim3)));
+            Point highPoint = lowPoint.Add(Vector.ByCoordinates(Convert.ToDouble(item.PackDimX), Convert.ToDouble(item.PackDimZ), Convert.ToDouble(item.PackDimY)));
             var cuboid = Cuboid.ByCorners(lowPoint, highPoint);
 
             // Dispose redundant intermediate geometry
