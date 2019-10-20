@@ -16,6 +16,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         private const string PackingFailed = "Could not pack items in container.";
         private const string BinNotInitialised = "Bin has not been initialised";
         private Container bin;
+        private Cuboid containerCuboid;
 
         public List<Cuboid> PackedItems { get; private set; }
 
@@ -44,6 +45,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             if (bin is null)
                 throw new ArgumentNullException(nameof(bin));
 
+            this.containerCuboid = bin;
             this.bin = ContainerFromCuboid(bin, id);
         }
 
@@ -65,8 +67,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             var packingResult = containerPackingResult.FirstOrDefault().AlgorithmPackingResults.FirstOrDefault();
             if (packingResult == null) throw new InvalidOperationException(PackingFailed);
 
-            // record results in this packer instance
-            this.PackedItems = CuboidsFromItems(packingResult.PackedItems);
+            // record results in this packer instance            
+            this.PackedItems = TransformPackedCuboids(this.containerCuboid, CuboidsFromItems(packingResult.PackedItems));
             this.RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
             this.PackedIndices = IdsFromItems(packingResult.PackedItems);
             this.PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
@@ -219,6 +221,27 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
                 items.Add(ItemFromCuboid(cuboids[i], i));
             }
             return items;
+        }
+
+        private static List<Cuboid> TransformPackedCuboids(Cuboid container, List<Cuboid> packedItems)
+        {
+            if (container == null)
+                throw new ArgumentNullException(nameof(container));
+
+            if (packedItems == null || packedItems.Count == 0)
+                throw new ArgumentNullException(nameof(packedItems));
+
+            CoordinateSystem fromCS = CoordinateSystem.ByOrigin(BoundingBox.ByGeometry(packedItems).MinPoint);
+            CoordinateSystem toCS = CoordinateSystem.ByOrigin(BoundingBox.ByGeometry(new List<Cuboid> { container }).MinPoint);
+            var transformedCuboids = new List<Cuboid>();
+            for (var i = 0; i < packedItems.Count; i++)
+            {
+                transformedCuboids.Add(packedItems[i].Transform(fromCS, toCS) as Cuboid);
+            }
+            fromCS.Dispose();
+            toCS.Dispose();
+            return transformedCuboids;
+
         }
 
         #endregion
