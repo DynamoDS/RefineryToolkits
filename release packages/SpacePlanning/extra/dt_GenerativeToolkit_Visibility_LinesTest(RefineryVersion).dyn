@@ -2,7 +2,7 @@
   "Uuid": "9b475e34-a870-453c-b18e-2a8426cc5ba8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_ViewsToOutsideTest(RefineryVersion)",
+  "Name": "dt_GenerativeToolkit_Visibility_LinesTest(RefineryVersion)",
   "ElementResolver": {
     "ResolutionMap": {
       "DSCore.List": {
@@ -56,7 +56,7 @@
       "Id": "03cb791fd14e40818a32a9dc2d804b09",
       "Name": "OUT_ViewsToOutsideScore_MAX",
       "Type": "float",
-      "InitialValue": "0.609205316399128",
+      "InitialValue": "60.9205316399128",
       "Description": "Visualize the output of node."
     }
   ],
@@ -602,72 +602,6 @@
       "Description": "Allows for DesignScript code to be authored directly"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.ViewsToOutside.ByLineSegments@Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
-      "Id": "92f3eeebfba54a39b0c81236255599e8",
-      "Inputs": [
-        {
-          "Id": "6eb9778f06294b9394889d784bd08b48",
-          "Name": "viewSegments",
-          "Description": "Line segments representing the views to outside\n\nCurve[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "d21537aec4b84ceb94165db0c63bb811",
-          "Name": "origin",
-          "Description": "Origin point to measure from\n\nPoint",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "295db760864c410cb5001ad353b78a9e",
-          "Name": "boundary",
-          "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "ad78fd9ab5d945b988fd45455a86a100",
-          "Name": "internals",
-          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "1a86c774bdbb4d41a343b68f3c8f9184",
-          "Name": "score",
-          "Description": "precentage of 360 view that is to the outside",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "04425ef2b7c64547900b9495cf76f8b0",
-          "Name": "segments",
-          "Description": "var",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Calculates the view to outside from a given point based on a 360 degree ratio. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nViewsToOutside.ByLineSegments (viewSegments: Curve[], origin: Point, boundary: Polygon[], internals: Polygon[] = []): var[]..[]"
-    },
-    {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
       "NodeType": "ExtensionNode",
       "Id": "03cb791fd14e40818a32a9dc2d804b09",
@@ -705,7 +639,7 @@
         {
           "Id": "d606805aac7e4f71beb3e0c22fb40650",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -714,7 +648,7 @@
         {
           "Id": "6b35462655834b108eb065109dfa2234",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -725,7 +659,7 @@
         {
           "Id": "053c58906a7547b393d39d7788d18abc",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -733,7 +667,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
@@ -1116,6 +1050,81 @@
       ],
       "Replication": "Disabled",
       "Description": "A slider that produces numeric values."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Visibility.OfLinesFromOrigin@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "Id": "934909efe10649bca471c6fab2af97af",
+      "Inputs": [
+        {
+          "Id": "29787a549ece4fe28216deb264463693",
+          "Name": "origin",
+          "Description": "Origin point to measure from\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ce7b86b9faf74fd29d26ac632305da93",
+          "Name": "targetLines",
+          "Description": "Line segments representing the views to outside\n\nCurve[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "469abd55d554469c8eb92d49b3564aff",
+          "Name": "boundary",
+          "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6ce7b32af9aa4af490d8c20435ed9290",
+          "Name": "obstructions",
+          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fdbd8756b1d14b8083b87eb5914e8840",
+          "Name": "Percentage visible",
+          "Description": "The total percentage of 360 view from origin point that target lines are visible from.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "03ae518de9574e3eb934a87f78a83efa",
+          "Name": "Visibility percentages",
+          "Description": "The percentage of 360 view from origin point that each target lines are visible from.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "22769138a83f407d8d7c6f04fffaec70",
+          "Name": "Visible items",
+          "Description": "The specific Lines that are visible from the origin point.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Calculates the visibility of target Lines from a given point based on a 360 degree view range. Returns the percentage of 360 view from origin point that target lines are visible from and the target lines that are visible.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
     }
   ],
   "Connectors": [
@@ -1211,18 +1220,18 @@
     },
     {
       "Start": "3bc70d0d2c284479bf65774023ec4915",
-      "End": "295db760864c410cb5001ad353b78a9e",
-      "Id": "7b458589edf342ee8863a49d91a830bd"
-    },
-    {
-      "Start": "3bc70d0d2c284479bf65774023ec4915",
       "End": "a13dc075d02749fc829c2366c321dc94",
       "Id": "5ae22281ab31492dadf758ca1d25b228"
     },
     {
+      "Start": "3bc70d0d2c284479bf65774023ec4915",
+      "End": "469abd55d554469c8eb92d49b3564aff",
+      "Id": "c2df6a8b049c421c943144ab55f3dc9d"
+    },
+    {
       "Start": "3af75c32ebcd42e7a320bd272e63df08",
-      "End": "ad78fd9ab5d945b988fd45455a86a100",
-      "Id": "a50ea55614e94f20af49f06cf6b5116e"
+      "End": "6ce7b32af9aa4af490d8c20435ed9290",
+      "Id": "bd6e9963590e49a8bab95b81942bad68"
     },
     {
       "Start": "7a06ddf9f9034e70887f0a81b0786fb6",
@@ -1231,8 +1240,8 @@
     },
     {
       "Start": "3750e862ada44995a42b269ce7bc4586",
-      "End": "6eb9778f06294b9394889d784bd08b48",
-      "Id": "2bc54d0ca102440082adaa638128c662"
+      "End": "ce7b86b9faf74fd29d26ac632305da93",
+      "Id": "0953bbe10c04416982e034c04a81b39c"
     },
     {
       "Start": "46e0c642ba2f413d84318ab6866e981a",
@@ -1243,21 +1252,6 @@
       "Start": "487c853d7c7246db9351a6bd5894ce8b",
       "End": "731fd3fedeb3488082d9689b2680dcfb",
       "Id": "9faf6c347089451380ec293647dd2393"
-    },
-    {
-      "Start": "1a86c774bdbb4d41a343b68f3c8f9184",
-      "End": "a426aac7b4914209b4dc9198c553ebd1",
-      "Id": "71256b43c2c04464b29ad06545227614"
-    },
-    {
-      "Start": "04425ef2b7c64547900b9495cf76f8b0",
-      "End": "8d126c648d9747cba8b8b2ff4f942be3",
-      "Id": "e8109359f1d74de990a46dd245de98c6"
-    },
-    {
-      "Start": "04425ef2b7c64547900b9495cf76f8b0",
-      "End": "a5c292f2a80f44148b93e555c068533e",
-      "Id": "f133d1fe791543d3a31a363c98c22d57"
     },
     {
       "Start": "2d2f3a972ec8428c876bf93e315882e4",
@@ -1306,28 +1300,53 @@
     },
     {
       "Start": "69097fd6501343a88c948b91411eba52",
-      "End": "d21537aec4b84ceb94165db0c63bb811",
-      "Id": "927c0e7f497c497797215355ad3005a4"
+      "End": "1067952e5bb44643a83937e3ca3f628a",
+      "Id": "4b519330d01847de8e6595047d81f7cb"
     },
     {
       "Start": "69097fd6501343a88c948b91411eba52",
-      "End": "1067952e5bb44643a83937e3ca3f628a",
-      "Id": "4b519330d01847de8e6595047d81f7cb"
+      "End": "29787a549ece4fe28216deb264463693",
+      "Id": "b07010dd536542beaed13c1035927929"
     },
     {
       "Start": "f59f00741d524018b7e7c37e69f03647",
       "End": "885e19930e714b269280b6ca492e077c",
       "Id": "98f33e6b37c54d1d975ce83f4a147e5b"
+    },
+    {
+      "Start": "fdbd8756b1d14b8083b87eb5914e8840",
+      "End": "a426aac7b4914209b4dc9198c553ebd1",
+      "Id": "b68fdaf42a384ff49676d6da275410e3"
+    },
+    {
+      "Start": "22769138a83f407d8d7c6f04fffaec70",
+      "End": "8d126c648d9747cba8b8b2ff4f942be3",
+      "Id": "3cbe7bc1608f4b16bab2ef510b7ba9c2"
+    },
+    {
+      "Start": "22769138a83f407d8d7c6f04fffaec70",
+      "End": "a5c292f2a80f44148b93e555c068533e",
+      "Id": "d95af312e28a4b12a8d6196afa1bec04"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Refinery Toolkit for Space Planning",
+      "Version": "0.0.1",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "934909efe10649bca471c6fab2af97af"
+      ]
+    }
+  ],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.4.0.6186",
       "RunType": "Automatic",
       "RunPeriod": "1000"
     },
@@ -1466,23 +1485,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "ViewsToOutside.ByLineSegments",
-        "Id": "92f3eeebfba54a39b0c81236255599e8",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 2618.691598598195,
-        "Y": 199.83786410020502
-      },
-      {
-        "ShowGeometry": true,
         "Name": "OUT_ViewsToOutsideScore_MAX",
         "Id": "03cb791fd14e40818a32a9dc2d804b09",
         "IsSetAsInput": false,
         "IsSetAsOutput": true,
         "Excluded": false,
-        "X": 2910.3815437924677,
-        "Y": 200.77051079395108
+        "X": 2919.5525147315493,
+        "Y": 331.20209748310845
       },
       {
         "ShowGeometry": true,
@@ -1491,8 +1500,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 5284.412662507405,
-        "Y": 598.932154653029
+        "X": 5259.54803999091,
+        "Y": 713.30941822890179
       },
       {
         "ShowGeometry": true,
@@ -1501,8 +1510,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4945.412662507405,
-        "Y": 665.932154653029
+        "X": 4920.54803999091,
+        "Y": 780.30941822890179
       },
       {
         "ShowGeometry": false,
@@ -1511,8 +1520,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2941.412662507405,
-        "Y": 653.85882131969572
+        "X": 2916.5480399909106,
+        "Y": 768.23608489556852
       },
       {
         "ShowGeometry": false,
@@ -1521,8 +1530,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4297.412662507405,
-        "Y": 557.932154653029
+        "X": 4272.54803999091,
+        "Y": 672.30941822890179
       },
       {
         "ShowGeometry": false,
@@ -1531,8 +1540,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4583.412662507405,
-        "Y": 557.93215465302887
+        "X": 4558.54803999091,
+        "Y": 672.30941822890168
       },
       {
         "ShowGeometry": false,
@@ -1541,8 +1550,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4030.412662507405,
-        "Y": 557.932154653029
+        "X": 4005.5480399909106,
+        "Y": 672.30941822890179
       },
       {
         "ShowGeometry": false,
@@ -1551,8 +1560,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3810.412662507405,
-        "Y": 557.932154653029
+        "X": 3785.5480399909106,
+        "Y": 672.30941822890179
       },
       {
         "ShowGeometry": false,
@@ -1561,8 +1570,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4945.412662507405,
-        "Y": 557.93215465302887
+        "X": 4920.54803999091,
+        "Y": 672.30941822890168
       },
       {
         "ShowGeometry": true,
@@ -1571,8 +1580,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3529.7087391170362,
-        "Y": 766.48824561826314
+        "X": 3504.8441166005418,
+        "Y": 880.86550919413594
       },
       {
         "ShowGeometry": false,
@@ -1603,6 +1612,16 @@
         "Excluded": false,
         "X": 1228.2714926111034,
         "Y": 139.20175562684636
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Visibility.OfLinesFromOrigin",
+        "Id": "934909efe10649bca471c6fab2af97af",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2579.6042849385062,
+        "Y": 387.56661075549943
       }
     ],
     "Annotations": [
@@ -1617,13 +1636,13 @@
           "838460e9f3af4b24bdce142885bf5189"
         ],
         "Left": 735.51785222130252,
-        "Top": 533.39110869416959,
-        "Width": 1613.0000000000002,
-        "Height": 439.83999999999992,
+        "Top": 533.19110869416954,
+        "Width": 1613.2000000000003,
+        "Height": 439.84,
         "FontSize": 36.0,
         "InitialTop": 586.39110869416959,
         "InitialHeight": 229.21333333333337,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1636,13 +1655,13 @@
           "a96e5a91863a401a87d56a7cd3e38466"
         ],
         "Left": 1218.2714926111034,
-        "Top": -105.79824437315364,
-        "Width": 615.0,
+        "Top": -105.99824437315364,
+        "Width": 613.4,
         "Height": 313.0,
         "FontSize": 36.0,
         "InitialTop": -52.798244373153636,
-        "InitialHeight": 194.99999999999966,
-        "TextblockHeight": 43.0,
+        "InitialHeight": 337.0,
+        "TextblockHeight": 43.2,
         "Background": "#FFD8D8D8"
       },
       {
@@ -1657,35 +1676,35 @@
           "0da5fc76613b48c89c45525d90bab64a"
         ],
         "Left": -203.03658702282553,
-        "Top": 222.45209913678718,
+        "Top": 222.25209913678719,
         "Width": 1382.344759554338,
-        "Height": 286.54790086321282,
+        "Height": 285.94790086321279,
         "FontSize": 36.0,
         "InitialTop": 275.45209913678718,
         "InitialHeight": 275.54790086321282,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
         "Id": "a07b0a7ee750466b90e9df0a8671e271",
-        "Title": "GenerativeToolkit - View To Outside",
+        "Title": "Refinery Toolkit - View To Outside",
         "Nodes": [
-          "92f3eeebfba54a39b0c81236255599e8",
-          "03cb791fd14e40818a32a9dc2d804b09"
+          "03cb791fd14e40818a32a9dc2d804b09",
+          "934909efe10649bca471c6fab2af97af"
         ],
-        "Left": 2608.691598598195,
-        "Top": 103.83786410020502,
-        "Width": 523.6899451942727,
-        "Height": 267.0,
+        "Left": 2569.6042849385062,
+        "Top": 278.00209748310846,
+        "Width": 571.94822979304308,
+        "Height": 278.96451327239095,
         "FontSize": 36.0,
-        "InitialTop": 199.83786410020502,
-        "InitialHeight": 145.93264669374605,
-        "TextblockHeight": 86.0,
+        "InitialTop": 331.20209748310845,
+        "InitialHeight": 201.36451327239098,
+        "TextblockHeight": 43.2,
         "Background": "#FFC1D676"
       },
       {
         "Id": "aaed35eef27847108b6dc90e9f6ffff1",
-        "Title": "GENERATIVE TOOLKIT\r\nViews To Outside",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nViews To Outside",
         "Nodes": [
           "390cefa54cde4059873551b415c6d3e3",
           "f5daac5df9b84c27aa00b7ec7c784ca7",
@@ -1696,13 +1715,13 @@
           "46ffe4545a6249a9b7073e348b81d65d"
         ],
         "Left": -1412.6712996497529,
-        "Top": 146.2444100108064,
-        "Width": 632.23562714206719,
-        "Height": 522.57338313009438,
+        "Top": 88.4444100108064,
+        "Width": 632.43562714206723,
+        "Height": 580.77338313009443,
         "FontSize": 48.0,
         "InitialTop": 271.2444100108064,
         "InitialHeight": 421.57338313009438,
-        "TextblockHeight": 115.0,
+        "TextblockHeight": 172.8,
         "Background": "#FFFFFFFF"
       },
       {
@@ -1713,8 +1732,8 @@
         ],
         "Left": -776.21464173341769,
         "Top": 270.45919157138928,
-        "Width": 314.0,
-        "Height": 146.0,
+        "Width": 313.6,
+        "Height": 146.4,
         "FontSize": 14.0,
         "InitialTop": 300.45919157138928,
         "InitialHeight": 140.0,
@@ -1729,8 +1748,8 @@
         ],
         "Left": -776.21464173341769,
         "Top": 426.81227593501478,
-        "Width": 314.0,
-        "Height": 146.0,
+        "Width": 313.6,
+        "Height": 146.4,
         "FontSize": 14.0,
         "InitialTop": 456.81227593501478,
         "InitialHeight": 140.0,
@@ -1745,7 +1764,7 @@
         ],
         "Left": -776.21464173341769,
         "Top": 587.49396142953026,
-        "Width": 314.0,
+        "Width": 313.6,
         "Height": 132.0,
         "FontSize": 14.0,
         "InitialTop": 617.49396142953026,
@@ -1767,14 +1786,14 @@
           "66ee514962d74879852598d4d6c0e4a5",
           "1747e126049442508aac206496320bc7"
         ],
-        "Left": 2931.412662507405,
-        "Top": 504.93215465302887,
-        "Width": 2633.0,
-        "Height": 354.55609096523426,
+        "Left": 2906.5480399909106,
+        "Top": 619.10941822890163,
+        "Width": 2632.5999999999995,
+        "Height": 354.35609096523433,
         "FontSize": 36.0,
-        "InitialTop": 557.93215465302887,
+        "InitialTop": 672.30941822890168,
         "InitialHeight": 353.55609096523426,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.2,
         "Background": "#FFC1D676"
       },
       {
@@ -1807,7 +1826,7 @@
       },
       {
         "Id": "46ffe4545a6249a9b7073e348b81d65d",
-        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nGenerativeToolkit",
+        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -1089.4356725076889,
         "Top": 361.06241785460668,
@@ -1849,7 +1868,7 @@
       },
       {
         "Id": "390cefa54cde4059873551b415c6d3e3",
-        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nGenerative Design Toolkit",
+        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -1402.6712996497529,
         "Top": 271.2444100108064,
@@ -1877,7 +1896,7 @@
       },
       {
         "Id": "f5881bc5e4744b80bd9373e19a9f94c4",
-        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2018",
+        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
         "Left": -1402.6712996497529,
         "Top": 451.93100785287231,
@@ -1918,8 +1937,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -2096.3683330124286,
-    "Y": 170.46755257732525,
-    "Zoom": 0.83188190356953773
+    "X": -2214.3754242295881,
+    "Y": -324.71601874970713,
+    "Zoom": 0.82723832466314162
   }
 }
