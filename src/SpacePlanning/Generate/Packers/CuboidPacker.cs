@@ -67,8 +67,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             var packingResult = containerPackingResult.FirstOrDefault().AlgorithmPackingResults.FirstOrDefault();
             if (packingResult == null) throw new InvalidOperationException(PackingFailed);
 
-            // record results in this packer instance            
-            this.PackedItems = TransformPackedCuboids(this.containerCuboid, CuboidsFromItems(packingResult.PackedItems));
+            // record results in this packer instance       
+            var packedCuboids = CuboidsFromItems(packingResult.PackedItems);
+            this.PackedItems = TransformPackedCuboidsToContainerCuboidCoords(this.containerCuboid, packedCuboids);
             this.RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
             this.PackedIndices = IdsFromItems(packingResult.PackedItems);
             this.PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
@@ -162,8 +163,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
         private static Container ContainerFromCuboid(Cuboid cuboid, int id)
         {
-            var length = Convert.ToDecimal(cuboid.Length);
-            var width = Convert.ToDecimal(cuboid.Width);
+            var length = Convert.ToDecimal(cuboid.Width);
+            var width = Convert.ToDecimal(cuboid.Length);
             var height = Convert.ToDecimal(cuboid.Height);
             return new Container(id, length, width, height);
         }
@@ -223,7 +224,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             return items;
         }
 
-        private static List<Cuboid> TransformPackedCuboids(Cuboid container, List<Cuboid> packedItems)
+        private static List<Cuboid> TransformPackedCuboidsToContainerCuboidCoords(Cuboid container, List<Cuboid> packedItems)
         {
             if (container == null)
                 throw new ArgumentNullException(nameof(container));
