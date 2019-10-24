@@ -2,7 +2,7 @@
   "Uuid": "9b475e34-a870-453c-b18e-2a8426cc5ba8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_Refinery Toolkit_Visibility_LinesTest(RefineryVersion)",
+  "Name": "dt_GenerativeToolkit_Visibility_LinesTest(RefineryVersion)",
   "ElementResolver": {
     "ResolutionMap": {
       "DSCore.List": {
@@ -639,7 +639,7 @@
         {
           "Id": "d606805aac7e4f71beb3e0c22fb40650",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -648,7 +648,7 @@
         {
           "Id": "6b35462655834b108eb065109dfa2234",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -659,7 +659,7 @@
         {
           "Id": "053c58906a7547b393d39d7788d18abc",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -667,7 +667,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
@@ -1086,7 +1086,7 @@
         },
         {
           "Id": "6ce7b32af9aa4af490d8c20435ed9290",
-          "Name": "obstacles",
+          "Name": "obstructions",
           "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
@@ -1098,7 +1098,7 @@
         {
           "Id": "fdbd8756b1d14b8083b87eb5914e8840",
           "Name": "Percentage visible",
-          "Description": "precentage of 360 view that is to the outside",
+          "Description": "The total percentage of 360 view from origin point that target lines are visible from.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1106,8 +1106,17 @@
         },
         {
           "Id": "03ae518de9574e3eb934a87f78a83efa",
+          "Name": "Visibility percentages",
+          "Description": "The percentage of 360 view from origin point that each target lines are visible from.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "22769138a83f407d8d7c6f04fffaec70",
           "Name": "Visible items",
-          "Description": "var",
+          "Description": "The specific Lines that are visible from the origin point.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1115,7 +1124,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Calculates the view to outside from a given point based on a 360 degree ratio. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstacles: Polygon[] = []): var[]..[]"
+      "Description": "Calculates the visibility of target Lines from a given point based on a 360 degree view range. Returns the percentage of 360 view from origin point that target lines are visible from and the target lines that are visible.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
     }
   ],
   "Connectors": [
@@ -1310,24 +1319,34 @@
       "Id": "b68fdaf42a384ff49676d6da275410e3"
     },
     {
-      "Start": "03ae518de9574e3eb934a87f78a83efa",
+      "Start": "22769138a83f407d8d7c6f04fffaec70",
       "End": "8d126c648d9747cba8b8b2ff4f942be3",
-      "Id": "339a9be863b24f3c8c9ece44e50b2528"
+      "Id": "3cbe7bc1608f4b16bab2ef510b7ba9c2"
     },
     {
-      "Start": "03ae518de9574e3eb934a87f78a83efa",
+      "Start": "22769138a83f407d8d7c6f04fffaec70",
       "End": "a5c292f2a80f44148b93e555c068533e",
-      "Id": "314a28af25fe4c218e1c024c557c74fe"
+      "Id": "d95af312e28a4b12a8d6196afa1bec04"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Refinery Toolkit for Space Planning",
+      "Version": "0.0.1",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "934909efe10649bca471c6fab2af97af"
+      ]
+    }
+  ],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.4.0.6186",
       "RunType": "Automatic",
       "RunPeriod": "1000"
     },
@@ -1617,13 +1636,13 @@
           "838460e9f3af4b24bdce142885bf5189"
         ],
         "Left": 735.51785222130252,
-        "Top": 533.05777536083622,
-        "Width": 1614.0000000000002,
-        "Height": 440.50666666666655,
+        "Top": 533.19110869416954,
+        "Width": 1613.2000000000003,
+        "Height": 439.84,
         "FontSize": 36.0,
         "InitialTop": 586.39110869416959,
         "InitialHeight": 229.21333333333337,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1636,13 +1655,13 @@
           "a96e5a91863a401a87d56a7cd3e38466"
         ],
         "Left": 1218.2714926111034,
-        "Top": -106.13157770648698,
-        "Width": 614.33333333333337,
+        "Top": -105.99824437315364,
+        "Width": 613.4,
         "Height": 313.0,
         "FontSize": 36.0,
         "InitialTop": -52.798244373153636,
         "InitialHeight": 337.0,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFD8D8D8"
       },
       {
@@ -1657,13 +1676,13 @@
           "0da5fc76613b48c89c45525d90bab64a"
         ],
         "Left": -203.03658702282553,
-        "Top": 222.11876580345384,
-        "Width": 1383.0114262210047,
-        "Height": 286.2145675298795,
+        "Top": 222.25209913678719,
+        "Width": 1382.344759554338,
+        "Height": 285.94790086321279,
         "FontSize": 36.0,
         "InitialTop": 275.45209913678718,
         "InitialHeight": 275.54790086321282,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1674,13 +1693,13 @@
           "934909efe10649bca471c6fab2af97af"
         ],
         "Left": 2569.6042849385062,
-        "Top": 277.86876414977513,
+        "Top": 278.00209748310846,
         "Width": 571.94822979304308,
-        "Height": 280.69784660572429,
+        "Height": 278.96451327239095,
         "FontSize": 36.0,
         "InitialTop": 331.20209748310845,
-        "InitialHeight": 145.93264669374605,
-        "TextblockHeight": 43.333333333333336,
+        "InitialHeight": 201.36451327239098,
+        "TextblockHeight": 43.2,
         "Background": "#FFC1D676"
       },
       {
@@ -1696,13 +1715,13 @@
           "46ffe4545a6249a9b7073e348b81d65d"
         ],
         "Left": -1412.6712996497529,
-        "Top": 88.577743344139748,
-        "Width": 631.90229380873393,
-        "Height": 580.90671646342764,
+        "Top": 88.4444100108064,
+        "Width": 632.43562714206723,
+        "Height": 580.77338313009443,
         "FontSize": 48.0,
         "InitialTop": 271.2444100108064,
         "InitialHeight": 421.57338313009438,
-        "TextblockHeight": 172.66666666666666,
+        "TextblockHeight": 172.8,
         "Background": "#FFFFFFFF"
       },
       {
@@ -1713,8 +1732,8 @@
         ],
         "Left": -776.21464173341769,
         "Top": 270.45919157138928,
-        "Width": 314.0,
-        "Height": 146.66666666666669,
+        "Width": 313.6,
+        "Height": 146.4,
         "FontSize": 14.0,
         "InitialTop": 300.45919157138928,
         "InitialHeight": 140.0,
@@ -1729,8 +1748,8 @@
         ],
         "Left": -776.21464173341769,
         "Top": 426.81227593501478,
-        "Width": 314.0,
-        "Height": 146.66666666666669,
+        "Width": 313.6,
+        "Height": 146.4,
         "FontSize": 14.0,
         "InitialTop": 456.81227593501478,
         "InitialHeight": 140.0,
@@ -1745,7 +1764,7 @@
         ],
         "Left": -776.21464173341769,
         "Top": 587.49396142953026,
-        "Width": 314.0,
+        "Width": 313.6,
         "Height": 132.0,
         "FontSize": 14.0,
         "InitialTop": 617.49396142953026,
@@ -1768,13 +1787,13 @@
           "1747e126049442508aac206496320bc7"
         ],
         "Left": 2906.5480399909106,
-        "Top": 618.97608489556831,
-        "Width": 2632.9999999999995,
-        "Height": 354.88942429856763,
+        "Top": 619.10941822890163,
+        "Width": 2632.5999999999995,
+        "Height": 354.35609096523433,
         "FontSize": 36.0,
         "InitialTop": 672.30941822890168,
         "InitialHeight": 353.55609096523426,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFC1D676"
       },
       {
@@ -1918,8 +1937,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -74.806252338785157,
-    "Y": 500.10657751530437,
-    "Zoom": 0.41274972585698955
+    "X": -2214.3754242295881,
+    "Y": -324.71601874970713,
+    "Zoom": 0.82723832466314162
   }
 }

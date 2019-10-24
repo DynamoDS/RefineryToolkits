@@ -2,7 +2,7 @@
   "Uuid": "92ad7c11-e64f-400d-bf03-7e6d8b170a1e",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_Refinery Toolkit_PackingCuboids",
+  "Name": "dt_GenerativeToolkit_PackingCuboids",
   "ElementResolver": {
     "ResolutionMap": {
       "DSCore.List": {
@@ -277,93 +277,6 @@
       ],
       "Replication": "Auto",
       "Description": "The Edges of the Topology\n\nTopology.Edges: Edge[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.DesignScript.Geometry.Cuboid.ByCorners@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
-      "Id": "39006376581a41fda76b99e20a7ceb84",
-      "Inputs": [
-        {
-          "Id": "8660e1f9267643a587217924e971d326",
-          "Name": "lowPoint",
-          "Description": "Point\nDefault value : Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "624b6f78a0d74cc9aa6e521d924a83c1",
-          "Name": "highPoint",
-          "Description": "Point\nDefault value : Autodesk.DesignScript.Geometry.Point.ByCoordinates(1, 1, 1)",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "56d360996db841b19af24ae7a02c7948",
-          "Name": "Cuboid",
-          "Description": "Cuboid",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Create an Cuboid spanning from low Point to high Point.\n\nCuboid.ByCorners (lowPoint: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0), highPoint: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(1, 1, 1)): Cuboid"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double,double",
-      "Id": "894bcf2d481f4911a957021ea76fe13a",
-      "Inputs": [
-        {
-          "Id": "cf8d1d7e7cb94132bf34f419813037b8",
-          "Name": "x",
-          "Description": "double\nDefault value : 0",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "079646d8e41a4ac19c268f2c3fd3916b",
-          "Name": "y",
-          "Description": "double\nDefault value : 0",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "6f1edb268cef434f8a78b620352442f2",
-          "Name": "z",
-          "Description": "double\nDefault value : 0",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "14cd6cd0c4a24f56a2c6f4a6b544a806",
-          "Name": "Point",
-          "Description": "Point",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Form a Point given 3 cartesian coordinates\n\nPoint.ByCoordinates (x: double = 0, y: double = 0, z: double = 0): Point"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -674,7 +587,7 @@
         {
           "Id": "f6c8c60b8f9344cb9381ca9c3081d528",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -683,7 +596,7 @@
         {
           "Id": "66225e526b2b493aa419965c257ecdc2",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -694,7 +607,7 @@
         {
           "Id": "dafefe84d8b945e9a5fc0d114421f318",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -702,7 +615,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
@@ -777,7 +690,7 @@
         {
           "Id": "e3483e1591544d10acd9eae672406080",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -786,7 +699,7 @@
         {
           "Id": "c44169e9bf78455d9130b4c7090af64a",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -797,7 +710,7 @@
         {
           "Id": "8d65bd71874c433fbab1d1477e7677f5",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -805,7 +718,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
@@ -925,7 +838,7 @@
         {
           "Id": "4c569b0633864a8a8b70920efe212f40",
           "Name": "containers",
-          "Description": "Cuboid to pack sample Cuboids into\n\nCuboid[]",
+          "Description": "Set of Cuboids to pack into.\n\nCuboid[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1138,29 +1051,14 @@
       "Id": "8b45b54ec0764c9d83baea2e553581a8"
     },
     {
-      "Start": "131fdd4805f946db827b047d0e76c7ee",
-      "End": "cf8d1d7e7cb94132bf34f419813037b8",
-      "Id": "d77b980cb01348b28135d637867787a8"
-    },
-    {
       "Start": "b37c2a63730b47179277a16121c0690c",
       "End": "6d1523ef98424065954718c28d2ad1e4",
       "Id": "f0c03b53f2f047beacfc1b3a854042b8"
     },
     {
-      "Start": "b37c2a63730b47179277a16121c0690c",
-      "End": "079646d8e41a4ac19c268f2c3fd3916b",
-      "Id": "064d762af96c4df8ae842d5ef2441a66"
-    },
-    {
       "Start": "4bb5250461ab4f1dbf52a198d14b8c2b",
       "End": "10bd3bdc519b45da9f3de174cd013e73",
       "Id": "4549904952304d73b0866c9ee1086691"
-    },
-    {
-      "Start": "4bb5250461ab4f1dbf52a198d14b8c2b",
-      "End": "6f1edb268cef434f8a78b620352442f2",
-      "Id": "692a8aa2e8ef497eb09ce65b39be45e2"
     },
     {
       "Start": "8b13b90501d24788bb5ab16c40955d53",
@@ -1183,6 +1081,11 @@
       "Id": "ebec1f6f31da445eb9b1783621b5da60"
     },
     {
+      "Start": "c2c51bf2f1d847ca9d30861a35125ea8",
+      "End": "3cbe9a6106574de8b4f8057a95ff354e",
+      "Id": "4db9179430cb49aab7ab3f45ad5bbcdb"
+    },
+    {
       "Start": "201c290ffd4143958885112c7c5f55ff",
       "End": "18d564b11ae24651b83615c239291ab4",
       "Id": "440ba84581a14ea5a16277893bec53c8"
@@ -1201,16 +1104,6 @@
       "Start": "12aa17c8a505470e811c9c68d8b749bd",
       "End": "bb370d4c7caa4cd3973fbd731bde4f29",
       "Id": "ae0fd38f74eb44b78d5312a3ae7220fe"
-    },
-    {
-      "Start": "56d360996db841b19af24ae7a02c7948",
-      "End": "3cbe9a6106574de8b4f8057a95ff354e",
-      "Id": "6bbbe59185f3472497c6471595150d22"
-    },
-    {
-      "Start": "14cd6cd0c4a24f56a2c6f4a6b544a806",
-      "End": "624b6f78a0d74cc9aa6e521d924a83c1",
-      "Id": "91b8da61e3b04467ae91429520615def"
     },
     {
       "Start": "4ea5a317a3184d0583d8610b4f16cc57",
@@ -1319,27 +1212,37 @@
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Refinery Toolkit for Space Planning",
+      "Version": "0.0.1",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "b992c113c68946e98d9a9f5f559de443"
+      ]
+    }
+  ],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.4.0.6186",
       "RunType": "Automatic",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": 2689.5280001158189,
-      "EyeY": 1342.7081349325795,
-      "EyeZ": 2127.0846799617802,
-      "LookX": -1136.9189410375357,
-      "LookY": -1388.8500704149935,
-      "LookZ": -2770.6304360872805,
-      "UpX": -0.082166498602310345,
-      "UpY": 0.976296007120023,
-      "UpZ": -0.20023679229631555
+      "EyeX": 3734.3918311346652,
+      "EyeY": 2304.9198837864815,
+      "EyeZ": 1491.1357640229496,
+      "LookX": -3977.3457019561074,
+      "LookY": -2362.7520543640649,
+      "LookZ": -1392.01823966822,
+      "UpX": -0.27438282941715475,
+      "UpY": 0.95681358405769368,
+      "UpZ": -0.096030350847451262
     },
     "NodeViews": [
       {
@@ -1389,8 +1292,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2199.1888802657554,
-        "Y": 1890.8890142221751
+        "X": 1735.4090236476372,
+        "Y": 1850.0195249416513
       },
       {
         "ShowGeometry": false,
@@ -1399,28 +1302,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1950.1227099046359,
-        "Y": 1890.8890142221751
-      },
-      {
-        "ShowGeometry": false,
-        "Name": "Cuboid.ByCorners",
-        "Id": "39006376581a41fda76b99e20a7ceb84",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1689.0147317008959,
-        "Y": 1890.2350961714731
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Point.ByCoordinates",
-        "Id": "894bcf2d481f4911a957021ea76fe13a",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1490.9925042024479,
-        "Y": 1915.5013639047681
+        "X": 1486.3428532865178,
+        "Y": 1850.0195249416513
       },
       {
         "ShowGeometry": true,
@@ -1631,13 +1514,13 @@
           "be5aa68c7c5d4e5a9c38929b00437fd6"
         ],
         "Left": 511.15254483225294,
-        "Top": 1495.2089792819,
-        "Width": 220.66666666666666,
-        "Height": 198.33333333333326,
+        "Top": 1495.3423126152331,
+        "Width": 220.0,
+        "Height": 197.00000000000006,
         "FontSize": 36.0,
         "InitialTop": 1548.5423126152332,
         "InitialHeight": 145.0,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1647,13 +1530,13 @@
           "d02e23a1f7174294af5b04ebf65f08f7"
         ],
         "Left": 506.54688243248938,
-        "Top": 1268.0292716170366,
-        "Width": 220.66666666666666,
-        "Height": 198.33333333333326,
+        "Top": 1268.1626049503698,
+        "Width": 220.0,
+        "Height": 197.00000000000006,
         "FontSize": 36.0,
         "InitialTop": 1321.3626049503698,
         "InitialHeight": 145.0,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1661,18 +1544,16 @@
         "Title": "Visualize Bin",
         "Nodes": [
           "e524ed37485646d9b030d92ced647d1a",
-          "4aaacd7becfe43e0ae346bbbd0a0da98",
-          "39006376581a41fda76b99e20a7ceb84",
-          "894bcf2d481f4911a957021ea76fe13a"
+          "4aaacd7becfe43e0ae346bbbd0a0da98"
         ],
-        "Left": 1480.9925042024479,
-        "Top": 1836.9017628381398,
-        "Width": 912.86304272997415,
-        "Height": 223.59960106662834,
+        "Left": 1476.3428532865178,
+        "Top": 1796.8195249416513,
+        "Width": 452.26617036111946,
+        "Height": 145.80000000000004,
         "FontSize": 36.0,
-        "InitialTop": 1890.2350961714731,
+        "InitialTop": 1850.0195249416513,
         "InitialHeight": 170.26626773329508,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFC1D676"
       },
       {
@@ -1682,13 +1563,13 @@
           "b992c113c68946e98d9a9f5f559de443"
         ],
         "Left": 1023.2903627944165,
-        "Top": 1236.4259606227351,
-        "Width": 373.33333333333331,
-        "Height": 293.66666666666674,
+        "Top": 1236.6926272894018,
+        "Width": 372.8,
+        "Height": 291.40000000000009,
         "FontSize": 36.0,
         "InitialTop": 1333.0926272894019,
         "InitialHeight": 145.0,
-        "TextblockHeight": 86.666666666666671,
+        "TextblockHeight": 86.4,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1704,13 +1585,13 @@
           "c4aada006fa34daf9bbf2c047bd64af0"
         ],
         "Left": -1252.8130569423508,
-        "Top": 1093.4551161897,
-        "Width": 631.90229380873393,
-        "Height": 624.24004979676079,
+        "Top": 1093.7217828563666,
+        "Width": 632.43562714206723,
+        "Height": 623.97338313009413,
         "FontSize": 48.0,
         "InitialTop": 1334.1217828563667,
         "InitialHeight": 421.57338313009404,
-        "TextblockHeight": 230.66666666666666,
+        "TextblockHeight": 230.4,
         "Background": "#FFFFFFFF"
       },
       {
@@ -1721,8 +1602,8 @@
         ],
         "Left": -616.35639902601565,
         "Top": 1333.3365644169496,
-        "Width": 314.0,
-        "Height": 146.66666666666669,
+        "Width": 313.6,
+        "Height": 146.4,
         "FontSize": 14.0,
         "InitialTop": 1363.3365644169496,
         "InitialHeight": 140.0,
@@ -1737,8 +1618,8 @@
         ],
         "Left": -616.356399026016,
         "Top": 1489.68964878058,
-        "Width": 314.0,
-        "Height": 146.66666666666669,
+        "Width": 313.6,
+        "Height": 146.4,
         "FontSize": 14.0,
         "InitialTop": 1519.68964878058,
         "InitialHeight": 140.0,
@@ -1753,7 +1634,7 @@
         ],
         "Left": -616.35639902601565,
         "Top": 1650.3713342750905,
-        "Width": 314.0,
+        "Width": 313.6,
         "Height": 132.0,
         "FontSize": 14.0,
         "InitialTop": 1680.3713342750905,
@@ -1768,13 +1649,13 @@
           "91e8ae5fdc244227a7511da6374e40f1"
         ],
         "Left": -144.10170922048326,
-        "Top": 1478.7483034379507,
+        "Top": 1479.0149701046173,
         "Width": 190.86666666666667,
-        "Height": 216.33333333333343,
+        "Height": 216.2000000000001,
         "FontSize": 36.0,
         "InitialTop": 1575.4149701046174,
         "InitialHeight": 145.0,
-        "TextblockHeight": 86.666666666666671,
+        "TextblockHeight": 86.4,
         "Background": "#FFFFB8D8"
       },
       {
@@ -1784,13 +1665,13 @@
           "4d13b9df7895419581c29261bcd18ff8"
         ],
         "Left": -156.18570708937739,
-        "Top": 1288.9427139511342,
-        "Width": 438.0,
-        "Height": 172.99999999999994,
+        "Top": 1289.0760472844674,
+        "Width": 437.6,
+        "Height": 173.00000000000006,
         "FontSize": 36.0,
         "InitialTop": 1342.2760472844675,
         "InitialHeight": 145.0,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFFFB8D8"
       },
       {
@@ -1810,13 +1691,13 @@
           "569cd30600804023bb014df7c0f31847"
         ],
         "Left": 1628.1944451634031,
-        "Top": 780.16428889402948,
-        "Width": 2163.0000000000005,
-        "Height": 475.33333333333337,
+        "Top": 779.89762222736283,
+        "Width": 2162.6000000000004,
+        "Height": 475.20000000000005,
         "FontSize": 36.0,
         "InitialTop": 919.49762222736285,
         "InitialHeight": 388.0,
-        "TextblockHeight": 129.33333333333334,
+        "TextblockHeight": 129.6,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1826,13 +1707,13 @@
           "1c8183db85aa4d489a525c022d6a2f60"
         ],
         "Left": 1026.3548765945068,
-        "Top": 799.03687409900817,
+        "Top": 799.1702074323415,
         "Width": 540.0,
-        "Height": 225.66666666666671,
+        "Height": 225.80000000000004,
         "FontSize": 36.0,
         "InitialTop": 852.37020743234154,
         "InitialHeight": 145.0,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1845,13 +1726,13 @@
           "36580061c16e423b87aff4b4b94db47a"
         ],
         "Left": 1459.6712837935618,
-        "Top": 1301.2145801366796,
-        "Width": 853.34662435267217,
-        "Height": 278.33333333333314,
+        "Top": 1301.3479134700128,
+        "Width": 853.47995768600549,
+        "Height": 275.40000000000009,
         "FontSize": 36.0,
         "InitialTop": 1354.5479134700129,
-        "InitialHeight": 368.8117945205945,
-        "TextblockHeight": 43.333333333333336,
+        "InitialHeight": 147.57573611552289,
+        "TextblockHeight": 43.2,
         "Background": "#FFC1D676"
       },
       {
@@ -1863,13 +1744,13 @@
           "ed666c6820174f72a262599498c69af6"
         ],
         "Left": 1468.1238053701104,
-        "Top": 1634.0940309832718,
-        "Width": 670.47987222722656,
-        "Height": 149.23524223954314,
+        "Top": 1634.227364316605,
+        "Width": 669.01320556056,
+        "Height": 148.70190890620992,
         "FontSize": 36.0,
         "InitialTop": 1687.427364316605,
         "InitialHeight": 147.90190890620988,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.2,
         "Background": "#FFC1D676"
       },
       {
@@ -2027,8 +1908,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 839.36547119361433,
-    "Y": 39.185027573967773,
-    "Zoom": 0.34329514798127597
+    "X": -756.493638213871,
+    "Y": -256.41571628905,
+    "Zoom": 0.39626295779559806
   }
 }
