@@ -2,7 +2,7 @@
   "Uuid": "9b475e34-a870-453c-b18e-2a8426cc5ba8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_ViewsToOutsideTest",
+  "Name": "dt_GenerativeToolkit_Visibility_LinesTest",
   "ElementResolver": {
     "ResolutionMap": {
       "DSCore.List": {
@@ -1023,20 +1023,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.ViewsToOutside.ByLineSegments@Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
-      "Id": "2e0515891a6541d2990d6850f93989a4",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Visibility.OfLinesFromOrigin@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Curve[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "Id": "38d406e5f1c74739afd5df054febd87f",
       "Inputs": [
         {
-          "Id": "7af68b69006c43028ad419904e533b04",
-          "Name": "viewSegments",
-          "Description": "Line segments representing the views to outside\n\nCurve[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "65cac3618b1849d098d28a7842cc407c",
+          "Id": "97481d7ef5684dc7a8a4e4be4fa3f353",
           "Name": "origin",
           "Description": "Origin point to measure from\n\nPoint",
           "UsingDefaultValue": false,
@@ -1045,7 +1036,16 @@
           "KeepListStructure": false
         },
         {
-          "Id": "285b7b59bd2b4d169d98fafa1c646805",
+          "Id": "c49d8370061a4e6da3874949fc3b02f5",
+          "Name": "targetLines",
+          "Description": "Line segments representing the views to outside\n\nCurve[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "cff7a784dd984567a5ad463354eca8b5",
           "Name": "boundary",
           "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
           "UsingDefaultValue": false,
@@ -1054,8 +1054,8 @@
           "KeepListStructure": false
         },
         {
-          "Id": "bd9d29e8370a46f0be2390b5170a997a",
-          "Name": "internals",
+          "Id": "db858cd9def647e5a2b72254ed7aef10",
+          "Name": "obstructions",
           "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
@@ -1065,18 +1065,27 @@
       ],
       "Outputs": [
         {
-          "Id": "edff500e643c476283fbf56b5788eb17",
-          "Name": "score",
-          "Description": "precentage of 360 view that is to the outside",
+          "Id": "a8c2601e9d6149ce9b7d69113ec4b958",
+          "Name": "Percentage visible",
+          "Description": "The total percentage of 360 view from origin point that target lines are visible from.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "ec97cc459c9b4fc8a6b6857e3b001fe6",
-          "Name": "segments",
-          "Description": "var",
+          "Id": "408e29a8a7d14f8285cbff214ecad873",
+          "Name": "Visibility percentages",
+          "Description": "The percentage of 360 view from origin point that each target lines are visible from.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f0b1c89ccdd64296b6fc08c6ba17a2b1",
+          "Name": "Visible items",
+          "Description": "The specific Lines that are visible from the origin point.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1084,7 +1093,36 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Calculates the view to outside from a given point based on a 360 degree ratio. Returns a number from 0-1 where 0 indicates no points are visible and 1 indicates all points are visible.\n\nViewsToOutside.ByLineSegments (viewSegments: Curve[], origin: Point, boundary: Polygon[], internals: Polygon[] = []): var[]..[]"
+      "Description": "Calculates the visibility of target Lines from a given point based on a 360 degree view range. Returns the percentage of 360 view from origin point that target lines are visible from and the target lines that are visible.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "8792a35e068442049b07fd19eecbb8be",
+      "Inputs": [
+        {
+          "Id": "38da62dfc3b44cecb20a283ae40b66a9",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c4d1f98f40fb487da04f60c3af1088fb",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
     }
   ],
   "Connectors": [
@@ -1190,13 +1228,13 @@
     },
     {
       "Start": "3bc70d0d2c284479bf65774023ec4915",
-      "End": "285b7b59bd2b4d169d98fafa1c646805",
-      "Id": "7597007bf1da4c6d86799ead608fb9eb"
+      "End": "cff7a784dd984567a5ad463354eca8b5",
+      "Id": "a61997acd5354613b699d37b21ce4e96"
     },
     {
       "Start": "3af75c32ebcd42e7a320bd272e63df08",
-      "End": "bd9d29e8370a46f0be2390b5170a997a",
-      "Id": "6e0757e85c7a47f6bdb95c647569d2f8"
+      "End": "db858cd9def647e5a2b72254ed7aef10",
+      "Id": "464c77067ae7467099f13d1d3982d6ab"
     },
     {
       "Start": "7a06ddf9f9034e70887f0a81b0786fb6",
@@ -1205,8 +1243,8 @@
     },
     {
       "Start": "3750e862ada44995a42b269ce7bc4586",
-      "End": "7af68b69006c43028ad419904e533b04",
-      "Id": "8ba7707e987746e28615064ecf5657c9"
+      "End": "c49d8370061a4e6da3874949fc3b02f5",
+      "Id": "ab91b990340040b5b11c2f843a6e89c7"
     },
     {
       "Start": "46e0c642ba2f413d84318ab6866e981a",
@@ -1270,23 +1308,28 @@
     },
     {
       "Start": "52927b8aecaa47ccbb731e3ee5c9eb00",
-      "End": "65cac3618b1849d098d28a7842cc407c",
-      "Id": "350dea76520e43f1af1d2edcceda828e"
+      "End": "97481d7ef5684dc7a8a4e4be4fa3f353",
+      "Id": "f3893515e2a74cffa2a4de17be382933"
     },
     {
-      "Start": "edff500e643c476283fbf56b5788eb17",
+      "Start": "a8c2601e9d6149ce9b7d69113ec4b958",
       "End": "a426aac7b4914209b4dc9198c553ebd1",
-      "Id": "caa91db8f996494fba6ed73dc11bd9f8"
+      "Id": "a83f225c70c74820969fc4a27251edac"
     },
     {
-      "Start": "ec97cc459c9b4fc8a6b6857e3b001fe6",
+      "Start": "408e29a8a7d14f8285cbff214ecad873",
+      "End": "38da62dfc3b44cecb20a283ae40b66a9",
+      "Id": "6c422799d6ae46f38c9ea5c70ac5384e"
+    },
+    {
+      "Start": "f0b1c89ccdd64296b6fc08c6ba17a2b1",
       "End": "8d126c648d9747cba8b8b2ff4f942be3",
-      "Id": "e378520b20a746f08425bf3bcc358c68"
+      "Id": "d791545a96fe411596402f47203aae83"
     },
     {
-      "Start": "ec97cc459c9b4fc8a6b6857e3b001fe6",
+      "Start": "f0b1c89ccdd64296b6fc08c6ba17a2b1",
       "End": "a5c292f2a80f44148b93e555c068533e",
-      "Id": "2de42dad1d3f4f96aee0143565767afd"
+      "Id": "8a75fa4245374d74a13e41501c407d6a"
     }
   ],
   "Dependencies": [],
@@ -1445,13 +1488,13 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Watch",
+        "Name": "Percent visible",
         "Id": "03cb791fd14e40818a32a9dc2d804b09",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2910.3815437924677,
-        "Y": 200.77051079395108
+        "X": 2740.8275142278053,
+        "Y": 279.36207814581167
       },
       {
         "ShowGeometry": true,
@@ -1565,13 +1608,23 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "ViewsToOutside.ByLineSegments",
-        "Id": "2e0515891a6541d2990d6850f93989a4",
+        "Name": "Visibility.OfLinesFromOrigin",
+        "Id": "38d406e5f1c74739afd5df054febd87f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2527.4695297127178,
-        "Y": 87.432785763899346
+        "X": 2396.6882615707782,
+        "Y": 327.25665254682383
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Percentages visible for each line",
+        "Id": "8792a35e068442049b07fd19eecbb8be",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2920.1366352210694,
+        "Y": 277.94317430747446
       }
     ],
     "Annotations": [
@@ -1586,13 +1639,13 @@
           "838460e9f3af4b24bdce142885bf5189"
         ],
         "Left": 735.51785222130252,
-        "Top": 533.39110869416959,
-        "Width": 1613.0000000000002,
-        "Height": 439.83999999999992,
+        "Top": 533.05777536083622,
+        "Width": 1614.0000000000002,
+        "Height": 440.50666666666655,
         "FontSize": 36.0,
         "InitialTop": 586.39110869416959,
         "InitialHeight": 229.21333333333337,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1605,13 +1658,13 @@
           "3dfc4bd820804bc7b79df1a36b3673ac"
         ],
         "Left": 1318.9075971489096,
-        "Top": 7.3347425780296192,
-        "Width": 615.0,
+        "Top": 7.0014092446962835,
+        "Width": 614.33333333333337,
         "Height": 313.0,
         "FontSize": 36.0,
         "InitialTop": 60.334742578029619,
         "InitialHeight": 337.0,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFD8D8D8"
       },
       {
@@ -1626,35 +1679,36 @@
           "0da5fc76613b48c89c45525d90bab64a"
         ],
         "Left": -203.03658702282553,
-        "Top": 222.45209913678718,
-        "Width": 1382.344759554338,
-        "Height": 286.54790086321282,
+        "Top": 222.11876580345384,
+        "Width": 1383.0114262210047,
+        "Height": 286.2145675298795,
         "FontSize": 36.0,
         "InitialTop": 275.45209913678718,
         "InitialHeight": 275.54790086321282,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
         "Id": "a07b0a7ee750466b90e9df0a8671e271",
-        "Title": "GenerativeToolkit - View To Outside",
+        "Title": "Refinery Toolkit\r\nVisibility of Lines",
         "Nodes": [
           "03cb791fd14e40818a32a9dc2d804b09",
-          "2e0515891a6541d2990d6850f93989a4"
+          "38d406e5f1c74739afd5df054febd87f",
+          "8792a35e068442049b07fd19eecbb8be"
         ],
-        "Left": 2517.4695297127178,
-        "Top": -8.5672142361006536,
-        "Width": 556.91201407975,
-        "Height": 318.33772503005173,
+        "Left": 2386.6882615707782,
+        "Top": 181.27650764080778,
+        "Width": 754.78170698362453,
+        "Height": 353.66666666666669,
         "FontSize": 36.0,
-        "InitialTop": 87.432785763899346,
-        "InitialHeight": 145.93264669374605,
-        "TextblockHeight": 86.0,
+        "InitialTop": 277.94317430747446,
+        "InitialHeight": 192.89457440101216,
+        "TextblockHeight": 86.666666666666671,
         "Background": "#FFC1D676"
       },
       {
         "Id": "aaed35eef27847108b6dc90e9f6ffff1",
-        "Title": "GENERATIVE TOOLKIT\r\nViews To Outside",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nViews To Outside",
         "Nodes": [
           "390cefa54cde4059873551b415c6d3e3",
           "f5daac5df9b84c27aa00b7ec7c784ca7",
@@ -1665,13 +1719,13 @@
           "46ffe4545a6249a9b7073e348b81d65d"
         ],
         "Left": -1412.6712996497529,
-        "Top": 146.2444100108064,
-        "Width": 632.23562714206719,
-        "Height": 522.57338313009438,
+        "Top": 88.577743344139748,
+        "Width": 631.90229380873393,
+        "Height": 580.90671646342764,
         "FontSize": 48.0,
         "InitialTop": 271.2444100108064,
         "InitialHeight": 421.57338313009438,
-        "TextblockHeight": 115.0,
+        "TextblockHeight": 172.66666666666666,
         "Background": "#FFFFFFFF"
       },
       {
@@ -1683,7 +1737,7 @@
         "Left": -776.21464173341769,
         "Top": 270.45919157138928,
         "Width": 314.0,
-        "Height": 146.0,
+        "Height": 146.66666666666669,
         "FontSize": 14.0,
         "InitialTop": 300.45919157138928,
         "InitialHeight": 140.0,
@@ -1699,7 +1753,7 @@
         "Left": -776.21464173341769,
         "Top": 426.81227593501478,
         "Width": 314.0,
-        "Height": 146.0,
+        "Height": 146.66666666666669,
         "FontSize": 14.0,
         "InitialTop": 456.81227593501478,
         "InitialHeight": 140.0,
@@ -1737,13 +1791,13 @@
           "1747e126049442508aac206496320bc7"
         ],
         "Left": 2931.412662507405,
-        "Top": 504.93215465302887,
+        "Top": 504.59882131969556,
         "Width": 2633.0,
-        "Height": 354.55609096523426,
+        "Height": 354.88942429856758,
         "FontSize": 36.0,
         "InitialTop": 557.93215465302887,
         "InitialHeight": 353.55609096523426,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFC1D676"
       },
       {
@@ -1776,7 +1830,7 @@
       },
       {
         "Id": "46ffe4545a6249a9b7073e348b81d65d",
-        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nGenerativeToolkit",
+        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -1089.4356725076889,
         "Top": 361.06241785460668,
@@ -1818,7 +1872,7 @@
       },
       {
         "Id": "390cefa54cde4059873551b415c6d3e3",
-        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nGenerative Design Toolkit",
+        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -1402.6712996497529,
         "Top": 271.2444100108064,
@@ -1846,7 +1900,7 @@
       },
       {
         "Id": "f5881bc5e4744b80bd9373e19a9f94c4",
-        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2018",
+        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
         "Left": -1402.6712996497529,
         "Top": 451.93100785287231,
@@ -1887,8 +1941,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 215.20245986836238,
-    "Y": 289.1342960467137,
-    "Zoom": 0.26677843908391136
+    "X": -1156.5090224369299,
+    "Y": 142.62332558123296,
+    "Zoom": 0.50924755625869056
   }
 }

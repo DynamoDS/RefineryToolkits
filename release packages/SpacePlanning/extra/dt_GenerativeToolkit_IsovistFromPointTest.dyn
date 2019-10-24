@@ -283,54 +283,6 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Isovist.FromPoint@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Point",
-      "Id": "b2ce6aeb2e54403f857be13baaa08af2",
-      "Inputs": [
-        {
-          "Id": "b26e257d9c1f4c3097c903a7bc7dff1b",
-          "Name": "boundary",
-          "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "1c70f20853a94bf98332c40b5627e3e2",
-          "Name": "internals",
-          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : [] (disabled)",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "e80c99f299a74c6484ab17a033705ee1",
-          "Name": "point",
-          "Description": "Origin point\n\nPoint",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "22e9973dc92a4726871fcdc4c0e23a99",
-          "Name": "isovist",
-          "Description": "Surface representing the isovist area",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Returns a surface representing the Isovist area visible from the given point.\n\nIsovist.FromPoint (boundary: Polygon[], internals: Polygon[] = [], point: Point): Surface"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
       "FunctionSignature": "Autodesk.DesignScript.Geometry.Surface.PointAtParameter@double,double",
       "Id": "bf6cd5e2897847b1aa131df91c90ee3b",
       "Inputs": [
@@ -407,27 +359,6 @@
       "Description": "Create a Surface by filling in the interior of a closed boundary defined by input Curves.\n\nSurface.ByPatch (closedCurve: Curve): Surface"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
-      "FunctionSignature": "a9ad1519-73f2-4015-97e3-03c6b9a484eb",
-      "FunctionType": "Graph",
-      "NodeType": "FunctionNode",
-      "Id": "8b44dee4dbea41e3bbeeb27d5305672f",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "aec6f2cf04f9413eb219a18067d9d598",
-          "Name": "0,0,255",
-          "Description": "return value",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Returns the colour blue."
-    },
-    {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
       "FunctionSignature": "Modifiers.GeometryColor.ByGeometryColor@Autodesk.DesignScript.Geometry.Geometry,DSCore.Color",
@@ -436,7 +367,7 @@
         {
           "Id": "044a9f16330440f4852ea98fc6b0ba64",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -445,7 +376,7 @@
         {
           "Id": "2cb3374067394ba8853897b209c96bdb",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -456,7 +387,7 @@
         {
           "Id": "05596187dd614c11897487fcd44b9f48",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -464,7 +395,80 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.Visibility.IsovistFromPoint@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
+      "Id": "9222788d417e49189c074ae526ca67f7",
+      "Inputs": [
+        {
+          "Id": "ff4eab3045cf4539bf7966f50bd3c4b6",
+          "Name": "point",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9a1ad3ecd0e54bdb9081d0f8542b3b9c",
+          "Name": "boundary",
+          "Description": "Polygon[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "df41e28ad4124d9ca83e86c0dadeeb0f",
+          "Name": "obstructions",
+          "Description": "Polygon[]\nDefault value : []",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "96a5463d73294338b6a4a297d06fc070",
+          "Name": "Surface",
+          "Description": "Surface",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Visibility.IsovistFromPoint (point: Point, boundary: Polygon[], obstructions: Polygon[] = []): Surface"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
+      "InputValue": {
+        "R": 0,
+        "G": 0,
+        "B": 255,
+        "A": 255
+      },
+      "NodeType": "ColorInputNode",
+      "Id": "26005961e1ca49b9b573f4ffad6bcba5",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a6ac1bd18a5147589680d04b84d84954",
+          "Name": "Color",
+          "Description": "Selected Color.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a Color from the palette"
     }
   ],
   "Connectors": [
@@ -515,28 +519,23 @@
     },
     {
       "Start": "3bc70d0d2c284479bf65774023ec4915",
-      "End": "b26e257d9c1f4c3097c903a7bc7dff1b",
-      "Id": "48224f7170da4e509c6967c03cf3b984"
-    },
-    {
-      "Start": "3bc70d0d2c284479bf65774023ec4915",
       "End": "2fad39cbb1d24649b22b61fe117ad377",
       "Id": "02d82a6c3b834f22ad092155e168e2e0"
     },
     {
-      "Start": "3af75c32ebcd42e7a320bd272e63df08",
-      "End": "1c70f20853a94bf98332c40b5627e3e2",
-      "Id": "28ea35f724f642698c3aaeeb42bf0bb8"
+      "Start": "3bc70d0d2c284479bf65774023ec4915",
+      "End": "9a1ad3ecd0e54bdb9081d0f8542b3b9c",
+      "Id": "79e3eee7fa8f449687c65bd2239cd1d5"
     },
     {
-      "Start": "22e9973dc92a4726871fcdc4c0e23a99",
-      "End": "044a9f16330440f4852ea98fc6b0ba64",
-      "Id": "e52df0097fad40f2b1795a458edf5ad1"
+      "Start": "3af75c32ebcd42e7a320bd272e63df08",
+      "End": "df41e28ad4124d9ca83e86c0dadeeb0f",
+      "Id": "4547de8523604b37aa1c36a901376580"
     },
     {
       "Start": "96e5ce0dc68d42ceabed9ddeb9d9ba61",
-      "End": "e80c99f299a74c6484ab17a033705ee1",
-      "Id": "6b67f7a58e4b485089a8a372c78b7f3c"
+      "End": "ff4eab3045cf4539bf7966f50bd3c4b6",
+      "Id": "7087d4bc1881403ba5e43790a4399166"
     },
     {
       "Start": "a3111520c28e49e79a96e43427ef1f67",
@@ -544,13 +543,26 @@
       "Id": "2cf63122a03542c5be9543863dd473bd"
     },
     {
-      "Start": "aec6f2cf04f9413eb219a18067d9d598",
+      "Start": "96a5463d73294338b6a4a297d06fc070",
+      "End": "044a9f16330440f4852ea98fc6b0ba64",
+      "Id": "3b7b7eab3d6549b783240c9ed14e3f40"
+    },
+    {
+      "Start": "a6ac1bd18a5147589680d04b84d84954",
       "End": "2cb3374067394ba8853897b209c96bdb",
-      "Id": "14c5d19e46ce47409ed70d5f56f3333b"
+      "Id": "70b5ccd96b424f4e841d17f70e84c9ea"
     }
   ],
-  "Dependencies": [
-    "a9ad1519-73f2-4015-97e3-03c6b9a484eb"
+  "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Refinery Toolkit for Space Planning",
+      "Version": "0.0.1",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "9222788d417e49189c074ae526ca67f7"
+      ]
+    }
   ],
   "Bindings": [],
   "View": {
@@ -558,21 +570,21 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.4.0.6186",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -54.64305598236971,
-      "EyeY": 67.059265523433709,
-      "EyeZ": -14.386467866567934,
-      "LookX": 60.083988498717957,
-      "LookY": -71.667826516399629,
-      "LookZ": 17.443923843315694,
-      "UpX": 0.57123534727400849,
-      "UpY": 0.803856860617223,
-      "UpZ": 0.1658442813707397
+      "EyeX": -49.60116908422436,
+      "EyeY": 43.646934274864094,
+      "EyeZ": -31.673671033712584,
+      "LookX": 45.066942285872365,
+      "LookY": -47.2701204297444,
+      "LookZ": 26.64123018381299,
+      "UpX": 0.42650888680579718,
+      "UpY": 0.86863151443819286,
+      "UpZ": 0.25212985067320642
     },
     "NodeViews": [
       {
@@ -656,16 +668,6 @@
         "Y": 271.212245017197
       },
       {
-        "ShowGeometry": false,
-        "Name": "Isovist.FromPoint",
-        "Id": "b2ce6aeb2e54403f857be13baaa08af2",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1179.9512277635763,
-        "Y": 390.29191805230016
-      },
-      {
         "ShowGeometry": true,
         "Name": "Surface.PointAtParameter",
         "Id": "bf6cd5e2897847b1aa131df91c90ee3b",
@@ -687,16 +689,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Color.Blue",
-        "Id": "8b44dee4dbea41e3bbeeb27d5305672f",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1288.7334686537638,
-        "Y": 571.18393275499659
-      },
-      {
-        "ShowGeometry": true,
         "Name": "GeometryColor.ByGeometryColor",
         "Id": "416c90eeb86143ad8bddf56ae74a13be",
         "IsSetAsInput": false,
@@ -704,6 +696,26 @@
         "Excluded": false,
         "X": 1492.7012394146436,
         "Y": 392.84783381747178
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Visibility.IsovistFromPoint",
+        "Id": "9222788d417e49189c074ae526ca67f7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1172.2417961506922,
+        "Y": 394.91864132072084
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Color Palette",
+        "Id": "26005961e1ca49b9b573f4ffad6bcba5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1287.9889807747818,
+        "Y": 538.19586929701268
       }
     ],
     "Annotations": [
@@ -717,13 +729,13 @@
           "89654f6e2e75489ab6451bfb8e4845b1"
         ],
         "Left": 432.535179033638,
-        "Top": 460.87926541807087,
-        "Width": 615.0,
+        "Top": 460.67926541807088,
+        "Width": 613.4,
         "Height": 313.0,
         "FontSize": 36.0,
         "InitialTop": 513.87926541807087,
         "InitialHeight": 337.0,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
@@ -738,36 +750,36 @@
           "0da5fc76613b48c89c45525d90bab64a"
         ],
         "Left": -317.01075212156076,
-        "Top": 181.212245017197,
+        "Top": 181.01224501719702,
         "Width": 1356.0,
-        "Height": 264.42666666666662,
+        "Height": 263.8266666666666,
         "FontSize": 36.0,
         "InitialTop": 234.212245017197,
         "InitialHeight": 253.42666666666662,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
         "Id": "e457b6083b9747bfaedef9d922cc5ef7",
-        "Title": "GenerativeToolkit - Isovist from point",
+        "Title": "Refinery Toolkit - Isovist from point",
         "Nodes": [
-          "b2ce6aeb2e54403f857be13baaa08af2",
           "416c90eeb86143ad8bddf56ae74a13be",
-          "8b44dee4dbea41e3bbeeb27d5305672f"
+          "9222788d417e49189c074ae526ca67f7",
+          "26005961e1ca49b9b573f4ffad6bcba5"
         ],
-        "Left": 1169.9512277635763,
-        "Top": 337.29191805230016,
-        "Width": 602.75001165106733,
-        "Height": 326.89201470269643,
+        "Left": 1162.2417961506922,
+        "Top": 339.64783381747179,
+        "Width": 610.05944326395149,
+        "Height": 291.14803547954091,
         "FontSize": 36.0,
-        "InitialTop": 390.29191805230016,
+        "InitialTop": 392.84783381747178,
         "InitialHeight": 325.89201470269643,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.2,
         "Background": "#FFC1D676"
       },
       {
         "Id": "eced7bae4fac49c1889a3e0bef922e46",
-        "Title": "GENERATIVE TOOLKIT\r\nIsovist from Point",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nIsovist from Point",
         "Nodes": [
           "2ad63b2bc17b415b81037385ef86985e",
           "4c3322fcaa074ac9aae4a6176e757186",
@@ -778,13 +790,13 @@
           "f875e31d08f7469280c1191b3d90b422"
         ],
         "Left": -1484.6891497796416,
-        "Top": 185.60381534425085,
-        "Width": 632.23562714206719,
-        "Height": 508.57338313009416,
+        "Top": 127.80381534425084,
+        "Width": 632.43562714206723,
+        "Height": 566.37338313009423,
         "FontSize": 48.0,
         "InitialTop": 310.60381534425085,
         "InitialHeight": 421.57338313009416,
-        "TextblockHeight": 115.0,
+        "TextblockHeight": 172.8,
         "Background": "#FFFFFFFF"
       },
       {
@@ -795,8 +807,8 @@
         ],
         "Left": -848.23249186330645,
         "Top": 309.81859690483373,
-        "Width": 314.0,
-        "Height": 146.0,
+        "Width": 313.6,
+        "Height": 146.4,
         "FontSize": 14.0,
         "InitialTop": 339.81859690483373,
         "InitialHeight": 140.0,
@@ -811,8 +823,8 @@
         ],
         "Left": -848.23249186330645,
         "Top": 466.17168126845934,
-        "Width": 314.0,
-        "Height": 146.0,
+        "Width": 313.6,
+        "Height": 146.4,
         "FontSize": 14.0,
         "InitialTop": 496.17168126845934,
         "InitialHeight": 140.0,
@@ -827,7 +839,7 @@
         ],
         "Left": -848.23249186330645,
         "Top": 626.85336676297459,
-        "Width": 314.0,
+        "Width": 313.6,
         "Height": 132.0,
         "FontSize": 14.0,
         "InitialTop": 656.85336676297459,
@@ -865,7 +877,7 @@
       },
       {
         "Id": "f875e31d08f7469280c1191b3d90b422",
-        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nGenerativeToolkit",
+        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -1161.4535226375776,
         "Top": 400.421823188051,
@@ -907,7 +919,7 @@
       },
       {
         "Id": "2ad63b2bc17b415b81037385ef86985e",
-        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nGenerative Design Toolkit",
+        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -1474.6891497796416,
         "Top": 310.60381534425085,
@@ -935,7 +947,7 @@
       },
       {
         "Id": "54ee9198a3854477b548c5079bba853b",
-        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2018",
+        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
         "Left": -1474.6891497796416,
         "Top": 491.29041318631687,
@@ -949,7 +961,7 @@
       },
       {
         "Id": "5a2b1a0ca0c841658bc05cd4d4cefbdc",
-        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the Isovist node from the Generative Toolkit packages.",
+        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the Isovist node from the REFINERY SPACE PLANNING TOOLKIT package.",
         "Nodes": [],
         "Left": -1474.6891497796416,
         "Top": 592.177198474345,
@@ -976,8 +988,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -175.52266264052389,
-    "Y": -19.857835794464847,
-    "Zoom": 0.79501128096188867
+    "X": 205.215497110976,
+    "Y": 61.875397310630376,
+    "Zoom": 0.47888946661943982
   }
 }
