@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Autodesk.RefineryToolkits.SpacePlanning.Graphs")]
+[assembly: AssemblyTitle("RefineryToolkits.SpacePlanning.Graphs")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GenerativeToolkit.Graphs")]
+[assembly: AssemblyProduct("RefineryToolkits.SpacePlanning.Graphs")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
