@@ -85,8 +85,6 @@ Also note that this project is released with a [Contributor Code of Conduct](htt
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](https://github.com/DynamoDS/RefineryToolkits/tree/master/LICENSE) for details.
 
-We do our best comply with all license conditions and restrictions, so please let us know if you have any questions or spot anything out of order.
-
 ### Packages used
 
 This project uses the third-party packages listed below, whose licenses are available in the [docs](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs) folder as per their MIT license requirements.
@@ -94,3 +92,6 @@ This project uses the third-party packages listed below, whose licenses are avai
 - [Graphical](https://github.com/alvpickmans/Graphical)
 - [MIConvexHull](https://github.com/DesignEngrLab/MIConvexHull)
 - [3DContainerPacking](https://github.com/davidmchapman/3DContainerPacking)
+
+We do our best comply with all license conditions and restrictions, so please let us know if you have any questions or spot anything out of order.
+
