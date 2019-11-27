@@ -77,11 +77,3 @@ The ContrastyColorRange node returns a given amount of colors in a random order 
 The maximum colors that can be created right now is 19.
 
 ![IMAGE](../../samples/SpacePlanning/ColorRange.png)
-
-### Packages used
-
-This project uses the third-party packages listed below, whose licenses are available in the [docs](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs) folder as per their MIT license requirements.
-
-- [Graphical](https://github.com/alvpickmans/Graphical)
-- [MIConvexHull](https://github.com/DesignEngrLab/MIConvexHull)
-- [3DContainerPacking](https://github.com/davidmchapman/3DContainerPacking)

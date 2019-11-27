@@ -69,7 +69,7 @@ Dynamo : version 2.1 or later
 .NET : version 4.7 or later
 ```
 
-Please note that only project has no dependency to Revit and its APIs, so it will happily run in Dynamo Sandbox or Dynamo Studio.
+Please note that only projects with `Revit` (ex : `MassingRevit`) in their name have a dependency on Revit and its APIs. The others it will happily run in supported versions of Dynamo Sandbox or Dynamo Studio.
 
 ## Contributing
 Please read [CONTRIBUTING.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package. Please also read the [CODE OF CONDUCT.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CODE_OF_CONDUCT.md).
@@ -79,3 +79,11 @@ Please read [CONTRIBUTING.md](https://github.com/DynamoDS/RefineryToolkits/tree/
 This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](https://github.com/DynamoDS/RefineryToolkits/tree/master/LICENSE) for details.
 
 We do our best comply with all license conditions and restrictions, so please let us know if you have any questions or spot anything out of order.
+
+### Packages used
+
+This project uses the third-party packages listed below, whose licenses are available in the [docs](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs) folder as per their MIT license requirements.
+
+- [Graphical](https://github.com/alvpickmans/Graphical)
+- [MIConvexHull](https://github.com/DesignEngrLab/MIConvexHull)
+- [3DContainerPacking](https://github.com/davidmchapman/3DContainerPacking)
