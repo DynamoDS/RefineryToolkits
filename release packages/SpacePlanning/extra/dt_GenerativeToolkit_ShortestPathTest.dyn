@@ -716,13 +716,13 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.PathFinding.ShortestPath@var,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.PathFinding.ShortestPath@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
       "Id": "433f7243db664f04b6af924dd68d6f99",
       "Inputs": [
         {
           "Id": "f72aa83e457743eeae9465d687e56303",
-          "Name": "visGraph",
-          "Description": "Visibility Graph\n\nvar",
+          "Name": "startPoint",
+          "Description": "Start point\n\nPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -730,8 +730,8 @@
         },
         {
           "Id": "3a850b587c554f1fa4efbba28da28f97",
-          "Name": "origin",
-          "Description": "Origin point\n\nPoint",
+          "Name": "endPoint",
+          "Description": "Destination point\n\nPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -739,8 +739,17 @@
         },
         {
           "Id": "c343a49de574464f8ba084d4acf2ddbc",
-          "Name": "destination",
-          "Description": "Destination point\n\nPoint",
+          "Name": "boundary",
+          "Description": "Polygon(s) enclosing all obstacle Polygons\n\nPolygon[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7a292edf1ee94168b2b09cec07c48968",
+          "Name": "obstructions",
+          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -751,7 +760,7 @@
         {
           "Id": "c178a117e45649d486927d567a1a6dc9",
           "Name": "path",
-          "Description": "Graph representing the shortest path",
+          "Description": "Set of lines representing the shortest path",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -760,7 +769,7 @@
         {
           "Id": "aee7ceb83aaa4c72915c8ce8cb3a551b",
           "Name": "length",
-          "Description": "Length of path",
+          "Description": "Length of path.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -768,7 +777,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns a graph representing the shortest path between two points on a given Visibility Graph.\n\nPathFinding.ShortestPath (visGraph: var, origin: Point, destination: Point): var[]..[]"
+      "Description": "Returns the shortest path between two points, in 2D only. Works by computing a visibility graph and then finding shortest path on graph with Dijkstra's algorithm.\n\nPathFinding.ShortestPath (startPoint: Point, endPoint: Point, boundary: Polygon[], obstructions: Polygon[]): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -810,24 +819,82 @@
       "Description": "Given a list, produces the first item in the list, and a new list containing all items except the first.\n\nList.Deconstruct (list: var[]..[]): var[]..[]"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.PathFinding.CreateVisibilityGraph@Autodesk.DesignScript.Geometry.Polygon[],Autodesk.DesignScript.Geometry.Polygon[]",
-      "Id": "68c8d0f879e445f0928812c45f76bf47",
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "ad91e6f574814a758e746df5fb3390c2",
       "Inputs": [
         {
-          "Id": "23766b6017814cebb70528a19934308c",
-          "Name": "boundary",
-          "Description": "Polygon[]",
+          "Id": "0a420beb6f5f44bb99c5d10f93b7427e",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6216cbf3026f4f9889976741aaec0d62",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "f797e9a7b0584c61af12d74c46bb1957",
+      "Inputs": [
+        {
+          "Id": "4e98a78783124bed880720327aef8243",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "150399e7cb8645a6b55d2701682f136e",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Modifiers.GeometryColor.ByGeometryColor@Autodesk.DesignScript.Geometry.Geometry,DSCore.Color",
+      "Id": "e0409af6b4c24794bd797f119fae8792",
+      "Inputs": [
+        {
+          "Id": "89b2ee67a8404b8fb416b6c9df4b6870",
+          "Name": "geometry",
+          "Description": "Geometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "a8c4abc089fd43ce83ba052c2a8afeea",
-          "Name": "internals",
-          "Description": "Polygon[]",
+          "Id": "d15a571fc2c34b2e95cc9292264d9847",
+          "Name": "color",
+          "Description": "Color",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -836,9 +903,9 @@
       ],
       "Outputs": [
         {
-          "Id": "a529f4725021495f8d9c107714aff561",
-          "Name": "visGraph",
-          "Description": "VisibilityGraph for use in ShortestPath",
+          "Id": "6f69688f73274ed48d9b101f8d6805f0",
+          "Name": "GeometryColor",
+          "Description": "GeometryColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -846,19 +913,46 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns a VisibilityGraph which is used as input for ShortestPath\n\nPathFinding.CreateVisibilityGraph (boundary: Polygon[], internals: Polygon[]): var"
+      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Analyze.PathFinding.Lines@var",
-      "Id": "1fafe1f994e541b3baa55d1530142a7e",
+      "FunctionSignature": "DSCore.Color.ByARGB@int,int,int,int",
+      "Id": "7f2dc05dbfa54ad89bb2d44d64521e1f",
       "Inputs": [
         {
-          "Id": "9689e492288b421ca103bd2b378fa211",
-          "Name": "path",
-          "Description": "var",
-          "UsingDefaultValue": false,
+          "Id": "2a479924dee7484bbcfdf1a36ddeb69b",
+          "Name": "a",
+          "Description": "The alpha value.\n\nint\nDefault value : 255",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0bec50bdac2040e5b81b187299f74c8a",
+          "Name": "r",
+          "Description": "The red value.\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b0473e87bf4a48a99e78700c5b0486e9",
+          "Name": "g",
+          "Description": "The green value.\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "82dcd9137c1249508a0a4f470d4956b0",
+          "Name": "b",
+          "Description": "The blue value.\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -866,9 +960,9 @@
       ],
       "Outputs": [
         {
-          "Id": "19a11fd0f2904b808c360bac377ecbfc",
-          "Name": "lines",
-          "Description": "List of lines representing the graph.",
+          "Id": "c9317f10a22044a79487e85b9f466a95",
+          "Name": "color",
+          "Description": "Color.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -876,7 +970,27 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the input graph as a list of lines\n\nPathFinding.Lines (path: var): Line[]"
+      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (a: int = 255, r: int = 0, g: int = 0, b: int = 0): Color"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "255;",
+      "Id": "9f13ccdcb3bd40ae9f88ae50d2b1715a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "49dec7f7c7344bccb5ea6bd70f7fae0d",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
     }
   ],
   "Connectors": [
@@ -972,8 +1086,8 @@
     },
     {
       "Start": "2d26577fe3ce4520ba088a3ab7cb4c71",
-      "End": "3a850b587c554f1fa4efbba28da28f97",
-      "Id": "9a33f9bb3341485f8667f9e643aec840"
+      "End": "f72aa83e457743eeae9465d687e56303",
+      "Id": "f965d81c06ff493daef0379b4de84990"
     },
     {
       "Start": "8bc5071cbc214b9090902318d0534388",
@@ -987,8 +1101,8 @@
     },
     {
       "Start": "c953f17b20924c709e67ac9ef1e53586",
-      "End": "c343a49de574464f8ba084d4acf2ddbc",
-      "Id": "a19df318af564078baf55dd771898224"
+      "End": "3a850b587c554f1fa4efbba28da28f97",
+      "Id": "b4e4c729edfe4821acd972c060f01cce"
     },
     {
       "Start": "45ca686eacc04e3781d7fab510cf06da",
@@ -1002,23 +1116,38 @@
     },
     {
       "Start": "c178a117e45649d486927d567a1a6dc9",
-      "End": "9689e492288b421ca103bd2b378fa211",
-      "Id": "b599530f67064667b0803f5d986fd833"
+      "End": "0a420beb6f5f44bb99c5d10f93b7427e",
+      "Id": "7c6a5ce21a59431a9b4905c1d012ffd7"
+    },
+    {
+      "Start": "aee7ceb83aaa4c72915c8ce8cb3a551b",
+      "End": "4e98a78783124bed880720327aef8243",
+      "Id": "7b13eea0166a4b17b0d406165ecf41fb"
     },
     {
       "Start": "98205c14818e41209e3e868dbab683c4",
-      "End": "23766b6017814cebb70528a19934308c",
-      "Id": "59ee8508ab7943dfa6fb8a53968441ad"
+      "End": "c343a49de574464f8ba084d4acf2ddbc",
+      "Id": "12936ae0c2a843feb0b1b0582137bbd0"
     },
     {
       "Start": "e4f228d68d4a4c3780e6026a9eabcff2",
-      "End": "a8c4abc089fd43ce83ba052c2a8afeea",
-      "Id": "1d0ce5ac78064caf9e595cb0aa40c2e7"
+      "End": "7a292edf1ee94168b2b09cec07c48968",
+      "Id": "1ed37f55f69d4fe996131e620b3f06a3"
     },
     {
-      "Start": "a529f4725021495f8d9c107714aff561",
-      "End": "f72aa83e457743eeae9465d687e56303",
-      "Id": "c77716e5810341bead7288c5797329a2"
+      "Start": "6216cbf3026f4f9889976741aaec0d62",
+      "End": "89b2ee67a8404b8fb416b6c9df4b6870",
+      "Id": "285b72d352204fc58a89e4a2ff4a6863"
+    },
+    {
+      "Start": "c9317f10a22044a79487e85b9f466a95",
+      "End": "d15a571fc2c34b2e95cc9292264d9847",
+      "Id": "cee9e25df5f046418fc328cfa1b3fa7b"
+    },
+    {
+      "Start": "49dec7f7c7344bccb5ea6bd70f7fae0d",
+      "End": "0bec50bdac2040e5b81b187299f74c8a",
+      "Id": "0090e294dca14c7898529df3cbec1e74"
     }
   ],
   "Dependencies": [],
@@ -1029,7 +1158,7 @@
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
       "Version": "2.0.2.6826",
-      "RunType": "Manual",
+      "RunType": "Automatic",
       "RunPeriod": "100"
     },
     "Camera": {
@@ -1046,264 +1175,294 @@
     },
     "NodeViews": [
       {
+        "ShowGeometry": true,
+        "Name": "Point.ByCoordinates",
         "Id": "56489fd4f7804b48b6d5e20472e95329",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Point.ByCoordinates",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 145.07607908493151,
-        "Y": 299.62401764413312
+        "X": 90.557134136520745,
+        "Y": 1007.8173953169044
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "500894a76d37488c817be3491e9b3dc9",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -253.92392091506849,
-        "Y": 223.62401764413312
+        "X": -296.30366244683159,
+        "Y": 988.46701126126072
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "b7a0da5860444c0aa20e69e2824ff6c1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -253.92392091506849,
-        "Y": 306.62401764413312
+        "X": -296.30366244683159,
+        "Y": 1071.4670112612607
       },
       {
+        "ShowGeometry": true,
+        "Name": "CoordinateSystem.ByOrigin",
         "Id": "8a35ef32180d4c8a9065baff7d173d5b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "CoordinateSystem.ByOrigin",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 623.07607908493151,
-        "Y": 439.62401764413312
+        "X": 578.67313698372732,
+        "Y": 1012.2629571643374
       },
       {
+        "ShowGeometry": true,
+        "Name": "List Create",
         "Id": "acfca71996ed4cf1a8346bca5edd717a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "List Create",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 403.07607908493151,
-        "Y": 439.62401764413312
+        "X": 358.67313698372732,
+        "Y": 1012.2629571643374
       },
       {
+        "ShowGeometry": true,
+        "Name": "Point.ByCoordinates",
         "Id": "1854e5363d804d768f0301e5925b7647",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Point.ByCoordinates",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 145.07607908493151,
-        "Y": 434.62401764413312
+        "X": 90.557134136520745,
+        "Y": 1142.8173953169044
       },
       {
+        "ShowGeometry": true,
+        "Name": "Point.ByCoordinates",
         "Id": "e017cafb39d244b39f56785f41b9575d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Point.ByCoordinates",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 145.07607908493151,
-        "Y": 568.62401764413312
+        "X": 90.557134136520745,
+        "Y": 1276.8173953169044
       },
       {
+        "ShowGeometry": true,
+        "Name": "Point.ByCoordinates",
         "Id": "bf0303bf9d104bd8b5bf9a2e808b8504",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Point.ByCoordinates",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 145.07607908493151,
-        "Y": 702.62401764413312
+        "X": 90.557134136520745,
+        "Y": 1410.8173953169044
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "f71a5efbc07941de8e71a4604bf272cc",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -253.92392091506849,
-        "Y": 389.62401764413312
+        "X": -296.30366244683159,
+        "Y": 1154.4670112612607
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "124e6f16f0fc4e0290aa66a8b5c96d2d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -253.92392091506849,
-        "Y": 472.62401764413312
+        "X": -296.30366244683159,
+        "Y": 1237.4670112612607
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "f7947833a31d4e0e931725707233790b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -253.92392091506849,
-        "Y": 555.62401764413312
+        "X": -296.30366244683159,
+        "Y": 1320.4670112612607
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "3b473e9a3a4c4d488cf139810e6b790c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -253.92392091506849,
-        "Y": 638.62401764413312
+        "X": -296.30366244683159,
+        "Y": 1403.4670112612607
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "54215aa95203421e8a1c6bb077aeffcb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -253.92392091506849,
-        "Y": 722.62401764413312
+        "X": -296.30366244683159,
+        "Y": 1487.4670112612607
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "37f6727bed024f1e9d0680c2474b0cfa",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -253.92392091506849,
-        "Y": 805.62401764413312
+        "X": -296.30366244683159,
+        "Y": 1570.4670112612607
       },
       {
+        "ShowGeometry": true,
+        "Name": "Rectangle.ByWidthLength",
         "Id": "0fa6841ab0654616a0c34e4343c6688f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Rectangle.ByWidthLength",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 988.07607908493151,
-        "Y": 472.62401764413312
+        "X": 931.53393356707943,
+        "Y": 1014.9149486227179
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "86469ead9fb840cd986dff6c950582c6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 623.07607908493151,
-        "Y": 548.83735097746637
+        "X": 578.67313698372732,
+        "Y": 1121.4762904976706
       },
       {
+        "ShowGeometry": true,
+        "Name": "Origin Point - Point.ByCoordinates",
         "Id": "5ffb6d3cd4d448bca556fcdcfb451d19",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Origin Point - Point.ByCoordinates",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 95.40928313941663,
-        "Y": 982.11987223281187
+        "X": 1086.8850325921564,
+        "Y": 622.06334924057785
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "f637a65ee5c64d68bd71ba7f26b74df1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -259.72897130776528,
-        "Y": 982.819019281677
+        "X": 731.74677814497454,
+        "Y": 622.762496289443
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "4bb951a33a82470f974f51bdd6530e9d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -259.72897130776528,
-        "Y": 1032.8190192816769
+        "X": 731.74677814497454,
+        "Y": 672.76249628944288
       },
       {
+        "ShowGeometry": true,
+        "Name": "Destination Point - Point.ByCoordinates",
         "Id": "19aff3052c1f4cbc95557eb151fd3dd5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Destination Point - Point.ByCoordinates",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 93.746906048186929,
-        "Y": 1128.3314807624367
+        "X": 1085.2226555009267,
+        "Y": 768.27495777020272
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "d74781362d094298a155fcada36ff348",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -259.41457282547162,
-        "Y": 1133.9279200435551
+        "X": 732.0611766272682,
+        "Y": 773.87139705132108
       },
       {
+        "ShowGeometry": true,
+        "Name": "Number Slider",
         "Id": "515bc72ba8814b409dbf467111ad0f6b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Number Slider",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -259.41457282547162,
-        "Y": 1183.9279200435551
+        "X": 732.0611766272682,
+        "Y": 823.87139705132108
       },
       {
+        "ShowGeometry": false,
+        "Name": "PathFinding.ShortestPath",
         "Id": "433f7243db664f04b6af924dd68d6f99",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "PathFinding.ShortestPath",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 2180.7461333360939,
-        "Y": 466.61680224113974
+        "X": 1582.282575813244,
+        "Y": 762.94673031474838
       },
       {
+        "ShowGeometry": true,
+        "Name": "List.Deconstruct",
         "Id": "b76a6bff5369457990960252e1258a13",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "List.Deconstruct",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 1304.0760790849315,
-        "Y": 472.62401764413306
+        "X": 1247.5339335670794,
+        "Y": 1014.9149486227178
       },
       {
-        "Id": "68c8d0f879e445f0928812c45f76bf47",
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "ad91e6f574814a758e746df5fb3390c2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "PathFinding.CreateVisibilityGraph",
-        "ShowGeometry": false,
         "Excluded": false,
-        "X": 1878.1452119241549,
-        "Y": 464.36326314582374
+        "X": 1872.0893917164626,
+        "Y": 792.411843069753
       },
       {
-        "Id": "1fafe1f994e541b3baa55d1530142a7e",
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "f797e9a7b0584c61af12d74c46bb1957",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "PathFinding.Lines",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 2442.5179437555034,
-        "Y": 466.05074060630358
+        "X": 2199.0317026664657,
+        "Y": 789.99857350523348
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "GeometryColor.ByGeometryColor",
+        "Id": "e0409af6b4c24794bd797f119fae8792",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2770.2716444573707,
+        "Y": 789.82371885083546
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Color.ByARGB",
+        "Id": "7f2dc05dbfa54ad89bb2d44d64521e1f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2541.0742510916507,
+        "Y": 815.67005743818652
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "9f13ccdcb3bd40ae9f88ae50d2b1715a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2420.0366392374867,
+        "Y": 833.23409433957181
       }
     ],
     "Annotations": [
@@ -1329,32 +1488,32 @@
           "86469ead9fb840cd986dff6c950582c6",
           "b76a6bff5369457990960252e1258a13"
         ],
-        "Left": -263.92392091506849,
-        "Top": 170.62401764413312,
-        "Width": 1738.0,
+        "Left": -306.30366244683159,
+        "Top": 935.13367792792735,
+        "Width": 1724.5042626805778,
         "Height": 703.0,
         "FontSize": 36.0,
-        "InitialTop": 223.62401764413312,
+        "InitialTop": 988.46701126126072,
         "InitialHeight": 727.0,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFFFB8D8"
       },
       {
         "Id": "0f35dba5af064e4784b374b93753a2d9",
-        "Title": "GenerativeToolkit - ShortestPath",
+        "Title": "Refinery Toolkit - ShortestPath",
         "Nodes": [
           "433f7243db664f04b6af924dd68d6f99",
-          "68c8d0f879e445f0928812c45f76bf47",
-          "1fafe1f994e541b3baa55d1530142a7e"
+          "f797e9a7b0584c61af12d74c46bb1957",
+          "ad91e6f574814a758e746df5fb3390c2"
         ],
-        "Left": 1868.1452119241549,
-        "Top": 411.36326314582374,
-        "Width": 759.37273183134857,
-        "Height": 200.253539095316,
+        "Left": 1572.282575813244,
+        "Top": 709.613396981415,
+        "Width": 784.7491268532217,
+        "Height": 263.13177942167135,
         "FontSize": 36.0,
-        "InitialTop": 464.36326314582374,
-        "InitialHeight": 147.253539095316,
-        "TextblockHeight": 43.0,
+        "InitialTop": 762.94673031474838,
+        "InitialHeight": 174.46511275500461,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFC1D676"
       },
       {
@@ -1368,19 +1527,19 @@
           "d74781362d094298a155fcada36ff348",
           "515bc72ba8814b409dbf467111ad0f6b"
         ],
-        "Left": -269.72897130776528,
-        "Top": 929.11987223281187,
+        "Left": 721.74677814497454,
+        "Top": 568.73001590724448,
         "Width": 631.47587735595221,
-        "Height": 344.21160852962487,
+        "Height": 344.54494186295818,
         "FontSize": 36.0,
-        "InitialTop": 982.11987223281187,
+        "InitialTop": 622.06334924057785,
         "InitialHeight": 346.80804781074323,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFB9F9E1"
       },
       {
         "Id": "5e66a10d69994138bceef249e4907133",
-        "Title": "GENERATIVE TOOLKIT\r\nShortest Path",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nShortest Path",
         "Nodes": [
           "28c4d9002bf44fba9f255ac44d71b087",
           "e3916bc3d172491e9a858334ad2477b6",
@@ -1391,13 +1550,13 @@
           "74d046b665ab4b9f930d71043811c8f7"
         ],
         "Left": -1419.8225361208301,
-        "Top": 476.24409823024905,
-        "Width": 632.23562714206719,
-        "Height": 508.57338313009427,
+        "Top": 418.57743156358242,
+        "Width": 631.90229380873393,
+        "Height": 566.2400497967609,
         "FontSize": 48.0,
         "InitialTop": 601.244098230249,
         "InitialHeight": 421.57338313009427,
-        "TextblockHeight": 115.0,
+        "TextblockHeight": 172.66666666666666,
         "Background": "#FFFFFFFF"
       },
       {
@@ -1409,7 +1568,7 @@
         "Left": -783.365878204495,
         "Top": 600.45887979083193,
         "Width": 314.0,
-        "Height": 146.0,
+        "Height": 146.66666666666669,
         "FontSize": 14.0,
         "InitialTop": 630.45887979083193,
         "InitialHeight": 140.0,
@@ -1425,7 +1584,7 @@
         "Left": -783.365878204495,
         "Top": 756.81196415445754,
         "Width": 314.0,
-        "Height": 146.0,
+        "Height": 146.66666666666669,
         "FontSize": 14.0,
         "InitialTop": 786.81196415445754,
         "InitialHeight": 140.0,
@@ -1446,6 +1605,24 @@
         "InitialTop": 947.49364964897279,
         "InitialHeight": 140.0,
         "TextblockHeight": 20.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "66df706a45544957abff4ba1dcb5fe60",
+        "Title": "Color path",
+        "Nodes": [
+          "e0409af6b4c24794bd797f119fae8792",
+          "7f2dc05dbfa54ad89bb2d44d64521e1f",
+          "9f13ccdcb3bd40ae9f88ae50d2b1715a"
+        ],
+        "Left": 2410.0366392374867,
+        "Top": 736.49038551750209,
+        "Width": 640.235005219884,
+        "Height": 250.17967192068443,
+        "FontSize": 36.0,
+        "InitialTop": 789.82371885083546,
+        "InitialHeight": 188.41037548873635,
+        "TextblockHeight": 43.333333333333336,
         "Background": "#FFFFC999"
       },
       {
@@ -1478,7 +1655,7 @@
       },
       {
         "Id": "74d046b665ab4b9f930d71043811c8f7",
-        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nGenerativeToolkit",
+        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -1096.5869089787661,
         "Top": 691.06210607404921,
@@ -1520,7 +1697,7 @@
       },
       {
         "Id": "28c4d9002bf44fba9f255ac44d71b087",
-        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nGenerative Design Toolkit",
+        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -1409.8225361208301,
         "Top": 601.244098230249,
@@ -1548,7 +1725,7 @@
       },
       {
         "Id": "a4d3c0951d3c47d29422006099c76ab7",
-        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2018",
+        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
         "Left": -1409.8225361208301,
         "Top": 781.93069607231507,
@@ -1589,8 +1766,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 2177.3691505645697,
-    "Y": -657.88560297819106,
-    "Zoom": 1.4443971180628048
+    "X": 228.16151191097839,
+    "Y": 72.023986948904337,
+    "Zoom": 0.27090805326842965
   }
 }

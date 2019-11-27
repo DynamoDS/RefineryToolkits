@@ -156,15 +156,15 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitNodes">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Dynamo\Dynamo Revit\2\Revit_2019\RevitNodes.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\Revit\RevitNodes.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitServices">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Dynamo\Dynamo Revit\2\Revit_2019\RevitServices.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\Revit\RevitServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -222,7 +222,7 @@
     <ProjectReference Include="..\MassingSandbox\MassingSandbox.csproj">
       <Project>{89df56a1-a27b-43d9-9d70-b650b2db4b64}</Project>
       <Name>MassingSandbox</Name>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

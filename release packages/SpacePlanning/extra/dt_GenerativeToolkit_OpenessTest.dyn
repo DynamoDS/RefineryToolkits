@@ -2,7 +2,7 @@
   "Uuid": "9b475e34-a870-453c-b18e-2a8426cc5ba8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_OpenessTest",
+  "Name": "dt_Refinery Toolkit_OpenessTest",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -1030,7 +1030,7 @@
       },
       {
         "Id": "ef2f643066fe49fe8e072308e59c92e7",
-        "Title": "GenerativeToolkit - Openess",
+        "Title": "Refinery Toolkit - Openess",
         "Nodes": [
           "04f27d96ffbc4da0a853b7dfe8c104d3",
           "c89c7d34431f4abea728d97a905c035d"
@@ -1047,7 +1047,7 @@
       },
       {
         "Id": "b6183195cae14a8cbd6fb5778a363c07",
-        "Title": "GENERATIVE TOOLKIT\r\nOpeness",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nOpeness",
         "Nodes": [
           "9b089276b94543cd847c91f3a3a5bf48",
           "bc798ca37d9441faac523de764e0d527",
@@ -1145,7 +1145,7 @@
       },
       {
         "Id": "f0fb99fc48d84ae09b975aae5d56c566",
-        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nGenerativeToolkit",
+        "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -472.70934536510322,
         "Top": -287.05082979893484,
@@ -1187,7 +1187,7 @@
       },
       {
         "Id": "9b089276b94543cd847c91f3a3a5bf48",
-        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nGenerative Design Toolkit",
+        "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
         "Left": -785.94497250716722,
         "Top": -376.868837642735,
@@ -1215,7 +1215,7 @@
       },
       {
         "Id": "f6599cc2bc13465c8538c62856b4873a",
-        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2018",
+        "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
         "Left": -785.94497250716722,
         "Top": -196.18223980066898,
@@ -1229,7 +1229,7 @@
       },
       {
         "Id": "f410eb5507fa4001a0987f3e80c29c9a",
-        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the Generative Toolkits Openess Node. \r\n\r\nThe Node returns the openess score of any surface. The score is calculated by checking how much of the object parameter is enclosed by any input obstacle. A tolerance can be set to check for intersection with elements with a fixed distance to the object.\r\n\r\nFor example this can be used in a desk layout workflow to optimize the placement of desks, bu either minimizing or mazimizing the openess score.",
+        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the REFINERY SPACE PLANNING TOOLKITs Openess Node. \r\n\r\nThe Node returns the openess score of any surface. The score is calculated by checking how much of the object parameter is enclosed by any input obstacle. A tolerance can be set to check for intersection with elements with a fixed distance to the object.\r\n\r\nFor example this can be used in a desk layout workflow to optimize the placement of desks, bu either minimizing or mazimizing the openess score.",
         "Nodes": [],
         "Left": -785.94497250716722,
         "Top": -95.295454512640845,

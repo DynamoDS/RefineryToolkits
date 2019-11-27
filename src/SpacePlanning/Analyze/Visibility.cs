@@ -1,186 +1,208 @@
-﻿using Autodesk.DesignScript.Interfaces;
+﻿/***************************************************************************************
+* Portions of this code was originally created by Alvaro Ortega Pickmans
+* Title: Graphical
+* Author: Alvaro Ortega Pickmans
+* Date: 2017
+* Availability: https://github.com/alvpickmans/Graphical
+*
+***************************************************************************************/
+
+using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
-using Autodesk.RefineryToolkits.Core.Utillites;
 using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
 using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using DSGeom = Autodesk.DesignScript.Geometry;
+using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
-    /// <summary>
-    /// Representation of a Graph.
-    /// </summary>
-    [IsVisibleInDynamoLibrary(false)]
-    public class Visibility : BaseGraph
+    public static class Visibility
     {
-        private const string graphOutput = "visGraph";
-        private const string factorsOutput = "factors";
-
-        #region Internal Properties
-        internal Dictionary<double, DSCore.Color> colorRange { get; private set; }
-
-        internal List<double> Factors { get; set; }
-
-        #endregion
-
-        #region Public Properties
-
-
-        #endregion
-
-        #region Internal Constructors
-
-        internal Visibility() { }
-
-        #endregion
-
-        #region Public Constructors
+        private const string percentageVisibleOutputPort = "Percentage visible";
+        private const string visibilityScoresOutputPort = "Visibility percentages";
+        private const string visibleItemsOutputPort = "Visible items";
 
         /// <summary>
-        /// Computes the Visibility Graph from a base graph using Lee's algorithm.
+        /// Calculates the visibility of a set of points, from a given origin point.
+        /// Returns the percentage of points that are visible and the visible points themselves.
         /// </summary>
-        /// <param name="baseGraph">Base graph</param>
-        /// <param name="reduced">Reduced graph returns edges where its vertices belong to different 
-        /// polygons and at least one is not convex/concave to its polygon.</param>
-        /// <returns name="visGraph">Visibility graph</returns>
-        [IsVisibleInDynamoLibrary(false)]
-        public static Visibility ByBaseGraph(BaseGraph baseGraph, bool reduced = true)
+        /// <param name="origin">Origin point to measure visibility from.</param>
+        /// <param name="points">The points to measure visibility to.</param>
+        /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
+        /// <param name="obstructions">List of Polygons representing internal obstructions</param>
+        /// <returns name="Percentage visible">The percentage of target Points that are visible from the origin point.</returns>
+        /// <returns name="Visible items">The specific Points that are visible from the origin point.</returns>
+        [MultiReturn(new[] { percentageVisibleOutputPort, visibleItemsOutputPort })]
+        public static Dictionary<string, object> OfPointsFromOrigin(
+            Point origin,
+            List<Point> points,
+            List<Polygon> boundary,
+            [DefaultArgument("[]")] List<Polygon> obstructions = null)
         {
-            if (baseGraph == null) throw new ArgumentNullException("graph");
-            var visGraph = new VisibilityGraph(baseGraph.graph, reduced, true);
-            var visibilityGraph = new Visibility()
+            if (origin is null)
+                throw new ArgumentNullException(nameof(origin));
+            if (points is null || points.Count == 0)
+                throw new ArgumentNullException(nameof(points));
+            if (obstructions == null) obstructions = new List<Polygon>();
+
+            Polygon isovist = IsovistPolygon(origin, obstructions, boundary);
+            GTGeom.Polygon isovistPolygon = GTGeom.Polygon.ByVertices(isovist.Points.Select(p => GTGeom.Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
+
+            var visiblePoints = new List<Point>();
+            double totalPoints = points.Count;
+            double visibilityAmount = 0;
+
+            for (var i = 0; i < points.Count; i++)
             {
-                graph = visGraph
-            };
+                var point = points[i];
+                GTGeom.Vertex vertex = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
-            return visibilityGraph;
-
-        }
-
-
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// Merges a set of Visibility Graphs by connecting them through intersecting lines.
-        /// In order to work better, lines end points should intersect VG polygon's edges.
-        /// </summary>
-        /// <param name="visibilityGraphs"></param>
-        /// <param name="lines">Connecting lines</param>
-        /// <returns name="visGraph">Connected VisibilityGraph</returns>
-        [NodeCategory("Actions")]
-        [IsVisibleInDynamoLibrary(false)]
-        public static Visibility ConnectGraphs(List<Visibility> visibilityGraphs, List<DSGeom.Line> lines)
-        {
-            if (visibilityGraphs == null) throw new ArgumentNullException("visibilityGraphs");
-
-            List<VisibilityGraph> visGraphs = visibilityGraphs.Select(vg => (VisibilityGraph)vg.graph).ToList();
-            VisibilityGraph mergedGraph = VisibilityGraph.Merge(visGraphs);
-
-            var edges = lines.Select(l => l.ToEdge()).ToList();
-
-            return new Visibility()
-            {
-                graph = VisibilityGraph.AddEdges(mergedGraph, edges)
-            };
-        }
-
-        /// <summary>
-        /// Connectivity factors represent the number of connections an edge has 
-        /// on a range from 0 to 1.
-        /// </summary>
-        /// <param name="visGraph">Visibility Graph</param>
-        /// <param name="colours">List of colours to include on the displayed range</param>
-        /// <param name="indices">List of values between 0.0 and 1.0 to define the limits of colours</param>
-        /// <returns name="visGraph">Visibility Graph</returns>
-        /// <returns name="factors">Connectivity factors by edge on graph</returns>
-        [NodeCategory("Query")]
-        [MultiReturn(new[] { graphOutput, factorsOutput })]
-        public static Dictionary<string, object> Connectivity(
-            Visibility visGraph,
-            [DefaultArgument("null")] List<DSCore.Color> colours,
-            [DefaultArgument("null")] List<double> indices)
-        {
-            if (visGraph == null) throw new ArgumentNullException("visGraph");
-
-            VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
-
-            Visibility graph = new Visibility()
-            {
-                graph = visibilityGraph,
-                Factors = visibilityGraph.ConnectivityFactor()
-            };
-
-            if (colours != null && indices != null && colours.Count == indices.Count)
-            {
-                graph.colorRange = new Dictionary<double, DSCore.Color>();
-                // Create KeyValuePairs and sort them by index in case unordered.
-                var pairs = indices.Zip(colours, (i, c) => new KeyValuePair<double, DSCore.Color>(i, c)).OrderBy(kv => kv.Key);
-
-                // Adding values to colorRange dictionary
-                foreach (KeyValuePair<double, DSCore.Color> kv in pairs)
+                if (isovistPolygon.ContainsVertex(vertex))
                 {
-                    graph.colorRange.Add(kv.Key, kv.Value);
+                    ++visibilityAmount;
+                    visiblePoints.Add(point);
                 }
             }
+            isovist.Dispose();
+
+            var visibilityPercentageScore = (1 / totalPoints) * visibilityAmount * 100;
 
             return new Dictionary<string, object>()
             {
-                {graphOutput, graph },
-                {factorsOutput, graph.Factors }
+                {percentageVisibleOutputPort, visibilityPercentageScore},
+                {visibleItemsOutputPort, visiblePoints }
             };
         }
-        #endregion
 
-        #region Override Methods
 
         /// <summary>
-        /// Customizing the render of Graph
+        /// Calculates the visibility of target Lines from a given point based on a 360 degree view range.
+        /// Returns the percentage of 360 view from origin point that target lines are visible from and the target lines that are visible.
         /// </summary>
-        /// <param name="package"></param>
-        /// <param name="parameters"></param>
-        [IsVisibleInDynamoLibrary(false)]
-        public void TessellateVisibilityGraph(IRenderPackage package, TessellationParameters parameters)
+        /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
+        /// <param name="obstructions">List of Polygons representing internal obstructions</param>
+        /// <param name="targetLines">Line segments representing the views to outside</param>
+        /// <param name="origin">Origin point to measure from</param>
+        /// <returns name="Percentage visible">The total percentage of 360 view from origin point that target lines are visible from.</returns>
+        /// <returns name="Visibility percentages">The percentage of 360 view from origin point that each target lines are visible from.</returns>
+        /// <returns name="Visible items">The specific Lines that are visible from the origin point.</returns>
+        [MultiReturn(new[] { percentageVisibleOutputPort, visibilityScoresOutputPort, visibleItemsOutputPort })]
+        public static Dictionary<string, object> OfLinesFromOrigin(
+            Point origin,
+            List<Curve> targetLines,
+            List<Polygon> boundary,
+            [DefaultArgument("[]")] List<Polygon> obstructions)
         {
+            double[] visibilityPercentages = new double[targetLines.Count];
+            Surface isovist = Visibility.IsovistFromPoint(origin, boundary, obstructions);
 
-            //foreach(Vertex v in graph.vertices)
-            //{
-            //    AddColouredVertex(package, v, vertexDefaultColour);
-            //}
-
-            package.RequiresPerVertexColoration = true;
-            var rangeColors = colorRange.Values.ToList();
-            for (var i = 0; i < base.graph.edges.Count; i++)
+            List<Curve> lines = new List<Curve>();
+            double outsideViewAngles = 0;
+            for (var i = 0; i < targetLines.Count; i++)
             {
-                var e = base.graph.edges[i];
-                var factor = Factors[i];
-                DSCore.Color color;
+                var segment = targetLines[i];
+                Geometry[] intersectSegment = isovist.Intersect(segment);
+                if (intersectSegment == null) continue;
 
-                if (factor <= colorRange.First().Key)
+                double segmentAngle = 0;
+                for (var j = 0; j < intersectSegment.Length; j++)
                 {
-                    color = colorRange.First().Value;
+                    var seg = (Curve)intersectSegment[j];
+                    lines.Add(seg);
+                    var vec1 = Vector.ByTwoPoints(origin, seg.StartPoint);
+                    var vec2 = Vector.ByTwoPoints(origin, seg.EndPoint);
+                    segmentAngle += vec1.AngleWithVector(vec2);
+                    vec1.Dispose();
+                    vec2.Dispose();
                 }
-                else if (factor >= colorRange.Last().Key)
-                {
-                    color = colorRange.Last().Value;
-                }
-                else
-                {
-                    int index = colorRange.Keys.ToList().BisectIndex(factor);
+                outsideViewAngles += segmentAngle;
+                visibilityPercentages[i] = segmentAngle / 360 * 100;
+                // TODO surface individual scores
+            }
+            isovist.Dispose();
+            double visibilityPercentageScore = outsideViewAngles / 360 * 100;
 
-                    color = DSCore.Color.Lerp(rangeColors[index - 1], rangeColors[index], Factors[i]);
-                }
+            return new Dictionary<string, object>()
+            {
+                {percentageVisibleOutputPort, visibilityPercentageScore },
+                {visibilityScoresOutputPort, visibilityPercentages },
+                {visibleItemsOutputPort, lines }
+            };
+        }
 
+        /// <summary>
+        /// Returns a surface representing the area visible from the given point.
+        /// </summary>
+        /// <param name="point">Origin or observation point</param>
+        /// <param name="boundary">Polygon(s) enclosing all internal Polygons</param>
+        /// <param name="obstructions">List of Polygons representing internal obstructions</param>
+        /// <returns name="Isovist">Surface representing the isovist area, meaning the area visible from observation point.</returns>
+        [NodeCategory("Actions")]
+        public static Surface IsovistFromPoint(
+            Point point,
+            List<Polygon> boundary,
+            [DefaultArgument("[]")] List<Polygon> obstructions)
+        {
+            var baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstructions);
 
-                AddColouredEdge(package, e, color);
+            if (baseGraph == null) throw new ArgumentNullException("graph");
+            if (point == null) throw new ArgumentNullException("point");
+
+            GTGeom.Vertex origin = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
+
+            List<GTGeom.Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
+            var points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
+
+            var polygon = Polygon.ByPoints(points);
+
+            // if polygon is self intersecting, make new polygon
+            if (polygon.SelfIntersections().Length > 0)
+            {
+                points.Add(point);
+                polygon = Polygon.ByPoints(points);
             }
 
+            var surface = Surface.ByPatch(polygon);
+            polygon.Dispose();
+            points.ForEach(p => p.Dispose());
 
+            return surface;
         }
+
+
+        #region Helpers
+        private static Polygon IsovistPolygon(
+                Point originPoint,
+                List<Polygon> obstacles,
+                List<Polygon> boundary)
+        {
+            if (obstacles is null)
+                throw new ArgumentNullException(nameof(obstacles));
+            if (boundary is null)
+                throw new ArgumentNullException(nameof(boundary));
+
+            var originVertex = GTGeom.Vertex.ByCoordinates(originPoint.X, originPoint.Y, originPoint.Z);
+            var baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstacles);
+
+            List<GTGeom.Vertex> vertices = Graphs.VisibilityGraph.VertexVisibility(originVertex, baseGraph.graph);
+            List<DSGeom.Point> points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
+
+            var polygon = DSGeom.Polygon.ByPoints(points);
+
+            // if polygon is self intersecting, make new polygon
+            if (polygon.SelfIntersections().Length > 0)
+            {
+                points.Add(originPoint);
+                polygon = DSGeom.Polygon.ByPoints(points);
+            }
+            points.ForEach(x => x.Dispose());
+
+            return polygon;
+        }
+
         #endregion
     }
 }

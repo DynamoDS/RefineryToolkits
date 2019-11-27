@@ -26,7 +26,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             };
 
             // Get the geometric median point
-            Point vertexOnObtuseAngle = AdjacencyPreference.GeometricMedian(samplePoints);
+            Point vertexOnObtuseAngle = Adjacency.GeometricMedianOfPoints(samplePoints);
 
             // Check if both X and Y of the geometric median is the same as X and Y of the vertex at angle > 120 in the obtuse triangle.
             Assert.AreEqual(samplePoints[2].X, vertexOnObtuseAngle.X);
@@ -56,7 +56,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
 
             // Get the geometric median of the Acute triangles sample points
             // Also known as the Fermat Point
-            Point fermatPoint = AdjacencyPreference.GeometricMedian(samplePoints);
+            Point fermatPoint = Adjacency.GeometricMedianOfPoints(samplePoints);
 
             // Create vectors from the fermat point to two arbitrary points in the sample points list.
             var vectors = new List<Vector>
@@ -98,7 +98,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
 
             // Get the geometric median of the Concave Quadrilateral sample points
             // which is the point inside the triangle formed by remaining 3 points
-            Point geometricMedianPoint = AdjacencyPreference.GeometricMedian(samplePoints);
+            Point geometricMedianPoint = Adjacency.GeometricMedianOfPoints(samplePoints);
 
             // Check if both X and Y of the geometric median is the same as X and Y of the 
             // point inside the triangle formed by the remaining points (samplePoints[0]).
@@ -136,8 +136,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             };
 
             // compute geometric median for both cases
-            Point geometricMedian4Point = AdjacencyPreference.GeometricMedian(sample4Points);
-            Point geometricMedian6Point = AdjacencyPreference.GeometricMedian(sample6Points);
+            Point geometricMedian4Point = Adjacency.GeometricMedianOfPoints(sample4Points);
+            Point geometricMedian6Point = Adjacency.GeometricMedianOfPoints(sample6Points);
 
             // Check if both X and Y of the geometric median is the same 
             // as X and Y of the midpoint on the line
@@ -164,7 +164,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             var expectedPoint = Point.ByCoordinates(5, 2.8867513459);
 
             // compute geometric median
-            Point geometricMedianTriangle = AdjacencyPreference.GeometricMedian(trianglePoints);
+            Point geometricMedianTriangle = Adjacency.GeometricMedianOfPoints(trianglePoints);
 
             // Check if both X and Y of the geometric median is the same 
             // as X and Y of the midpoint on the line

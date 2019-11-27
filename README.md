@@ -74,8 +74,12 @@ Dynamo : version 2.1 or later
 
 Please note that only projects with `Revit` (ex : `MassingRevit`) in their name have a dependency on Revit and its APIs. The others it will happily run in supported versions of Dynamo Sandbox or Dynamo Studio.
 
-## Contributing
-Please read [CONTRIBUTING.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package. Please also read the [CODE OF CONDUCT.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CODE_OF_CONDUCT.md).
+## Contributing & code of conduct
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](docs/CODE_OF_CONDUCT.md)
+
+Please read [CONTRIBUTING.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package.
+
+Also note that this project is released with a [Contributor Code of Conduct](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ## Licensing
 

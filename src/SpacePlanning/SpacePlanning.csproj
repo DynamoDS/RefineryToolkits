@@ -200,23 +200,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyze\AdjacencyPreference.cs" />
-    <Compile Include="Analyze\Base.cs" />
+    <Compile Include="Analyze\Adjacency.cs" />
+    <Compile Include="Analyze\BaseGraph.cs" />
     <Compile Include="Analyze\Buzz.cs" />
     <Compile Include="Analyze\Daylight.cs" />
-    <Compile Include="Analyze\Isovist.cs" />
     <Compile Include="Analyze\Openess.cs" />
     <Compile Include="Analyze\Productivity.cs" />
     <Compile Include="Analyze\PathFinding.cs" />
     <Compile Include="Analyze\SpaceNavigation.cs" />
-    <Compile Include="Analyze\ViewsToOutside.cs" />
+    <Compile Include="Analyze\RepresentableGraph.cs" />
     <Compile Include="Analyze\Visibility.cs" />
-    <Compile Include="Analyze\VisiblePoints.cs" />
     <Compile Include="Explore\ColorRange.cs" />
     <Compile Include="Generate\AmenitySpace.cs" />
-    <Compile Include="Generate\BinPacking3D.cs" />
+    <Compile Include="Generate\Packers\CuboidPacker.cs" />
+    <Compile Include="Generate\Packing.cs" />
+    <Compile Include="Generate\Packers\IPacker.cs" />
     <Compile Include="Generate\DeskLayout.cs" />
-    <Compile Include="Generate\BinPacking2D.cs" />
+    <Compile Include="Generate\Packers\RectanglePacker.cs" />
     <Compile Include="Generate\SurfaceDivision2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rank\SeededShuffle.cs" />
