@@ -2,6 +2,9 @@
 
 A collection of packages to accelerate generative design workflows in [Dynamo](http://www.dynamobim.org) & [Refinery](https://www.autodesk.com/solutions/refinery-beta).
 
+![Space Planning Toolkit floorplan layout](samples/SpacePlanning/SpacePlanningToolkit_floorplan_layout.png)
+
+
 # The toolkits
 There are currently 2 packages included in the toolkit, each focusing on enabling specific types of workflows:
 - SpacePlanning Toolkit
@@ -11,15 +14,15 @@ There are currently 2 packages included in the toolkit, each focusing on enablin
 The toolkit offers a range of nodes that help with general space-planning workflows in Dynamo and Revit.  
 ![Space Planning Toolkit package nodes](docs/images/SpacePlanningToolkit.png)
 
-[For more information on the SpacePlanningToolkit](src/SpacePlanning)
+[Read more about the SpacePlanningToolkit](src/SpacePlanning)
 
 ## Massing Toolkit
 optimization & design option generation
 ![Massing Toolkit package nodes](docs/images/MassingToolkit.png)
 
-[For more information on the MassingToolkit](src/MassingSandbox)
+[Read more about the MassingToolkit](src/MassingSandbox)
 
-[For more information on the MassingToolkit for Revit](src/MassingRevit)
+[Read more about the MassingToolkit for Revit](src/MassingRevit)
 
 # Getting Started
 
