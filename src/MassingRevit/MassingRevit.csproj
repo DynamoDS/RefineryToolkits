@@ -160,11 +160,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitNodes">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\Revit\RevitNodes.dll</HintPath>
+      <HintPath>..\..\..\DynamoRevit\bin\AnyCPU\Debug\Revit\RevitNodes.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitServices">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\Revit\RevitServices.dll</HintPath>
+      <HintPath>..\..\..\DynamoRevit\bin\AnyCPU\Debug\Revit\RevitServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -200,7 +200,9 @@
   <ItemGroup>
     <None Include="MassingRevit.ruleset" />
     <None Include="packages.config" />
-    <None Include="pkg.json" />
+    <None Include="pkg.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.2.6.3\analyzers\dotnet\cs\Humanizer.dll" />

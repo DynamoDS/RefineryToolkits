@@ -1,8 +1,8 @@
 {
   "license": "MIT",
   "file_hash": null,
-  "name": "Refinery Toolkit for Massing [Revit]",
-  "version": "0.0.1",
+  "name": "Refinery Toolkit for Massing for Revit",
+  "version": "1.0.1",
   "description": "Collection of nodes to be used in Generative Massing workflows",
   "group": "",
   "keywords": [
@@ -11,7 +11,7 @@
     "Refinery"
   ],
   "dependencies": [
-
+    "Refinery Toolkit for Massing"
   ],
   "contents": "",
   "engine_version": "2.0.2",

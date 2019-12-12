@@ -2,7 +2,7 @@
   "license": "",
   "file_hash": null,
   "name": "Refinery Toolkit for Space Planning",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Collection of nodes to be used in Generative Space Planning workflows",
   "group": "",
   "keywords": [
@@ -12,7 +12,7 @@
   ],
   "dependencies": [],
   "contents": "",
-  "engine_version": "2.0.1.5065",
+  "engine_version": "2.0.2",
   "engine": "dynamo",
   "engine_metadata": "",
   "site_url": "",

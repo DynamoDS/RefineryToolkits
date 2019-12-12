@@ -212,7 +212,9 @@
   <ItemGroup>
     <None Include="MassingSandbox.ruleset" />
     <None Include="packages.config" />
-    <None Include="pkg.json" />
+    <None Include="pkg.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.2.6.3\analyzers\dotnet\cs\Humanizer.dll" />
