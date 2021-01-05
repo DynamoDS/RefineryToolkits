@@ -123,6 +123,12 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
             for (var i = 0; i < containers.Count; i++)
             {
+                //this moves on if the pack is complete and there are containers left
+                if (remainingItems.Count == 0)
+                {
+                    continue;
+                }
+
                 // pack items
                 var currentBin = containers[i];
                 var packer = new CuboidPacker(currentBin, i);
