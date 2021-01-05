@@ -68,6 +68,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             if (packingResult == null) throw new InvalidOperationException(PackingFailed);
 
             // record results in this packer instance       
+            if (!packingResult.PackedItems.Any())
+            {
+                this.PackedItems = new List<Cuboid>();
+                this.RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
+                this.PackedIndices = new List<int>();
+                this.PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
+                this.PercentItemVolumePacked = decimal.ToDouble(packingResult.PercentItemVolumePacked);
+                return;
+            }
+
             var packedCuboids = CuboidsFromItems(packingResult.PackedItems);
             this.PackedItems = TransformPackedCuboidsToContainerCuboidCoords(this.containerCuboid, packedCuboids);
             this.RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
@@ -125,14 +135,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             {
                 //this moves on if the pack is complete and there are containers left
                 if (remainingItems.Count == 0)
-                {
                     continue;
-                }
-
+                
                 // pack items
                 var currentBin = containers[i];
                 var packer = new CuboidPacker(currentBin, i);
                 packer.PackItems(remainingItems);
+                
+                //continue if the packer failed on that one
+                if (!packer.PackedItems.Any())
+                    continue;
 
                 // update list of remaining items to pack
                 RemovePackedItemsById(remainingItems, packer);
