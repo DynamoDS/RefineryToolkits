@@ -67,7 +67,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             var packingResult = containerPackingResult.FirstOrDefault().AlgorithmPackingResults.FirstOrDefault();
             if (packingResult == null) throw new InvalidOperationException(PackingFailed);
 
-            // record results in this packer instance       
+            // record results in this packer instance    
+            
+            // if the container was not used, we return a blank list
             if (!packingResult.PackedItems.Any())
             {
                 this.PackedItems = new List<Cuboid>();
