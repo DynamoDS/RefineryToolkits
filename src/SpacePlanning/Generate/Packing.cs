@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 {
+    /// <summary>
+    /// Wrapper class for Packing nodes
+    /// </summary>
     public static class Packing
     {
         private const string packedItemsOutputPort = "Packed Items";
@@ -25,7 +28,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy</param>
         /// <returns name="Packed Items">List of packed rectangles for each of the containers provided.</returns>
         /// <returns name="Packed Indices">Indices of packed rectangles for correlation to input items list.</returns>
-        /// <returns name="Remaining Items">Items (rectangles) that didn't get packed.</returns>
+        /// <returns name="Remaining Indices">Indices of items (rectangles) that didn't get packed.</returns>
         [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingIndicesOutputPort })]
         public static Dictionary<string, object> PackRectangles(
             List<Rectangle> items,
@@ -45,7 +48,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="containers">Set of Cuboids to pack into.</param>
         /// <returns name="Packed Items">The cuboids that were packed.</returns>
         /// <returns name="Packed Indices">Indices of packed cuboids for correlation to input items list.</returns>
-        /// <returns name="Remaining Items">Cuboids that didn't get packed.</returns>
+        /// <returns name="Remaining Indices">Indices of Cuboids that didn't get packed.</returns>
         /// <returns name="% Container Volume Packed">Metric : percentage of each container volume that was packed.</returns>
         /// <returns name="% Item Volume Packed">Metric : percentage expressing how much of total items volume was packed in each container.</returns>
         [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingIndicesOutputPort, percentContainerVolumePackedPort, percentItemVolumePackedPort })]
