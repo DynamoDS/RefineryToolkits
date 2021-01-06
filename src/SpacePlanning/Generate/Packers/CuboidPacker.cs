@@ -143,10 +143,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
                 var currentBin = containers[i];
                 var packer = new CuboidPacker(currentBin, i);
                 packer.PackItems(remainingItems);
-                
-                //continue if the packer failed on that one
-                if (!packer.PackedItems.Any())
-                    continue;
 
                 // update list of remaining items to pack
                 RemovePackedItemsById(remainingItems, packer);
