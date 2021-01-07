@@ -106,7 +106,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Assert.AreEqual(2, packeditems.Count); // the number of bins this was packed into is 2
             Assert.AreEqual(4, packeditems.Sum(x => x.Count)); // total number of packed cuboids is 4
 
-            var remainItems = (List<Cuboid>)result[remainingIndicesOutputPort];
+            var remainItems = (List<int>)result[remainingIndicesOutputPort];
             Assert.AreEqual(2, remainItems.Count);
 
             // Checks that the right items has been packed
