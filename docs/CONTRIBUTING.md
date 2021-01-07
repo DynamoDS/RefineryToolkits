@@ -1,8 +1,8 @@
 # Contributing
 
-When contributing to this repository, before making a change please first discuss the change you wish to make with the owners of this repository. You can do this by [creating an issue](http://www.github.com/radumg/DynaWeb/issues/new)
+When contributing to this repository, before making a change please first discuss the change you wish to make with the owners of this repository. You can do this by [creating an issue](https://github.com/DynamoDS/RefineryToolkits/issues/new)
 
-Please note we also have a [CODE OF CONDUCT](https://github.com/radumg/DynaWeb/CODE_OF_CONDUCT.md), so please read & follow it in all your interactions with the project.
+Please note we also have a [CODE OF CONDUCT](./CODE_OF_CONDUCT.md), so please read & follow it in all your interactions with the project.
 
 ## Pull Request Process
 
