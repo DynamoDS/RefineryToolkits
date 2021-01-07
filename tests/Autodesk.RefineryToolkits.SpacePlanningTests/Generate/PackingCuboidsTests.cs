@@ -59,7 +59,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 
             // extract results from dictionary
             var actualPackeditems = (List<List<Cuboid>>)result[packedItemsOutputPort];
-            var actualRemainItems = (List<Cuboid>)result[remainingIndicesOutputPort];
+            var actualRemainItems = (List<int>)result[remainingIndicesOutputPort];
             var actualPackedIndices = (List<List<int>>)result[indicesOutputPort];
             var actualPercentContVol = (result[percentContainerVolumePackedPort] as IEnumerable<double>).First();
             var actualPercentItemVol = (result[percentItemVolumePackedPort] as IEnumerable<double>).First();

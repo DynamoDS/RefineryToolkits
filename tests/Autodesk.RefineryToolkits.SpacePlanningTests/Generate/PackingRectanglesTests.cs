@@ -44,7 +44,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Assert.AreEqual(1, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.First().Count);
 
-            var remainItems = (List<Rectangle>)result[remainingIndicesOutputPort];
+            var remainItems = (List<int>)result[remainingIndicesOutputPort];
             Assert.AreEqual(0, remainItems.Count);
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -82,7 +82,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Assert.AreEqual(1, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.First().Count);
 
-            var remainItems = (List<Rectangle>)result[remainingIndicesOutputPort];
+            var remainItems = (List<int>)result[remainingIndicesOutputPort];
             Assert.AreEqual(2, remainItems.Count);
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -125,7 +125,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Assert.AreEqual(3, packedRectangles.Count); // 3 bins were packed
             Assert.AreEqual(4, packedRectangles.Sum(x => x.Count)); // the number of rectangles packed is 4
 
-            var remainItems = (List<Rectangle>)result[remainingIndicesOutputPort];
+            var remainItems = (List<int>)result[remainingIndicesOutputPort];
             Assert.AreEqual(2, remainItems.Count); // 2 rectangles were not packed
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -173,7 +173,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Assert.AreEqual(3, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.Sum(x => x.Count));
 
-            var remainItems = (List<Rectangle>)result3[remainingIndicesOutputPort];
+            var remainItems = (List<int>)result3[remainingIndicesOutputPort];
             Assert.AreEqual(2, remainItems.Count);
         }
     }
