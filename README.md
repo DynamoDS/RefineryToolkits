@@ -35,7 +35,7 @@ This repository has quite a few sample files provided to help you get started wi
 It is highly recommed starting with the samples as they contain detailed notes and instructions on how to use each of the nodes. 
 Feel free to open an issue or submit a PR if you'd like to see further some documentation added here.
 
-You can find the samples in this repository's [`samples folder`](./samples) folder, as well as and in the `extra` folder of the package you download using the Dynamo Package Manager, typically found here : `%appdata%\Dynamo\Dynamo Revit\2\packages\GenerativeToolkit`
+You can find the samples in this repository's [`samples folder`](https://github.com/DynamoDS/RefineryToolkits/tree/master/samples) folder, as well as and in the `extra` folder of the package you download using the Dynamo Package Manager, typically found here : `%appdata%\Dynamo\Dynamo Revit\2\packages\GenerativeToolkit`
 
 The samples shows a simple example of how each node in the toolkit works. Some of the samples will have a Revit version (marked with __(RVT)__), and some also have a version setup to be used with Refinery (marked with __(RefineryVersion)__) :
 
@@ -77,17 +77,17 @@ Please note that only projects with `Revit` (ex : `MassingRevit`) in their name 
 ## Contributing & code of conduct
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](docs/CODE_OF_CONDUCT.md)
 
-Please read [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on how to contribute to this package.
+Please read [CONTRIBUTING.md](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CONTRIBUTING.md) for details on how to contribute to this package.
 
-Also note that this project is released with a [Contributor Code of Conduct](docs/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+Also note that this project is released with a [Contributor Code of Conduct](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ## Licensing
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](./LICENSE) for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE FILE](https://github.com/DynamoDS/RefineryToolkits/tree/master/LICENSE) for details.
 
 ### Packages used
 
-This project uses the third-party packages listed below, whose licenses are available in the [docs](docs) folder as per their MIT license requirements.
+This project uses the third-party packages listed below, whose licenses are available in the [docs](https://github.com/DynamoDS/RefineryToolkits/tree/master/docs) folder as per their MIT license requirements.
 
 - [Graphical](https://github.com/alvpickmans/Graphical)
 - [MIConvexHull](https://github.com/DesignEngrLab/MIConvexHull)
