@@ -21,9 +21,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 {
     public static class Visibility
     {
-        private const string percentageVisibleOutputPort = "Percentage visible";
-        private const string visibilityScoresOutputPort = "Visibility percentages";
-        private const string visibleItemsOutputPort = "Visible items";
+        private const string percentageVisibleOutputPort = "percentageVisible";
+        private const string visibilityScoresOutputPort = "visibilityPercentages";
+        private const string visibleItemsOutputPort = "visibleItems";
 
         /// <summary>
         /// Calculates the visibility of a set of points, from a given origin point.
@@ -33,8 +33,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="points">The points to measure visibility to.</param>
         /// <param name="boundary">Polygon(s) enclosing all obstacle Polygons</param>
         /// <param name="obstructions">List of Polygons representing internal obstructions</param>
-        /// <returns name="Percentage visible">The percentage of target Points that are visible from the origin point.</returns>
-        /// <returns name="Visible items">The specific Points that are visible from the origin point.</returns>
+        /// <returns name="percentageVisible">The percentage of target Points that are visible from the origin point.</returns>
+        /// <returns name="visibleItems">The specific Points that are visible from the origin point.</returns>
         [MultiReturn(new[] { percentageVisibleOutputPort, visibleItemsOutputPort })]
         public static Dictionary<string, object> OfPointsFromOrigin(
             Point origin,
@@ -86,9 +86,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="obstructions">List of Polygons representing internal obstructions</param>
         /// <param name="targetLines">Line segments representing the views to outside</param>
         /// <param name="origin">Origin point to measure from</param>
-        /// <returns name="Percentage visible">The total percentage of 360 view from origin point that target lines are visible from.</returns>
-        /// <returns name="Visibility percentages">The percentage of 360 view from origin point that each target lines are visible from.</returns>
-        /// <returns name="Visible items">The specific Lines that are visible from the origin point.</returns>
+        /// <returns name="percentageVisible">The total percentage of 360 view from origin point that target lines are visible from.</returns>
+        /// <returns name="visibilityPercentages">The percentage of 360 view from origin point that each target lines are visible from.</returns>
+        /// <returns name="visibleItems">The specific Lines that are visible from the origin point.</returns>
         [MultiReturn(new[] { percentageVisibleOutputPort, visibilityScoresOutputPort, visibleItemsOutputPort })]
         public static Dictionary<string, object> OfLinesFromOrigin(
             Point origin,
