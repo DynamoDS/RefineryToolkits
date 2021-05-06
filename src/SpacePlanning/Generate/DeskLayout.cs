@@ -10,7 +10,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
     public static class DeskLayout
     {
         /// <summary>
-        /// Creates a layout of desks on a surface based on desk dimensions. Note: Units are in mm. Please convert prior to connecting.
+        /// Creates a layout of desks on a surface based on desk dimensions. Units default to millimeters. If your project is using a different unit system, please convert the inputs to millimeters.
         /// </summary>
         /// <param name="surface">The surface to perform desk layout within.</param>
         /// <param name="deskWidth">The width of the desks in mm</param>
