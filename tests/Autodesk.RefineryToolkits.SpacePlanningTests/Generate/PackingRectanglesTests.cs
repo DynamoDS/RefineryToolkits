@@ -11,7 +11,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
     public partial class PackingTests
     {
         private const string packedItemsOutputPort = "Packed Items";
-        private const string remainingItemsOutputPort = "Remaining Items";
+        private const string remainingIndicesOutputPort = "Remaining Indices";
         private const string indicesOutputPort = "Packed Indices";
 
         [Test]
@@ -37,14 +37,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 
             // Assert
             Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
-            Assert.IsTrue(result.Keys.Contains(remainingItemsOutputPort));
+            Assert.IsTrue(result.Keys.Contains(remainingIndicesOutputPort));
             Assert.IsTrue(result.Keys.Contains(indicesOutputPort));
 
             var packedRectangles = (List<List<Rectangle>>)result[packedItemsOutputPort];
             Assert.AreEqual(1, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.First().Count);
 
-            var remainItems = (List<Rectangle>)result[remainingItemsOutputPort];
+            var remainItems = (List<int>)result[remainingIndicesOutputPort];
             Assert.AreEqual(0, remainItems.Count);
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -75,14 +75,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 
             // Assert
             Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
-            Assert.IsTrue(result.Keys.Contains(remainingItemsOutputPort));
+            Assert.IsTrue(result.Keys.Contains(remainingIndicesOutputPort));
             Assert.IsTrue(result.Keys.Contains(indicesOutputPort));
 
             var packedRectangles = (List<List<Rectangle>>)result[packedItemsOutputPort];
             Assert.AreEqual(1, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.First().Count);
 
-            var remainItems = (List<Rectangle>)result[remainingItemsOutputPort];
+            var remainItems = (List<int>)result[remainingIndicesOutputPort];
             Assert.AreEqual(2, remainItems.Count);
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -118,14 +118,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 
             // Assert
             Assert.IsTrue(result.Keys.Contains(packedItemsOutputPort));
-            Assert.IsTrue(result.Keys.Contains(remainingItemsOutputPort));
+            Assert.IsTrue(result.Keys.Contains(remainingIndicesOutputPort));
             Assert.IsTrue(result.Keys.Contains(indicesOutputPort));
 
             var packedRectangles = (List<List<Rectangle>>)result[packedItemsOutputPort];
             Assert.AreEqual(3, packedRectangles.Count); // 3 bins were packed
             Assert.AreEqual(4, packedRectangles.Sum(x => x.Count)); // the number of rectangles packed is 4
 
-            var remainItems = (List<Rectangle>)result[remainingItemsOutputPort];
+            var remainItems = (List<int>)result[remainingIndicesOutputPort];
             Assert.AreEqual(2, remainItems.Count); // 2 rectangles were not packed
 
             var packedIndices = (List<List<int>>)result[indicesOutputPort];
@@ -166,14 +166,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 
             // Assert
             Assert.IsTrue(result3.Keys.Contains(packedItemsOutputPort));
-            Assert.IsTrue(result3.Keys.Contains(remainingItemsOutputPort));
+            Assert.IsTrue(result3.Keys.Contains(remainingIndicesOutputPort));
             Assert.IsTrue(result3.Keys.Contains(indicesOutputPort));
 
             var packedRectangles = (List<List<Rectangle>>)result3[packedItemsOutputPort];
             Assert.AreEqual(3, packedRectangles.Count);
             Assert.AreEqual(4, packedRectangles.Sum(x => x.Count));
 
-            var remainItems = (List<Rectangle>)result3[remainingItemsOutputPort];
+            var remainItems = (List<int>)result3[remainingIndicesOutputPort];
             Assert.AreEqual(2, remainItems.Count);
         }
     }
