@@ -2,7 +2,7 @@
   "Uuid": "b07abd64-7529-4d6d-9531-572f41aab6c1",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_Refinery Toolkit_PackingRectangles_BLSF",
+  "Name": "GenerativeToolkit_PackingRectangles_BSSF",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -350,7 +350,7 @@
         {
           "Id": "86d1144a627c41a99f1b9618db547af4",
           "Name": "values",
-          "Description": "The numbers to sum\n\ndouble[]",
+          "Description": "Numbers to add to sum\n\ndouble[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -360,7 +360,7 @@
       "Outputs": [
         {
           "Id": "0a81605f56e443deb6b12ce91f8af053",
-          "Name": "sum",
+          "Name": "double",
           "Description": "The sum of the values",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -419,7 +419,7 @@
         {
           "Id": "afe633e111624f1cbfe15a1bfac16dc3",
           "Name": "keys",
-          "Description": "list of keys\n\nvar[]..[]",
+          "Description": "list of keys, keys have to be sortable (e.g. numbers,strings)\n\nvar[]..[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -429,8 +429,8 @@
       "Outputs": [
         {
           "Id": "13622e9a280a4788ae9d7939599a123d",
-          "Name": "sorted list",
-          "Description": "sorted list",
+          "Name": "sortedList",
+          "Description": "type: var[]..[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -438,8 +438,8 @@
         },
         {
           "Id": "803749a570b44995926a07de4c03444a",
-          "Name": "sorted keys",
-          "Description": "sorted keys",
+          "Name": "sortedKeys",
+          "Description": "type: var[]..[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -499,7 +499,7 @@
         {
           "Id": "b9501c801cac4d139fd65f03e3f9704e",
           "Name": "list",
-          "Description": "New list.",
+          "Description": "Reversed list",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -528,7 +528,7 @@
       "Outputs": [
         {
           "Id": "ab51f287c6e54b50b6ae429bfc317e07",
-          "Name": "count",
+          "Name": "int",
           "Description": "List length.",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -597,7 +597,7 @@
       "Outputs": [
         {
           "Id": "fe19b243a0394403a77da9498032f4c6",
-          "Name": "count",
+          "Name": "int",
           "Description": "List length.",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -665,7 +665,7 @@
         {
           "Id": "1e876d7168db4a4f8b99fc8d10940565",
           "Name": "values",
-          "Description": "The numbers to sum\n\ndouble[]",
+          "Description": "Numbers to add to sum\n\ndouble[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -675,7 +675,7 @@
       "Outputs": [
         {
           "Id": "5c0a587321354c4c901605addda0e3fe",
-          "Name": "sum",
+          "Name": "double",
           "Description": "The sum of the values",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -842,7 +842,7 @@
       "Outputs": [
         {
           "Id": "39a5a885901c450e9990b54bc4b40c15",
-          "Name": "count",
+          "Name": "int",
           "Description": "List length.",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -910,7 +910,7 @@
         {
           "Id": "5be7043fca4d430881c95ee3c1926664",
           "Name": "values",
-          "Description": "The numbers to sum\n\ndouble[]",
+          "Description": "Numbers to add to sum\n\ndouble[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -920,7 +920,7 @@
       "Outputs": [
         {
           "Id": "9742dd5e705648098dc765803c2103f5",
-          "Name": "sum",
+          "Name": "double",
           "Description": "The sum of the values",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -1107,7 +1107,7 @@
         {
           "Id": "63d37c24b8734e4c8110c60a20effd75",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1116,7 +1116,7 @@
         {
           "Id": "740bb3b6e67f4be0b8786d265f2c5d03",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1127,7 +1127,7 @@
         {
           "Id": "d7b3b18bd490451096e70522ec4965fb",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1135,7 +1135,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1145,8 +1145,8 @@
       "Inputs": [
         {
           "Id": "7141ac24aa654d0681c65d1aac5c1e24",
-          "Name": "a",
-          "Description": "The alpha value.\n\nint\nDefault value : 255",
+          "Name": "alpha",
+          "Description": "Alpha value (between 0 and 255 inclusive)\n\nint\nDefault value : 255",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1154,8 +1154,8 @@
         },
         {
           "Id": "d7cd51a9e8db48ef93be632ec80c167c",
-          "Name": "r",
-          "Description": "The red value.\n\nint\nDefault value : 0",
+          "Name": "red",
+          "Description": "Red value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1163,8 +1163,8 @@
         },
         {
           "Id": "d64268606e444f4c804a690a948b567d",
-          "Name": "g",
-          "Description": "The green value.\n\nint\nDefault value : 0",
+          "Name": "green",
+          "Description": "Green value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1172,8 +1172,8 @@
         },
         {
           "Id": "669465949cba4f508e58ea3f58f7f828",
-          "Name": "b",
-          "Description": "The blue value.\n\nint\nDefault value : 0",
+          "Name": "blue",
+          "Description": "Blue value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1184,7 +1184,7 @@
         {
           "Id": "4c96a7e031354a6c820a0f08eae3a342",
           "Name": "color",
-          "Description": "Color.",
+          "Description": "Color created from ARGB",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1192,7 +1192,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (a: int = 255, r: int = 0, g: int = 0, b: int = 0): Color"
+      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (alpha: int = 255, red: int = 0, green: int = 0, blue: int = 0): Color"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1316,7 +1316,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -1345,7 +1345,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -1374,7 +1374,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -1403,7 +1403,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -1432,7 +1432,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -1461,7 +1461,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1505,7 +1505,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.Packing.PackRectangles@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle[],var",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.Packing.PackRectangles@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy",
       "Id": "fab24a55f42c4b1f8b321c8acb139197",
       "Inputs": [
         {
@@ -1529,7 +1529,7 @@
         {
           "Id": "56cc87eef4894bd18b34de9f1278866d",
           "Name": "strategy",
-          "Description": "Method for choosing where to place the next rectangle when packing. Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy\n\nvar\nDefault value : Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits",
+          "Description": "(optional) Method for choosing where to place the next rectangle when packing. Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy\n\nRectanglePackingStrategy\nDefault value : Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1540,7 +1540,7 @@
         {
           "Id": "2ea7da33462245009edbf9dbdc843c4e",
           "Name": "Packed Items",
-          "Description": "List of packed rectangles for each of the containers provided, the indices of rectangles packed and any items that have not been packed.",
+          "Description": "List of packed rectangles for each of the containers provided.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1549,7 +1549,7 @@
         {
           "Id": "4bde0e324340411fa6345e22ff19c792",
           "Name": "Packed Indices",
-          "Description": "var",
+          "Description": "Indices of packed rectangles for correlation to input items list.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1558,7 +1558,7 @@
         {
           "Id": "bbeef25fd39c4a348282a47096541039",
           "Name": "Remaining Items",
-          "Description": "var",
+          "Description": "Items (rectangles) that didn't get packed.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1566,12 +1566,12 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packs a list of items (Rectangles) into a set of containers (Rectangles too). Algorithm sequentially packs rectangles in each container (order as provided) until there is nothing left to pack or it run out of bins. You can safely use this with a single container as well.\n\nPacking.PackRectangles (items: Rectangle[], containers: Rectangle[], strategy: var = Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits): var[]..[]"
+      "Description": "Packs a list of items (Rectangles) into a set of containers (Rectangles too). Algorithm sequentially packs rectangles in each container (order as provided) until there is nothing left to pack or it run out of bins. You can safely use this with a single container as well.\n\nPacking.PackRectangles (items: Rectangle[], containers: Rectangle[], strategy: RectanglePackingStrategy = Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.Packing.PackRectangles@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle[],var",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.Packing.PackRectangles@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy",
       "Id": "c5d2be0ded1642d0979886487ce9dfe8",
       "Inputs": [
         {
@@ -1595,7 +1595,7 @@
         {
           "Id": "b5b68e6d284d45c3b5d75977971e4d79",
           "Name": "strategy",
-          "Description": "Method for choosing where to place the next rectangle when packing. Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy\n\nvar\nDefault value : Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits",
+          "Description": "(optional) Method for choosing where to place the next rectangle when packing. Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy\n\nRectanglePackingStrategy\nDefault value : Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1606,7 +1606,7 @@
         {
           "Id": "77679f682d62496c94997ef293ae4248",
           "Name": "Packed Items",
-          "Description": "List of packed rectangles for each of the containers provided, the indices of rectangles packed and any items that have not been packed.",
+          "Description": "List of packed rectangles for each of the containers provided.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1615,7 +1615,7 @@
         {
           "Id": "3fa0c3c2da134d638289b658701d9d9c",
           "Name": "Packed Indices",
-          "Description": "var",
+          "Description": "Indices of packed rectangles for correlation to input items list.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1624,7 +1624,7 @@
         {
           "Id": "7aae6b18dc1247a0a6072e421a9cae16",
           "Name": "Remaining Items",
-          "Description": "var",
+          "Description": "Items (rectangles) that didn't get packed.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1632,12 +1632,12 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packs a list of items (Rectangles) into a set of containers (Rectangles too). Algorithm sequentially packs rectangles in each container (order as provided) until there is nothing left to pack or it run out of bins. You can safely use this with a single container as well.\n\nPacking.PackRectangles (items: Rectangle[], containers: Rectangle[], strategy: var = Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits): var[]..[]"
+      "Description": "Packs a list of items (Rectangles) into a set of containers (Rectangles too). Algorithm sequentially packs rectangles in each container (order as provided) until there is nothing left to pack or it run out of bins. You can safely use this with a single container as well.\n\nPacking.PackRectangles (items: Rectangle[], containers: Rectangle[], strategy: RectanglePackingStrategy = Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.Packing.PackRectangles@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle[],var",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.Packing.PackRectangles@Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.DesignScript.Geometry.Rectangle[],Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy",
       "Id": "fa857e96a21b4c8a873a18b1cdce2ccb",
       "Inputs": [
         {
@@ -1661,7 +1661,7 @@
         {
           "Id": "e6419b13bb644120baf07a60f127eef7",
           "Name": "strategy",
-          "Description": "Method for choosing where to place the next rectangle when packing. Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy\n\nvar\nDefault value : Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits",
+          "Description": "(optional) Method for choosing where to place the next rectangle when packing. Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy\n\nRectanglePackingStrategy\nDefault value : Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1672,7 +1672,7 @@
         {
           "Id": "b7492e55115f44ec98a4e38475908e9a",
           "Name": "Packed Items",
-          "Description": "List of packed rectangles for each of the containers provided, the indices of rectangles packed and any items that have not been packed.",
+          "Description": "List of packed rectangles for each of the containers provided.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1681,7 +1681,7 @@
         {
           "Id": "6429825435b4480e83c982dec8387d03",
           "Name": "Packed Indices",
-          "Description": "var",
+          "Description": "Indices of packed rectangles for correlation to input items list.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1690,7 +1690,7 @@
         {
           "Id": "4b4e60d3171f439bb09891d7458c79d3",
           "Name": "Remaining Items",
-          "Description": "var",
+          "Description": "Items (rectangles) that didn't get packed.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1698,19 +1698,19 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packs a list of items (Rectangles) into a set of containers (Rectangles too). Algorithm sequentially packs rectangles in each container (order as provided) until there is nothing left to pack or it run out of bins. You can safely use this with a single container as well.\n\nPacking.PackRectangles (items: Rectangle[], containers: Rectangle[], strategy: var = Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits): var[]..[]"
+      "Description": "Packs a list of items (Rectangles) into a set of containers (Rectangles too). Algorithm sequentially packs rectangles in each container (order as provided) until there is nothing left to pack or it run out of bins. You can safely use this with a single container as well.\n\nPacking.PackRectangles (items: Rectangle[], containers: Rectangle[], strategy: RectanglePackingStrategy = Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.Packing.RectangleLongSideStrategy",
-      "Id": "6a64734cabe447fba6c52e974fa33afa",
+      "FunctionSignature": "Autodesk.RefineryToolkits.SpacePlanning.Generate.Packing.RectangleShortSideStrategy",
+      "Id": "6bafb6b04fda4419bab2f2d314efd3db",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "f2f878c3997f443696e3111ca0fa5c2e",
-          "Name": "var",
-          "Description": "var",
+          "Id": "0dbf5c1842f647d9969c72cb565aa8c0",
+          "Name": "RectanglePackingStrategy",
+          "Description": "RectanglePackingStrategy",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1718,7 +1718,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packs next rectangle into the free area where the length of the shorter leftover side is minimized.\n\nPacking.RectangleLongSideStrategy: var"
+      "Description": "Packs next rectangle into the free area where the length of the longer leftover side is minimized\n\nPacking.RectangleShortSideStrategy: RectanglePackingStrategy"
     }
   ],
   "Connectors": [
@@ -2043,29 +2043,43 @@
       "Id": "19298602fccd48598a782f2ae29f6928"
     },
     {
-      "Start": "f2f878c3997f443696e3111ca0fa5c2e",
+      "Start": "0dbf5c1842f647d9969c72cb565aa8c0",
       "End": "56cc87eef4894bd18b34de9f1278866d",
-      "Id": "00a5f428e3124b79b9d29d6eb25c0202"
+      "Id": "71b62c3aec934a62b8b4b2f0af68f7bb"
     },
     {
-      "Start": "f2f878c3997f443696e3111ca0fa5c2e",
+      "Start": "0dbf5c1842f647d9969c72cb565aa8c0",
       "End": "b5b68e6d284d45c3b5d75977971e4d79",
-      "Id": "680d29311cfc41fbb9b3836875f57f32"
+      "Id": "3fd15401a4cc4801acf857d48dee3879"
     },
     {
-      "Start": "f2f878c3997f443696e3111ca0fa5c2e",
+      "Start": "0dbf5c1842f647d9969c72cb565aa8c0",
       "End": "e6419b13bb644120baf07a60f127eef7",
-      "Id": "c242373ea48a4bcca877928964dae3b1"
+      "Id": "34a9fd58d83641a5a7cb88df67312955"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Refinery Toolkit",
+      "Version": "1.1.1",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "fab24a55f42c4b1f8b321c8acb139197",
+        "c5d2be0ded1642d0979886487ce9dfe8",
+        "fa857e96a21b4c8a873a18b1cdce2ccb",
+        "6bafb6b04fda4419bab2f2d314efd3db"
+      ]
+    }
+  ],
+  "ExtensionWorkspaceData": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.11.1.4675",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -2239,8 +2253,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2816.219096627894,
-        "Y": 548.52951736575164
+        "X": 2812.0771037638042,
+        "Y": 718.35122479343659
       },
       {
         "ShowGeometry": true,
@@ -2249,8 +2263,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2744.3148188305677,
-        "Y": 677.9872352750433
+        "X": 2740.1728259664778,
+        "Y": 847.80894270272825
       },
       {
         "ShowGeometry": true,
@@ -2260,7 +2274,7 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2840.0966113839386,
-        "Y": 162.92596640792749
+        "Y": 249.43406966277928
       },
       {
         "ShowGeometry": true,
@@ -2300,7 +2314,7 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2738.2394598057035,
-        "Y": 288.01311337945265
+        "Y": 374.52121663430444
       },
       {
         "ShowGeometry": true,
@@ -2329,8 +2343,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2867.0847826819027,
-        "Y": -189.43207021378157
+        "X": 2859.1959500545117,
+        "Y": -233.31530250983781
       },
       {
         "ShowGeometry": true,
@@ -2369,8 +2383,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2743.1571229629972,
-        "Y": -62.428442437041895
+        "X": 2735.2682903356063,
+        "Y": -106.31167473309813
       },
       {
         "ShowGeometry": true,
@@ -2449,8 +2463,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3087.219096627894,
-        "Y": 548.52951736575164
+        "X": 3083.0771037638042,
+        "Y": 718.35122479343659
       },
       {
         "ShowGeometry": true,
@@ -2459,8 +2473,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3148.3148188305677,
-        "Y": 673.77390194170994
+        "X": 3313.9945333941628,
+        "Y": 843.59560936939488
       },
       {
         "ShowGeometry": true,
@@ -2470,7 +2484,7 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "X": 3111.0966113839386,
-        "Y": 162.92596640792749
+        "Y": 249.43406966277928
       },
       {
         "ShowGeometry": true,
@@ -2479,8 +2493,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3142.2394598057035,
-        "Y": 283.79978004611928
+        "X": 3351.4100994422424,
+        "Y": 366.16589043688123
       },
       {
         "ShowGeometry": true,
@@ -2489,8 +2503,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3138.0847826819027,
-        "Y": -189.43207021378157
+        "X": 3130.195950054509,
+        "Y": -233.31530250983826
       },
       {
         "ShowGeometry": true,
@@ -2499,8 +2513,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3147.1571229629972,
-        "Y": -66.641775770375261
+        "X": 3360.8649085644147,
+        "Y": -106.38301520234177
       },
       {
         "ShowGeometry": true,
@@ -2544,38 +2558,265 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Packing.RectangleLongSideStrategy",
-        "Id": "6a64734cabe447fba6c52e974fa33afa",
+        "Name": "Packing.RectangleShortSideStrategy",
+        "Id": "6bafb6b04fda4419bab2f2d314efd3db",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 761.02883313966686,
-        "Y": 881.75353380648119
+        "X": 760.46724708512943,
+        "Y": 881.41440700554483
       }
     ],
     "Annotations": [
       {
-        "Id": "acb7714db4434264bf539b91f2c871c5",
+        "Id": "9f11e03fb624474c92166928b3bfe695",
+        "Title": "Bin Properties",
+        "Nodes": [
+          "9562e8c255874a92b1c5186858093c4a"
+        ],
+        "Left": -1343.9999451693468,
+        "Top": 281.29835348999569,
+        "Width": 171.30333333333334,
+        "Height": 199.0,
+        "FontSize": 36.0,
+        "InitialTop": 377.29835348999569,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 86.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "1a0c327186ef49edbe0e13877a0ae1d8",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nPacking Rectangles\r\nBest Short Side Strategy\r\n",
+        "Nodes": [
+          "45177fe3199c4c2ca6da6d70880eeade",
+          "b8b133a43f1a4305b8ebedbf43c6a2ec",
+          "d910be780cc34892ad4e3146ebf71921",
+          "fa9cec24cce64bbb8886fa6b518c1c52",
+          "e20ceeaabae3448ea9c495c675629310",
+          "de6a1675c5a5421ea6b257570a85e08e",
+          "c0ed8b3580a14a87aee7a526184a6a14"
+        ],
+        "Left": -2676.3405238271862,
+        "Top": -9.9524517356745719,
+        "Width": 632.23562714206673,
+        "Height": 758.57338313009416,
+        "FontSize": 48.0,
+        "InitialTop": 288.04754826432543,
+        "InitialHeight": 426.57338313009416,
+        "TextblockHeight": 288.0,
+        "Background": "#FFFFFFFF"
+      },
+      {
+        "Id": "b878a234e6da4017af7eba4a1f351dfe",
+        "Title": "Rectangle properties",
+        "Nodes": [
+          "132e5699d4d44b0f8e13e844c7a753c4",
+          "effbcd915fd545728c194108402283f5"
+        ],
+        "Left": -1345.5879627676968,
+        "Top": 490.65721693416356,
+        "Width": 312.0,
+        "Height": 290.91429863517033,
+        "FontSize": 36.0,
+        "InitialTop": 586.65721693416356,
+        "InitialHeight": 236.91429863517033,
+        "TextblockHeight": 86.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "1727f093b14e4716a2c17c429ce9cad0",
+        "Title": "",
+        "Nodes": [
+          "2326507259fb462f85cbae88d6157ccd"
+        ],
+        "Left": -1684.0469317613861,
+        "Top": 283.41407989295493,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 313.41407989295493,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 20.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "5e5563a572f746f18203f89588686f9e",
+        "Title": "",
+        "Nodes": [
+          "a86a8408fdb045ad8123f5b6eb438f68"
+        ],
+        "Left": -1682.46260855636,
+        "Top": 453.27669037492632,
+        "Width": 319.0,
+        "Height": 137.00000000000006,
+        "FontSize": 14.0,
+        "InitialTop": 483.27669037492632,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 20.0,
+        "Background": "#FFD4B6DB"
+      },
+      {
+        "Id": "cb21b3867e874d03b090822526461759",
+        "Title": "",
+        "Nodes": [
+          "1d93e20485a947758894f95156cfcc5c"
+        ],
+        "Left": -2011.0697361635143,
+        "Top": 453.94724915488877,
+        "Width": 314.0,
+        "Height": 123.00000000000006,
+        "FontSize": 14.0,
+        "InitialTop": 483.94724915488877,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 20.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "fe7dc42d24554bf5ac6ae1ed337af28c",
+        "Title": "",
+        "Nodes": [
+          "5b393362fe7c491d87812a8500169d9c"
+        ],
+        "Left": -2012.0637678086241,
+        "Top": 283.67772175972794,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 313.67772175972794,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 20.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "5acc6779d2f1474d8656188a894426db",
+        "Title": "",
+        "Nodes": [
+          "6d6b81d4fe234818b3ebf52643b41a17"
+        ],
+        "Left": -2010.33965533146,
+        "Top": 602.47326388241231,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 632.47326388241231,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 20.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "0dc025c2ff744c8dbeb624cec8ad77fc",
         "Title": "Random Rectangles",
         "Nodes": [
+          "0e9aa67db8f1430b8d65f336aaeeee5c",
           "fe5b997b8f60468aa34bd19968f25f5d",
           "577f51449e63460ca4d8bd65fef6358b",
-          "0e9aa67db8f1430b8d65f336aaeeee5c",
           "a5807237ba01480eab655c9402c0a67d"
         ],
         "Left": -1005.7144749276185,
-        "Top": 527.14533143238248,
-        "Width": 1096.666666666667,
-        "Height": 235.33333333333337,
-        "FontSize": 36.0,
+        "Top": 541.47866476571585,
+        "Width": 1093.0000000000002,
+        "Height": 221.0,
+        "FontSize": 24.0,
         "InitialTop": 580.47866476571585,
-        "InitialHeight": 195.0,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 212.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
       },
       {
-        "Id": "98cc0bed500f4d9eb9053ddedf924343",
-        "Title": "Best Long Side Fits - Custom Order",
+        "Id": "d6801f751dab456fac7d3f13ce758a11",
+        "Title": "Rectangles Area",
+        "Nodes": [
+          "3ca4f7983387475b9bd1d8538bbecead"
+        ],
+        "Left": -140.49895144438597,
+        "Top": 179.78181539373264,
+        "Width": 283.0,
+        "Height": 132.0,
+        "FontSize": 24.0,
+        "InitialTop": 218.78181539373264,
+        "InitialHeight": 311.78181539373264,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "b72da17f73a846a6a91d889a633b4efa",
+        "Title": "Sort Ascending",
+        "Nodes": [
+          "6a57d1d8c2c8411882946e0c12988677"
+        ],
+        "Left": 213.831258829111,
+        "Top": 149.380302171232,
+        "Width": 233.0,
+        "Height": 157.99999999999997,
+        "FontSize": 24.0,
+        "InitialTop": 188.380302171232,
+        "InitialHeight": 192.38030217123196,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "cff213920b034ae38d7c26f477397fe7",
+        "Title": "Sort Descending",
+        "Nodes": [
+          "c902154d043e4f2095542c5b40d66ddd"
+        ],
+        "Left": 213.940281069644,
+        "Top": -85.4649619369343,
+        "Width": 173.00000000000003,
+        "Height": 161.0,
+        "FontSize": 24.0,
+        "InitialTop": -17.4649619369343,
+        "InitialHeight": 241.53503806306571,
+        "TextblockHeight": 58.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "7fa03e7d6f6c453a8e078e5253c62b17",
+        "Title": "Best Short Side Fits - Decending Order",
+        "Nodes": [
+          "f0fc26e9eae84da08c6477be88c5340d",
+          "d17faabf50394909b2dada2e25992f1c",
+          "6c2caeef84004805b21ed89eb5211bb3",
+          "302f6c3003bc409f9a4ee7231fdf9974",
+          "694a806a42c341468c22bf78eb884a6c",
+          "fab24a55f42c4b1f8b321c8acb139197",
+          "d4c696784bf4449a80925345984bc254"
+        ],
+        "Left": 744.79281154158639,
+        "Top": -210.80084281516378,
+        "Width": 1812.9999999999998,
+        "Height": 239.66173729965422,
+        "FontSize": 24.0,
+        "InitialTop": -171.80084281516378,
+        "InitialHeight": 230.66173729965422,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "31d600117501460dba8844883f05ada0",
+        "Title": "Best Short Side Fits - Ascending Order",
+        "Nodes": [
+          "aaa7a9dd3c0a41ba92baeea6fd0007b4",
+          "25a1a8ebc091437ca4ce35fbaa85198f",
+          "748667b7350b4118bd413cc154adda6e",
+          "198eac55c335433da8a0128a8a607e36",
+          "e85f15fbf060459f8382483cc2851274",
+          "c5d2be0ded1642d0979886487ce9dfe8",
+          "40c618e2d7fd4434a19b6663a25c4927"
+        ],
+        "Left": 737.91371963089659,
+        "Top": 109.38729984156134,
+        "Width": 1813.0,
+        "Height": 229.21879414054945,
+        "FontSize": 24.0,
+        "InitialTop": 148.38729984156134,
+        "InitialHeight": 220.21879414054945,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "9b0f56287c554c9cb33d503725082b58",
+        "Title": "Best Short Side Fits - Custom Order",
         "Nodes": [
           "a6f4f2d7f95e4405aa0a286e66cf7ca4",
           "c62787d58b7e4ea29c2199e2843890d1",
@@ -2586,118 +2827,34 @@
           "fa952a3736714770a706426c9565d54f"
         ],
         "Left": 736.0827700743821,
-        "Top": 451.37619422966179,
-        "Width": 1797.0,
-        "Height": 248.18056853384496,
-        "FontSize": 36.0,
+        "Top": 465.70952756299511,
+        "Width": 1813.0,
+        "Height": 233.84723520051165,
+        "FontSize": 24.0,
         "InitialTop": 504.70952756299511,
-        "InitialHeight": 246.84723520051165,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 224.84723520051165,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
       },
       {
-        "Id": "81b5486a500140b8b4bdd77ccb3811b3",
-        "Title": "Best Long Side Fits - Ascending Order",
+        "Id": "31025d117950420fbba4a3c9690c5e67",
+        "Title": "Packing strategy",
         "Nodes": [
-          "aaa7a9dd3c0a41ba92baeea6fd0007b4",
-          "e85f15fbf060459f8382483cc2851274",
-          "198eac55c335433da8a0128a8a607e36",
-          "25a1a8ebc091437ca4ce35fbaa85198f",
-          "748667b7350b4118bd413cc154adda6e",
-          "c5d2be0ded1642d0979886487ce9dfe8",
-          "40c618e2d7fd4434a19b6663a25c4927"
+          "6bafb6b04fda4419bab2f2d314efd3db",
+          "6e0083e45d784228b97951656771f4d4"
         ],
-        "Left": 737.91371963089659,
-        "Top": 95.053966508228,
-        "Width": 1797.0,
-        "Height": 229.85977724009953,
-        "FontSize": 36.0,
-        "InitialTop": 148.38729984156134,
-        "InitialHeight": 228.52644390676619,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
+        "Left": 744.00312885768062,
+        "Top": 842.41440700554483,
+        "Width": 268.46411822744881,
+        "Height": 184.515547344913,
+        "FontSize": 24.0,
+        "InitialTop": 881.41440700554483,
+        "InitialHeight": 276.92995435045782,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
       },
       {
-        "Id": "0e9ff861026f4c6ca430cd3008e264f2",
-        "Title": "Best Long Side Fits - Decending Order",
-        "Nodes": [
-          "f0fc26e9eae84da08c6477be88c5340d",
-          "694a806a42c341468c22bf78eb884a6c",
-          "302f6c3003bc409f9a4ee7231fdf9974",
-          "d17faabf50394909b2dada2e25992f1c",
-          "6c2caeef84004805b21ed89eb5211bb3",
-          "fab24a55f42c4b1f8b321c8acb139197",
-          "d4c696784bf4449a80925345984bc254"
-        ],
-        "Left": 744.79281154158639,
-        "Top": -225.13417614849712,
-        "Width": 1796.9999999999998,
-        "Height": 251.25317951822964,
-        "FontSize": 36.0,
-        "InitialTop": -171.80084281516378,
-        "InitialHeight": 249.9198461848963,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "a0eedd943032432197e9a1144ed50627",
-        "Title": "Best Long Side Fits Results - Decending Order",
-        "Nodes": [
-          "1df721c472f94a8a9cbebea62e58925a",
-          "13965a1ad6be435090931a15daeaa68b",
-          "40fd82bbc0964920879161ee60f24863",
-          "51e3504020cf44f3a4e19fa5b7f20e66"
-        ],
-        "Left": 2733.1571229629972,
-        "Top": -286.09873688044826,
-        "Width": 609.33333333333337,
-        "Height": 369.12362777673968,
-        "FontSize": 36.0,
-        "InitialTop": -189.43207021378157,
-        "InitialHeight": 272.00362777673968,
-        "TextblockHeight": 86.666666666666671,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "e12199215a824015af1f44b48d314420",
-        "Title": "Best Long Side Fits Results - Ascending Order",
-        "Nodes": [
-          "0a171f4539a5468995fa840d45e264e3",
-          "49cc5b926e2042d2b37a1d99b5a2fb5e",
-          "19791b333b004e30960f3827b14dcf05",
-          "dea3c9f463de4a11bf82adc9244baf92"
-        ],
-        "Left": 2728.2394598057035,
-        "Top": 66.259299741260818,
-        "Width": 609.33333333333337,
-        "Height": 367.20714697152511,
-        "FontSize": 36.0,
-        "InitialTop": 162.92596640792749,
-        "InitialHeight": 270.08714697152516,
-        "TextblockHeight": 86.666666666666671,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "60ba0c17834e4d818bd2d14d22748fb7",
-        "Title": "Best Long Side Fits Results - Custom Order",
-        "Nodes": [
-          "ba4b638e55c849f2869c682d8c145753",
-          "4e4c69d38ce144308e62bb49938cf0ba",
-          "16fe1bbcbd7944a5929e80c2731d7766",
-          "bdbc9f82723e42eebda32f588bdc5328"
-        ],
-        "Left": 2734.3148188305677,
-        "Top": 451.86285069908496,
-        "Width": 609.33333333333337,
-        "Height": 371.57771790929155,
-        "FontSize": 36.0,
-        "InitialTop": 548.52951736575164,
-        "InitialHeight": 274.45771790929166,
-        "TextblockHeight": 86.666666666666671,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "8751b6b46136487c88edfe76013eab6f",
+        "Id": "e66bb549be0e4d3aaa3eb81b624278b0",
         "Title": "Color",
         "Nodes": [
           "1c3b2120923747c08d437d7047edc4ee",
@@ -2707,182 +2864,71 @@
           "b889494c65a04e4d8f4d9bd3c9746a61"
         ],
         "Left": 2704.97994920375,
-        "Top": -697.608908398582,
+        "Top": -683.27557506524863,
         "Width": 848.99999999999909,
-        "Height": 351.18666666667116,
-        "FontSize": 36.0,
+        "Height": 338.85333333333779,
+        "FontSize": 24.0,
         "InitialTop": -644.27557506524863,
-        "InitialHeight": 305.85333333333779,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "9f11e03fb624474c92166928b3bfe695",
-        "Title": "Bin Properties",
-        "Nodes": [
-          "9562e8c255874a92b1c5186858093c4a"
-        ],
-        "Left": -1343.9999451693468,
-        "Top": 280.631686823329,
-        "Width": 171.30333333333334,
-        "Height": 199.0,
-        "FontSize": 36.0,
-        "InitialTop": 377.29835348999569,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 86.666666666666671,
-        "Background": "#FFFFB8D8"
-      },
-      {
-        "Id": "36d8fe6e2f5844f8ad46a0437904e563",
-        "Title": "Rectangles Area",
-        "Nodes": [
-          "3ca4f7983387475b9bd1d8538bbecead"
-        ],
-        "Left": -140.49895144438597,
-        "Top": 165.4484820603993,
-        "Width": 283.33333333333331,
-        "Height": 146.33333333333334,
-        "FontSize": 36.0,
-        "InitialTop": 218.78181539373264,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "aa7f7deeaf194ed9aae65e5988b28000",
-        "Title": "Sort Ascending",
-        "Nodes": [
-          "6a57d1d8c2c8411882946e0c12988677"
-        ],
-        "Left": 213.831258829111,
-        "Top": 91.7136355045655,
-        "Width": 235.333333333333,
-        "Height": 215.666666666667,
-        "FontSize": 36.0,
-        "InitialTop": 188.380302171232,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 86.6666666666667,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "b6174c6d183342f5b34b7859cd1650ce",
-        "Title": "Sort Descending",
-        "Nodes": [
-          "c902154d043e4f2095542c5b40d66ddd"
-        ],
-        "Left": 213.940281069644,
-        "Top": -114.131628603601,
-        "Width": 196.67,
-        "Height": 189.666666666667,
-        "FontSize": 36.0,
-        "InitialTop": -17.4649619369343,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 86.6666666666667,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "60bfe7526703474cb9caeff136639221",
-        "Title": "Packing strategy",
-        "Nodes": [
-          "6e0083e45d784228b97951656771f4d4",
-          "6a64734cabe447fba6c52e974fa33afa"
-        ],
-        "Left": 744.00312885768062,
-        "Top": 828.42020047314782,
-        "Width": 259.69237094865287,
-        "Height": 194.17642054397666,
-        "FontSize": 36.0,
-        "InitialTop": 881.75353380648119,
-        "InitialHeight": 239.90500426657945,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "1a0c327186ef49edbe0e13877a0ae1d8",
-        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nPacking Rectangles\r\nBest Long Side Strategy\r\n",
-        "Nodes": [
-          "45177fe3199c4c2ca6da6d70880eeade",
-          "b8b133a43f1a4305b8ebedbf43c6a2ec",
-          "d910be780cc34892ad4e3146ebf71921",
-          "fa9cec24cce64bbb8886fa6b518c1c52",
-          "e20ceeaabae3448ea9c495c675629310",
-          "de6a1675c5a5421ea6b257570a85e08e",
-          "c0ed8b3580a14a87aee7a526184a6a14"
-        ],
-        "Left": -2477.7739436048723,
-        "Top": 32.096941723168356,
-        "Width": 631.90229380873348,
-        "Height": 753.57338313009416,
-        "FontSize": 48.0,
-        "InitialTop": 330.09694172316836,
-        "InitialHeight": 421.57338313009416,
-        "TextblockHeight": 288.0,
-        "Background": "#FFFFFFFF"
-      },
-      {
-        "Id": "084cc3f0f3814b4a9fabc78aba5c9039",
-        "Title": "",
-        "Nodes": [
-          "572a89ba08cb4e718c95caa83dd94a7e"
-        ],
-        "Left": -1841.3172856885376,
-        "Top": 329.31172328375123,
-        "Width": 314.0,
-        "Height": 146.66666666666669,
-        "FontSize": 14.0,
-        "InitialTop": 359.31172328375123,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFFFB8D8"
-      },
-      {
-        "Id": "0540732bed834b2fb17892cb6a8a9c68",
-        "Title": "",
-        "Nodes": [
-          "37353f04ed7f4cc9ad9accb00e67fa9e"
-        ],
-        "Left": -1841.3172856885376,
-        "Top": 485.66480764737685,
-        "Width": 314.0,
-        "Height": 146.66666666666669,
-        "FontSize": 14.0,
-        "InitialTop": 515.66480764737685,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "4f555508fc13480b971fa322a6b6ef7e",
-        "Title": "",
-        "Nodes": [
-          "0d98d8ee557a40849ff3f3b493acb260"
-        ],
-        "Left": -1841.3172856885376,
-        "Top": 646.3464931418921,
-        "Width": 314.0,
-        "Height": 132.0,
-        "FontSize": 14.0,
-        "InitialTop": 676.3464931418921,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
+        "InitialHeight": 329.85333333333779,
+        "TextblockHeight": 29.0,
         "Background": "#FFFFC999"
       },
       {
-        "Id": "b878a234e6da4017af7eba4a1f351dfe",
-        "Title": "Rectangle properties",
+        "Id": "49ca388b71c646dca2dc138e41affd9e",
+        "Title": "Best Short Side Fits Results - Decending Order",
         "Nodes": [
-          "132e5699d4d44b0f8e13e844c7a753c4",
-          "effbcd915fd545728c194108402283f5"
+          "1df721c472f94a8a9cbebea62e58925a",
+          "13965a1ad6be435090931a15daeaa68b",
+          "40fd82bbc0964920879161ee60f24863",
+          "51e3504020cf44f3a4e19fa5b7f20e66"
         ],
-        "Left": -1345.5879627676968,
-        "Top": 489.99055026749687,
-        "Width": 270.546328376453,
-        "Height": 290.91429863517033,
-        "FontSize": 36.0,
-        "InitialTop": 586.65721693416356,
-        "InitialHeight": 236.91429863517033,
-        "TextblockHeight": 86.666666666666671,
-        "Background": "#FFFFB8D8"
+        "Left": 2725.2682903356063,
+        "Top": -272.31530250983826,
+        "Width": 855.59661822880844,
+        "Height": 443.93228730749649,
+        "FontSize": 24.0,
+        "InitialTop": -233.31530250983826,
+        "InitialHeight": 434.93228730749649,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "6fffde25e43348088adff36ebe31267b",
+        "Title": "Best Short Side Fits Results - Ascending Order",
+        "Nodes": [
+          "0a171f4539a5468995fa840d45e264e3",
+          "49cc5b926e2042d2b37a1d99b5a2fb5e",
+          "19791b333b004e30960f3827b14dcf05",
+          "dea3c9f463de4a11bf82adc9244baf92"
+        ],
+        "Left": 2728.2394598057035,
+        "Top": 210.43406966277928,
+        "Width": 843.17063963653891,
+        "Height": 433.73182077410195,
+        "FontSize": 24.0,
+        "InitialTop": 249.43406966277928,
+        "InitialHeight": 424.73182077410195,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "d2f94abe12124d57baa03649da6fbebc",
+        "Title": "Best Short Side Fits Results - Custom Order",
+        "Nodes": [
+          "ba4b638e55c849f2869c682d8c145753",
+          "4e4c69d38ce144308e62bb49938cf0ba",
+          "16fe1bbcbd7944a5929e80c2731d7766",
+          "bdbc9f82723e42eebda32f588bdc5328"
+        ],
+        "Left": 2730.1728259664778,
+        "Top": 679.35122479343659,
+        "Width": 803.82170742768494,
+        "Height": 442.24438457595829,
+        "FontSize": 24.0,
+        "InitialTop": 718.35122479343659,
+        "InitialHeight": 433.24438457595829,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFC999"
       },
       {
         "Id": "6e0083e45d784228b97951656771f4d4",
@@ -2902,22 +2948,8 @@
         "Id": "e20ceeaabae3448ea9c495c675629310",
         "Title": "DYNAMO VERSION\r\n________________________________________________________\r\n\r\n2.0.2",
         "Nodes": [],
-        "Left": -2154.5383164628056,
-        "Top": 331.25839380649745,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "572a89ba08cb4e718c95caa83dd94a7e",
-        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nGreen indicates Variables that can be altered per project and must be set accordingly before running the script.",
-        "Nodes": [],
-        "Left": -1831.3172856885376,
-        "Top": 359.31172328375123,
+        "Left": -2353.1048966851195,
+        "Top": 289.20900034765452,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -2930,8 +2962,8 @@
         "Id": "c0ed8b3580a14a87aee7a526184a6a14",
         "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -2154.5383164628083,
-        "Top": 419.91494956696852,
+        "Left": -2353.1048966851222,
+        "Top": 377.86555610812559,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -2944,22 +2976,8 @@
         "Id": "de6a1675c5a5421ea6b257570a85e08e",
         "Title": "ADDITIONAL COMMENTS\r\n________________________________________________________\r\n\r\n",
         "Nodes": [],
-        "Left": -2154.5383164628083,
-        "Top": 510.78353956523438,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "37353f04ed7f4cc9ad9accb00e67fa9e",
-        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nOrange indicates the working of the script. No changes should be made in these groups unless advised.",
-        "Nodes": [],
-        "Left": -1831.3172856885376,
-        "Top": 515.66480764737685,
+        "Left": -2353.1048966851222,
+        "Top": 468.73414610639145,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -2972,8 +2990,8 @@
         "Id": "45177fe3199c4c2ca6da6d70880eeade",
         "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -2467.7739436048723,
-        "Top": 330.09694172316836,
+        "Left": -2666.3405238271862,
+        "Top": 288.04754826432543,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -2986,8 +3004,8 @@
         "Id": "b8b133a43f1a4305b8ebedbf43c6a2ec",
         "Title": "ASSOCIATED FILE(S)      \r\n________________________________________________________\r\n\r\nN/A",
         "Nodes": [],
-        "Left": -2467.7739436048723,
-        "Top": 420.44024064420137,
+        "Left": -2666.3405238271862,
+        "Top": 378.39084718535844,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3000,8 +3018,8 @@
         "Id": "d910be780cc34892ad4e3146ebf71921",
         "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
-        "Left": -2467.7739436048723,
-        "Top": 510.78353956523438,
+        "Left": -2666.3405238271862,
+        "Top": 468.73414610639145,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3014,22 +3032,8 @@
         "Id": "fa9cec24cce64bbb8886fa6b518c1c52",
         "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nExample file showing how the 2D bin packing node works with the Best Best Area Fits Algorithm, with different sorting methods.\r\n\r\nBin packing is helpful when trying to fit a collection of rectangles inside another rectangle. For example when placing rooms in a floor plan.",
         "Nodes": [],
-        "Left": -2467.7739436048723,
-        "Top": 611.67032485326251,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "0d98d8ee557a40849ff3f3b493acb260",
-        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nRed indicates checking nodes to ensure the script has deployed correctly.",
-        "Nodes": [],
-        "Left": -1831.3172856885376,
-        "Top": 676.3464931418921,
+        "Left": -2666.3405238271862,
+        "Top": 569.62093139441959,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3079,10 +3083,80 @@
         "InitialHeight": 0.0,
         "TextblockHeight": 0.0,
         "Background": "#FFC1D676"
+      },
+      {
+        "Id": "2326507259fb462f85cbae88d6157ccd",
+        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nOrange indicates checking nodes to ensure the script has deployed correctly.",
+        "Nodes": [],
+        "Left": -1674.0469317613861,
+        "Top": 313.41407989295493,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a86a8408fdb045ad8123f5b6eb438f68",
+        "Title": "Remember / Gate Nodes\r\n_______________________________________________________\r\n\r\nData that needs to be cached from Dynamo for Revit is stored here.",
+        "Nodes": [],
+        "Left": -1672.46260855636,
+        "Top": 483.27669037492632,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "1d93e20485a947758894f95156cfcc5c",
+        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nCore Workings of the Dynamo Graph",
+        "Nodes": [],
+        "Left": -2001.0697361635143,
+        "Top": 483.94724915488877,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "5b393362fe7c491d87812a8500169d9c",
+        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nVariables that can be altered per project and must be set accordingly before running the graph.",
+        "Nodes": [],
+        "Left": -2002.0637678086241,
+        "Top": 313.67772175972794,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "6d6b81d4fe234818b3ebf52643b41a17",
+        "Title": "Display / Validation\r\n_______________________________________________________\r\n\r\nLogic used simply for visualization purposes, does not contain core logic.",
+        "Nodes": [],
+        "Left": -2000.33965533146,
+        "Top": 632.47326388241231,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
       }
     ],
-    "X": 519.68751290962609,
-    "Y": 376.24191039616687,
-    "Zoom": 0.24788302189934741
+    "X": 681.49416711684569,
+    "Y": 388.01831602175116,
+    "Zoom": 0.24434019634585544
   }
 }

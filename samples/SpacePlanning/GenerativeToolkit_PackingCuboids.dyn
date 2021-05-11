@@ -2,7 +2,7 @@
   "Uuid": "92ad7c11-e64f-400d-bf03-7e6d8b170a1e",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_PackingCuboids",
+  "Name": "GenerativeToolkit_PackingCuboids",
   "ElementResolver": {
     "ResolutionMap": {
       "DSCore.List": {
@@ -305,7 +305,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -334,7 +334,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -651,7 +651,7 @@
         {
           "Id": "72c922e8620e43289ad31a891309b7fc",
           "Name": "list1",
-          "Description": "List of objects to be included in the new list.\n\nvar[]",
+          "Description": "List of objects to be included in the new list\n\nvar[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -660,7 +660,7 @@
         {
           "Id": "f297955a7aee49df9e4e7e8be11145ca",
           "Name": "list2",
-          "Description": "List of objects to be excluded in the new list.\n\nvar[]",
+          "Description": "List of objects to be excluded in the new list\n\nvar[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -670,8 +670,8 @@
       "Outputs": [
         {
           "Id": "f6a29d2a8ccb4fce8381093f4f2222e0",
-          "Name": "newList",
-          "Description": "The new list that contains objects in List1 but not in List2.",
+          "Name": "list",
+          "Description": "The new list that contains objects in List1 but not in List2",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -963,7 +963,7 @@
       "Inputs": [
         {
           "Id": "b43590d3830241a49190e1de9a09d221",
-          "Name": "obj",
+          "Name": "object",
           "Description": "An object.\n\nvar",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -974,8 +974,8 @@
       "Outputs": [
         {
           "Id": "208e5d519df24039a6f32f2a073d7dbf",
-          "Name": "var[]..[]",
-          "Description": "var[]..[]",
+          "Name": "object",
+          "Description": "Same object",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -983,7 +983,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns what is passed in, doing nothing.\n\nObject.Identity (obj: var): var[]..[]"
+      "Description": "Returns what is passed in, doing nothing.\n\nObject.Identity (object: var): var[]..[]"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -1012,7 +1012,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -1041,7 +1041,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     }
   ],
   "Connectors": [
@@ -1222,13 +1222,14 @@
       ]
     }
   ],
+  "ExtensionWorkspaceData": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.4.0.6186",
+      "Version": "2.11.1.4675",
       "RunType": "Automatic",
       "RunPeriod": "1000"
     },
@@ -1273,7 +1274,7 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "X": 521.15254483225294,
-        "Y": 1548.5423126152332
+        "Y": 1553.1237412791052
       },
       {
         "ShowGeometry": false,
@@ -1292,8 +1293,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1735.4090236476372,
-        "Y": 1850.0195249416513
+        "X": 1718.24302887849,
+        "Y": 1891.77194358775
       },
       {
         "ShowGeometry": false,
@@ -1302,8 +1303,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1486.3428532865178,
-        "Y": 1850.0195249416513
+        "X": 1469.17685851737,
+        "Y": 1891.77194358775
       },
       {
         "ShowGeometry": true,
@@ -1312,8 +1313,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1469.6712837935618,
-        "Y": 1354.5479134700129
+        "X": 1469.17685851737,
+        "Y": 1354.54791347001
       },
       {
         "ShowGeometry": true,
@@ -1322,8 +1323,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1788.4846639243451,
-        "Y": 1355.4375724889392
+        "X": 1785.00792303058,
+        "Y": 1377.80493962078
       },
       {
         "ShowGeometry": false,
@@ -1462,8 +1463,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1694.8708405695504,
-        "Y": 1687.427364316605
+        "X": 1685.92389371681,
+        "Y": 1729.1797829627
       },
       {
         "ShowGeometry": true,
@@ -1472,8 +1473,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1943.9370109306703,
-        "Y": 1687.427364316605
+        "X": 1934.99006407793,
+        "Y": 1729.1797829627
       },
       {
         "ShowGeometry": true,
@@ -1482,8 +1483,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1478.1238053701104,
-        "Y": 1690.3292732228149
+        "X": 1469.17685851737,
+        "Y": 1732.08169186891
       },
       {
         "ShowGeometry": true,
@@ -1492,8 +1493,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1915.8751146544087,
-        "Y": 1356.7900934735906
+        "X": 2034.67331408136,
+        "Y": 1377.66630279664
       },
       {
         "ShowGeometry": true,
@@ -1502,76 +1503,11 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2066.3512414795673,
-        "Y": 1357.1236495855358
+        "X": 2302.95090780086,
+        "Y": 1380.98217452616
       }
     ],
     "Annotations": [
-      {
-        "Id": "866ca5a6b8af4fef944e99f6ab04ef12",
-        "Title": "Create Bins",
-        "Nodes": [
-          "be5aa68c7c5d4e5a9c38929b00437fd6"
-        ],
-        "Left": 511.15254483225294,
-        "Top": 1495.3423126152331,
-        "Width": 220.0,
-        "Height": 197.00000000000006,
-        "FontSize": 36.0,
-        "InitialTop": 1548.5423126152332,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 43.2,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "b7b29fc503014ef6bd4df5091baa5688",
-        "Title": "Create Items",
-        "Nodes": [
-          "d02e23a1f7174294af5b04ebf65f08f7"
-        ],
-        "Left": 506.54688243248938,
-        "Top": 1268.1626049503698,
-        "Width": 220.0,
-        "Height": 197.00000000000006,
-        "FontSize": 36.0,
-        "InitialTop": 1321.3626049503698,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 43.2,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "7402e9ae28964bdc923c2013fd732dbb",
-        "Title": "Visualize Bin",
-        "Nodes": [
-          "e524ed37485646d9b030d92ced647d1a",
-          "4aaacd7becfe43e0ae346bbbd0a0da98"
-        ],
-        "Left": 1476.3428532865178,
-        "Top": 1796.8195249416513,
-        "Width": 452.26617036111946,
-        "Height": 145.80000000000004,
-        "FontSize": 36.0,
-        "InitialTop": 1850.0195249416513,
-        "InitialHeight": 170.26626773329508,
-        "TextblockHeight": 43.2,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "e9df669152f44e96a3c8c7c705a030a9",
-        "Title": "Refinery Toolkit - \r\nPacking Cuboids",
-        "Nodes": [
-          "b992c113c68946e98d9a9f5f559de443"
-        ],
-        "Left": 1023.2903627944165,
-        "Top": 1236.6926272894018,
-        "Width": 372.8,
-        "Height": 291.40000000000009,
-        "FontSize": 36.0,
-        "InitialTop": 1333.0926272894019,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 86.4,
-        "Background": "#FFB9F9E1"
-      },
       {
         "Id": "ebfe730332374b3dafc993c8dba78b55",
         "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nPacking Cuboids\r\n",
@@ -1584,63 +1520,15 @@
           "7b434d706f094073b7adb16462f82b62",
           "c4aada006fa34daf9bbf2c047bd64af0"
         ],
-        "Left": -1252.8130569423508,
-        "Top": 1093.7217828563666,
-        "Width": 632.43562714206723,
-        "Height": 623.97338313009413,
+        "Left": -1063.4991937192624,
+        "Top": 793.08170527211155,
+        "Width": 632.23562714206719,
+        "Height": 628.573383130094,
         "FontSize": 48.0,
-        "InitialTop": 1334.1217828563667,
-        "InitialHeight": 421.57338313009404,
-        "TextblockHeight": 230.4,
+        "InitialTop": 1033.0817052721115,
+        "InitialHeight": 426.57338313009404,
+        "TextblockHeight": 230.0,
         "Background": "#FFFFFFFF"
-      },
-      {
-        "Id": "ae539aa57d494854a9dba9fff8a21fb7",
-        "Title": "",
-        "Nodes": [
-          "d791a51833164d3ca6ac1c850c1963aa"
-        ],
-        "Left": -616.35639902601565,
-        "Top": 1333.3365644169496,
-        "Width": 313.6,
-        "Height": 146.4,
-        "FontSize": 14.0,
-        "InitialTop": 1363.3365644169496,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFFFB8D8"
-      },
-      {
-        "Id": "c7409329587d4ecab1d44b9a258834ba",
-        "Title": "",
-        "Nodes": [
-          "617c5eb586fb4cf18c44aa24bb2e131b"
-        ],
-        "Left": -616.356399026016,
-        "Top": 1489.68964878058,
-        "Width": 313.6,
-        "Height": 146.4,
-        "FontSize": 14.0,
-        "InitialTop": 1519.68964878058,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "72820d644a5c4d1aa3ba9c066e83bab8",
-        "Title": "",
-        "Nodes": [
-          "cb3c66edbf774f108492b3de58758d9f"
-        ],
-        "Left": -616.35639902601565,
-        "Top": 1650.3713342750905,
-        "Width": 313.6,
-        "Height": 132.0,
-        "FontSize": 14.0,
-        "InitialTop": 1680.3713342750905,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFFFC999"
       },
       {
         "Id": "8b9514f906884de58221ad32d61bafbc",
@@ -1649,13 +1537,13 @@
           "91e8ae5fdc244227a7511da6374e40f1"
         ],
         "Left": -144.10170922048326,
-        "Top": 1479.0149701046173,
+        "Top": 1479.4149701046174,
         "Width": 190.86666666666667,
-        "Height": 216.2000000000001,
+        "Height": 217.0,
         "FontSize": 36.0,
         "InitialTop": 1575.4149701046174,
         "InitialHeight": 145.0,
-        "TextblockHeight": 86.4,
+        "TextblockHeight": 86.0,
         "Background": "#FFFFB8D8"
       },
       {
@@ -1665,17 +1553,161 @@
           "4d13b9df7895419581c29261bcd18ff8"
         ],
         "Left": -156.18570708937739,
-        "Top": 1289.0760472844674,
-        "Width": 437.6,
-        "Height": 173.00000000000006,
+        "Top": 1289.2760472844675,
+        "Width": 438.0,
+        "Height": 174.0,
         "FontSize": 36.0,
         "InitialTop": 1342.2760472844675,
         "InitialHeight": 145.0,
-        "TextblockHeight": 43.2,
+        "TextblockHeight": 43.0,
         "Background": "#FFFFB8D8"
       },
       {
-        "Id": "207684851b374b52adbbd5dc86d5a319",
+        "Id": "a8b91986de1c4c938c5d053056a3aca4",
+        "Title": "",
+        "Nodes": [
+          "ff5aad6579c14c62bb3f054700563987"
+        ],
+        "Left": -81.916050008342154,
+        "Top": 795.57425895442543,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 825.57425895442543,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "220bfd450f4a48e98817b59b33249020",
+        "Title": "",
+        "Nodes": [
+          "d9fca01886db47119bcacefa8daa439b"
+        ],
+        "Left": -80.331726803316087,
+        "Top": 965.43686943639682,
+        "Width": 319.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 995.43686943639682,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFD4B6DB"
+      },
+      {
+        "Id": "c8f0ccb3befc45de9401e7fe5ded93e7",
+        "Title": "",
+        "Nodes": [
+          "9878c40aef4b4bbab2ab5e1500805bf6"
+        ],
+        "Left": -408.93885441047041,
+        "Top": 966.10742821635927,
+        "Width": 314.0,
+        "Height": 123.0,
+        "FontSize": 14.0,
+        "InitialTop": 996.10742821635927,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "0209a6c471d14ddc8c9b90a218816e3f",
+        "Title": "",
+        "Nodes": [
+          "95dd6fe4549a4e4dad7493202d7f2735"
+        ],
+        "Left": -409.93288605558018,
+        "Top": 795.83790082119845,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 825.83790082119845,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "23cd57fab4d24044929c4b2d851d67ab",
+        "Title": "",
+        "Nodes": [
+          "bfdb967ef30f452daa0817e00958dd65"
+        ],
+        "Left": -408.20877357841619,
+        "Top": 1105.6334429438828,
+        "Width": 314.0,
+        "Height": 146.0,
+        "FontSize": 24.0,
+        "InitialTop": 1144.6334429438828,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "c1b5b1df6db34bd3bcafd51633439a55",
+        "Title": "Create Items",
+        "Nodes": [
+          "d02e23a1f7174294af5b04ebf65f08f7"
+        ],
+        "Left": 506.54688243248938,
+        "Top": 1282.3626049503698,
+        "Width": 217.0,
+        "Height": 184.0,
+        "FontSize": 24.0,
+        "InitialTop": 1321.3626049503698,
+        "InitialHeight": 175.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "d76f7cfed63241ac9031f6fa58253c2b",
+        "Title": "Create Bins",
+        "Nodes": [
+          "be5aa68c7c5d4e5a9c38929b00437fd6"
+        ],
+        "Left": 511.15254483225294,
+        "Top": 1514.1237412791052,
+        "Width": 217.0,
+        "Height": 184.0,
+        "FontSize": 24.0,
+        "InitialTop": 1553.1237412791052,
+        "InitialHeight": 175.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "f054d5ca97f94851b8fd47d7ad869c63",
+        "Title": "Refinery Toolkit - \r\nPacking Cuboids",
+        "Nodes": [
+          "b992c113c68946e98d9a9f5f559de443"
+        ],
+        "Left": 1023.2903627944165,
+        "Top": 1265.0926272894019,
+        "Width": 373.0,
+        "Height": 265.0,
+        "FontSize": 24.0,
+        "InitialTop": 1333.0926272894019,
+        "InitialHeight": 227.0,
+        "TextblockHeight": 58.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "1e6bf944d506406cb3de80fe43248c66",
+        "Title": "Get Cuboids offset from plane",
+        "Nodes": [
+          "1c8183db85aa4d489a525c022d6a2f60"
+        ],
+        "Left": 1026.3548765945068,
+        "Top": 813.37020743234154,
+        "Width": 540.0,
+        "Height": 214.0,
+        "FontSize": 24.0,
+        "InitialTop": 852.37020743234154,
+        "InitialHeight": 205.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "8530ca8cfa0549db995a37c5fb8bac13",
         "Title": "Translate Cuboids to plane and color\r\nPacked Items = Green\r\nUnpacked Items = Red",
         "Nodes": [
           "882fe1c5e23c4f98afa4a1748116a83f",
@@ -1691,102 +1723,75 @@
           "569cd30600804023bb014df7c0f31847"
         ],
         "Left": 1628.1944451634031,
-        "Top": 779.89762222736283,
-        "Width": 2162.6000000000004,
-        "Height": 475.20000000000005,
-        "FontSize": 36.0,
+        "Top": 823.49762222736285,
+        "Width": 2163.0000000000005,
+        "Height": 432.0,
+        "FontSize": 24.0,
         "InitialTop": 919.49762222736285,
-        "InitialHeight": 388.0,
-        "TextblockHeight": 129.6,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 366.0,
+        "TextblockHeight": 86.0,
+        "Background": "#FFE8F7AD"
       },
       {
-        "Id": "dbee2b0532324f94a45539db2dfb0b95",
-        "Title": "Get Cuboids offset from plane",
-        "Nodes": [
-          "1c8183db85aa4d489a525c022d6a2f60"
-        ],
-        "Left": 1026.3548765945068,
-        "Top": 799.1702074323415,
-        "Width": 540.0,
-        "Height": 225.80000000000004,
-        "FontSize": 36.0,
-        "InitialTop": 852.37020743234154,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 43.2,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "5d66a3265bb2402da7b9f5eae397df56",
+        "Id": "aac629f423524451872a2bfd54bceb81",
         "Title": "Results",
         "Nodes": [
           "7c3d7b45466948088a67fc07e7dc8d5d",
           "835323dc7ae14c699788933a2d977b4f",
-          "3112da2be9e048669e7c778971ee8736",
-          "36580061c16e423b87aff4b4b94db47a"
+          "36580061c16e423b87aff4b4b94db47a",
+          "3112da2be9e048669e7c778971ee8736"
         ],
-        "Left": 1459.6712837935618,
-        "Top": 1301.3479134700128,
-        "Width": 853.47995768600549,
-        "Height": 275.40000000000009,
-        "FontSize": 36.0,
-        "InitialTop": 1354.5479134700129,
-        "InitialHeight": 147.57573611552289,
-        "TextblockHeight": 43.2,
-        "Background": "#FFC1D676"
+        "Left": 1459.17685851737,
+        "Top": 1315.54791347001,
+        "Width": 1137.77404928349,
+        "Height": 343.43426105615004,
+        "FontSize": 24.0,
+        "InitialTop": 1354.54791347001,
+        "InitialHeight": 334.43426105615004,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFC999"
       },
       {
-        "Id": "8de72bf93a74424b9cd637385122e86b",
+        "Id": "7e66e3aa0eb2412babc8e4f1940cfe04",
         "Title": "Visualize Packed Items",
         "Nodes": [
-          "1b0ef7f55e284f8781e1284e544adf92",
+          "ed666c6820174f72a262599498c69af6",
           "0f6e8973a5904e5abedf51c6f8736d3e",
-          "ed666c6820174f72a262599498c69af6"
+          "1b0ef7f55e284f8781e1284e544adf92"
         ],
-        "Left": 1468.1238053701104,
-        "Top": 1634.227364316605,
-        "Width": 669.01320556056,
-        "Height": 148.70190890620992,
-        "FontSize": 36.0,
-        "InitialTop": 1687.427364316605,
-        "InitialHeight": 147.90190890620988,
-        "TextblockHeight": 43.2,
-        "Background": "#FFC1D676"
+        "Left": 1459.17685851737,
+        "Top": 1690.1797829627,
+        "Width": 669.81320556055971,
+        "Height": 134.90190890620988,
+        "FontSize": 24.0,
+        "InitialTop": 1729.1797829627,
+        "InitialHeight": 125.90190890620988,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
       },
       {
-        "Id": "2f6727ad76414e6b80064481111df24c",
-        "Title": "Get Cuboid offset from plane",
-        "Nodes": [],
-        "Left": 2684.94259784882,
-        "Top": -580.790026879979,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
+        "Id": "e9e37f4cea814bfaa0544aab2725a42f",
+        "Title": "Visualize Bin",
+        "Nodes": [
+          "e524ed37485646d9b030d92ced647d1a",
+          "4aaacd7becfe43e0ae346bbbd0a0da98"
+        ],
+        "Left": 1459.17685851737,
+        "Top": 1852.77194358775,
+        "Width": 453.06617036111993,
+        "Height": 132.0,
+        "FontSize": 24.0,
+        "InitialTop": 1891.77194358775,
+        "InitialHeight": 123.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
       },
       {
         "Id": "86e8955df6004f3c90b8a1bca3dfb0cc",
         "Title": "DYNAMO VERSION\r\n________________________________________________________\r\n\r\n2.0.2",
         "Nodes": [],
-        "Left": -929.57742980028365,
-        "Top": 1335.2832349396958,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "d791a51833164d3ca6ac1c850c1963aa",
-        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nGreen indicates Variables that can be altered per project and must be set accordingly before running the script.",
-        "Nodes": [],
-        "Left": -606.35639902601565,
-        "Top": 1363.3365644169496,
+        "Left": -740.26356657719521,
+        "Top": 1034.2431573554406,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1799,8 +1804,8 @@
         "Id": "c4aada006fa34daf9bbf2c047bd64af0",
         "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -929.57742980028684,
-        "Top": 1423.9397907001669,
+        "Left": -740.26356657719839,
+        "Top": 1122.8997131159117,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1813,22 +1818,8 @@
         "Id": "7b434d706f094073b7adb16462f82b62",
         "Title": "ADDITIONAL COMMENTS\r\n________________________________________________________\r\n\r\n",
         "Nodes": [],
-        "Left": -929.57742980028684,
-        "Top": 1514.8083806984328,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "617c5eb586fb4cf18c44aa24bb2e131b",
-        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nOrange indicates the working of the script. No changes should be made in these groups unless advised.",
-        "Nodes": [],
-        "Left": -606.356399026016,
-        "Top": 1519.68964878058,
+        "Left": -740.26356657719839,
+        "Top": 1213.7683031141776,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1841,8 +1832,8 @@
         "Id": "b1252314242a4c1d9fb9aab62a162dc0",
         "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -1242.8130569423508,
-        "Top": 1334.1217828563667,
+        "Left": -1053.4991937192624,
+        "Top": 1033.0817052721115,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1855,8 +1846,8 @@
         "Id": "6fb7c90286e54b6a921a9aa72526953a",
         "Title": "ASSOCIATED FILE(S)      \r\n________________________________________________________\r\n\r\nN/A",
         "Nodes": [],
-        "Left": -1242.8130569423508,
-        "Top": 1424.4650817773997,
+        "Left": -1053.4991937192624,
+        "Top": 1123.4250041931446,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1869,8 +1860,8 @@
         "Id": "01b1a3be665a4a0186a202c4cd01f8db",
         "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
-        "Left": -1242.8130569423508,
-        "Top": 1514.8083806984328,
+        "Left": -1053.4991937192624,
+        "Top": 1213.7683031141776,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1883,8 +1874,8 @@
         "Id": "2d27cae0a0204575b4ed52fdc11e8b3e",
         "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows the workflow of setting up the 3D bin packing.",
         "Nodes": [],
-        "Left": -1242.8130569423508,
-        "Top": 1615.6951659864608,
+        "Left": -1053.4991937192624,
+        "Top": 1314.6550884022056,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1894,11 +1885,67 @@
         "Background": "#FFC1D676"
       },
       {
-        "Id": "cb3c66edbf774f108492b3de58758d9f",
-        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nRed indicates checking nodes to ensure the script has deployed correctly.",
+        "Id": "ff5aad6579c14c62bb3f054700563987",
+        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nOrange indicates checking nodes to ensure the script has deployed correctly.",
         "Nodes": [],
-        "Left": -606.35639902601565,
-        "Top": 1680.3713342750905,
+        "Left": -71.916050008342154,
+        "Top": 825.57425895442543,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "d9fca01886db47119bcacefa8daa439b",
+        "Title": "Remember / Gate Nodes\r\n_______________________________________________________\r\n\r\nData that needs to be cached from Dynamo for Revit is stored here.",
+        "Nodes": [],
+        "Left": -70.331726803316087,
+        "Top": 995.43686943639682,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "9878c40aef4b4bbab2ab5e1500805bf6",
+        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nCore Workings of the Dynamo Graph",
+        "Nodes": [],
+        "Left": -398.93885441047041,
+        "Top": 996.10742821635927,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "95dd6fe4549a4e4dad7493202d7f2735",
+        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nVariables that can be altered per project and must be set accordingly before running the graph.",
+        "Nodes": [],
+        "Left": -399.93288605558018,
+        "Top": 825.83790082119845,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "bfdb967ef30f452daa0817e00958dd65",
+        "Title": "Display / Validation\r\n_______________________________________________________\r\n\r\nLogic used simply for visualization purposes, does not contain core logic.",
+        "Nodes": [],
+        "Left": -398.20877357841619,
+        "Top": 1144.6334429438828,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1908,8 +1955,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -756.493638213871,
-    "Y": -256.41571628905,
-    "Zoom": 0.39626295779559806
+    "X": 362.08573099974262,
+    "Y": 3.9232095274171,
+    "Zoom": 0.31522162805587983
   }
 }

@@ -2,7 +2,7 @@
   "Uuid": "4e8d8f9b-66ba-4e98-9257-aadb88b62eaf",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_AllNodes",
+  "Name": "GenerativeToolkit_AllNodes",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -37,8 +37,8 @@
       "Outputs": [
         {
           "Id": "b9734f313cd2484391df4ab1e1ef7080",
-          "Name": "RepresentableGraph",
-          "Description": "RepresentableGraph",
+          "Name": "visGraph",
+          "Description": "VisibilityGraph for use in ShortestPath",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -46,7 +46,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "PathFinding.CreateVisibilityGraph (boundary: Polygon[], obstructions: Polygon[]): RepresentableGraph"
+      "Description": "Returns a VisibilityGraph which is used as input for ShortestPath\n\nPathFinding.CreateVisibilityGraph (boundary: Polygon[], obstructions: Polygon[]): RepresentableGraph"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -57,7 +57,7 @@
         {
           "Id": "a419f44e5cc548cbbf5924696a859064",
           "Name": "startPoint",
-          "Description": "Point",
+          "Description": "Start point\n\nPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -66,7 +66,7 @@
         {
           "Id": "47a555f2815f4a18b2f01c2836705159",
           "Name": "endPoint",
-          "Description": "Point",
+          "Description": "Destination point\n\nPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -75,7 +75,7 @@
         {
           "Id": "822777c44c9d44709d23e5cea03374e9",
           "Name": "boundary",
-          "Description": "Polygon[]",
+          "Description": "Polygon(s) enclosing all obstacle Polygons\n\nPolygon[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -84,7 +84,7 @@
         {
           "Id": "35162f1318534638900cfe92b5310b4c",
           "Name": "obstructions",
-          "Description": "Polygon[]",
+          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -94,8 +94,8 @@
       "Outputs": [
         {
           "Id": "a866474500da4d9581d9ab6810d9fa61",
-          "Name": "Path",
-          "Description": "var",
+          "Name": "path",
+          "Description": "Set of lines representing the shortest path",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -103,8 +103,8 @@
         },
         {
           "Id": "af42b864fbff489484f4de9215937f89",
-          "Name": "Length",
-          "Description": "var",
+          "Name": "length",
+          "Description": "Length of path.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -112,7 +112,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "PathFinding.ShortestPath (startPoint: Point, endPoint: Point, boundary: Polygon[], obstructions: Polygon[]): var[]..[]"
+      "Description": "Returns the shortest path between two points, in 2D only. Works by computing a visibility graph and then finding shortest path on graph with Dijkstra's algorithm.\n\nPathFinding.ShortestPath (startPoint: Point, endPoint: Point, boundary: Polygon[], obstructions: Polygon[]): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -123,7 +123,7 @@
         {
           "Id": "714594d906ba445dafef28f90bf13c67",
           "Name": "amount",
-          "Description": "int\nDefault value : 19 (disabled)",
+          "Description": "Number of colors (max. 19)\n\nint\nDefault value : 19 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -132,7 +132,7 @@
         {
           "Id": "754a69336a384762b710fc87fa45ac85",
           "Name": "brightness",
-          "Description": "double\nDefault value : 0 (disabled)",
+          "Description": "Correction factor from 0-1\n\ndouble\nDefault value : 0 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -141,7 +141,7 @@
         {
           "Id": "c4c9e7be61f74a12ae052b376bce6b44",
           "Name": "seed",
-          "Description": "int\nDefault value : 1 (disabled)",
+          "Description": "Seed\n\nint\nDefault value : 1 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -152,7 +152,7 @@
         {
           "Id": "e64a3ce1433b49c384b59a53e5aa3eac",
           "Name": "Color[]",
-          "Description": "Color[]",
+          "Description": "distinct colors",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -160,7 +160,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Colors.ContrastyColorRange (amount: int = 19, brightness: double = 0, seed: int = 1): Color[]"
+      "Description": "Creates a given amount of distinct colors which can be used in a color range\n\nColors.ContrastyColorRange (amount: int = 19, brightness: double = 0, seed: int = 1): Color[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -171,7 +171,7 @@
         {
           "Id": "0c8a558b59ab4fc2916bbd40b98cd28a",
           "Name": "surface",
-          "Description": "Surface",
+          "Description": "Surface to create Amenity Spaces on\n\nSurface",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -180,7 +180,7 @@
         {
           "Id": "a9c29ca2ea52445f85a3ad080e8c084b",
           "Name": "offset",
-          "Description": "double",
+          "Description": "How much to offset to surface perimeter with\n\ndouble",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -200,7 +200,7 @@
         {
           "Id": "26e2c57060da47e99838d56e8e63657d",
           "Name": "amenitySrf",
-          "Description": "var",
+          "Description": "amenity surface and remaining surface",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -217,7 +217,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "AmenitySpace.Create (surface: Surface, offset: double, depth: double): var[]..[]"
+      "Description": "Creates an amentiy space on a given surface, returning both the amenity space and the remaining space within the original surface\n\nAmenitySpace.Create (surface: Surface, offset: double, depth: double): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -237,7 +237,7 @@
         {
           "Id": "b0701c1860b54d8b8117be152120c267",
           "Name": "deskWidth",
-          "Description": "double\nDefault value : 1400",
+          "Description": "the width of the desks in mm\n\ndouble\nDefault value : 1400",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -246,7 +246,7 @@
         {
           "Id": "1f2fd79f072e45af94e09d98d7834994",
           "Name": "deskDepth",
-          "Description": "double\nDefault value : 800",
+          "Description": "the depth of the desks in mm\n\ndouble\nDefault value : 800",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -255,7 +255,7 @@
         {
           "Id": "95038b5b2956437fbd62d9fef0eedea3",
           "Name": "backToBack",
-          "Description": "double\nDefault value : 2200",
+          "Description": "the distance in mm between two desks where the people sat at them are back to back\n\ndouble\nDefault value : 2200",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -274,7 +274,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "DeskLayout.Create (surface: Surface, deskWidth: double = 1400, deskDepth: double = 800, backToBack: double = 2200): var[]..[]"
+      "Description": "Creates a layout of desks on a surface based on desk dimensions\n\nDeskLayout.Create (surface: Surface, deskWidth: double = 1400, deskDepth: double = 800, backToBack: double = 2200): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -285,7 +285,7 @@
         {
           "Id": "1180cb737d0f452cb4efc4cb34eb1b19",
           "Name": "surface",
-          "Description": "Surface",
+          "Description": "Surface to divide\n\nSurface",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -294,7 +294,7 @@
         {
           "Id": "557952d3caf04df4a0bd2167678f9442",
           "Name": "U",
-          "Description": "double[]",
+          "Description": "U parameter\n\ndouble[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -303,7 +303,7 @@
         {
           "Id": "962d3732524f4b5b8de5278fb068f461",
           "Name": "V",
-          "Description": "double[]",
+          "Description": "V parameter\n\ndouble[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -314,7 +314,7 @@
         {
           "Id": "313c439434f743f188b9ddc57b7bc32e",
           "Name": "Geometry[]",
-          "Description": "Geometry[]",
+          "Description": "List of individual surfaces",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -322,7 +322,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "SurfaceDivision2D.DivideSurface (surface: Surface, U: double[], V: double[]): Geometry[]"
+      "Description": "Divides surface based on U and V parameters\n\nSurfaceDivision2D.DivideSurface (surface: Surface, U: double[], V: double[]): Geometry[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -333,7 +333,7 @@
         {
           "Id": "c185a53d9d174ba69c41094a59e7a8d3",
           "Name": "list",
-          "Description": "var[]..[]",
+          "Description": "List to shuffle\n\nvar[]..[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -342,7 +342,7 @@
         {
           "Id": "073fb9c6b8f7430782e8d61271e36241",
           "Name": "seed",
-          "Description": "int\nDefault value : 1 (disabled)",
+          "Description": "Seed\n\nint\nDefault value : 1 (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -353,7 +353,7 @@
         {
           "Id": "885c0eb893ff498b949ceb62b352419f",
           "Name": "var[]..[]",
-          "Description": "var[]..[]",
+          "Description": "randomized list",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -361,7 +361,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "ListShuffle.SeededShuffle (list: var[]..[], seed: int = 1): var[]..[]"
+      "Description": "Shuffles a list, randomizing the order of its items based on the seed.\n\nListShuffle.SeededShuffle (list: var[]..[], seed: int = 1): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -372,7 +372,7 @@
         {
           "Id": "ab91f82d45b34ca1bc90416575273ee0",
           "Name": "surface",
-          "Description": "Surface",
+          "Description": "Surface of object to check\n\nSurface",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -381,7 +381,7 @@
         {
           "Id": "9c22b7e5f8954707b6b265e4a07b2c13",
           "Name": "searchDistance",
-          "Description": "double\nDefault value : 0",
+          "Description": "(optional) Only takes into account objects that are this given max distance away.\n\ndouble\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -390,7 +390,7 @@
         {
           "Id": "aede2b81d915440b8e439445b711cddc",
           "Name": "boundary",
-          "Description": "Polygon[]\nDefault value : []",
+          "Description": "(optional) Polygon(s) enclosing all obstacle Polygons\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -399,7 +399,7 @@
         {
           "Id": "c50dbd6544b94f9e97e998cbc6b3528f",
           "Name": "obstructions",
-          "Description": "Polygon[]\nDefault value : []",
+          "Description": "(optional) List of Polygons representing obstacles that might enclose the object to check\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -410,7 +410,7 @@
         {
           "Id": "622dd5cd188f492691e79f8af699bd01",
           "Name": "double",
-          "Description": "double",
+          "Description": "Percentage of openess, from 0 being totally enclosed and 100 being totally open.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -418,7 +418,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Openess.FromSurface (surface: Surface, searchDistance: double = 0, boundary: Polygon[] = [], obstructions: Polygon[] = []): double"
+      "Description": "Calculates an openess percentage based on how enclosed a Surface is.\n\nOpeness.FromSurface (surface: Surface, searchDistance: double = 0, boundary: Polygon[] = [], obstructions: Polygon[] = []): double"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -429,7 +429,7 @@
         {
           "Id": "d30eebd0c6bd4a4c96b63621131372d3",
           "Name": "points",
-          "Description": "Point[]",
+          "Description": "List of points to compute geometric median for.\n\nPoint[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -440,7 +440,7 @@
         {
           "Id": "e2a6824f3dbd4cfaac22c8bf8db54173",
           "Name": "Point",
-          "Description": "Point",
+          "Description": "Point that minimizes the distance to all other points",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -448,7 +448,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Adjacency.GeometricMedianOfPoints (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points, which is the point minimizing the sum of distances to all supplied points.\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -459,7 +459,7 @@
         {
           "Id": "d4b4ef99420a42debc2f3161ce9b6749",
           "Name": "point",
-          "Description": "Point",
+          "Description": "Origin or observation point\n\nPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -468,7 +468,7 @@
         {
           "Id": "5c20b780b048482c8fca2f68dcb51c47",
           "Name": "boundary",
-          "Description": "Polygon[]",
+          "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -477,7 +477,7 @@
         {
           "Id": "39a3b121ff204daa87b123ddcdcd7432",
           "Name": "obstructions",
-          "Description": "Polygon[]\nDefault value : []",
+          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -487,8 +487,8 @@
       "Outputs": [
         {
           "Id": "3476486c6c3443f882aebb504d5953ee",
-          "Name": "Surface",
-          "Description": "Surface",
+          "Name": "Isovist",
+          "Description": "Surface representing the isovist area, meaning the area visible from observation point.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -496,7 +496,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Visibility.IsovistFromPoint (point: Point, boundary: Polygon[], obstructions: Polygon[] = []): Surface"
+      "Description": "Returns a surface representing the area visible from the given point.\n\nVisibility.IsovistFromPoint (point: Point, boundary: Polygon[], obstructions: Polygon[] = []): Surface"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -507,7 +507,7 @@
         {
           "Id": "c725332ca7a74c548839315c53542a5f",
           "Name": "origin",
-          "Description": "Point",
+          "Description": "Origin point to measure from\n\nPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -516,7 +516,7 @@
         {
           "Id": "2e0a64c1f37147cf8f36abc42db16112",
           "Name": "targetLines",
-          "Description": "Curve[]",
+          "Description": "Line segments representing the views to outside\n\nCurve[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -525,7 +525,7 @@
         {
           "Id": "e544004771fb4c66adb64bfb4b815485",
           "Name": "boundary",
-          "Description": "Polygon[]",
+          "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -534,7 +534,7 @@
         {
           "Id": "4dd0d0bad9a9434aa436fa9b8eba81e9",
           "Name": "obstructions",
-          "Description": "Polygon[]\nDefault value : []",
+          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -545,7 +545,7 @@
         {
           "Id": "96e88c961ebc40c7adbf63d2d0e4af03",
           "Name": "Percentage visible",
-          "Description": "var",
+          "Description": "The total percentage of 360 view from origin point that target lines are visible from.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -554,7 +554,7 @@
         {
           "Id": "f7d4ca9dcbc34c6091cd183f783d97a7",
           "Name": "Visibility percentages",
-          "Description": "var",
+          "Description": "The percentage of 360 view from origin point that each target lines are visible from.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -563,7 +563,7 @@
         {
           "Id": "6968a2c9c42b4bfeb62b256828fba2bc",
           "Name": "Visible items",
-          "Description": "var",
+          "Description": "The specific Lines that are visible from the origin point.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -571,7 +571,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Visibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
+      "Description": "Calculates the visibility of target Lines from a given point based on a 360 degree view range. Returns the percentage of 360 view from origin point that target lines are visible from and the target lines that are visible.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -582,7 +582,7 @@
         {
           "Id": "b2bfefd7433a4b52ba02518ceac6ade5",
           "Name": "origin",
-          "Description": "Point",
+          "Description": "Origin point to measure visibility from.\n\nPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -591,7 +591,7 @@
         {
           "Id": "052667ef4c404b4cb467dd425c78d003",
           "Name": "points",
-          "Description": "Point[]",
+          "Description": "The points to measure visibility to.\n\nPoint[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -600,7 +600,7 @@
         {
           "Id": "5fd1cae5620446af9547d44c1430ab10",
           "Name": "boundary",
-          "Description": "Polygon[]",
+          "Description": "Polygon(s) enclosing all obstacle Polygons\n\nPolygon[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -609,7 +609,7 @@
         {
           "Id": "27c51f2ccb0e4d5faa117773cc006a48",
           "Name": "obstructions",
-          "Description": "Polygon[]\nDefault value : []",
+          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -620,7 +620,7 @@
         {
           "Id": "6c8894d7aa8e440db3d671b053600c83",
           "Name": "Percentage visible",
-          "Description": "var",
+          "Description": "The percentage of target Points that are visible from the origin point.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -629,7 +629,7 @@
         {
           "Id": "e4d887de82c543089063229a82bc4dd1",
           "Name": "Visible items",
-          "Description": "var",
+          "Description": "The specific Points that are visible from the origin point.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -637,7 +637,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Visibility.OfPointsFromOrigin (origin: Point, points: Point[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
+      "Description": "Calculates the visibility of a set of points, from a given origin point. Returns the percentage of points that are visible and the visible points themselves.\n\nVisibility.OfPointsFromOrigin (origin: Point, points: Point[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -648,7 +648,7 @@
         {
           "Id": "a897c70c42184845afacbc4eaeba7a24",
           "Name": "items",
-          "Description": "Cuboid[]",
+          "Description": "List of Cuboids to pack\n\nCuboid[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -657,7 +657,7 @@
         {
           "Id": "6aefc7d3dc3244908361c3fe7fd456b2",
           "Name": "containers",
-          "Description": "Cuboid[]",
+          "Description": "Set of Cuboids to pack into.\n\nCuboid[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -668,7 +668,7 @@
         {
           "Id": "1fe25a81cc8c4b699d78f25d26a7ad51",
           "Name": "Packed Items",
-          "Description": "var",
+          "Description": "The cuboids that were packed.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -677,7 +677,7 @@
         {
           "Id": "549f44f017b94681b88787cb70e1770c",
           "Name": "Packed Indices",
-          "Description": "var",
+          "Description": "Indices of packed cuboids for correlation to input items list.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -685,8 +685,8 @@
         },
         {
           "Id": "19cc8a65b7c34ee6a4b030e8adb00f36",
-          "Name": "Remaining Indices",
-          "Description": "var",
+          "Name": "Remaining Items",
+          "Description": "Cuboids that didn't get packed.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -695,7 +695,7 @@
         {
           "Id": "916ca5cf7c1845f1bb3c7f90cefa3be8",
           "Name": "% Container Volume Packed",
-          "Description": "var",
+          "Description": "Metric : percentage of each container volume that was packed.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -703,8 +703,8 @@
         },
         {
           "Id": "dbbef0782690441385cf90ff96e42d53",
-          "Name": "% Items Volume Packed",
-          "Description": "var",
+          "Name": "% Item Volume Packed",
+          "Description": "Metric : percentage expressing how much of total items volume was packed in each container.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -712,7 +712,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packing.PackCuboids (items: Cuboid[], containers: Cuboid[]): var[]..[]"
+      "Description": "Packs a list of items (Cuboids) into a set of containers (Cuboids too). When supplying multiple containers, it sequentially packs each until no space is left, before moving on to next container.\n\nPacking.PackCuboids (items: Cuboid[], containers: Cuboid[]): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -723,7 +723,7 @@
         {
           "Id": "0b5768bb8d384a7280fc5141e4064d8c",
           "Name": "items",
-          "Description": "Rectangle[]",
+          "Description": "List of items (rectangles) to pack.\n\nRectangle[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -732,7 +732,7 @@
         {
           "Id": "11f810ad3caf49e7ad1c26296b772920",
           "Name": "containers",
-          "Description": "Rectangle[]",
+          "Description": "List of containers (rectangles) to pack into.\n\nRectangle[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -741,7 +741,7 @@
         {
           "Id": "c819798ddaf445da8c8681a4a8ca1946",
           "Name": "strategy",
-          "Description": "RectanglePackingStrategy\nDefault value : Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits",
+          "Description": "(optional) Method for choosing where to place the next rectangle when packing. Possible values are : RectangleShortSideStrategy, RectangleLongSideStrategy, RectangleAreaStrategy\n\nRectanglePackingStrategy\nDefault value : Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -752,7 +752,7 @@
         {
           "Id": "21dddabb29a74830b9771291f6e401c5",
           "Name": "Packed Items",
-          "Description": "var",
+          "Description": "List of packed rectangles for each of the containers provided.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -761,7 +761,7 @@
         {
           "Id": "ab42cea4315d4edc81299f831a02f7e8",
           "Name": "Packed Indices",
-          "Description": "var",
+          "Description": "Indices of packed rectangles for correlation to input items list.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -769,8 +769,8 @@
         },
         {
           "Id": "fe404b5f55cf45c2a3c06c0c9067b33e",
-          "Name": "Remaining Indices",
-          "Description": "var",
+          "Name": "Remaining Items",
+          "Description": "Items (rectangles) that didn't get packed.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -778,7 +778,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packing.PackRectangles (items: Rectangle[], containers: Rectangle[], strategy: RectanglePackingStrategy = Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits): var[]..[]"
+      "Description": "Packs a list of items (Rectangles) into a set of containers (Rectangles too). Algorithm sequentially packs rectangles in each container (order as provided) until there is nothing left to pack or it run out of bins. You can safely use this with a single container as well.\n\nPacking.PackRectangles (items: Rectangle[], containers: Rectangle[], strategy: RectanglePackingStrategy = Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers.RectanglePackingStrategy.BestAreaFits): var[]..[]"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -798,7 +798,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packing.RectangleAreaStrategy: RectanglePackingStrategy"
+      "Description": "Picks the free area that is smallest in area to place the next rectangle into.\n\nPacking.RectangleAreaStrategy: RectanglePackingStrategy"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -818,7 +818,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packing.RectangleLongSideStrategy: RectanglePackingStrategy"
+      "Description": "Packs next rectangle into the free area where the length of the shorter leftover side is minimized.\n\nPacking.RectangleLongSideStrategy: RectanglePackingStrategy"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -838,7 +838,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Packing.RectangleShortSideStrategy: RectanglePackingStrategy"
+      "Description": "Packs next rectangle into the free area where the length of the longer leftover side is minimized\n\nPacking.RectangleShortSideStrategy: RectanglePackingStrategy"
     }
   ],
   "Connectors": [],
@@ -869,13 +869,14 @@
       ]
     }
   ],
+  "ExtensionWorkspaceData": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.4.0.6186",
+      "Version": "2.11.1.4675",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -900,7 +901,7 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "X": 253.0,
-        "Y": 590.5005814603943
+        "Y": 590.500581460394
       },
       {
         "ShowGeometry": true,
@@ -919,8 +920,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 613.46473679729183,
-        "Y": 170.86401332564114
+        "X": 613.464736797292,
+        "Y": 170.278481389798
       },
       {
         "ShowGeometry": true,
@@ -929,8 +930,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 872.62348162138119,
-        "Y": 640.88969982896208
+        "X": 872.623481621381,
+        "Y": 639.407199153171
       },
       {
         "ShowGeometry": true,
@@ -939,8 +940,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 872.62348162138119,
-        "Y": 468.78023616691371
+        "X": 872.623481621381,
+        "Y": 467.297735491123
       },
       {
         "ShowGeometry": true,
@@ -949,8 +950,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 872.62348162138119,
-        "Y": 786.99916349101113
+        "X": 872.623481621381,
+        "Y": 785.51666281522
       },
       {
         "ShowGeometry": true,
@@ -959,8 +960,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1264.1884799136478,
-        "Y": 170.925655396499
+        "X": 1264.18847991365,
+        "Y": 170.278481389798
       },
       {
         "ShowGeometry": true,
@@ -969,8 +970,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 256.33138951354408,
-        "Y": 407.35018737549723
+        "X": 256.331389513544,
+        "Y": 407.350187375497
       },
       {
         "ShowGeometry": true,
@@ -979,8 +980,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 257.03049003773452,
-        "Y": 127.2784813897984
+        "X": 257.030490037735,
+        "Y": 127.278481389798
       },
       {
         "ShowGeometry": true,
@@ -989,8 +990,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 257.9402208036941,
-        "Y": 240.99482713475177
+        "X": 257.940220803694,
+        "Y": 240.994827134752
       },
       {
         "ShowGeometry": true,
@@ -999,7 +1000,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 252.36733895918985,
+        "X": 252.36733895919,
         "Y": 880.038416491164
       },
       {
@@ -1009,8 +1010,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 255.44997378872119,
-        "Y": 1051.1246495301914
+        "X": 255.449973788721,
+        "Y": 1051.12464953019
       },
       {
         "ShowGeometry": true,
@@ -1019,8 +1020,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 873.8428560073346,
-        "Y": 273.34602904348719
+        "X": 873.842856007335,
+        "Y": 271.863528367696
       },
       {
         "ShowGeometry": true,
@@ -1029,8 +1030,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 876.77363398661646,
-        "Y": 128.76098206558916
+        "X": 876.773633986616,
+        "Y": 127.278481389798
       },
       {
         "ShowGeometry": true,
@@ -1076,14 +1077,14 @@
           "2af6f72a52674b4ea6b7649ab6e6095c",
           "53bf6e8b53f14050baa14bbd2d844a2d"
         ],
-        "Left": 242.36733895918985,
-        "Top": 74.0784813897984,
-        "Width": 340.63266104081015,
-        "Height": 1146.446168140393,
+        "Left": 242.36733895919,
+        "Top": 74.278481389798,
+        "Width": 337.0,
+        "Height": 1147.84616814039,
         "FontSize": 36.0,
-        "InitialTop": 127.2784813897984,
-        "InitialHeight": 1011.319925604863,
-        "TextblockHeight": 43.2,
+        "InitialTop": 127.278481389798,
+        "InitialHeight": 1068.84616814039,
+        "TextblockHeight": 43.0,
         "Background": "#FF48B9FF"
       },
       {
@@ -1092,14 +1093,14 @@
         "Nodes": [
           "4702f8da299d409cb86cb938b288c374"
         ],
-        "Left": 603.46473679729183,
-        "Top": 74.464013325641133,
-        "Width": 243.2,
-        "Height": 240.20000000000002,
+        "Left": 603.464736797292,
+        "Top": 74.2784813897984,
+        "Width": 244.0,
+        "Height": 241.0,
         "FontSize": 36.0,
-        "InitialTop": 170.86401332564114,
+        "InitialTop": 170.864013325641,
         "InitialHeight": 145.0,
-        "TextblockHeight": 86.4,
+        "TextblockHeight": 86.0,
         "Background": "#FF48B9FF"
       },
       {
@@ -1112,14 +1113,14 @@
           "28ce89e962dc413fb0bedf8520fb6881",
           "2b4e1273dec5481499941cb9c2ee17b6"
         ],
-        "Left": 862.62348162138119,
-        "Top": 75.560982065589158,
-        "Width": 374.01937438595343,
-        "Height": 855.238181425422,
+        "Left": 862.623481621381,
+        "Top": 74.2784813897984,
+        "Width": 374.219374385953,
+        "Height": 856.238181425422,
         "FontSize": 36.0,
-        "InitialTop": 128.76098206558916,
-        "InitialHeight": 729.43785464819507,
-        "TextblockHeight": 43.2,
+        "InitialTop": 128.760982065589,
+        "InitialHeight": 803.238181425422,
+        "TextblockHeight": 43.0,
         "Background": "#FF48B9FF"
       },
       {
@@ -1131,13 +1132,13 @@
           "cc84eaddf1a94c85b7977605d895ced8"
         ],
         "Left": 861.46030766214085,
-        "Top": 939.85945326150716,
-        "Width": 256.0,
+        "Top": 940.25945326150713,
+        "Width": 262.0,
         "Height": 381.606138068262,
         "FontSize": 36.0,
         "InitialTop": 1036.2594532615071,
-        "InitialHeight": 327.75687221263127,
-        "TextblockHeight": 86.4,
+        "InitialHeight": 337.606138068262,
+        "TextblockHeight": 86.0,
         "Background": "#FFC1D676"
       },
       {
@@ -1146,14 +1147,14 @@
         "Nodes": [
           "9a92f8f033de4646a843c95d240940e1"
         ],
-        "Left": 1254.1884799136478,
-        "Top": 74.525655396498991,
-        "Width": 210.4,
-        "Height": 214.60000000000002,
+        "Left": 1254.18847991365,
+        "Top": 74.2784813897984,
+        "Width": 211.0,
+        "Height": 215.0,
         "FontSize": 36.0,
         "InitialTop": 170.925655396499,
         "InitialHeight": 145.0,
-        "TextblockHeight": 86.4,
+        "TextblockHeight": 86.0,
         "Background": "#FF48B9FF"
       },
       {
@@ -1168,84 +1169,102 @@
           "73dba53733e7454699a8b2784a91c825",
           "8b179604499a448c86cfab31f20faaa8"
         ],
-        "Left": -950.44303474374692,
-        "Top": -90.144266151280192,
-        "Width": 632.43562714206723,
-        "Height": 595.17338313009418,
+        "Left": -1082.13962614985,
+        "Top": 83.8350966761498,
+        "Width": 632.235627142067,
+        "Height": 600.573383130094,
         "FontSize": 48.0,
-        "InitialTop": 92.655733848719819,
-        "InitialHeight": 421.57338313009416,
-        "TextblockHeight": 172.8,
+        "InitialTop": 266.83509667615,
+        "InitialHeight": 426.573383130094,
+        "TextblockHeight": 173.0,
         "Background": "#FFFFFFFF"
       },
       {
-        "Id": "36ae6563e8e04267be51e94519123cfd",
+        "Id": "be776862122643e09552a25429aa9ef9",
         "Title": "",
         "Nodes": [
-          "fb34f1f00fb54d358536b61a4c2b92ea"
+          "f94b1dd2a2dd4d14a3eee3a3fd77daca"
         ],
-        "Left": -313.98637682741173,
-        "Top": 91.8705154093027,
-        "Width": 313.6,
-        "Height": 146.4,
+        "Left": -108.70225685049297,
+        "Top": 254.60593237777846,
+        "Width": 319.0,
+        "Height": 137.0,
         "FontSize": 14.0,
-        "InitialTop": 121.8705154093027,
-        "InitialHeight": 140.0,
+        "InitialTop": 284.60593237777846,
+        "InitialHeight": 145.0,
         "TextblockHeight": 20.0,
-        "Background": "#FFFFB8D8"
+        "Background": "#FFD4B6DB"
       },
       {
-        "Id": "c093583eade64a9885778515d54f3cae",
+        "Id": "b6b31b3aba354fd28bc769ab8486c987",
         "Title": "",
         "Nodes": [
-          "7618438ed58c4cc7841eadde1498c505"
+          "0a84ff41dd964fb58318080015d60c3c"
         ],
-        "Left": -313.98637682741173,
-        "Top": 248.22359977292831,
-        "Width": 313.6,
-        "Height": 146.4,
+        "Left": -437.3093844576473,
+        "Top": 255.27649115774091,
+        "Width": 314.0,
+        "Height": 123.0,
         "FontSize": 14.0,
-        "InitialTop": 278.22359977292831,
-        "InitialHeight": 140.0,
+        "InitialTop": 285.27649115774091,
+        "InitialHeight": 145.0,
         "TextblockHeight": 20.0,
-        "Background": "#FFB9F9E1"
+        "Background": "#FFE8F7AD"
       },
       {
-        "Id": "e8f2b11086ba4e36b36ce1a7b6e7e98c",
+        "Id": "4054beea6d5342b0a3581950cbb6013d",
         "Title": "",
         "Nodes": [
-          "020ebb464a7e44af8d7d28cc2b300128"
+          "8c7b9869d2ee4c03a83ea02b8a4f3c5a"
         ],
-        "Left": -313.98637682741173,
-        "Top": 408.90528526744356,
-        "Width": 313.6,
-        "Height": 132.0,
+        "Left": -436.57930362559307,
+        "Top": 403.8025058852644,
+        "Width": 314.0,
+        "Height": 137.0,
         "FontSize": 14.0,
-        "InitialTop": 438.90528526744356,
-        "InitialHeight": 140.0,
+        "InitialTop": 433.8025058852644,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 20.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "53dcc19928a449c29b3ff9d387a468d3",
+        "Title": "",
+        "Nodes": [
+          "fbcd6177a67d4976b33c7010c18437df"
+        ],
+        "Left": -110.286580055519,
+        "Top": 84.7433218958073,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 114.743321895807,
+        "InitialHeight": 145.0,
         "TextblockHeight": 20.0,
         "Background": "#FFFFC999"
+      },
+      {
+        "Id": "666dfbe65354432eaa17ad29094ccade",
+        "Title": "",
+        "Nodes": [
+          "847ea62bf34f445c990c2eaeb040b0c0"
+        ],
+        "Left": -438.303416102757,
+        "Top": 85.0069637625802,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 115.00696376258,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 20.0,
+        "Background": "#FFFFB8D8"
       },
       {
         "Id": "c9cb9577ec55485a95b367bfcb62e68f",
         "Title": "DYNAMO VERSION\r\n________________________________________________________\r\n\r\n2.0.2",
         "Nodes": [],
-        "Left": -627.20740760167973,
-        "Top": 93.817185932048915,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "fb34f1f00fb54d358536b61a4c2b92ea",
-        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nGreen indicates Variables that can be altered per project and must be set accordingly before running the script.",
-        "Nodes": [],
-        "Left": -303.98637682741173,
-        "Top": 121.8705154093027,
+        "Left": -758.903999007785,
+        "Top": 267.996548759479,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1258,8 +1277,8 @@
         "Id": "8b179604499a448c86cfab31f20faaa8",
         "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -627.20740760168292,
-        "Top": 182.47374169251998,
+        "Left": -758.903999007789,
+        "Top": 356.65310451995,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1272,22 +1291,8 @@
         "Id": "73dba53733e7454699a8b2784a91c825",
         "Title": "ADDITIONAL COMMENTS\r\n________________________________________________________\r\n\r\n",
         "Nodes": [],
-        "Left": -627.20740760168292,
-        "Top": 273.34233169078584,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "7618438ed58c4cc7841eadde1498c505",
-        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nOrange indicates the working of the script. No changes should be made in these groups unless advised.",
-        "Nodes": [],
-        "Left": -303.98637682741173,
-        "Top": 278.22359977292831,
+        "Left": -758.903999007789,
+        "Top": 447.521694518216,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1300,8 +1305,8 @@
         "Id": "f22effec3a4742a1b98d1dd471c7efc6",
         "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -940.44303474374692,
-        "Top": 92.655733848719819,
+        "Left": -1072.13962614985,
+        "Top": 266.83509667615,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1314,8 +1319,8 @@
         "Id": "d7a8fa205b92463fb89a32edb39718fc",
         "Title": "ASSOCIATED FILE(S)      \r\n________________________________________________________\r\n\r\nN/A",
         "Nodes": [],
-        "Left": -940.44303474374692,
-        "Top": 182.99903276975283,
+        "Left": -1072.13962614985,
+        "Top": 357.178395597183,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1328,8 +1333,8 @@
         "Id": "60e2bc6567e1477793f48a3f74563ada",
         "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
-        "Left": -940.44303474374692,
-        "Top": 273.34233169078584,
+        "Left": -1072.13962614985,
+        "Top": 447.521694518216,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1342,8 +1347,8 @@
         "Id": "a771a1d4ad2f4382a3d34ae03fd443b4",
         "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis is an index graph showing all the available nodes in the Refinery Toolkit packages. For example workflows of the nodes see the extra folder of the package.",
         "Nodes": [],
-        "Left": -940.44303474374692,
-        "Top": 374.229116978814,
+        "Left": -1072.13962614985,
+        "Top": 548.408479806244,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1353,11 +1358,67 @@
         "Background": "#FFC1D676"
       },
       {
-        "Id": "020ebb464a7e44af8d7d28cc2b300128",
-        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nRed indicates checking nodes to ensure the script has deployed correctly.",
+        "Id": "f94b1dd2a2dd4d14a3eee3a3fd77daca",
+        "Title": "Remember / Gate Nodes\r\n_______________________________________________________\r\n\r\nData that needs to be cached from Dynamo for Revit is stored here.",
         "Nodes": [],
-        "Left": -303.98637682741173,
-        "Top": 438.90528526744356,
+        "Left": -98.702256850492972,
+        "Top": 284.60593237777846,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "8c7b9869d2ee4c03a83ea02b8a4f3c5a",
+        "Title": "Display / Validation\r\n_______________________________________________________\r\n\r\nLogic used simply for visualization purposes, does not contain core logic.",
+        "Nodes": [],
+        "Left": -426.57930362559307,
+        "Top": 433.8025058852644,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "0a84ff41dd964fb58318080015d60c3c",
+        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nCore Workings of the Dynamo Graph",
+        "Nodes": [],
+        "Left": -427.3093844576473,
+        "Top": 285.27649115774091,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "fbcd6177a67d4976b33c7010c18437df",
+        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nOrange indicates checking nodes to ensure the script has deployed correctly.",
+        "Nodes": [],
+        "Left": -100.286580055519,
+        "Top": 114.743321895807,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "847ea62bf34f445c990c2eaeb040b0c0",
+        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nVariables that can be altered per project and must be set accordingly before running the graph.",
+        "Nodes": [],
+        "Left": -428.303416102757,
+        "Top": 115.00696376258,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1367,8 +1428,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 398.10508439051119,
-    "Y": 124.09752247001384,
-    "Zoom": 0.33893335724341567
+    "X": 676.50916765902423,
+    "Y": 15.878963705208903,
+    "Zoom": 0.60300836933030533
   }
 }

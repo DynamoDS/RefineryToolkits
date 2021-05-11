@@ -2,7 +2,7 @@
   "Uuid": "a83758a3-1dbb-4e2f-8644-0dc0b2bb961d",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_GeometricMedianTest",
+  "Name": "GenerativeToolkit_GeometricMedianTest",
   "ElementResolver": {
     "ResolutionMap": {
       "DesignScript.Point": {
@@ -97,7 +97,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points, which is the point minimizing the sum of distances to all supplied points.\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -441,7 +441,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points, which is the point minimizing the sum of distances to all supplied points.\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -539,7 +539,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points, which is the point minimizing the sum of distances to all supplied points.\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -637,7 +637,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points, which is the point minimizing the sum of distances to all supplied points.\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -735,7 +735,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the geometric median point of a list of points. The geometric median is the point minimizing the sum of distances to the sample points\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
+      "Description": "Returns the geometric median point of a list of points, which is the point minimizing the sum of distances to all supplied points.\n\nAdjacency.GeometricMedianOfPoints (points: Point[]): Point"
     },
     {
       "ConcreteType": "CoreNodeModels.CreateList, CoreNodeModels",
@@ -851,7 +851,7 @@
         {
           "Id": "d38a9f8a79b2486e8dfa7f9496059d00",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -860,7 +860,7 @@
         {
           "Id": "44730cd356c840ff886d013026bbc5e4",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -871,7 +871,7 @@
         {
           "Id": "fa4fd460257e49ff994641e0568d1582",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -879,7 +879,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -889,8 +889,8 @@
       "Inputs": [
         {
           "Id": "94639bd3079b4104ac59f96e63a6579f",
-          "Name": "a",
-          "Description": "The alpha value.\n\nint\nDefault value : 255",
+          "Name": "alpha",
+          "Description": "Alpha value (between 0 and 255 inclusive)\n\nint\nDefault value : 255",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -898,8 +898,8 @@
         },
         {
           "Id": "bccda39914ee426aa1399b31b3e3d251",
-          "Name": "r",
-          "Description": "The red value.\n\nint\nDefault value : 0",
+          "Name": "red",
+          "Description": "Red value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -907,8 +907,8 @@
         },
         {
           "Id": "2aec40114ab44acf9e6355678adf368b",
-          "Name": "g",
-          "Description": "The green value.\n\nint\nDefault value : 0",
+          "Name": "green",
+          "Description": "Green value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -916,8 +916,8 @@
         },
         {
           "Id": "b5c5d36cbd394b1eb64233c98adfbc49",
-          "Name": "b",
-          "Description": "The blue value.\n\nint\nDefault value : 0",
+          "Name": "blue",
+          "Description": "Blue value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -928,7 +928,7 @@
         {
           "Id": "aec683b140d84f4cb766e9dc70f2bb5e",
           "Name": "color",
-          "Description": "Color.",
+          "Description": "Color created from ARGB",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -936,7 +936,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (a: int = 255, r: int = 0, g: int = 0, b: int = 0): Color"
+      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (alpha: int = 255, red: int = 0, green: int = 0, blue: int = 0): Color"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1033,7 +1033,7 @@
         {
           "Id": "0ca29a14de304d45ac56f3f058738f2b",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1042,7 +1042,7 @@
         {
           "Id": "b89d60657bf544dfad318177e293d6cc",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1053,7 +1053,7 @@
         {
           "Id": "751f180eec514ebcbf5d42645adeccdf",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1061,7 +1061,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1071,8 +1071,8 @@
       "Inputs": [
         {
           "Id": "8449343ca59e4c53bb92f88de828e289",
-          "Name": "a",
-          "Description": "The alpha value.\n\nint\nDefault value : 255",
+          "Name": "alpha",
+          "Description": "Alpha value (between 0 and 255 inclusive)\n\nint\nDefault value : 255",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1080,8 +1080,8 @@
         },
         {
           "Id": "d5172d556b4c462cb3f0a22fea354d4c",
-          "Name": "r",
-          "Description": "The red value.\n\nint\nDefault value : 0",
+          "Name": "red",
+          "Description": "Red value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1089,8 +1089,8 @@
         },
         {
           "Id": "876852441d124681bb8c24e6df7614cc",
-          "Name": "g",
-          "Description": "The green value.\n\nint\nDefault value : 0",
+          "Name": "green",
+          "Description": "Green value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1098,8 +1098,8 @@
         },
         {
           "Id": "a5addc86a16d476e9fd294358247eafe",
-          "Name": "b",
-          "Description": "The blue value.\n\nint\nDefault value : 0",
+          "Name": "blue",
+          "Description": "Blue value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1110,7 +1110,7 @@
         {
           "Id": "80ef1777caca42ae9d00fd8eb8680865",
           "Name": "color",
-          "Description": "Color.",
+          "Description": "Color created from ARGB",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1118,7 +1118,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (a: int = 255, r: int = 0, g: int = 0, b: int = 0): Color"
+      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (alpha: int = 255, red: int = 0, green: int = 0, blue: int = 0): Color"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1215,7 +1215,7 @@
         {
           "Id": "9f3cd23248634ddf9c60a8037c23b2a8",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1224,7 +1224,7 @@
         {
           "Id": "43937371175f43e5b4b982d25d640bd2",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1235,7 +1235,7 @@
         {
           "Id": "86cfbeb606df4efebbc5e89bfa7a5ac0",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1243,7 +1243,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1253,8 +1253,8 @@
       "Inputs": [
         {
           "Id": "fff35247aca64ba9bf4f5662a9b48389",
-          "Name": "a",
-          "Description": "The alpha value.\n\nint\nDefault value : 255",
+          "Name": "alpha",
+          "Description": "Alpha value (between 0 and 255 inclusive)\n\nint\nDefault value : 255",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1262,8 +1262,8 @@
         },
         {
           "Id": "4f93160755384c7080f8efdd97a52541",
-          "Name": "r",
-          "Description": "The red value.\n\nint\nDefault value : 0",
+          "Name": "red",
+          "Description": "Red value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1271,8 +1271,8 @@
         },
         {
           "Id": "53f9684ad9ea434e873b5aaf60a40b6d",
-          "Name": "g",
-          "Description": "The green value.\n\nint\nDefault value : 0",
+          "Name": "green",
+          "Description": "Green value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1280,8 +1280,8 @@
         },
         {
           "Id": "8e180864996d45ca82463e9e3fe3a84d",
-          "Name": "b",
-          "Description": "The blue value.\n\nint\nDefault value : 0",
+          "Name": "blue",
+          "Description": "Blue value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1292,7 +1292,7 @@
         {
           "Id": "f4e8a104692742ddb4fe63e429371b77",
           "Name": "color",
-          "Description": "Color.",
+          "Description": "Color created from ARGB",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1300,7 +1300,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (a: int = 255, r: int = 0, g: int = 0, b: int = 0): Color"
+      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (alpha: int = 255, red: int = 0, green: int = 0, blue: int = 0): Color"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1397,7 +1397,7 @@
         {
           "Id": "f740a493be1342cd8b61d732bc0385d7",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1406,7 +1406,7 @@
         {
           "Id": "37f3084cf996426990b6ebd3042965a7",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1417,7 +1417,7 @@
         {
           "Id": "e276f7f1f7524cbaa1746a9aed20ada8",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1425,7 +1425,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1435,8 +1435,8 @@
       "Inputs": [
         {
           "Id": "0dacef772fcc43f692ac2812e3388f57",
-          "Name": "a",
-          "Description": "The alpha value.\n\nint\nDefault value : 255",
+          "Name": "alpha",
+          "Description": "Alpha value (between 0 and 255 inclusive)\n\nint\nDefault value : 255",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1444,8 +1444,8 @@
         },
         {
           "Id": "cc1365999a3a4c95a25b375fcf35afb4",
-          "Name": "r",
-          "Description": "The red value.\n\nint\nDefault value : 0",
+          "Name": "red",
+          "Description": "Red value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1453,8 +1453,8 @@
         },
         {
           "Id": "d118077eb8e84307a33d4ec827653adc",
-          "Name": "g",
-          "Description": "The green value.\n\nint\nDefault value : 0",
+          "Name": "green",
+          "Description": "Green value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1462,8 +1462,8 @@
         },
         {
           "Id": "a88ff20c60e34908a80afacc9503520a",
-          "Name": "b",
-          "Description": "The blue value.\n\nint\nDefault value : 0",
+          "Name": "blue",
+          "Description": "Blue value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1474,7 +1474,7 @@
         {
           "Id": "6adee3ff1e4b4e9180399043f93b4400",
           "Name": "color",
-          "Description": "Color.",
+          "Description": "Color created from ARGB",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1482,7 +1482,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (a: int = 255, r: int = 0, g: int = 0, b: int = 0): Color"
+      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (alpha: int = 255, red: int = 0, green: int = 0, blue: int = 0): Color"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1579,7 +1579,7 @@
         {
           "Id": "42ddc6b1516a4cfd82a059eb4e2bd273",
           "Name": "geometry",
-          "Description": "Geometry",
+          "Description": "The geometry to which you would like to apply color.\n\nGeometry",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1588,7 +1588,7 @@
         {
           "Id": "1e4e51575fef459eae04d1d24138efe9",
           "Name": "color",
-          "Description": "Color",
+          "Description": "The color.\n\nColor",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1599,7 +1599,7 @@
         {
           "Id": "1d21dface8e3487984028dd84895cbd7",
           "Name": "GeometryColor",
-          "Description": "GeometryColor",
+          "Description": "A Display object.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1607,7 +1607,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "GeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
+      "Description": "Display geometry using a color.\n\nGeometryColor.ByGeometryColor (geometry: Geometry, color: Color): GeometryColor"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1617,8 +1617,8 @@
       "Inputs": [
         {
           "Id": "63c5d99b0463448fa5b329b65cb98a71",
-          "Name": "a",
-          "Description": "The alpha value.\n\nint\nDefault value : 255",
+          "Name": "alpha",
+          "Description": "Alpha value (between 0 and 255 inclusive)\n\nint\nDefault value : 255",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1626,8 +1626,8 @@
         },
         {
           "Id": "0cd0f317c0a8417f8fb10165eb7c719a",
-          "Name": "r",
-          "Description": "The red value.\n\nint\nDefault value : 0",
+          "Name": "red",
+          "Description": "Red value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1635,8 +1635,8 @@
         },
         {
           "Id": "6e0f32a91c2d4950a51d79a5fcb4d41b",
-          "Name": "g",
-          "Description": "The green value.\n\nint\nDefault value : 0",
+          "Name": "green",
+          "Description": "Green value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1644,8 +1644,8 @@
         },
         {
           "Id": "c75aea4fa2114a9b93d58deadc90ce07",
-          "Name": "b",
-          "Description": "The blue value.\n\nint\nDefault value : 0",
+          "Name": "blue",
+          "Description": "Blue value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -1656,7 +1656,7 @@
         {
           "Id": "ce9f62ff45e44bfbae6b1b08af6b274f",
           "Name": "color",
-          "Description": "Color.",
+          "Description": "Color created from ARGB",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1664,7 +1664,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (a: int = 255, r: int = 0, g: int = 0, b: int = 0): Color"
+      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (alpha: int = 255, red: int = 0, green: int = 0, blue: int = 0): Color"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1811,8 +1811,8 @@
       "Inputs": [
         {
           "Id": "fb1e8066047f4b14835735eb4228fac6",
-          "Name": "objectA",
-          "Description": "first object\n\nvar[]..[]",
+          "Name": "object",
+          "Description": "First object\n\nvar[]..[]",
           "UsingDefaultValue": false,
           "Level": 1,
           "UseLevels": true,
@@ -1820,8 +1820,8 @@
         },
         {
           "Id": "569293965e104d81b0fa2494a334f2e4",
-          "Name": "objectB",
-          "Description": "second object\n\nvar[]..[]",
+          "Name": "otherObject",
+          "Description": "Other object\n\nvar[]..[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1832,7 +1832,7 @@
         {
           "Id": "69510e36f9244b419411cb55c491ebd0",
           "Name": "bool",
-          "Description": "bool",
+          "Description": "Returns true if object instances are equal, false if they are different",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1840,7 +1840,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Determines whether two object instances are equal.\n\nList.Equals (objectA: var[]..[], objectB: var[]..[]): bool"
+      "Description": "Determines whether two object instances are equal.\n\nList.Equals (object: var[]..[], otherObject: var[]..[]): bool"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1898,8 +1898,8 @@
       "Inputs": [
         {
           "Id": "5711daec9e114d29ae87d09aa8f9d89a",
-          "Name": "objectA",
-          "Description": "first object\n\nvar[]..[]",
+          "Name": "object",
+          "Description": "First object\n\nvar[]..[]",
           "UsingDefaultValue": false,
           "Level": 1,
           "UseLevels": true,
@@ -1907,8 +1907,8 @@
         },
         {
           "Id": "a7b017bcaca5446795cad69538d207d3",
-          "Name": "objectB",
-          "Description": "second object\n\nvar[]..[]",
+          "Name": "otherObject",
+          "Description": "Other object\n\nvar[]..[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1919,7 +1919,7 @@
         {
           "Id": "984e1f8e186441539a0b28876458648d",
           "Name": "bool",
-          "Description": "bool",
+          "Description": "Returns true if object instances are equal, false if they are different",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -1927,7 +1927,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Determines whether two object instances are equal.\n\nList.Equals (objectA: var[]..[], objectB: var[]..[]): bool"
+      "Description": "Determines whether two object instances are equal.\n\nList.Equals (object: var[]..[], otherObject: var[]..[]): bool"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -2376,13 +2376,28 @@
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Refinery Toolkit",
+      "Version": "1.1.1",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "48ac742b5ae64288b59eb53874bffc60",
+        "20b78854c6e949dfb95ee81461712a78",
+        "73ba1130f5654484b1a1e833da764e97",
+        "27e7124fe5d34217afb2a14a91437e9b",
+        "196c84e76ced4f92baeb4fee741cf0eb"
+      ]
+    }
+  ],
+  "ExtensionWorkspaceData": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 100.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.11.1.4675",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -2416,7 +2431,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4831.1705538599572,
+        "X": 4812.8162285690987,
         "Y": -1218.3358571271601
       },
       {
@@ -2526,7 +2541,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4838.43061653858,
+        "X": 4812.8162285690987,
         "Y": -919.06028415029539
       },
       {
@@ -2556,7 +2571,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4832.4394123046222,
+        "X": 4812.8162285690987,
         "Y": -619.78073886448146
       },
       {
@@ -2616,7 +2631,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4822.0353637277931,
+        "X": 4812.8162285690987,
         "Y": 26.412720001006846
       },
       {
@@ -2902,137 +2917,6 @@
     ],
     "Annotations": [
       {
-        "Id": "52dd55a3a6da4a06b0ae825212fcf557",
-        "Title": "50 Random points",
-        "Nodes": [
-          "dd0948b8c8524e7680de12a63c955af3",
-          "060c5d8a88554dfeb407848c3a33b808",
-          "dc0e76a96e7e41f5a35ddfb7f34934a5",
-          "b33e173f13694c7ea57cb2bb601e4902",
-          "473550f7453f4c8589b3011b41afec89",
-          "05942dc1f6a341f197c386277a5efc44"
-        ],
-        "Left": 3697.8245717639707,
-        "Top": -1353.7208686741772,
-        "Width": 1024.1417942540174,
-        "Height": 264.09333333333308,
-        "FontSize": 36.0,
-        "InitialTop": -1300.3875353408439,
-        "InitialHeight": 253.42666666666651,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "480a27686d114c299e582e24ef26ae8d",
-        "Title": "Obtuse Triangle",
-        "Nodes": [
-          "2c62051fd9524ac4977faa2728ef01ba",
-          "0e09cfac90184c2f9b6bf74ada3f68b4",
-          "54b9bb99b2ea4e948668bb4e3706116c"
-        ],
-        "Left": 4301.1057344882438,
-        "Top": -1053.0470145463946,
-        "Width": 451.34157124361025,
-        "Height": 260.04062580123457,
-        "FontSize": 36.0,
-        "InitialTop": -999.71368121306125,
-        "InitialHeight": 258.70729246790108,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "7756bc7b7e56418d81be876c94c7aafa",
-        "Title": "Acute Triangle",
-        "Nodes": [
-          "3adce81f27754efbb7b6c744e2f645b2",
-          "89efea6e0cd2432ca2207cac6cfc2839",
-          "bc4569c5798b4e8abd378744a73176c0"
-        ],
-        "Left": 4292.97750265486,
-        "Top": -754.05439102705475,
-        "Width": 398.33333333333337,
-        "Height": 259.57700253942141,
-        "FontSize": 36.0,
-        "InitialTop": -700.72105769372138,
-        "InitialHeight": 258.24366920608804,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "eefb722f32214c168626086f0cf04a8c",
-        "Title": "One of the four points is inside the triangle formed by the other three points",
-        "Nodes": [
-          "6cf75553865c41d08a8454fc4b3c0c63",
-          "b46351058d114f04aa278cc3c136ff1f",
-          "cd922f3535394c6bbed3123111f89314"
-        ],
-        "Left": 4286.48771823651,
-        "Top": -477.56068201128346,
-        "Width": 422.33333333333337,
-        "Height": 348.15567565436447,
-        "FontSize": 36.0,
-        "InitialTop": -338.22734867795009,
-        "InitialHeight": 260.8223423210311,
-        "TextblockHeight": 129.33333333333334,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "8360a5839cc7436c97c80176707971b2",
-        "Title": "Convex Quadrilateral",
-        "Nodes": [
-          "90706c90a36040079b7844bb13e76b10",
-          "29aae6b6f2a34635a016d1922e9c973e",
-          "f6d5b98102e4420388278b440daba198"
-        ],
-        "Left": 4275.4053266426235,
-        "Top": -106.95425316078601,
-        "Width": 422.33333333333337,
-        "Height": 263.45268059702653,
-        "FontSize": 36.0,
-        "InitialTop": -53.620919827452667,
-        "InitialHeight": 262.11934726369316,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "a0dba852e4cd428fa4f9a9a8645a3a7e",
-        "Title": "Refinery Toolkit - Geometric Median\r\n",
-        "Nodes": [
-          "48ac742b5ae64288b59eb53874bffc60",
-          "196c84e76ced4f92baeb4fee741cf0eb",
-          "27e7124fe5d34217afb2a14a91437e9b",
-          "73ba1130f5654484b1a1e833da764e97",
-          "20b78854c6e949dfb95ee81461712a78"
-        ],
-        "Left": 4802.8162285690987,
-        "Top": -1401.0025237938269,
-        "Width": 289.61438796948096,
-        "Height": 1520.4152437948337,
-        "FontSize": 36.0,
-        "InitialTop": -1218.3358571271601,
-        "InitialHeight": 145.0,
-        "TextblockHeight": 172.66666666666666,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "2552d5c2ac8243aa8ecf976cde2a9d3b",
-        "Title": "Vizualize Geometric Median",
-        "Nodes": [
-          "4483a990215c49d38891b2c40cdb36fc",
-          "d07c8dc056d34180b5f18693fbed2e87",
-          "5642239d86e8485e967dd160af7f664a"
-        ],
-        "Left": 6588.0194238200238,
-        "Top": -619.21581879020187,
-        "Width": 548.46311189513165,
-        "Height": 323.74635987960312,
-        "FontSize": 36.0,
-        "InitialTop": -565.88248545686849,
-        "InitialHeight": 322.41302654626975,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFC1D676"
-      },
-      {
         "Id": "fce1da69c6fa47a2b38a1ed821404ef0",
         "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nGeometric Median",
         "Nodes": [
@@ -3044,66 +2928,118 @@
           "2c3c64e216964a84ba0c498acbf66cc8",
           "3b696a6e5f9c4e229b4e2f6f212c6c8c"
         ],
-        "Left": 2515.8349410506539,
-        "Top": -1166.9111782453804,
-        "Width": 631.90229380873393,
-        "Height": 666.90671646342753,
+        "Left": 2363.4291171758696,
+        "Top": -1353.8102614943978,
+        "Width": 632.23562714206719,
+        "Height": 672.57338313009416,
         "FontSize": 48.0,
-        "InitialTop": -984.24451157871363,
-        "InitialHeight": 421.57338313009416,
-        "TextblockHeight": 172.66666666666666,
+        "InitialTop": -1170.8102614943978,
+        "InitialHeight": 426.57338313009416,
+        "TextblockHeight": 173.0,
         "Background": "#FFFFFFFF"
       },
       {
-        "Id": "d6112bb332aa4a939f8d71fb7eb63876",
+        "Id": "91a52490b966464eb33ccd5fcb1c0f9f",
         "Title": "",
         "Nodes": [
-          "ff46df5af3e441b08819d9f02aec33f9"
+          "f70fb28f557d4760bddd7dd27af50823"
         ],
-        "Left": 3152.2915989669891,
-        "Top": -985.02973001813075,
+        "Left": 3012.047007977767,
+        "Top": -1031.7156431390279,
         "Width": 314.0,
-        "Height": 146.66666666666669,
+        "Height": 137.0,
         "FontSize": 14.0,
-        "InitialTop": -955.02973001813075,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFFFB8D8"
+        "InitialTop": -1001.7156431390279,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFA4E1FF"
       },
       {
-        "Id": "976a8a8cc2364cb1b88e3fa214f2cc9c",
+        "Id": "73c380d8a21c44e7bb85c17fa874317d",
         "Title": "",
         "Nodes": [
-          "a0db08cdb11b44a98ab48bc56f9a046c"
+          "68ffcde3c2dc450d8c5b24adcb305085"
         ],
-        "Left": 3152.2915989669891,
-        "Top": -828.67664565450514,
-        "Width": 314.0,
-        "Height": 146.66666666666669,
+        "Left": 3339.9240547528671,
+        "Top": -1180.9122166465138,
+        "Width": 319.0,
+        "Height": 137.0,
         "FontSize": 14.0,
-        "InitialTop": -798.67664565450514,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFB9F9E1"
+        "InitialTop": -1150.9122166465138,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFD4B6DB"
       },
       {
-        "Id": "7ed3af664af8487a820c985ef26c2a3f",
+        "Id": "03029da274114015937bef4769dd66b7",
         "Title": "",
         "Nodes": [
-          "3df046adcf764f4797489cf725459cbb"
+          "54d4732ffa694a61aa284838456c80ca"
         ],
-        "Left": 3152.2915989669891,
-        "Top": -667.99496015998989,
+        "Left": 3011.3169271457127,
+        "Top": -1180.2416578665513,
         "Width": 314.0,
-        "Height": 132.0,
+        "Height": 123.0,
         "FontSize": 14.0,
-        "InitialTop": -637.99496015998989,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
+        "InitialTop": -1150.2416578665513,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "8270119a70e846a3a9b6337d77e5a19c",
+        "Title": "",
+        "Nodes": [
+          "1f5b50e0a07e4b8cb0724c3073af9ced"
+        ],
+        "Left": 3338.339731547841,
+        "Top": -1350.7748271284854,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": -1320.7748271284854,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
         "Background": "#FFFFC999"
       },
       {
-        "Id": "d790b897b7594db9ad0db56f1775141d",
+        "Id": "ef9327c88556473fbe420e20a1cf4f1a",
+        "Title": "",
+        "Nodes": [
+          "76ac89267b0e4d13a1469d6a5ce1b27f"
+        ],
+        "Left": 3010.322895500603,
+        "Top": -1350.5111852617124,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": -1320.5111852617124,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "294656ca63854a8a82a9fe5b6ab7331d",
+        "Title": "Refinery Toolkit - Geometric Median\r\n",
+        "Nodes": [
+          "48ac742b5ae64288b59eb53874bffc60",
+          "20b78854c6e949dfb95ee81461712a78",
+          "73ba1130f5654484b1a1e833da764e97",
+          "27e7124fe5d34217afb2a14a91437e9b",
+          "196c84e76ced4f92baeb4fee741cf0eb"
+        ],
+        "Left": 4802.8162285690987,
+        "Top": -1314.3358571271601,
+        "Width": 270.0,
+        "Height": 1433.748577128167,
+        "FontSize": 24.0,
+        "InitialTop": -1218.3358571271601,
+        "InitialHeight": 1367.748577128167,
+        "TextblockHeight": 86.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "8d6a392f787642b083517ecc601ca311",
         "Title": "Visualize Lines",
         "Nodes": [
           "b256a8f96aeb4a9a8afbb2847f75cc56",
@@ -3112,38 +3048,38 @@
           "2e8b346952ef4eec870773605e73329b"
         ],
         "Left": 5198.6412120315281,
-        "Top": -1476.045017430677,
+        "Top": -1461.7116840973438,
         "Width": 772.0,
-        "Height": 358.33333333333348,
-        "FontSize": 36.0,
+        "Height": 344.00000000000023,
+        "FontSize": 24.0,
         "InitialTop": -1422.7116840973438,
-        "InitialHeight": 295.85333333333347,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 335.00000000000023,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
       },
       {
-        "Id": "f88f712ac56d49998dc3e679772b8f13",
+        "Id": "52979ba2cf1f4ee182e9b0a964793ffe",
         "Title": "Visualize Lines",
         "Nodes": [
           "d969b309ddf14ae78a0e0ea9fa200b46",
           "172107956cf2492fb58beb9db42c1e0c",
           "499291c17b604ec5b58700537b09ba6a",
           "f9602def0d1343a1af01d75bad8c3add",
-          "8701cbf45f4e4c789e1b64fedd30eb86",
-          "6880eb2004b945e684ef1a31fd4bdcef"
+          "6880eb2004b945e684ef1a31fd4bdcef",
+          "8701cbf45f4e4c789e1b64fedd30eb86"
         ],
         "Left": 5198.6847394765609,
-        "Top": -1098.5160611582546,
+        "Top": -1084.1827278249214,
         "Width": 1156.0,
-        "Height": 358.33333333333326,
-        "FontSize": 36.0,
+        "Height": 344.0,
+        "FontSize": 24.0,
         "InitialTop": -1045.1827278249214,
-        "InitialHeight": 295.85333333333335,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 335.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
       },
       {
-        "Id": "09a5e5333d6549668df5610d0702f01a",
+        "Id": "4a9dfb3a92a3459f968d166cdf414f57",
         "Title": "Visualize Lines",
         "Nodes": [
           "10f3bab4360a49928a1d7f07e7c3a8c6",
@@ -3152,38 +3088,38 @@
           "7f02894094bb43bbb9c7ded08dfedceb"
         ],
         "Left": 5202.3198656859358,
-        "Top": -732.60337777742518,
+        "Top": -718.27004444409181,
         "Width": 772.0,
-        "Height": 358.33333333333337,
-        "FontSize": 36.0,
+        "Height": 344.0,
+        "FontSize": 24.0,
         "InitialTop": -679.27004444409181,
-        "InitialHeight": 295.85333333332983,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 335.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
       },
       {
-        "Id": "66a2813823ca4469966f4137aa14dd41",
+        "Id": "a15fd7c7b7cf4c87b8b2df9dd3df6da9",
         "Title": "Visualize Lines",
         "Nodes": [
           "195ae22790c445e2bdf4f3c831141a1f",
           "b1d7bc3ddcba4d3abf0436202d379d10",
           "eaf61451c2ec400ea01b0553caa92bcc",
           "03cf78cfcb7e47eeab89881a46631f6f",
-          "87f6d24ed6f74dd490970c60627a0d25",
-          "87d3c18537be400882157db96308b559"
+          "87d3c18537be400882157db96308b559",
+          "87f6d24ed6f74dd490970c60627a0d25"
         ],
         "Left": 5194.4334517956,
-        "Top": -356.35246432796129,
+        "Top": -342.019130994628,
         "Width": 1156.0,
-        "Height": 360.33333333333326,
-        "FontSize": 36.0,
+        "Height": 346.0,
+        "FontSize": 24.0,
         "InitialTop": -303.019130994628,
-        "InitialHeight": 297.8533333333333,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 337.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
       },
       {
-        "Id": "f4407dd737f84309b591e17aa3fa9d17",
+        "Id": "ec9ee64b5fec4f98827f6ac7db40ac35",
         "Title": "Visualize Lines",
         "Nodes": [
           "51075b1c677c42cba7a0a22f65713763",
@@ -3192,35 +3128,132 @@
           "611274c33a22445dbc885bf668d601f4"
         ],
         "Left": 5198.7109555706647,
-        "Top": 15.884984861131194,
+        "Top": 30.21831819446453,
         "Width": 772.0,
-        "Height": 358.33333333333326,
-        "FontSize": 36.0,
+        "Height": 343.99999999999994,
+        "FontSize": 24.0,
         "InitialTop": 69.21831819446453,
-        "InitialHeight": 295.85333333332994,
-        "TextblockHeight": 43.333333333333336,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 334.99999999999994,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "4792e157e41541ad83dff0f0032b27a1",
+        "Title": "Vizualize Geometric Median",
+        "Nodes": [
+          "4483a990215c49d38891b2c40cdb36fc",
+          "d07c8dc056d34180b5f18693fbed2e87",
+          "5642239d86e8485e967dd160af7f664a"
+        ],
+        "Left": 6588.0194238200238,
+        "Top": -604.88248545686849,
+        "Width": 543.796445228465,
+        "Height": 309.41302654626975,
+        "FontSize": 24.0,
+        "InitialTop": -565.88248545686849,
+        "InitialHeight": 300.41302654626975,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "c2646c0f49d4429da336dcdff8ac9ee8",
+        "Title": "50 Random points",
+        "Nodes": [
+          "dd0948b8c8524e7680de12a63c955af3",
+          "060c5d8a88554dfeb407848c3a33b808",
+          "dc0e76a96e7e41f5a35ddfb7f34934a5",
+          "b33e173f13694c7ea57cb2bb601e4902",
+          "473550f7453f4c8589b3011b41afec89",
+          "05942dc1f6a341f197c386277a5efc44"
+        ],
+        "Left": 3697.8245717639707,
+        "Top": -1339.3875353408439,
+        "Width": 1023.808460920684,
+        "Height": 250.42666666666651,
+        "FontSize": 24.0,
+        "InitialTop": -1300.3875353408439,
+        "InitialHeight": 241.42666666666651,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "6a3bf3313545490f98d5754e0bd88f0e",
+        "Title": "Obtuse Triangle",
+        "Nodes": [
+          "2c62051fd9524ac4977faa2728ef01ba",
+          "0e09cfac90184c2f9b6bf74ada3f68b4",
+          "54b9bb99b2ea4e948668bb4e3706116c"
+        ],
+        "Left": 4301.1057344882438,
+        "Top": -1038.7136812130611,
+        "Width": 450.34157124360991,
+        "Height": 245.70729246790108,
+        "FontSize": 24.0,
+        "InitialTop": -999.71368121306125,
+        "InitialHeight": 148.99999999999989,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "e668a8f6f7924a92878305f1ac8e7529",
+        "Title": "Acute Triangle",
+        "Nodes": [
+          "3adce81f27754efbb7b6c744e2f645b2",
+          "89efea6e0cd2432ca2207cac6cfc2839",
+          "bc4569c5798b4e8abd378744a73176c0"
+        ],
+        "Left": 4292.97750265486,
+        "Top": -739.72105769372138,
+        "Width": 398.84167606426126,
+        "Height": 245.24366920608804,
+        "FontSize": 24.0,
+        "InitialTop": -700.72105769372138,
+        "InitialHeight": 236.24366920608804,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "98327549f7b344ca90bee371ff425cf2",
+        "Title": "One of the four points is inside the triangle formed by the other three points",
+        "Nodes": [
+          "6cf75553865c41d08a8454fc4b3c0c63",
+          "b46351058d114f04aa278cc3c136ff1f",
+          "cd922f3535394c6bbed3123111f89314"
+        ],
+        "Left": 4286.48771823651,
+        "Top": -434.22734867795009,
+        "Width": 422.35125695834813,
+        "Height": 304.8223423210311,
+        "FontSize": 24.0,
+        "InitialTop": -338.22734867795009,
+        "InitialHeight": 238.8223423210311,
+        "TextblockHeight": 86.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "716c213365804420ae618cb66a7c06ac",
+        "Title": "Convex Quadrilateral",
+        "Nodes": [
+          "90706c90a36040079b7844bb13e76b10",
+          "29aae6b6f2a34635a016d1922e9c973e",
+          "f6d5b98102e4420388278b440daba198"
+        ],
+        "Left": 4275.4053266426235,
+        "Top": -92.620919827452667,
+        "Width": 422.0,
+        "Height": 249.11934726369316,
+        "FontSize": 24.0,
+        "InitialTop": -53.620919827452667,
+        "InitialHeight": 240.11934726369316,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFB8D8"
       },
       {
         "Id": "4541823eb20d4f8cabbc078fb93f3659",
         "Title": "DYNAMO VERSION\r\n________________________________________________________\r\n\r\n2.0.2",
         "Nodes": [],
-        "Left": 2839.0705681927211,
-        "Top": -983.08305949538453,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "ff46df5af3e441b08819d9f02aec33f9",
-        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nGreen indicates Variables that can be altered per project and must be set accordingly before running the script.",
-        "Nodes": [],
-        "Left": 3162.2915989669891,
-        "Top": -955.02973001813075,
+        "Left": 2686.6647443179368,
+        "Top": -1169.6488094110687,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3233,8 +3266,8 @@
         "Id": "3b696a6e5f9c4e229b4e2f6f212c6c8c",
         "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": 2839.0705681927179,
-        "Top": -894.42650373491347,
+        "Left": 2686.6647443179336,
+        "Top": -1080.9922536505976,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3247,22 +3280,8 @@
         "Id": "2c3c64e216964a84ba0c498acbf66cc8",
         "Title": "ADDITIONAL COMMENTS\r\n________________________________________________________\r\n\r\n",
         "Nodes": [],
-        "Left": 2839.0705681927179,
-        "Top": -803.55791373664761,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "a0db08cdb11b44a98ab48bc56f9a046c",
-        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nOrange indicates the working of the script. No changes should be made in these groups unless advised.",
-        "Nodes": [],
-        "Left": 3162.2915989669891,
-        "Top": -798.67664565450514,
+        "Left": 2686.6647443179336,
+        "Top": -990.12366365233174,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3275,8 +3294,8 @@
         "Id": "a6705b1000f54d8982d1e4e1c97e88d1",
         "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": 2525.8349410506539,
-        "Top": -984.24451157871363,
+        "Left": 2373.4291171758696,
+        "Top": -1170.8102614943978,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3289,8 +3308,8 @@
         "Id": "b90d6a3849f54a2db7e2bd1364a2990b",
         "Title": "ASSOCIATED FILE(S)      \r\n________________________________________________________\r\n\r\nN/A",
         "Nodes": [],
-        "Left": 2525.8349410506539,
-        "Top": -893.90121265768062,
+        "Left": 2373.4291171758696,
+        "Top": -1080.4669625733648,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3303,8 +3322,8 @@
         "Id": "45399f5ccc45401789a9bd723a839373",
         "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
-        "Left": 2525.8349410506539,
-        "Top": -803.55791373664761,
+        "Left": 2373.4291171758696,
+        "Top": -990.12366365233174,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3317,8 +3336,8 @@
         "Id": "ba560db153cd4a9cbd89753a8da21494",
         "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph show examples of how the GeometricMedian node finds the point in a set of sample points, that minimizes the distance to all other points. The example shows this with different shaps and sample points.\r\n\r\nThe GeometricMedian can be used to find the optimal location where the goal is to minimize distance to a set of objects.",
         "Nodes": [],
-        "Left": 2525.8349410506539,
-        "Top": -702.67112844861947,
+        "Left": 2373.4291171758696,
+        "Top": -889.23687836430361,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3328,11 +3347,67 @@
         "Background": "#FFC1D676"
       },
       {
-        "Id": "3df046adcf764f4797489cf725459cbb",
-        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nRed indicates checking nodes to ensure the script has deployed correctly.",
+        "Id": "f70fb28f557d4760bddd7dd27af50823",
+        "Title": "Display / Validation\r\n_______________________________________________________\r\n\r\nLogic used simply for visualization purposes, does not contain core logic.",
         "Nodes": [],
-        "Left": 3162.2915989669891,
-        "Top": -637.99496015998989,
+        "Left": 3022.047007977767,
+        "Top": -1001.7156431390279,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "68ffcde3c2dc450d8c5b24adcb305085",
+        "Title": "Remember / Gate Nodes\r\n_______________________________________________________\r\n\r\nData that needs to be cached from Dynamo for Revit is stored here.",
+        "Nodes": [],
+        "Left": 3349.9240547528671,
+        "Top": -1150.9122166465138,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "54d4732ffa694a61aa284838456c80ca",
+        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nCore Workings of the Dynamo Graph",
+        "Nodes": [],
+        "Left": 3021.3169271457127,
+        "Top": -1150.2416578665513,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "1f5b50e0a07e4b8cb0724c3073af9ced",
+        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nOrange indicates checking nodes to ensure the script has deployed correctly.",
+        "Nodes": [],
+        "Left": 3348.339731547841,
+        "Top": -1320.7748271284854,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "76ac89267b0e4d13a1469d6a5ce1b27f",
+        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nVariables that can be altered per project and must be set accordingly before running the graph.",
+        "Nodes": [],
+        "Left": 3020.322895500603,
+        "Top": -1320.5111852617124,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -3342,8 +3417,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": -1512.0160824210975,
-    "Y": 678.10959664688562,
-    "Zoom": 0.41114781853938659
+    "X": -731.754710302304,
+    "Y": 615.16468827510823,
+    "Zoom": 0.32095111026897311
   }
 }

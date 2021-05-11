@@ -2,7 +2,7 @@
   "Uuid": "6ee2cf30-fc12-4570-84f8-ed61c4d38022",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_Refinery Toolkit_Visibility_LinesTest(RVT)",
+  "Name": "GenerativeToolkit_Visibility_LinesTest(RVT)",
   "ElementResolver": {
     "ResolutionMap": {
       "Autodesk.Geometry": {
@@ -56,6 +56,10 @@
       "Autodesk.DesignScript.Geometry.Vector": {
         "Key": "Autodesk.DesignScript.Geometry.Vector",
         "Value": "ProtoGeometry.dll"
+      },
+      "Category": {
+        "Key": "Revit.Elements.Category",
+        "Value": "RevitNodes.dll"
       }
     }
   },
@@ -141,7 +145,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Get an exsiting element's location\n\nElement.GetLocation ( ): Geometry"
+      "Description": "Get an existing element's location\n\nElement.GetLocation ( ): Geometry"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -509,26 +513,6 @@
       "Description": "Get room area\n\nRoom.Area: double"
     },
     {
-      "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
-      "SelectedIndex": 425,
-      "NodeType": "ExtensionNode",
-      "Id": "794d882239d14584b1c4226ff6018d67",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "09c289ab2e3f42db862649c7d02a87ef",
-          "Name": "Category",
-          "Description": "The selected Category.",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "All built-in categories."
-    },
-    {
       "ConcreteType": "DSRevitNodesUI.ElementsOfCategory, DSRevitNodesUI",
       "NodeType": "ExtensionNode",
       "Id": "aa08ef5218864d04a2f157ed90c0a87c",
@@ -608,45 +592,6 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "GraphicalDynamo.Geometry.Curves.BuildPolygons@Autodesk.DesignScript.Geometry.Line[]",
-      "Id": "0eef0c92991c404984df55302123ce05",
-      "Inputs": [
-        {
-          "Id": "1fafb234be6245b8a9730548242cf38c",
-          "Name": "lines",
-          "Description": "List of connected lines\n\nLine[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "752bc53c2a7c4f89809bd74f9fe5b088",
-          "Name": "polygons",
-          "Description": "Polygons created from connected lines",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "8a0d8d98086447dcb417ac456a8325c0",
-          "Name": "ungrouped",
-          "Description": "Lines not forming a closed polygon",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Creates polygons from a list of lines. Lines are returned as ungrouped if not connected or not forming a closed polygon.\n\nCurves.BuildPolygons (lines: Line[]): var[]..[]"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
       "FunctionSignature": "Revit.Elements.Room.CoreBoundary",
       "Id": "b1cec60744ec41aab4bd346d8a5cdaf3",
       "Inputs": [
@@ -677,6 +622,7 @@
     {
       "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
       "SelectedIndex": 619,
+      "SelectedString": "OST_LoadCasesAccidental",
       "NodeType": "ExtensionNode",
       "Id": "1dc9a9d6bc3f40c5a8fc069a42caf41b",
       "Inputs": [],
@@ -751,7 +697,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Get an exsiting element's location\n\nElement.GetLocation ( ): Geometry"
+      "Description": "Get an existing element's location\n\nElement.GetLocation ( ): Geometry"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -820,7 +766,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the FamilyType for this Element. Returns null if the Element cannot have a FamilyType assigned.\n\nElement.ElementType: Element"
+      "Description": "Returns the ElementType for this Element. Returns null if the Element cannot have an ElementType assigned.\n\nElement.ElementType: ElementType"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1106,7 +1052,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Returns the FamilyType for this Element. Returns null if the Element cannot have a FamilyType assigned.\n\nElement.ElementType: Element"
+      "Description": "Returns the ElementType for this Element. Returns null if the Element cannot have an ElementType assigned.\n\nElement.ElementType: ElementType"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
@@ -1156,7 +1102,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Get an exsiting element's location\n\nElement.GetLocation ( ): Geometry"
+      "Description": "Get an existing element's location\n\nElement.GetLocation ( ): Geometry"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1786,6 +1732,7 @@
     {
       "ConcreteType": "DSRevitNodesUI.FamilyTypes, DSRevitNodesUI",
       "SelectedIndex": 24,
+      "SelectedString": "M_Desk:1525 x 762mm",
       "NodeType": "ExtensionNode",
       "Id": "57b6076aad5247c1a3b5c7e387cbcfed",
       "Inputs": [],
@@ -1834,7 +1781,8 @@
     },
     {
       "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
-      "SelectedIndex": 122,
+      "SelectedIndex": 148,
+      "SelectedString": "OST_Columns",
       "NodeType": "ExtensionNode",
       "Id": "82a93b20d3e74ee38eb066435965ebb2",
       "Inputs": [],
@@ -1909,7 +1857,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Get an exsiting element's location\n\nElement.GetLocation ( ): Geometry"
+      "Description": "Get an existing element's location\n\nElement.GetLocation ( ): Geometry"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -2097,36 +2045,6 @@
       "Description": "Create a CoordinateSystem with origin at input Point, with X and Y Axes set as WCS X and Y Axes.\n\nCoordinateSystem.ByOrigin (origin: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)): CoordinateSystem"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "archilab.Revit.Elements.Elements.Type@Revit.Elements.Element",
-      "Id": "6b370e41989844a1a710923e8d2f523b",
-      "Inputs": [
-        {
-          "Id": "dc9ab6a15a8443e483aa3c328aeaa99a",
-          "Name": "element",
-          "Description": "Element",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "23960f193e2146e79359a71a2a8af578",
-          "Name": "Element",
-          "Description": "Element",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Auto",
-      "Description": "Get Element Type.\n\nElements.Type (element: Element): Element"
-    },
-    {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
       "NodeType": "ExtensionNode",
       "Id": "c36fce206d704c5199eb767d13f2b5b9",
@@ -2202,7 +2120,7 @@
         {
           "Id": "5973e52488da4858aa7e19aab496959b",
           "Name": "Percentage visible",
-          "Description": "The percentage of 360 view from origin point that target lines are visible from.",
+          "Description": "The total percentage of 360 view from origin point that target lines are visible from.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -2210,6 +2128,15 @@
         },
         {
           "Id": "d9550e8b53f84bb4ac17c9de5607a143",
+          "Name": "Visibility percentages",
+          "Description": "The percentage of 360 view from origin point that each target lines are visible from.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a9bf1600f49a4478bd9b503230b90789",
           "Name": "Visible items",
           "Description": "The specific Lines that are visible from the origin point.",
           "UsingDefaultValue": false,
@@ -2219,7 +2146,96 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Calculates the visibility of target Lines from a given point based on a 360 degree view range. Returns the percentage of 360 view from origin point that target lines are visible from and the visible lines themselves.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
+      "Description": "Calculates the visibility of target Lines from a given point based on a 360 degree view range. Returns the percentage of 360 view from origin point that target lines are visible from and the target lines that are visible.\n\nVisibility.OfLinesFromOrigin (origin: Point, targetLines: Curve[], boundary: Polygon[], obstructions: Polygon[] = []): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "GraphicalDynamo.Geometry.Curves.BuildPolygons@Autodesk.DesignScript.Geometry.Line[]",
+      "Id": "0eef0c92991c404984df55302123ce05",
+      "Inputs": [
+        {
+          "Id": "1fafb234be6245b8a9730548242cf38c",
+          "Name": "lines",
+          "Description": "List of connected lines\n\nLine[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "752bc53c2a7c4f89809bd74f9fe5b088",
+          "Name": "polygons",
+          "Description": "Polygons created from connected lines",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8a0d8d98086447dcb417ac456a8325c0",
+          "Name": "ungrouped",
+          "Description": "Lines not forming a closed polygon",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates polygons from a list of lines. Lines are returned as ungrouped if not connected or not forming a closed polygon.\n\nCurves.BuildPolygons (lines: Line[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "Category.ByName(\"Rooms\");",
+      "Id": "7421d45743414d928e7a1fdc18157fd8",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6da9b415bcbb46379e97192ad1073851",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.ElementType",
+      "Id": "def2dc770b084ba6b536e7d971a27874",
+      "Inputs": [
+        {
+          "Id": "33bbd0780192415aa662ed8f5d40b7a7",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e20a244dbfdb4eabb770fb8ca2608e1f",
+          "Name": "ElementType",
+          "Description": "Element Type or Null.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the ElementType for this Element. Returns null if the Element cannot have an ElementType assigned.\n\nElement.ElementType: ElementType"
     }
   ],
   "Connectors": [
@@ -2232,6 +2248,11 @@
       "Start": "d9387a0677b14230aa5b592f0acc8695",
       "End": "16ff779627784a058bb1cb7775d7df5f",
       "Id": "f59149a092c7490ab7979bc6c69ea232"
+    },
+    {
+      "Start": "d9387a0677b14230aa5b592f0acc8695",
+      "End": "5abefdee852c4dc2a681c6fdbf5e0db7",
+      "Id": "9898091d26e9402f96e8278d2746e1ad"
     },
     {
       "Start": "49f0aeb64372415db90ed29792f555ba",
@@ -2294,11 +2315,6 @@
       "Id": "6d69872a41c442d99e305ecee40a9d91"
     },
     {
-      "Start": "09c289ab2e3f42db862649c7d02a87ef",
-      "End": "05eec0256f5f4ad99f397a9b8b87ff40",
-      "Id": "e1b6f77a933f442a9c47fe627f2846cb"
-    },
-    {
       "Start": "9b4a50df12f343dfb40a527e87e4b71f",
       "End": "bafa93b344984e868957518b4f9af101",
       "Id": "b7f8c52bd4a54cda8d0a26a0cc97c22d"
@@ -2312,11 +2328,6 @@
       "Start": "18d7ad270e6943f3853e2b576c4623b9",
       "End": "d85fbeedc21b463d92bdd5484a1c4412",
       "Id": "ee32ab0b2ca44e15979094599cf8a047"
-    },
-    {
-      "Start": "752bc53c2a7c4f89809bd74f9fe5b088",
-      "End": "345e8b7f4d454a4a81405644999728da",
-      "Id": "9b6b6a2da2af494b91e8c9d579cb83de"
     },
     {
       "Start": "0406cdebc43e49d88a4aa8365dcb678d",
@@ -2367,11 +2378,6 @@
       "Start": "905b9c414afa4022b3cad08031313109",
       "End": "b48dfcd00b974c249957b5063c96d331",
       "Id": "885c7d713b714944b4d1ae34d9e009a6"
-    },
-    {
-      "Start": "21e64b25bc4e412799198548bda2ef04",
-      "End": "5abefdee852c4dc2a681c6fdbf5e0db7",
-      "Id": "fb472ff573784f1ab0cc5bb379b3aa90"
     },
     {
       "Start": "97f2e5193517419d95f1a23cf7b4d201",
@@ -2550,8 +2556,8 @@
     },
     {
       "Start": "c4f22be289d54222b8a2f778773e3cb6",
-      "End": "dc9ab6a15a8443e483aa3c328aeaa99a",
-      "Id": "ba3aecc9857145cd953f7555dc14f26a"
+      "End": "33bbd0780192415aa662ed8f5d40b7a7",
+      "Id": "e9a3cd098dd7498dae0a72ed075223f9"
     },
     {
       "Start": "e90fd8488fb44d4283f56b45ebc0589b",
@@ -2589,29 +2595,57 @@
       "Id": "664cbb7e0f4745a48a17fa7208141639"
     },
     {
-      "Start": "23960f193e2146e79359a71a2a8af578",
-      "End": "4e8be7423f6943b3b35df8ea5036bd78",
-      "Id": "7dbc122ddcd5486eb9a3b1a52ca8efb5"
-    },
-    {
-      "Start": "23960f193e2146e79359a71a2a8af578",
-      "End": "86d78c509b8f46e2ad2be868448106ba",
-      "Id": "d85e5283870948f395806c2fe6f7dbdc"
-    },
-    {
       "Start": "5973e52488da4858aa7e19aab496959b",
       "End": "d945847af6034a218e03026bbf48de75",
       "Id": "1c48f00e3de24a12985dd6cdcd0bef68"
+    },
+    {
+      "Start": "752bc53c2a7c4f89809bd74f9fe5b088",
+      "End": "345e8b7f4d454a4a81405644999728da",
+      "Id": "9b6b6a2da2af494b91e8c9d579cb83de"
+    },
+    {
+      "Start": "6da9b415bcbb46379e97192ad1073851",
+      "End": "05eec0256f5f4ad99f397a9b8b87ff40",
+      "Id": "dc8193c6a19a4709bf6ef98bbd06aba3"
+    },
+    {
+      "Start": "e20a244dbfdb4eabb770fb8ca2608e1f",
+      "End": "86d78c509b8f46e2ad2be868448106ba",
+      "Id": "14f339c5622045859bc336e0aaba7721"
+    },
+    {
+      "Start": "e20a244dbfdb4eabb770fb8ca2608e1f",
+      "End": "4e8be7423f6943b3b35df8ea5036bd78",
+      "Id": "da777adc582047a28a94f6a9555597c7"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Refinery Toolkit",
+      "Version": "1.1.1",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "7de418df8499483195c4a2e5b128a89d"
+      ]
+    },
+    {
+      "Name": "Graphical",
+      "Version": "0.0.10",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "0eef0c92991c404984df55302123ce05"
+      ]
+    }
+  ],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 100.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.10.1.3976",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -2770,16 +2804,6 @@
       },
       {
         "ShowGeometry": false,
-        "Name": "Categories",
-        "Id": "794d882239d14584b1c4226ff6018d67",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 517.13391416390982,
-        "Y": 617.75538782444471
-      },
-      {
-        "ShowGeometry": false,
         "Name": "All Elements of Category",
         "Id": "aa08ef5218864d04a2f157ed90c0a87c",
         "IsSetAsInput": false,
@@ -2797,16 +2821,6 @@
         "Excluded": false,
         "X": 1437.1339141639078,
         "Y": 622.75538782444471
-      },
-      {
-        "ShowGeometry": false,
-        "Name": "Curves.BuildPolygons",
-        "Id": "0eef0c92991c404984df55302123ce05",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 1889.0268989860278,
-        "Y": 755.65236486552772
       },
       {
         "ShowGeometry": false,
@@ -3250,16 +3264,6 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "Elements.Type",
-        "Id": "6b370e41989844a1a710923e8d2f523b",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 3595.2052214166642,
-        "Y": 1938.8453655542435
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Watch",
         "Id": "c36fce206d704c5199eb767d13f2b5b9",
         "IsSetAsInput": false,
@@ -3277,6 +3281,36 @@
         "Excluded": false,
         "X": 5113.1827061197091,
         "Y": 954.78414460042472
+      },
+      {
+        "ShowGeometry": false,
+        "Name": "Curves.BuildPolygons",
+        "Id": "0eef0c92991c404984df55302123ce05",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1889.0268989860278,
+        "Y": 755.65236486552772
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "7421d45743414d928e7a1fdc18157fd8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 442.78307650087777,
+        "Y": 619.75538782444471
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.ElementType",
+        "Id": "def2dc770b084ba6b536e7d971a27874",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 3593.630660175143,
+        "Y": 1938.2761170208423
       }
     ],
     "Annotations": [
@@ -3294,13 +3328,13 @@
           "6cbfadcac9f4434c997b8347b7ad8fe6"
         ],
         "Left": 2405.6841514028447,
-        "Top": 617.44078211211161,
-        "Width": 2103.1128358261649,
-        "Height": 304.53499990920784,
+        "Top": 617.774115445445,
+        "Width": 2102.1128358261649,
+        "Height": 304.20166657587447,
         "FontSize": 36.0,
         "InitialTop": 670.774115445445,
         "InitialHeight": 277.20166657587447,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
       {
@@ -3315,13 +3349,13 @@
           "61d25a830bf64d73bd0a0c070cebf1d3"
         ],
         "Left": 3300.2944612412621,
-        "Top": 193.94765835963196,
-        "Width": 1205.6666666666667,
-        "Height": 405.25305144247875,
+        "Top": 194.2809916929653,
+        "Width": 1201.0,
+        "Height": 404.91971810914532,
         "FontSize": 36.0,
         "InitialTop": 247.2809916929653,
-        "InitialHeight": 403.91971810914538,
-        "TextblockHeight": 43.333333333333336,
+        "InitialHeight": 403.91971810914532,
+        "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
       {
@@ -3329,23 +3363,22 @@
         "Title": "Get Room boundaries as Polygons",
         "Nodes": [
           "aa08ef5218864d04a2f157ed90c0a87c",
-          "794d882239d14584b1c4226ff6018d67",
           "9ff82556bb8d4373871cc87eb10d0cd4",
           "d0b918262e824921ba3ccc04475a4366",
           "c17ceb3d2f924e5b9e71208001ddfa41",
           "d6940b3943664ba3a8fc6222133af076",
           "b1cec60744ec41aab4bd346d8a5cdaf3",
-          "0eef0c92991c404984df55302123ce05",
-          "fe421ee4df984e7f8bfe397ab110b5b0"
+          "fe421ee4df984e7f8bfe397ab110b5b0",
+          "7421d45743414d928e7a1fdc18157fd8"
         ],
-        "Left": 507.13391416390982,
-        "Top": 564.42205449111134,
-        "Width": 1837.7585924023147,
-        "Height": 361.3333333333353,
+        "Left": 432.78307650087777,
+        "Top": 566.75538782444471,
+        "Width": 1910.44276339868,
+        "Height": 359.00000000000193,
         "FontSize": 36.0,
-        "InitialTop": 617.75538782444471,
+        "InitialTop": 619.75538782444471,
         "InitialHeight": 360.00000000000193,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
       {
@@ -3361,13 +3394,13 @@
           "b02c36a7944e4ccd8950b834e282d253"
         ],
         "Left": 2477.0364153434157,
-        "Top": 950.49353709408035,
-        "Width": 2025.9999999999991,
-        "Height": 271.75999999999988,
+        "Top": 950.82687042741372,
+        "Width": 2024.9999999999991,
+        "Height": 271.42666666666651,
         "FontSize": 36.0,
         "InitialTop": 1003.8268704274137,
         "InitialHeight": 270.42666666666651,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
       {
@@ -3382,13 +3415,13 @@
           "2f8100c0f675486b9f04d7d9c8abb842"
         ],
         "Left": 507.68128970653515,
-        "Top": 959.73677142110012,
-        "Width": 1339.3333333333335,
-        "Height": 289.97561220573164,
+        "Top": 960.07010475443349,
+        "Width": 1339.0000000000002,
+        "Height": 289.64227887239826,
         "FontSize": 36.0,
         "InitialTop": 1013.0701047544335,
         "InitialHeight": 288.64227887239826,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
       {
@@ -3415,13 +3448,13 @@
           "cd968f1340b74480947e9f2cad52ef32"
         ],
         "Left": 1451.1958288593314,
-        "Top": 1263.6870072522083,
-        "Width": 3062.6666666666665,
-        "Height": 456.11999999999944,
+        "Top": 1264.0203405855416,
+        "Width": 3061.0,
+        "Height": 455.78666666666618,
         "FontSize": 36.0,
         "InitialTop": 1317.0203405855416,
         "InitialHeight": 454.78666666666618,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
       {
@@ -3436,16 +3469,16 @@
           "855f4a4d780b4f4ab9dc8a5291d8aa6c",
           "ff302dcc455a42a5b320a879ba407ad2",
           "6deb02282fa54b85af13f3570643a67e",
-          "6b370e41989844a1a710923e8d2f523b"
+          "def2dc770b084ba6b536e7d971a27874"
         ],
         "Left": 3045.2052214166642,
-        "Top": 1754.0120322209102,
-        "Width": 1470.6666666666667,
-        "Height": 427.33333333333326,
+        "Top": 1754.3453655542435,
+        "Width": 1467.0,
+        "Height": 415.0,
         "FontSize": 36.0,
         "InitialTop": 1807.3453655542435,
         "InitialHeight": 388.0,
-        "TextblockHeight": 43.333333333333336,
+        "TextblockHeight": 43.0,
         "Background": "#FFC1D676"
       },
       {
@@ -3456,18 +3489,18 @@
           "7de418df8499483195c4a2e5b128a89d"
         ],
         "Left": 5103.1827061197091,
-        "Top": 858.1174779337581,
-        "Width": 446.39627001238722,
-        "Height": 267.66666666666657,
+        "Top": 858.78414460042472,
+        "Width": 459.72960334572053,
+        "Height": 427.158936302053,
         "FontSize": 36.0,
         "InitialTop": 954.78414460042472,
         "InitialHeight": 147.158936302053,
-        "TextblockHeight": 86.666666666666671,
+        "TextblockHeight": 86.0,
         "Background": "#FF48B9FF"
       }
     ],
-    "X": -1496.7228255906555,
-    "Y": -39.96391725890237,
-    "Zoom": 0.41634625229923905
+    "X": -70.945056496010707,
+    "Y": 170.74031813674421,
+    "Zoom": 0.22797857879694866
   }
 }
