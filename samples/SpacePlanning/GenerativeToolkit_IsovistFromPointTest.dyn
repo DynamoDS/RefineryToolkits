@@ -2,7 +2,7 @@
   "Uuid": "9b475e34-a870-453c-b18e-2a8426cc5ba8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_GenerativeToolkit_IsovistFromPointTest",
+  "Name": "GenerativeToolkit_IsovistFromPointTest",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -261,7 +261,7 @@
         {
           "Id": "3bc70d0d2c284479bf65774023ec4915",
           "Name": "first",
-          "Description": "First item in the list.",
+          "Description": "First item in the list (type: var[]..[])",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -270,7 +270,7 @@
         {
           "Id": "3af75c32ebcd42e7a320bd272e63df08",
           "Name": "rest",
-          "Description": "Rest of the list.",
+          "Description": "Rest of the list (type: var[]..[])",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -406,7 +406,7 @@
         {
           "Id": "ff4eab3045cf4539bf7966f50bd3c4b6",
           "Name": "point",
-          "Description": "Point",
+          "Description": "Origin or observation point\n\nPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -415,7 +415,7 @@
         {
           "Id": "9a1ad3ecd0e54bdb9081d0f8542b3b9c",
           "Name": "boundary",
-          "Description": "Polygon[]",
+          "Description": "Polygon(s) enclosing all internal Polygons\n\nPolygon[]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -424,7 +424,7 @@
         {
           "Id": "df41e28ad4124d9ca83e86c0dadeeb0f",
           "Name": "obstructions",
-          "Description": "Polygon[]\nDefault value : []",
+          "Description": "List of Polygons representing internal obstructions\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -434,8 +434,8 @@
       "Outputs": [
         {
           "Id": "96a5463d73294338b6a4a297d06fc070",
-          "Name": "Surface",
-          "Description": "Surface",
+          "Name": "Isovist",
+          "Description": "Surface representing the isovist area, meaning the area visible from observation point.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -443,7 +443,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "Visibility.IsovistFromPoint (point: Point, boundary: Polygon[], obstructions: Polygon[] = []): Surface"
+      "Description": "Returns a surface representing the area visible from the given point.\n\nVisibility.IsovistFromPoint (point: Point, boundary: Polygon[], obstructions: Polygon[] = []): Surface"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
@@ -564,13 +564,14 @@
       ]
     }
   ],
+  "ExtensionWorkspaceData": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.4.0.6186",
+      "Version": "2.11.1.4675",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -720,64 +721,6 @@
     ],
     "Annotations": [
       {
-        "Id": "43659fcdfe284474823401fdb61c99b5",
-        "Title": "Sample Point",
-        "Nodes": [
-          "7f65efa755194e7eb5b44b5617db1c5a",
-          "8b341dccf66d4899ace19cebead6ec5b",
-          "bf6cd5e2897847b1aa131df91c90ee3b",
-          "89654f6e2e75489ab6451bfb8e4845b1"
-        ],
-        "Left": 432.535179033638,
-        "Top": 460.67926541807088,
-        "Width": 613.4,
-        "Height": 313.0,
-        "FontSize": 36.0,
-        "InitialTop": 513.87926541807087,
-        "InitialHeight": 337.0,
-        "TextblockHeight": 43.2,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "382b4df973a4482c862d8ca6053c79d0",
-        "Title": "Create Layout",
-        "Nodes": [
-          "0e6e56b49dbc42779cbbbfbdf43836c2",
-          "a430e6e799344c2c9b848aec8ff038d6",
-          "dc78de68e5ce40c28d33e8710cb39e03",
-          "d78c7c21f39340249efb20d239021a2f",
-          "418a21bc682c4f5d803a89b7101f600a",
-          "0da5fc76613b48c89c45525d90bab64a"
-        ],
-        "Left": -317.01075212156076,
-        "Top": 181.01224501719702,
-        "Width": 1356.0,
-        "Height": 263.8266666666666,
-        "FontSize": 36.0,
-        "InitialTop": 234.212245017197,
-        "InitialHeight": 253.42666666666662,
-        "TextblockHeight": 43.2,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "e457b6083b9747bfaedef9d922cc5ef7",
-        "Title": "Refinery Toolkit - Isovist from point",
-        "Nodes": [
-          "416c90eeb86143ad8bddf56ae74a13be",
-          "9222788d417e49189c074ae526ca67f7",
-          "26005961e1ca49b9b573f4ffad6bcba5"
-        ],
-        "Left": 1162.2417961506922,
-        "Top": 339.64783381747179,
-        "Width": 610.05944326395149,
-        "Height": 291.14803547954091,
-        "FontSize": 36.0,
-        "InitialTop": 392.84783381747178,
-        "InitialHeight": 325.89201470269643,
-        "TextblockHeight": 43.2,
-        "Background": "#FFC1D676"
-      },
-      {
         "Id": "eced7bae4fac49c1889a3e0bef922e46",
         "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nIsovist from Point",
         "Nodes": [
@@ -789,84 +732,160 @@
           "7d1a1fd913044c7c813fd0678e856d46",
           "f875e31d08f7469280c1191b3d90b422"
         ],
-        "Left": -1484.6891497796416,
-        "Top": 127.80381534425084,
-        "Width": 632.43562714206723,
-        "Height": 566.37338313009423,
+        "Left": -1650.7971685597688,
+        "Top": 179.2818656314015,
+        "Width": 632.23562714206719,
+        "Height": 571.57338313009427,
         "FontSize": 48.0,
-        "InitialTop": 310.60381534425085,
-        "InitialHeight": 421.57338313009416,
-        "TextblockHeight": 172.8,
+        "InitialTop": 362.2818656314015,
+        "InitialHeight": 426.57338313009427,
+        "TextblockHeight": 173.0,
         "Background": "#FFFFFFFF"
       },
       {
-        "Id": "ed5564c909fa490fb783fe4b9cf2631e",
+        "Id": "84d6a6de807c4a4c8bea8a5afba578cb",
         "Title": "",
         "Nodes": [
-          "ac8813dfcf8b47eb934a95e5340c8df3"
+          "982c7c2f7459445191bbd9e182d6129d"
         ],
-        "Left": -848.23249186330645,
-        "Top": 309.81859690483373,
-        "Width": 313.6,
-        "Height": 146.4,
+        "Left": -664.43410938607667,
+        "Top": 187.61733545888035,
+        "Width": 314.0,
+        "Height": 137.0,
         "FontSize": 14.0,
-        "InitialTop": 339.81859690483373,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
+        "InitialTop": 217.61733545888035,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "12caa806430243b7b54f06e0eeba4826",
+        "Title": "",
+        "Nodes": [
+          "31147bd96feb4ffe883f75c83f3ee519"
+        ],
+        "Left": -662.8497861810506,
+        "Top": 357.47994594085196,
+        "Width": 319.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 387.47994594085196,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFD4B6DB"
+      },
+      {
+        "Id": "58d3061fdaf04379aeee6a7e2250f0f9",
+        "Title": "",
+        "Nodes": [
+          "871164ae18374a4689def56247e303fa"
+        ],
+        "Left": -990.7268329561507,
+        "Top": 506.6765194483379,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 536.6765194483379,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "adb904d78adc4a5fa39a6d8d47f9af12",
+        "Title": "",
+        "Nodes": [
+          "1df9ca3970954caf9cd0a8189a005c81"
+        ],
+        "Left": -991.45691378820493,
+        "Top": 358.15050472081441,
+        "Width": 314.0,
+        "Height": 123.0,
+        "FontSize": 14.0,
+        "InitialTop": 388.15050472081441,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "bfe1f0ad5ec94e62b6acf5b001f0e32c",
+        "Title": "",
+        "Nodes": [
+          "3aaef06f641f4f3b8ec6453544b63e34"
+        ],
+        "Left": -992.4509454333147,
+        "Top": 187.88097732565336,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": 217.88097732565336,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
         "Background": "#FFFFB8D8"
       },
       {
-        "Id": "cf7a11e198344c269327b805acebec98",
-        "Title": "",
+        "Id": "9556f2989865494ba2823a8b1c0ac076",
+        "Title": "Create Layout",
         "Nodes": [
-          "c895e3776c5047c89565d5cca7bffa5b"
+          "0e6e56b49dbc42779cbbbfbdf43836c2",
+          "a430e6e799344c2c9b848aec8ff038d6",
+          "dc78de68e5ce40c28d33e8710cb39e03",
+          "d78c7c21f39340249efb20d239021a2f",
+          "418a21bc682c4f5d803a89b7101f600a",
+          "0da5fc76613b48c89c45525d90bab64a"
         ],
-        "Left": -848.23249186330645,
-        "Top": 466.17168126845934,
-        "Width": 313.6,
-        "Height": 146.4,
-        "FontSize": 14.0,
-        "InitialTop": 496.17168126845934,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFB9F9E1"
+        "Left": -317.01075212156076,
+        "Top": 195.212245017197,
+        "Width": 1356.0,
+        "Height": 250.42666666666662,
+        "FontSize": 24.0,
+        "InitialTop": 234.212245017197,
+        "InitialHeight": 241.42666666666662,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
       },
       {
-        "Id": "977e592711724df78a88e7c99ffb42ca",
-        "Title": "",
+        "Id": "1db02ebf571a45508f77a78a62395164",
+        "Title": "Sample Point",
         "Nodes": [
-          "38d8709963bc45428ea64dac0031c302"
+          "7f65efa755194e7eb5b44b5617db1c5a",
+          "8b341dccf66d4899ace19cebead6ec5b",
+          "bf6cd5e2897847b1aa131df91c90ee3b",
+          "89654f6e2e75489ab6451bfb8e4845b1"
         ],
-        "Left": -848.23249186330645,
-        "Top": 626.85336676297459,
-        "Width": 313.6,
-        "Height": 132.0,
-        "FontSize": 14.0,
-        "InitialTop": 656.85336676297459,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFFFC999"
+        "Left": 432.535179033638,
+        "Top": 474.87926541807087,
+        "Width": 615.00000000000011,
+        "Height": 299.0,
+        "FontSize": 24.0,
+        "InitialTop": 513.87926541807087,
+        "InitialHeight": 290.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "cae722697ff049ee82586048f4457213",
+        "Title": "Refinery Toolkit - Isovist from point",
+        "Nodes": [
+          "416c90eeb86143ad8bddf56ae74a13be",
+          "9222788d417e49189c074ae526ca67f7",
+          "26005961e1ca49b9b573f4ffad6bcba5"
+        ],
+        "Left": 1162.2417961506922,
+        "Top": 353.84783381747178,
+        "Width": 610.45944326395147,
+        "Height": 277.3480354795409,
+        "FontSize": 24.0,
+        "InitialTop": 392.84783381747178,
+        "InitialHeight": 268.3480354795409,
+        "TextblockHeight": 29.0,
+        "Background": "#FFA4E1FF"
       },
       {
         "Id": "52027df44cc047089dc752afda2cd975",
         "Title": "DYNAMO VERSION\r\n________________________________________________________\r\n\r\n2.0.2",
         "Nodes": [],
-        "Left": -1161.4535226375745,
-        "Top": 311.76526742757994,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "ac8813dfcf8b47eb934a95e5340c8df3",
-        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nGreen indicates Variables that can be altered per project and must be set accordingly before running the script.",
-        "Nodes": [],
-        "Left": -838.23249186330645,
-        "Top": 339.81859690483373,
+        "Left": -1327.5615414177016,
+        "Top": 363.4433177147306,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -879,8 +898,8 @@
         "Id": "f875e31d08f7469280c1191b3d90b422",
         "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -1161.4535226375776,
-        "Top": 400.421823188051,
+        "Left": -1327.5615414177048,
+        "Top": 452.09987347520189,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -893,22 +912,8 @@
         "Id": "7d1a1fd913044c7c813fd0678e856d46",
         "Title": "ADDITIONAL COMMENTS\r\n________________________________________________________\r\n\r\n",
         "Nodes": [],
-        "Left": -1161.4535226375776,
-        "Top": 491.29041318631687,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "c895e3776c5047c89565d5cca7bffa5b",
-        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nOrange indicates the working of the script. No changes should be made in these groups unless advised.",
-        "Nodes": [],
-        "Left": -838.23249186330645,
-        "Top": 496.17168126845934,
+        "Left": -1327.5615414177048,
+        "Top": 542.96846347346752,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -921,8 +926,8 @@
         "Id": "2ad63b2bc17b415b81037385ef86985e",
         "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -1474.6891497796416,
-        "Top": 310.60381534425085,
+        "Left": -1640.7971685597688,
+        "Top": 362.2818656314015,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -935,8 +940,8 @@
         "Id": "4c3322fcaa074ac9aae4a6176e757186",
         "Title": "ASSOCIATED FILE(S)      \r\n________________________________________________________\r\n\r\nN/A",
         "Nodes": [],
-        "Left": -1474.6891497796416,
-        "Top": 400.94711426528386,
+        "Left": -1640.7971685597688,
+        "Top": 452.62516455243474,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -949,8 +954,8 @@
         "Id": "54ee9198a3854477b548c5079bba853b",
         "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
-        "Left": -1474.6891497796416,
-        "Top": 491.29041318631687,
+        "Left": -1640.7971685597688,
+        "Top": 542.96846347346752,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -963,8 +968,8 @@
         "Id": "5a2b1a0ca0c841658bc05cd4d4cefbdc",
         "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the Isovist node from the REFINERY SPACE PLANNING TOOLKIT package.",
         "Nodes": [],
-        "Left": -1474.6891497796416,
-        "Top": 592.177198474345,
+        "Left": -1640.7971685597688,
+        "Top": 643.85524876149577,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -974,11 +979,67 @@
         "Background": "#FFC1D676"
       },
       {
-        "Id": "38d8709963bc45428ea64dac0031c302",
-        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nRed indicates checking nodes to ensure the script has deployed correctly.",
+        "Id": "982c7c2f7459445191bbd9e182d6129d",
+        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nOrange indicates checking nodes to ensure the script has deployed correctly.",
         "Nodes": [],
-        "Left": -838.23249186330645,
-        "Top": 656.85336676297459,
+        "Left": -654.43410938607667,
+        "Top": 217.61733545888035,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "31147bd96feb4ffe883f75c83f3ee519",
+        "Title": "Remember / Gate Nodes\r\n_______________________________________________________\r\n\r\nData that needs to be cached from Dynamo for Revit is stored here.",
+        "Nodes": [],
+        "Left": -652.8497861810506,
+        "Top": 387.47994594085196,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "871164ae18374a4689def56247e303fa",
+        "Title": "Display / Validation\r\n_______________________________________________________\r\n\r\nLogic used simply for visualization purposes, does not contain core logic.",
+        "Nodes": [],
+        "Left": -980.7268329561507,
+        "Top": 536.6765194483379,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "1df9ca3970954caf9cd0a8189a005c81",
+        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nCore Workings of the Dynamo Graph",
+        "Nodes": [],
+        "Left": -981.45691378820493,
+        "Top": 388.15050472081441,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "3aaef06f641f4f3b8ec6453544b63e34",
+        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nVariables that can be altered per project and must be set accordingly before running the graph.",
+        "Nodes": [],
+        "Left": -982.4509454333147,
+        "Top": 217.88097732565336,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -988,8 +1049,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 205.215497110976,
-    "Y": 61.875397310630376,
-    "Zoom": 0.47888946661943982
+    "X": 764.70722919282969,
+    "Y": 225.87483240044139,
+    "Zoom": 0.447774559385502
   }
 }

@@ -2,7 +2,7 @@
   "Uuid": "9b475e34-a870-453c-b18e-2a8426cc5ba8",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "dt_Refinery Toolkit_OpenessTest",
+  "Name": "GenerativeToolkit_OpennessTest",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -471,7 +471,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Visualize the output of node."
+      "Description": "Visualize the node's output"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -520,8 +520,8 @@
         },
         {
           "Id": "063c2de1410c4b7cbfc74a13211384a9",
-          "Name": "tolerance",
-          "Description": "Takes into account objects that are a given distance away\n\ndouble\nDefault value : 0",
+          "Name": "searchDistance",
+          "Description": "(optional) Only takes into account objects that are this given max distance away.\n\ndouble\nDefault value : 0",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -530,7 +530,7 @@
         {
           "Id": "350fe6dbab3c48f99497591c9fd0153b",
           "Name": "boundary",
-          "Description": "Polygon(s) enclosing all obstacle Polygons\n\nPolygon[]\nDefault value : [] (disabled)",
+          "Description": "(optional) Polygon(s) enclosing all obstacle Polygons\n\nPolygon[]\nDefault value : [] (disabled)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -538,8 +538,8 @@
         },
         {
           "Id": "7896b9be63d64c22ba6a079788371d61",
-          "Name": "obstacles",
-          "Description": "List of Polygons representing obstacles that might enclose the object to check\n\nPolygon[]\nDefault value : []",
+          "Name": "obstructions",
+          "Description": "(optional) List of Polygons representing obstacles that might enclose the object to check\n\nPolygon[]\nDefault value : []",
           "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
@@ -550,7 +550,7 @@
         {
           "Id": "181322ee904a4134bb2bb0e2a34cd070",
           "Name": "double",
-          "Description": "Score from 0-1, 1 being totally enclosed and 0 being totally open",
+          "Description": "Percentage of openess, from 0 being totally enclosed and 100 being totally open.",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -558,7 +558,7 @@
         }
       ],
       "Replication": "Auto",
-      "Description": "gives a openess score from 0-1 based on how enclosed a Surface is.\n\nOpeness.FromSurface (surface: Surface, tolerance: double = 0, boundary: Polygon[] = [], obstacles: Polygon[] = []): double"
+      "Description": "Calculates an openess percentage based on how enclosed a Surface is.\n\nOpeness.FromSurface (surface: Surface, searchDistance: double = 0, boundary: Polygon[] = [], obstructions: Polygon[] = []): double"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -580,7 +580,7 @@
         {
           "Id": "1bf03b58d6364fcf9874f4065a0d94d7",
           "Name": "first",
-          "Description": "First item in the list.",
+          "Description": "First item in the list (type: var[]..[])",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -589,7 +589,7 @@
         {
           "Id": "c6bc745df8644808b10ff8fe7d7fc252",
           "Name": "rest",
-          "Description": "Rest of the list.",
+          "Description": "Rest of the list (type: var[]..[])",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -762,13 +762,24 @@
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Refinery Toolkit",
+      "Version": "1.1.1",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "c89c7d34431f4abea728d97a905c035d"
+      ]
+    }
+  ],
+  "ExtensionWorkspaceData": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.3.0.4794",
+      "Version": "2.11.1.4675",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -979,7 +990,7 @@
         ],
         "Left": 296.08304673664043,
         "Top": -503.41702169705195,
-        "Width": 643.0,
+        "Width": 690.0,
         "Height": 402.60763701117452,
         "FontSize": 36.0,
         "InitialTop": -450.41702169705195,
@@ -988,27 +999,129 @@
         "Background": "#FFFFB8D8"
       },
       {
-        "Id": "91422b83b40d4074a93a4cc03a20a74c",
+        "Id": "b6183195cae14a8cbd6fb5778a363c07",
+        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nOpenness ",
+        "Nodes": [
+          "9b089276b94543cd847c91f3a3a5bf48",
+          "bc798ca37d9441faac523de764e0d527",
+          "f6599cc2bc13465c8538c62856b4873a",
+          "f410eb5507fa4001a0987f3e80c29c9a",
+          "d2a50ef48f0d4820a5bb373ca7dec622",
+          "159a0d4462f748e9ae9263dbbf377686",
+          "f0fb99fc48d84ae09b975aae5d56c566"
+        ],
+        "Left": -1032.4205766893806,
+        "Top": -502.347744733548,
+        "Width": 632.23562714206719,
+        "Height": 715.57338313009416,
+        "FontSize": 48.0,
+        "InitialTop": -319.347744733548,
+        "InitialHeight": 426.57338313009416,
+        "TextblockHeight": 173.0,
+        "Background": "#FFFFFFFF"
+      },
+      {
+        "Id": "83e71468bcc74e10ac28473058a9d169",
+        "Title": "",
+        "Nodes": [
+          "4a5215da56934fd78f46a18048227f6f"
+        ],
+        "Left": -44.593496588405742,
+        "Top": -498.382554654656,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": -468.382554654656,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "0ae7370f938a4325abe66fbf68b33c1f",
+        "Title": "",
+        "Nodes": [
+          "26c7c16deb3943b5ae3ad6922b6e07e7"
+        ],
+        "Left": -43.009173383379675,
+        "Top": -328.5199441726844,
+        "Width": 319.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": -298.5199441726844,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFD4B6DB"
+      },
+      {
+        "Id": "aa3b0a3892704ba79e59bb26086a6a0e",
+        "Title": "",
+        "Nodes": [
+          "4819b6567d1648d7bb4b3a684f0d26a1"
+        ],
+        "Left": -370.88622015847977,
+        "Top": -179.32337066519847,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": -149.32337066519847,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "16c5131974284ba0b73348d8bbefda5c",
+        "Title": "",
+        "Nodes": [
+          "4e0d68039ab9484fb026158373c6da25"
+        ],
+        "Left": -371.616300990534,
+        "Top": -327.84938539272196,
+        "Width": 314.0,
+        "Height": 123.0,
+        "FontSize": 14.0,
+        "InitialTop": -297.84938539272196,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "54ce863d783649d1938faa9c47e599f9",
+        "Title": "",
+        "Nodes": [
+          "0d208b00d7844f52a8a6c43fbb9702c6"
+        ],
+        "Left": -372.61033263564377,
+        "Top": -498.118912787883,
+        "Width": 314.0,
+        "Height": 137.0,
+        "FontSize": 14.0,
+        "InitialTop": -468.118912787883,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "04f3b13cd38048839f7dd7097db81f60",
         "Title": "Surface from of object",
         "Nodes": [
-          "d74543f8830840b08dd5c934c941e007",
-          "fd2d7e80ed1f4c9a9ad09df2920eac98",
-          "ed4ab5eafcbb4522add86e318375b66e",
           "64519277b7f24362a1474aef29d6af07",
+          "fd2d7e80ed1f4c9a9ad09df2920eac98",
+          "d74543f8830840b08dd5c934c941e007",
+          "ed4ab5eafcbb4522add86e318375b66e",
           "361170b7368f435b929153ba2927b167"
         ],
         "Left": 1026.1001498577989,
-        "Top": -445.95706573332882,
+        "Top": -431.95706573332882,
         "Width": 1277.0,
-        "Height": 308.0,
-        "FontSize": 36.0,
+        "Height": 294.0,
+        "FontSize": 24.0,
         "InitialTop": -392.95706573332882,
-        "InitialHeight": 307.0,
-        "TextblockHeight": 43.0,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 285.0,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
       },
       {
-        "Id": "13df87c19ec84e7d9371451efca4467e",
+        "Id": "352e802c132343faa121284ce1d19c9f",
         "Title": "Layout",
         "Nodes": [
           "0e6e56b49dbc42779cbbbfbdf43836c2",
@@ -1019,122 +1132,38 @@
           "e6cf5bcb06284f939a8511b88ee7d946"
         ],
         "Left": 1031.7039275655936,
-        "Top": -92.1913716439987,
+        "Top": -78.1913716439987,
         "Width": 1350.137914462787,
-        "Height": 264.42666666666662,
-        "FontSize": 36.0,
+        "Height": 250.42666666666662,
+        "FontSize": 24.0,
         "InitialTop": -39.191371643998707,
-        "InitialHeight": 253.42666666666662,
-        "TextblockHeight": 43.0,
-        "Background": "#FFB9F9E1"
+        "InitialHeight": 241.42666666666662,
+        "TextblockHeight": 29.0,
+        "Background": "#FFE8F7AD"
       },
       {
-        "Id": "ef2f643066fe49fe8e072308e59c92e7",
+        "Id": "745872fee1104b31bf1900454999ccbb",
         "Title": "Refinery Toolkit - Openess",
         "Nodes": [
           "04f27d96ffbc4da0a853b7dfe8c104d3",
           "c89c7d34431f4abea728d97a905c035d"
         ],
         "Left": 2518.1044056644614,
-        "Top": -154.15781279813075,
-        "Width": 383.78226572736912,
-        "Height": 267.0,
-        "FontSize": 36.0,
+        "Top": -97.157812798130749,
+        "Width": 515.78226572736912,
+        "Height": 330.26493218061216,
+        "FontSize": 24.0,
         "InitialTop": -58.157812798130749,
-        "InitialHeight": 158.26493218061213,
-        "TextblockHeight": 86.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "b6183195cae14a8cbd6fb5778a363c07",
-        "Title": "REFINERY SPACE PLANNING TOOLKIT\r\nOpeness",
-        "Nodes": [
-          "9b089276b94543cd847c91f3a3a5bf48",
-          "bc798ca37d9441faac523de764e0d527",
-          "f6599cc2bc13465c8538c62856b4873a",
-          "f410eb5507fa4001a0987f3e80c29c9a",
-          "d2a50ef48f0d4820a5bb373ca7dec622",
-          "159a0d4462f748e9ae9263dbbf377686",
-          "f0fb99fc48d84ae09b975aae5d56c566"
-        ],
-        "Left": -795.94497250716722,
-        "Top": -501.868837642735,
-        "Width": 632.23562714206719,
-        "Height": 652.57338313009416,
-        "FontSize": 48.0,
-        "InitialTop": -376.868837642735,
-        "InitialHeight": 421.57338313009416,
-        "TextblockHeight": 115.0,
-        "Background": "#FFFFFFFF"
-      },
-      {
-        "Id": "fe1f76b1692b4fb1ae8da9b2d4c2408a",
-        "Title": "",
-        "Nodes": [
-          "6e0120ad6d0e4357a7fff79a803a832c"
-        ],
-        "Left": -159.48831459083203,
-        "Top": -377.65405608215212,
-        "Width": 314.0,
-        "Height": 146.0,
-        "FontSize": 14.0,
-        "InitialTop": -347.65405608215212,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFFFB8D8"
-      },
-      {
-        "Id": "2065e5f28fc347d68600e0dd777de5cd",
-        "Title": "",
-        "Nodes": [
-          "87c7f21374e142fe9c7d451c7dff49c8"
-        ],
-        "Left": -159.48831459083203,
-        "Top": -221.30097171852651,
-        "Width": 314.0,
-        "Height": 146.0,
-        "FontSize": 14.0,
-        "InitialTop": -191.30097171852651,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "e7cf0fc2fe3e46fda8fb13a0e4b0601b",
-        "Title": "",
-        "Nodes": [
-          "247f6d48fc6344c09abc42add25b700c"
-        ],
-        "Left": -159.48831459083203,
-        "Top": -60.619286224011262,
-        "Width": 314.0,
-        "Height": 132.0,
-        "FontSize": 14.0,
-        "InitialTop": -30.619286224011262,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 20.0,
+        "InitialHeight": 321.26493218061216,
+        "TextblockHeight": 29.0,
         "Background": "#FFFFC999"
       },
       {
         "Id": "d2a50ef48f0d4820a5bb373ca7dec622",
         "Title": "DYNAMO VERSION\r\n________________________________________________________\r\n\r\n2.0.2",
         "Nodes": [],
-        "Left": -472.70934536510003,
-        "Top": -375.70738555940591,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "6e0120ad6d0e4357a7fff79a803a832c",
-        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nGreen indicates Variables that can be altered per project and must be set accordingly before running the script.",
-        "Nodes": [],
-        "Left": -149.48831459083203,
-        "Top": -347.65405608215212,
+        "Left": -709.18494954731341,
+        "Top": -318.18629265021889,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1147,8 +1176,8 @@
         "Id": "f0fb99fc48d84ae09b975aae5d56c566",
         "Title": "REQUIRED DYNAMO PACKAGES\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -472.70934536510322,
-        "Top": -287.05082979893484,
+        "Left": -709.18494954731659,
+        "Top": -229.52973688974782,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1161,22 +1190,8 @@
         "Id": "159a0d4462f748e9ae9263dbbf377686",
         "Title": "ADDITIONAL COMMENTS\r\n________________________________________________________\r\n\r\n",
         "Nodes": [],
-        "Left": -472.70934536510322,
-        "Top": -196.18223980066898,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "87c7f21374e142fe9c7d451c7dff49c8",
-        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nOrange indicates the working of the script. No changes should be made in these groups unless advised.",
-        "Nodes": [],
-        "Left": -149.48831459083203,
-        "Top": -191.30097171852651,
+        "Left": -709.18494954731659,
+        "Top": -138.66114689148196,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1189,8 +1204,8 @@
         "Id": "9b089276b94543cd847c91f3a3a5bf48",
         "Title": "DYNAMO PROJECT\r\n________________________________________________________\r\n\r\nRefinery Toolkit",
         "Nodes": [],
-        "Left": -785.94497250716722,
-        "Top": -376.868837642735,
+        "Left": -1022.4205766893806,
+        "Top": -319.347744733548,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1203,8 +1218,8 @@
         "Id": "bc798ca37d9441faac523de764e0d527",
         "Title": "ASSOCIATED FILE(S)      \r\n________________________________________________________\r\n\r\nN/A",
         "Nodes": [],
-        "Left": -785.94497250716722,
-        "Top": -286.525538721702,
+        "Left": -1022.4205766893806,
+        "Top": -229.00444581251497,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1217,8 +1232,8 @@
         "Id": "f6599cc2bc13465c8538c62856b4873a",
         "Title": "AUTHOR(S) / CREATION DATE\r\n________________________________________________________\r\n\r\ndesigntech.io for Autodesk Refinery Team / April 2019",
         "Nodes": [],
-        "Left": -785.94497250716722,
-        "Top": -196.18223980066898,
+        "Left": -1022.4205766893806,
+        "Top": -138.66114689148196,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1229,10 +1244,10 @@
       },
       {
         "Id": "f410eb5507fa4001a0987f3e80c29c9a",
-        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the REFINERY SPACE PLANNING TOOLKITs Openess Node. \r\n\r\nThe Node returns the openess score of any surface. The score is calculated by checking how much of the object parameter is enclosed by any input obstacle. A tolerance can be set to check for intersection with elements with a fixed distance to the object.\r\n\r\nFor example this can be used in a desk layout workflow to optimize the placement of desks, bu either minimizing or mazimizing the openess score.",
+        "Title": "DESCRIPTION\r\n________________________________________________________\r\n\r\nThis graph shows how to use the REFINERY SPACE PLANNING TOOLKITs Openness Node. \r\n\r\nThe Node returns the openess score of any surface. The score is calculated by checking how much of the object parameter is enclosed by any input obstacle. A tolerance can be set to check for intersection with elements with a fixed distance to the object.\r\n\r\nFor example this can be used in a desk layout workflow to optimize the placement of desks, bu either minimizing or mazimizing the openess score.",
         "Nodes": [],
-        "Left": -785.94497250716722,
-        "Top": -95.295454512640845,
+        "Left": -1022.4205766893806,
+        "Top": -37.774361603453826,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1242,11 +1257,67 @@
         "Background": "#FFC1D676"
       },
       {
-        "Id": "247f6d48fc6344c09abc42add25b700c",
-        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nRed indicates checking nodes to ensure the script has deployed correctly.",
+        "Id": "4a5215da56934fd78f46a18048227f6f",
+        "Title": "Checking / Outputs\r\n_______________________________________________________\r\n\r\nOrange indicates checking nodes to ensure the script has deployed correctly.",
         "Nodes": [],
-        "Left": -149.48831459083203,
-        "Top": -30.619286224011262,
+        "Left": -34.593496588405742,
+        "Top": -468.382554654656,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "26c7c16deb3943b5ae3ad6922b6e07e7",
+        "Title": "Remember / Gate Nodes\r\n_______________________________________________________\r\n\r\nData that needs to be cached from Dynamo for Revit is stored here.",
+        "Nodes": [],
+        "Left": -33.009173383379675,
+        "Top": -298.5199441726844,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "4819b6567d1648d7bb4b3a684f0d26a1",
+        "Title": "Display / Validation\r\n_______________________________________________________\r\n\r\nLogic used simply for visualization purposes, does not contain core logic.",
+        "Nodes": [],
+        "Left": -360.88622015847977,
+        "Top": -149.32337066519847,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "4e0d68039ab9484fb026158373c6da25",
+        "Title": "Working / Functions\r\n_______________________________________________________\r\n\r\nCore Workings of the Dynamo Graph",
+        "Nodes": [],
+        "Left": -361.616300990534,
+        "Top": -297.84938539272196,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "0d208b00d7844f52a8a6c43fbb9702c6",
+        "Title": "Variables / Inputs\r\n_______________________________________________________\r\n\r\nVariables that can be altered per project and must be set accordingly before running the graph.",
+        "Nodes": [],
+        "Left": -362.61033263564377,
+        "Top": -468.118912787883,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -1256,8 +1327,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 1157.8971088395128,
-    "Y": 579.87872351364285,
-    "Zoom": 1.095662217435952
+    "X": 415.08419241112034,
+    "Y": 491.63183403653613,
+    "Zoom": 0.37663971284501246
   }
 }
