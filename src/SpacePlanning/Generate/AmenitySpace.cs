@@ -9,18 +9,19 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 {
     public static class AmenitySpace
     {
-        private const string amenitySurfaceOutputPort = "amenitySrf";
-        private const string remainingSurfaceOutputPort = "remainSrf";
+        private const string amenitySurfaceOutputPort = "amenitySurface";
+        private const string remainingSurfaceOutputPort = "remainingSurface";
 
         /// <summary>
-        /// Creates an amentiy space on a given surface, returning both the amenity space and the remaining space within the original surface
+        /// Creates an amenity space on a given surface, returning both the amenity space and the remaining space within the original surface.
         /// </summary>
-        /// <param name="surface">Surface to create Amenity Spaces on</param>
-        /// <param name="offset">How much to offset to surface perimeter with</param>
-        /// <param name="depth"></param> 
-        /// <returns>amenity surface and remaining surface</returns>
-        [NodeCategory("Create")]
+        /// <param name="surface">Surface to create Amenity Spaces on.</param>
+        /// <param name="offset">How much to offset from surface perimeter.</param>
+        /// <param name="depth">The depth of the amenity space.</param> 
+        /// <returns name="amenitySurface">The created amenity surface.</returns>
+        /// <returns name="remainingSurface">The created amenity surface.</returns>
         [MultiReturn(new[] { amenitySurfaceOutputPort, remainingSurfaceOutputPort })]
+        [NodeCategory("Create")]
         public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(
             Autodesk.DesignScript.Geometry.Surface surface,
             double offset,

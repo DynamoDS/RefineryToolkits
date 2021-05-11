@@ -12,7 +12,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Rank
         /// </summary>
         /// <param name="list">List to shuffle</param>
         /// <param name="seed">Seed</param>
-        /// <returns>randomized list</returns>
+        /// <returns name="list">The shuffled list.</returns>
         public static IList SeededShuffle(
             IList list,
             int seed = 1)
