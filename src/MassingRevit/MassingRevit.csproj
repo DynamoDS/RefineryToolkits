@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Autodesk.RefineryToolkits.MassingRevit</RootNamespace>
     <AssemblyName>Autodesk.RefineryToolkits.MassingRevit</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -57,24 +57,8 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Analysis, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\Analysis.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CoreNodeModels, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\CoreNodeModels.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CoreNodeModelsWpf, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\CoreNodeModelsWpf.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="DesignScriptBuiltin, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DesignScriptBuiltin.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DSCoreNodes, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\DSCoreNodes.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DSIronPython, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
@@ -89,36 +73,20 @@
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoCoreTests, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\DynamoCoreTests.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DynamoCoreWpf, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\DynamoCoreWpf.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="DynamoInstallDetective, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoInstallDetective.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.2.1.5204\lib\net47\DynamoServices.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoServices, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.18.0.4931\lib\netstandard2.0\DynamoServices.dll</HintPath>
     </Reference>
     <Reference Include="DynamoShapeManager, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoShapeManager.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoUnits, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.2.1.5204\lib\net47\DynamoUnits.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="DynamoUtilities, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoUtilities.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GeometryColor, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\GeometryColor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -151,24 +119,29 @@
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\ProtoCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ProtoGeometry, Version=2.2.1.5173, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.2.1.5204\lib\net47\ProtoGeometry.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ProtoGeometry">
+      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.18.0.4931\lib\net48\ProtoGeometry.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>C:\Program Files\Autodesk\Revit 2023\RevitAPI.dll</HintPath>
     </Reference>
     <Reference Include="RevitNodes">
-      <HintPath>..\..\..\DynamoRevit\bin\AnyCPU\Debug\Revit\RevitNodes.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>C:\Program Files\Autodesk\Revit 2023\AddIns\DynamoForRevit\Revit\RevitNodes.dll</HintPath>
     </Reference>
     <Reference Include="RevitServices">
-      <HintPath>..\..\..\DynamoRevit\bin\AnyCPU\Debug\Revit\RevitServices.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>C:\Program Files\Autodesk\Revit 2023\AddIns\DynamoForRevit\Revit\RevitServices.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.7.0.0\lib\net462\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
       <Private>False</Private>
@@ -179,14 +152,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="SystemTestServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\SystemTestServices.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="TestServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\TestServices.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="VMDataBridge, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\VMDataBridge.dll</HintPath>
       <Private>False</Private>
@@ -198,6 +163,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="MassingRevit.ruleset" />
     <None Include="packages.config" />
     <None Include="pkg.json">
@@ -219,6 +185,7 @@
     <Content Include="Autodesk.RefineryToolkits.MassingRevit_DynamoCustomization.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="DynamoServices.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MassingSandbox\MassingSandbox.csproj">

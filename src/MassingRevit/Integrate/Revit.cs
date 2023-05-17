@@ -12,6 +12,7 @@ using RevitServices.Transactions;
 using Autodesk.DesignScript.Geometry;
 using Dynamo.Graph.Nodes;
 using Autodesk.RefineryToolkits.MassingSandbox.Generate;
+using NUnit.Framework;
 
 namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
 {
@@ -43,8 +44,8 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
                 throw new ArgumentOutOfRangeException(nameof(floorType));
             }
 
-            DisplayUnitType unitType = Document.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits;
-            
+            //DisplayUnitType unitType = Document.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits;
+
             var FloorElements = new List<List<DynamoRevitElements.Floor>>();
             var collector = new FilteredElementCollector(Document);
 
@@ -68,7 +69,7 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
 
                 using (var floorBounds = BoundingBox.ByGeometry(srfList[i]))
                 {
-                    elevation = UnitUtils.ConvertToInternalUnits(floorBounds.MaxPoint.Z, unitType);
+                    elevation = UnitUtils.ConvertToInternalUnits(floorBounds.MaxPoint.Z, UnitTypeId.Feet);
                 }
 
                 if (revitLevel != null)
@@ -83,7 +84,7 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
                     revitLevel.Name = levelName;
                 }
 
-                var revitCurves = new CurveArray();
+                var revitCurves = new List<RevitElements.Curve>();
 
                 foreach (var surface in srfList[i])
                 {
@@ -91,9 +92,13 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
 
                     revitCurves.Clear();
 
-                    loops[0].Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
+                    loops[0].Curves().ForEach(curve => revitCurves.Add(curve.ToRevitType()));
                     
-                    var revitFloor = Document.Create.NewFloor(revitCurves, revitFloorType, revitLevel, true);
+                    
+
+                    //var revitFloor = Document.Create.NewFloor(revitCurves, revitFloorType, revitLevel, true);
+                    //For Revit 2023+
+                    var revitFloor = RevitElements.Floor.Create(Document, new List<CurveLoop>{CurveLoop.Create(revitCurves)}, revitFloorType.Id, revitLevel.Id);
 
                     FloorElements.Last().Add(revitFloor.ToDSType(false) as DynamoRevitElements.Floor);
 
@@ -101,20 +106,23 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
                     TransactionManager.Instance.ForceCloseTransaction();
                     TransactionManager.Instance.EnsureInTransaction(Document);
 
+                    CurveArray revitCurveArray = new CurveArray();
+
                     loops.Skip(1).ToArray().ForEach(loop =>
                     {
-                        revitCurves.Clear();
+                        revitCurveArray.Clear();
 
-                        loop.Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
+                        loop.Curves().ForEach(curve => revitCurveArray.Append(curve.ToRevitType()));
 
-                        Document.Create.NewOpening(revitFloor, revitCurves, true);
+                        Document.Create.NewOpening(revitFloor, revitCurveArray, true);
                     });
 
                     loops.ForEach(x => x.Dispose());
                     revitFloor.Dispose();
+
+                    revitCurveArray.Dispose();
                 }
                 
-                revitCurves.Dispose();
             }
 
             TransactionManager.Instance.TransactionTaskDone();

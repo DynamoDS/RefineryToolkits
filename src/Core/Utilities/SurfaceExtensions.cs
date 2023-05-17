@@ -21,7 +21,11 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         public static Autodesk.DesignScript.Geometry.Surface BoundingSurface(this Autodesk.DesignScript.Geometry.Surface surface)
         {
             Autodesk.DesignScript.Geometry.BoundingBox bb = surface.BoundingBox;
-            Cuboid c = bb.ToCuboid();
+            //Cuboid c = bb.ToCuboid();
+            var maxPoint = bb.MaxPoint;
+            var minPoint = bb.MinPoint;
+
+            var c = Cuboid.ByCorners(minPoint,maxPoint);
             Autodesk.DesignScript.Geometry.Surface srf = (c.Explode())[0] as Autodesk.DesignScript.Geometry.Surface;
 
             bb.Dispose();
@@ -86,7 +90,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         {
             List<Autodesk.DesignScript.Geometry.Curve> srfPerimCrvs = surface.PerimeterCurves().ToList();
 
-            Autodesk.DesignScript.Geometry.PolyCurve plyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(srfPerimCrvs);
+            Autodesk.DesignScript.Geometry.PolyCurve plyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(srfPerimCrvs,0.001D);
 
             double inOffset;
             double outOffset;
@@ -106,7 +110,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
             try
             {
                 List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>() { (plyCrv.Offset(inOffset)) };
-                Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(inOffsetCrv);
+                Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(inOffsetCrv, 0.001D);
                 List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrvList = inOffsetPolyCrv.Curves().ToList();
                 List<Autodesk.DesignScript.Geometry.Point> inPts = new List<Autodesk.DesignScript.Geometry.Point>();
                 foreach (Autodesk.DesignScript.Geometry.Curve c in inOffsetCrvList)
@@ -129,7 +133,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
             try
             {
                 List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>() { (plyCrv.Offset(outOffset)) };
-                Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(outOffsetCrv);
+                Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(outOffsetCrv, 0.001D);
                 List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrvList = outOffsetPolyCrv.Curves().ToList();
                 List<Autodesk.DesignScript.Geometry.Point> outPts = new List<Autodesk.DesignScript.Geometry.Point>();
                 foreach (Autodesk.DesignScript.Geometry.Curve c in outOffsetCrvList)

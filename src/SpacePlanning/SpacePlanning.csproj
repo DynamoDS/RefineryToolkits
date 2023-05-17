@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Autodesk.RefineryToolkits.SpacePlanning</RootNamespace>
     <AssemblyName>Autodesk.RefineryToolkits.SpacePlanning</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <StartAction>Program</StartAction>
@@ -50,72 +50,56 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Analysis, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\Analysis.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Analysis, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.18.0.4931\lib\net48\Analysis.dll</HintPath>
     </Reference>
-    <Reference Include="CoreNodeModels, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\CoreNodeModels.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="CoreNodeModels, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.18.0.4931\lib\net48\CoreNodeModels.dll</HintPath>
     </Reference>
-    <Reference Include="CoreNodeModelsWpf, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\CoreNodeModelsWpf.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="CoreNodeModelsWpf, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.18.0.4931\lib\net48\CoreNodeModelsWpf.dll</HintPath>
     </Reference>
     <Reference Include="CromulentBisgetti.ContainerPacking">
       <HintPath>..\..\lib\3DContainerPacking\CromulentBisgetti.ContainerPacking.dll</HintPath>
     </Reference>
-    <Reference Include="DesignScriptBuiltin, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DesignScriptBuiltin.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DesignScriptBuiltin, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\DesignScriptBuiltin.dll</HintPath>
     </Reference>
-    <Reference Include="DSCoreNodes, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\DSCoreNodes.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DSCoreNodes, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.18.0.4931\lib\net48\DSCoreNodes.dll</HintPath>
     </Reference>
-    <Reference Include="DSIronPython, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DSIronPython.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DSCPython, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\DSCPython.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoApplications, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoApplications.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoApplications, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\DynamoApplications.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoCore, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoCore.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoCore, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\DynamoCore.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoCoreTests, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\DynamoCoreTests.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoCoreTests, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.18.0.4931\lib\net48\DynamoCoreTests.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoCoreWpf, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.2.1.5204\lib\net47\DynamoCoreWpf.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoCoreWpf, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.WpfUILibrary.2.18.0.4931\lib\net48\DynamoCoreWpf.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoInstallDetective, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoInstallDetective.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoInstallDetective, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\DynamoInstallDetective.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.2.1.5204\lib\net47\DynamoServices.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoServices, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.18.0.4931\lib\netstandard2.0\DynamoServices.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoShapeManager, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoShapeManager.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoShapeManager, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\DynamoShapeManager.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoUnits, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.2.1.5204\lib\net47\DynamoUnits.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoUnits, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.18.0.4931\lib\net48\DynamoUnits.dll</HintPath>
     </Reference>
-    <Reference Include="DynamoUtilities, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\DynamoUtilities.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DynamoUtilities, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\DynamoUtilities.dll</HintPath>
     </Reference>
-    <Reference Include="GeometryColor, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.2.1.5204\lib\net47\GeometryColor.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="GeometryColor, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.18.0.4931\lib\net48\GeometryColor.dll</HintPath>
     </Reference>
     <Reference Include="MIConvexHull, Version=1.1.18.1017, Culture=neutral, PublicKeyToken=2644b6f8be52c998, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -133,9 +117,8 @@
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
@@ -147,19 +130,33 @@
     <Reference Include="PresentationFramework">
       <Private>False</Private>
     </Reference>
-    <Reference Include="ProtoCore, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\ProtoCore.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ProtoCore, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\ProtoCore.dll</HintPath>
     </Reference>
-    <Reference Include="ProtoGeometry, Version=2.2.1.5173, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.2.1.5204\lib\net47\ProtoGeometry.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ProtoGeometry, Version=2.18.0.665, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.18.0.4931\lib\net48\ProtoGeometry.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.7.1\lib\net461\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core">
       <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
@@ -183,17 +180,14 @@
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
-    <Reference Include="SystemTestServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\SystemTestServices.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="SystemTestServices, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.18.0.4931\lib\net48\SystemTestServices.dll</HintPath>
     </Reference>
-    <Reference Include="TestServices, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.2.1.5204\lib\net47\TestServices.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="TestServices, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Tests.2.18.0.4931\lib\net48\TestServices.dll</HintPath>
     </Reference>
-    <Reference Include="VMDataBridge, Version=2.2.1.5204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamoVisualProgramming.Core.2.2.1.5204\lib\net47\VMDataBridge.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="VMDataBridge, Version=2.18.0.4931, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\DynamoVisualProgramming.Core.2.18.0.4931\lib\net48\VMDataBridge.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase">
       <Private>False</Private>
@@ -247,6 +241,7 @@
     <Content Include="Autodesk.RefineryToolkits.SpacePlanning_DynamoCustomization.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\logo.png" />
     <Content Include="MIConvexHull.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
