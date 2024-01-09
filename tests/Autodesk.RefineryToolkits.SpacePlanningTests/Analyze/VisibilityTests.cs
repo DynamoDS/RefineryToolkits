@@ -10,8 +10,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
     [TestFixture]
     public partial class VisibilityTests : GeometricTestBase
     {
-        private const string percentageVisibleOutputPort = "Percentage visible";
-        private const string visibleItemsOutputPort = "Visible items";
+        private const string percentageVisibleOutputPort = "percentageVisible";
+        private const string visibleItemsOutputPort = "visibleItems";
 
         // Points
         private Polygon pointObstacles;

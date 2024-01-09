@@ -49,7 +49,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             if (obstructions == null) obstructions = new List<Polygon>();
 
             Polygon isovist = IsovistPolygon(origin, obstructions, boundary);
-            GTGeom.Polygon isovistPolygon = GTGeom.Polygon.ByVertices(isovist.Points.Select(p => GTGeom.Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
+            GTGeom.Polygon isovistPolygon = GTGeom.Polygon.ByVertices(((PolyCurve)isovist).Points.Select(p => GTGeom.Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
 
             var visiblePoints = new List<Point>();
             double totalPoints = points.Count;

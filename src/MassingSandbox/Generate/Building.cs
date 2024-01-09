@@ -300,7 +300,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
                 if (!added)
                 {
-                    loops.Add(PolyCurve.ByJoinedCurves(new[] { curve }));
+                    loops.Add(PolyCurve.ByJoinedCurves(new[] { curve }, 0.001, false));
                 }
 
                 curve.Dispose();

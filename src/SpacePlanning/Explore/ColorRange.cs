@@ -49,7 +49,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Explore
                     green = Convert.ToInt32((255 - color.Green) * brightness + color.Green);
                     blue = Convert.ToInt32((255 - color.Blue) * brightness + color.Blue);
                 }
-                colors.Add(Color.ByARGB(r: red, g: green, b: blue));
+                colors.Add(Color.ByARGB(red, green, blue));
             }
             return colors;
         }

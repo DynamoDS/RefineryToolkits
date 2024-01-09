@@ -1,4 +1,5 @@
-﻿using Autodesk.DesignScript.Interfaces;
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
 using Dynamo.Graph.Nodes;
@@ -137,7 +138,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             var gtPolygons = new List<GTGeom.Polygon>();
             for (var i = 0; i < polygons.Count; i++)
             {
-                var vertices = polygons[i].Points
+                var vertices = ((PolyCurve)polygons[i]).Points
                     .Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z))
                     .ToList();
                 GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, external);

@@ -218,7 +218,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 {
                     try
                     {
-                        baseSurface = baseSurface.TrimWithEdgeLoops(holes.Select(c => PolyCurve.ByJoinedCurves(new[] { c })));
+                        baseSurface = baseSurface.TrimWithEdgeLoops(holes.Select(c => PolyCurve.ByJoinedCurves(new[] { c }, 0.0001, false)), 0);
                         break;
                     }
                     catch (ApplicationException)

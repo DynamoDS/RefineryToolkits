@@ -112,7 +112,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                         points.ForEach(p => p.Dispose());
                     }
 
-                    holes.Add(PolyCurve.ByJoinedCurves(curves));
+                    holes.Add(PolyCurve.ByJoinedCurves(curves, 0.001, false));
 
                     curves.ForEach(x => x.Dispose());
                 }
@@ -164,7 +164,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
             }
 
-            var boundary = PolyCurve.ByJoinedCurves(boundaryCurves);
+            var boundary = PolyCurve.ByJoinedCurves(boundaryCurves, 0.001, false);
 
             return (boundary, holes);
         }

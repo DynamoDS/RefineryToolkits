@@ -24,7 +24,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         [NodeCategory("Create")]
         [MultiReturn(new[] { "siteSolid", "siteOffset" })]
         public static Dictionary<string, object> VolumeByOutlineSetback(Curve siteOutline, double setback = 0, double heightLimit = 100)
-        {
+            {
             Solid siteMass;
             Curve siteOffset;
 
@@ -32,18 +32,17 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
             if (setback < 0) { throw new ArgumentOutOfRangeException(nameof(setback), $"{nameof(setback)} must be greater than or equal to 0."); }
             if (heightLimit <= 0) { throw new ArgumentOutOfRangeException(nameof(heightLimit), $"{nameof(heightLimit)} must be greater than 0."); }
             
-            var inset1 = siteOutline.Offset(setback);
-            var inset2 = siteOutline.Offset(-setback);
+            var inset1 = siteOutline.OffsetMany(setback, siteOutline.Normal);
+            var inset2 = siteOutline.OffsetMany(-setback, siteOutline.Normal);
 
-            if (inset1.Length < inset2.Length)
+            if (inset1[0].Length < inset2[0].Length)
             {
-                siteOffset = inset1;
-                inset2.Dispose();
+                siteOffset = inset1[0];
+                inset1.ForEach(c => c.Dispose());
             }
             else
             {
-                siteOffset = inset2;
-                inset1.Dispose();
+                siteOffset = inset2[0];
             }
 
             using (var zAxis = Vector.ZAxis())
@@ -56,6 +55,9 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
             }
 
             siteMass = siteOffset.ExtrudeAsSolid(heightLimit);
+
+            inset1.ForEach(c => c.Dispose());
+            inset2.ForEach(c => c.Dispose());
 
             return new Dictionary<string, object>
             {

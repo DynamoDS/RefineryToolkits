@@ -30,7 +30,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             // offset perimeter curves by the specified offset and create new surface.
             // makes sure there are space between outer perimeter and the amenity space
             List<Curve> inCrvs = surface.OffsetPerimeterCurves(offset)["insetCrvs"].ToList();
-            Surface inSrf = Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
+            Surface inSrf = Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs, 0.001, false));
 
             // get longest curve of the inSrf
             Curve max;

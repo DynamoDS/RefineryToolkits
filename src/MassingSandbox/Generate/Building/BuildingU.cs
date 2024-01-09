@@ -133,7 +133,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                     }
                 }
 
-                boundary = PolyCurve.ByJoinedCurves(boundaryCurves);
+                boundary = PolyCurve.ByJoinedCurves(boundaryCurves, 0.001, false);
             }
             else
             {
