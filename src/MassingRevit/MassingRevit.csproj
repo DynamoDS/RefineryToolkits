@@ -6,15 +6,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="RevitAPI">
-      <HintPath>..\package-static\RevitAPI.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit Preview Release\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitServices">
-      <HintPath>..\package-static\RevitServices.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit Preview Release\AddIns\DynamoForRevit\Revit\RevitServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitNodes">
-      <HintPath>..\package-static\RevitNodes.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit Preview Release\AddIns\DynamoForRevit\Revit\RevitNodes.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -27,6 +27,6 @@
     <ProjectReference Include="..\MassingSandbox\MassingSandbox.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DynamoVisualProgramming.Core" Version="3.0.0.7190" />
+    <PackageReference Include="DynamoVisualProgramming.Core" Version="$(DynamoPackageVersion)" />
   </ItemGroup>
 </Project>

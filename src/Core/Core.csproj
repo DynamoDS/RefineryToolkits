@@ -4,6 +4,6 @@
     <AssemblyName>Autodesk.RefineryToolkits.Core</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DynamoVisualProgramming.DynamoCoreNodes" Version="3.0.0.7190" />
+    <PackageReference Include="DynamoVisualProgramming.DynamoCoreNodes" Version="$(DynamoPackageVersion)" />
   </ItemGroup>
 </Project>

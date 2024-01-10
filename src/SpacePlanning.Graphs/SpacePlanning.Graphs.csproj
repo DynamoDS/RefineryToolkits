@@ -7,6 +7,6 @@
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DynamoVisualProgramming.DynamoServices" Version="3.0.0.7190" />
+    <PackageReference Include="DynamoVisualProgramming.DynamoServices" Version="$(DynamoPackageVersion)" />
   </ItemGroup>
 </Project>

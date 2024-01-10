@@ -1,5 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>x64</PlatformTarget>
     <RootNamespace>Autodesk.RefineryToolkits.CoreTests</RootNamespace>
     <AssemblyName>Autodesk.RefineryToolkits.CoreTests</AssemblyName>
   </PropertyGroup>
@@ -13,7 +16,7 @@
     <ProjectReference Include="..\..\src\Core\Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DynamoVisualProgramming.Tests" Version="3.0.0.7190" />
+    <PackageReference Include="DynamoVisualProgramming.Tests" Version="$(DynamoPackageVersion)" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />

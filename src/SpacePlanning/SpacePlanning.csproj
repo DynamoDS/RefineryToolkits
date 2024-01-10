@@ -26,8 +26,8 @@
     <Content Include="MIConvexHull.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DynamoVisualProgramming.Core" Version="3.0.0.7190" />
-    <PackageReference Include="DynamoVisualProgramming.DynamoCoreNodes" Version="3.0.0.7190" />
-    <PackageReference Include="DynamoVisualProgramming.DynamoServices" Version="3.0.0.7190" />
+    <PackageReference Include="DynamoVisualProgramming.Core" Version="$(DynamoPackageVersion)" />
+    <PackageReference Include="DynamoVisualProgramming.DynamoCoreNodes" Version="$(DynamoPackageVersion)" />
+    <PackageReference Include="DynamoVisualProgramming.DynamoServices" Version="$(DynamoPackageVersion)" />
   </ItemGroup>
 </Project>

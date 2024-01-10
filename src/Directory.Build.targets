@@ -1,0 +1,46 @@
+<Project>
+  <PropertyGroup>
+    <ExtensionOutput>$(MSBuildThisFileDirectory)..\build\</ExtensionOutput>
+    
+    <!-- Set these in a csproj.user file (or here, just don't commit the change) to override. -->
+    <LocalCopyFolder>$(AppData)/Dynamo/Dynamo Core/$(DynamoVersion)/packages</LocalCopyFolder>
+    <!--<LocalCopyFolder>$(AppData)/Dynamo/Dynamo Revit/$(DynamoVersion)/packages</LocalCopyFolder>-->
+    <CopyLocal>True</CopyLocal>
+  </PropertyGroup>
+
+  <Target Name="PrepareExtension" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <BinFiles Include="$(OutputPath)**\*" />
+      <OtherFiles Include="$(MSBuildThisFileDirectory)..\samples\**\*.dyn">
+        <Folder>Extra\</Folder>
+      </OtherFiles>
+      <OtherFiles Include="$(MSBuildThisFileDirectory)..\docs\*_LICENSE.md">
+        <Folder>Extra\license\Third Party</Folder>
+      </OtherFiles>
+      <OtherFiles Include="$(MSBuildThisFileDirectory)..\LICENSE">
+        <Folder>Extra\license\</Folder>
+      </OtherFiles>
+    </ItemGroup>
+
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(ExtensionOutput)\bin\%(RecursiveDir)" />
+    <Copy SourceFiles="@(OtherFiles)" DestinationFolder="$(ExtensionOutput)\%(Folder)" />
+  
+    <WriteLinesToFile File="$(ExtensionOutput)pkg.json" Lines="$([System.IO.File]::ReadAllText($(MSBuildThisFileDirectory)pkg.json).Replace('$Version$','$(Version)').Replace('$DynamoVersion$','$(DynamoVersion)'))" Overwrite="true" Encoding="Unicode" />
+  </Target>
+
+  <!--Copy the built extension to a local Dynamo packages folder for development.-->
+  <Target Name="CopyLocal" Condition=" '$(CopyLocal)' == 'True' " AfterTargets="DispatchToInnerBuilds">
+    <PropertyGroup>
+      <ExtensionTarget>$(LocalCopyFolder)\Refinery Toolkit</ExtensionTarget>
+    </PropertyGroup>
+    <ItemGroup>
+      <ExtensionFiles Include="$(ExtensionOutput)**\*" />
+    </ItemGroup>
+
+    <Message Importance="High" Text="CopyLocal: Refinery Toolkit Extension to $(ExtensionTarget)" />
+
+    <RemoveDir Directories="$(ExtensionTarget)" />
+    <MakeDir Directories="$(ExtensionTarget)" />
+    <Copy SourceFiles="@(ExtensionFiles)" DestinationFiles="$(ExtensionTarget)/%(RecursiveDir)%(Filename)%(Extension)" />
+  </Target>
+</Project>
