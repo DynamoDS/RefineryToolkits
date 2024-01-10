@@ -22,16 +22,16 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         /// <returns name="siteOffset">Allowable footprint for building mass.</returns>
         /// <search>site,design,refactory</search>
         [NodeCategory("Create")]
-        [MultiReturn(new[] { "siteSolid", "siteOffset" })]
+        [MultiReturn(["siteSolid", "siteOffset"])]
         public static Dictionary<string, object> VolumeByOutlineSetback(Curve siteOutline, double setback = 0, double heightLimit = 100)
-            {
+        {
             Solid siteMass;
             Curve siteOffset;
 
-            if (siteOutline == null) { throw new ArgumentNullException(nameof(siteOutline)); }
+            ArgumentNullException.ThrowIfNull(siteOutline);
             if (setback < 0) { throw new ArgumentOutOfRangeException(nameof(setback), $"{nameof(setback)} must be greater than or equal to 0."); }
             if (heightLimit <= 0) { throw new ArgumentOutOfRangeException(nameof(heightLimit), $"{nameof(heightLimit)} must be greater than 0."); }
-            
+
             var inset1 = siteOutline.OffsetMany(setback, siteOutline.Normal);
             var inset2 = siteOutline.OffsetMany(-setback, siteOutline.Normal);
 
@@ -75,14 +75,14 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         /// <returns name="heightList">Height of each element.</returns>
         /// <search>refinery</search>
         [NodeCategory("Query")]
-        [MultiReturn(new[] { "solidList", "boundingBoxList", "heightList" })]
+        [MultiReturn(["solidList", "boundingBoxList", "heightList"])]
         public static Dictionary<string, object> ContextByElement(PolySurface polysurface)
         {
             Solid[] solidList = null;
             List<BoundingBox> boundingBoxList = null;
             List<double> heightList = null;
 
-            if (polysurface == null) { throw new ArgumentNullException(nameof(polysurface)); }
+            ArgumentNullException.ThrowIfNull(polysurface);
 
             solidList = polysurface.ExtractSolids();
 

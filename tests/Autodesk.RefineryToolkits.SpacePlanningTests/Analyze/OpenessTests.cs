@@ -27,7 +27,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             var surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
             // Calculate openess score
-            var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
+            var openessScore = Openess.FromSurface(surface, 0, [], [obstacle]);
 
             // Check of score equals 75%, as the entire left side is blocked by the obstacle
             Assert.AreEqual(75d, openessScore);
@@ -48,7 +48,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             var surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
             // Calculate openess score
-            var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
+            var openessScore = Openess.FromSurface(surface, 0, [], [obstacle]);
 
             // Check of score equals 75%, as the entire right side is blocked by the obstacle
             Assert.AreEqual(75d, openessScore);
@@ -69,7 +69,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             var surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
             // Calculate openess score
-            var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
+            var openessScore = Openess.FromSurface(surface, 0, [], [obstacle]);
 
             // Check of score equals 75%, as the entire top is blocked by the obstacle
             Assert.AreEqual(75d, openessScore);
@@ -90,7 +90,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             var surface = Surface.ByPatch(Rectangle.ByWidthLength(CoordinateSystem.ByOrigin(origin), 10, 10));
 
             // Calculate openess score
-            var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, new List<Polygon> { obstacle });
+            var openessScore = Openess.FromSurface(surface, 0, [], [obstacle]);
 
             // Check of score equals 75%, as the entire bottom is blocked by the obstacle
             Assert.AreEqual(75d, openessScore);
@@ -116,7 +116,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             var surface = Surface.ByPatch(Rectangle.ByWidthLength(10, 10));
 
             // Calculate openess score
-            var openessScore = Openess.FromSurface(surface, 0, new List<Polygon> { }, obstaclePolygons);
+            var openessScore = Openess.FromSurface(surface, 0, [], obstaclePolygons);
 
             // Check if score equals 50%, as the entire right and left side is blocked by the obstacles
             Assert.AreEqual(50d, openessScore);

@@ -20,14 +20,14 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Analyze
         /// <returns name="percentOutside">Percent of building volume that is outside the site boundary.</returns>
         /// <search>site,design,refinery</search>
         [NodeCategory("Query")]
-        [MultiReturn(new[] { "buildingInside", "buildingOutside", "intersects", "percentOutside" })]
+        [MultiReturn(["buildingInside", "buildingOutside", "intersects", "percentOutside"])]
         public static Dictionary<string, object> ClashTest(Solid buildingSolid, Solid siteSolid)
         {
             bool intersects = false;
             double percentOutside = 0;
 
-            if (buildingSolid == null) { throw new ArgumentNullException(nameof(buildingSolid)); }
-            if (siteSolid == null) { throw new ArgumentNullException(nameof(siteSolid)); }
+            ArgumentNullException.ThrowIfNull(buildingSolid);
+            ArgumentNullException.ThrowIfNull(siteSolid);
 
             Solid outsideVolume = buildingSolid.Difference(siteSolid);
             Solid insideVolume = buildingSolid.Difference(outsideVolume);
@@ -61,11 +61,11 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Analyze
         /// <returns name="distanceList">Distance from each sampling point along surface normal to the closest context geometry.</returns>
         /// <returns name="geometryColor">Colored surfaces mapping view distance.</returns>
         [NodeCategory("Query")]
-        [MultiReturn(new[] { "pointList", "distanceList", "geometryColor" })]
+        [MultiReturn(["pointList", "distanceList", "geometryColor"])]
         public static Dictionary<string, object> ViewDistance(
             Surface surface, Geometry[] contextGeomList,
-            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 0, 115);")]DSCore.Color startColor,
-            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 255, 255);")]DSCore.Color endColor,
+            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 0, 115);")] DSCore.Color startColor,
+            [DefaultArgument("DSCore.Color.ByARGB(255, 255, 255, 255);")] DSCore.Color endColor,
             double resolution = 3, double maxDistance = 50)
         {
             if (resolution <= 0) { throw new ArgumentNullException(nameof(resolution)); }

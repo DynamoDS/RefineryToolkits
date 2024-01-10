@@ -8,11 +8,8 @@
 *
 ***************************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.Core.Geometry
 {
@@ -22,8 +19,8 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
     public class BoundingBox
     {
         #region Private Properties
-        private double[] min = new double[3];
-        private double[] max = new double[3];
+        private readonly double[] min = new double[3];
+        private readonly double[] max = new double[3];
         #endregion
 
         #region Public Properties
@@ -47,8 +44,8 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         #region Private Constructor
         internal BoundingBox(IEnumerable<double> xCoordinates, IEnumerable<double> yCoordinates, IEnumerable<double> zCoordinates)
         {
-            this.min = new double[3] { xCoordinates.Min(), yCoordinates.Min(), zCoordinates.Min() };
-            this.max = new double[3] { xCoordinates.Max(), yCoordinates.Max(), zCoordinates.Max() };
+            min = [xCoordinates.Min(), yCoordinates.Min(), zCoordinates.Min()];
+            max = [xCoordinates.Max(), yCoordinates.Max(), zCoordinates.Max()];
         }
         #endregion
 
@@ -61,7 +58,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <returns></returns>
         public static BoundingBox ByMinVertexMaxVertex(Vertex min, Vertex max)
         {
-            return new BoundingBox(new double[2] { min.X, max.X}, new double[2] { min.Y, max.Y }, new double[2] { min.Z, max.Z });
+            return new BoundingBox(new double[2] { min.X, max.X }, new double[2] { min.Y, max.Y }, new double[2] { min.Z, max.Z });
         }
         #endregion
 
@@ -77,7 +74,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
                 (min[0] <= other.max[0]) && (max[0] >= other.min[0]) &&
                 (min[1] <= other.max[1]) && (max[1] >= other.min[1]) &&
                 (min[2] <= other.max[2]) && (max[2] >= other.min[2]);
-        } 
+        }
         #endregion
 
     }

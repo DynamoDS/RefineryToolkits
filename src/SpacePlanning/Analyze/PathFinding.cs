@@ -4,7 +4,6 @@ using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSGeom = Autodesk.DesignScript.Geometry;
 using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
@@ -24,28 +23,23 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="obstructions">List of Polygons representing internal obstructions</param>
         /// <returns name="path">Set of lines representing the shortest path</returns>
         /// <returns name="length">Length of path.</returns>
-        [MultiReturn(new[] { pathOutputPort, lengthOutputPort })]
+        [MultiReturn([pathOutputPort, lengthOutputPort])]
         public static Dictionary<string, object> ShortestPath(
             Point startPoint,
             Point endPoint,
             List<Polygon> boundary,
             List<Polygon> obstructions)
         {
-            if (startPoint is null)
-                throw new ArgumentNullException(nameof(startPoint));
-            if (endPoint is null)
-                throw new ArgumentNullException(nameof(endPoint));
-            if (boundary is null)
-                throw new ArgumentNullException(nameof(boundary));
-            if (obstructions is null)
-                throw new ArgumentNullException(nameof(obstructions));
+            ArgumentNullException.ThrowIfNull(startPoint);
+            ArgumentNullException.ThrowIfNull(endPoint);
+            ArgumentNullException.ThrowIfNull(boundary);
+            ArgumentNullException.ThrowIfNull(obstructions);
 
             var gOrigin = GTGeom.Vertex.ByCoordinates(startPoint.X, startPoint.Y, startPoint.Z);
             var gDestination = GTGeom.Vertex.ByCoordinates(endPoint.X, endPoint.Y, endPoint.Z);
 
             // compute visibility graph
-            var visGraph = CreateVisibilityGraph(boundary, obstructions);
-            if (visGraph is null) throw new InvalidOperationException("Failed to create visibility graph.");
+            var visGraph = CreateVisibilityGraph(boundary, obstructions) ?? throw new InvalidOperationException("Failed to create visibility graph.");
             var visibilityGraph = visGraph.graph as VisibilityGraph;
 
             var graph = VisibilityGraph.ShortestPath(visibilityGraph, gOrigin, gDestination);
@@ -63,8 +57,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns name = "visGraph">VisibilityGraph for use in ShortestPath</returns>
         [IsVisibleInDynamoLibrary(false)]
         public static RepresentableGraph CreateVisibilityGraph(
-            List<DSGeom.Polygon> boundary,
-            List<DSGeom.Polygon> obstructions)
+            List<Polygon> boundary,
+            List<Polygon> obstructions)
         {
             var graph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstructions);
             var visGraph = RepresentableGraph.ByBaseGraph(graph);

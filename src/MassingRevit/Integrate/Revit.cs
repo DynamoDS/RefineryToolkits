@@ -33,7 +33,7 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
         [NodeCategory("Create")]
         public static List<List<DynamoRevitElements.Floor>> CreateRevitFloors(
             DynamoElements.Surface[][] srfList,
-            DynamoRevitElements.FloorType floorType, 
+            DynamoRevitElements.FloorType floorType,
             string levelPrefixStr = "Dynamo Level")
         {
             ArgumentNullException.ThrowIfNull(srfList);
@@ -57,7 +57,7 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
             for (var i = 0; i < srfList.Length; i++)
             {
                 ArgumentNullException.ThrowIfNull(srfList[i]);
-  
+
                 FloorElements.Add([]);
 
                 string levelName = $"{levelPrefixStr} {i + 1}";
@@ -92,7 +92,7 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
                     floorCurves.Clear();
 
                     floorCurves.Add(loops[0].ToRevitType());
-                    
+
                     var revitFloor = RevitElements.Floor.Create(Document, floorCurves, revitFloorType.Id, revitLevel.Id);
 
                     FloorElements.Last().Add(revitFloor.ToDSType(false) as DynamoRevitElements.Floor);
@@ -120,7 +120,7 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
             }
 
             TransactionManager.Instance.TransactionTaskDone();
-            
+
             collector.Dispose();
 
             return FloorElements;

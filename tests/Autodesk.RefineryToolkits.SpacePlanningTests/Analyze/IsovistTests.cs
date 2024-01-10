@@ -1,10 +1,5 @@
 ﻿using NUnit.Framework;
-using Autodesk.RefineryToolkits.SpacePlanning.Analyze;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServices;
 using Autodesk.DesignScript.Geometry;
 
@@ -29,13 +24,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         /// </summary>
         [Test]
         public void IsovistFromPointReturnsCorrectSurfaceAreaTest()
-        {          
+        {
             // Create origin point
             Point originPoint = layoutPolygon.Center();
 
             // Create isovist form the origin point
-            Surface isovist = Visibility.IsovistFromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { layoutPolygon });
-            
+            Surface isovist = Visibility.IsovistFromPoint(originPoint, [layoutPolygon], [layoutPolygon]);
+
             // Checks if the area of the isovist is equal to the area of the layout
             // as there are no obstructions the entire layout should be visible from the origin point
             Assert.AreEqual(isovist.Area, Surface.ByPatch(layoutPolygon).Area);
@@ -51,10 +46,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             Polygon internals = Rectangle.ByWidthLength(5, 5) as Polygon;
 
             // Create origin point
-            Point originPoint = Point.ByCoordinates(3,3);
+            Point originPoint = Point.ByCoordinates(3, 3);
 
             // Create isovist form the origin point
-            Surface isovist = Visibility.IsovistFromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { internals });
+            Surface isovist = Visibility.IsovistFromPoint(originPoint, [layoutPolygon], [internals]);
 
             // Checks that the area returned by the isovist is not equal to the area of the layout
             // and that the isovist does not intersect the midpoint of the obstacle.
@@ -75,7 +70,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
             // Create origin point
             Point originPoint = Point.ByCoordinates(0, 0);
 
-            Assert.Throws<ApplicationException>(() => Visibility.IsovistFromPoint(originPoint, new List<Polygon> { layoutPolygon }, new List<Polygon> { internals }));
+            Assert.Throws<ApplicationException>(() => Visibility.IsovistFromPoint(originPoint, [layoutPolygon], [internals]));
 
         }
     }

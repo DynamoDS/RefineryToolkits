@@ -1,10 +1,6 @@
 ﻿using NUnit.Framework;
-using Autodesk.RefineryToolkits.SpacePlanning.Explore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DSCore;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Explore.Tests

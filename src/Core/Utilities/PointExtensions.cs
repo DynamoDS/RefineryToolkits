@@ -2,9 +2,6 @@
 using Autodesk.RefineryToolkits.Core.Geometry;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DSGeom = Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.Core.Utillites
@@ -19,8 +16,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// <search>colinear</search>
         public static bool AreColinear(this List<DSGeom.Point> pointList)
         {
-            if (pointList == null)
-                throw new ArgumentNullException(nameof(pointList));
+            ArgumentNullException.ThrowIfNull(pointList);
 
             int n = pointList.Count;
             if (n < 3) return true;
@@ -28,9 +24,9 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
             int startIndex = 1;
             var referenceVector = Vector.ByTwoVertices(pointList[0].ToVertex(), pointList[1].ToVertex());
 
-            for (var i = startIndex; i < n-1; i++)
+            for (var i = startIndex; i < n - 1; i++)
             {
-                var currentVector = Vector.ByTwoVertices(pointList[i].ToVertex(), pointList[i+1].ToVertex());
+                var currentVector = Vector.ByTwoVertices(pointList[i].ToVertex(), pointList[i + 1].ToVertex());
                 var crossProduct = referenceVector.Cross(currentVector);
                 if (crossProduct.X != 0 || crossProduct.Y != 0 || crossProduct.Z != 0) return false;
             }
@@ -47,15 +43,15 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// <search></search>
         public static bool CompareCoincidental(this DSGeom.Point point1, DSGeom.Point point2, double tolerance = 8)
         {
-            double pt1X = System.Math.Round(point1.X, 8);
-            double pt1Y = System.Math.Round(point1.Y, 8);
-            double pt1Z = System.Math.Round(point1.Z, 8);
+            double pt1X = Math.Round(point1.X, 8);
+            double pt1Y = Math.Round(point1.Y, 8);
+            double pt1Z = Math.Round(point1.Z, 8);
 
             string pt1 = pt1X.ToString() + "," + pt1Y.ToString() + "," + pt1Z.ToString();
 
-            double pt2X = System.Math.Round(point2.X, 8);
-            double pt2Y = System.Math.Round(point2.Y, 8);
-            double pt2Z = System.Math.Round(point2.Z, 8);
+            double pt2X = Math.Round(point2.X, 8);
+            double pt2Y = Math.Round(point2.Y, 8);
+            double pt2Z = Math.Round(point2.Z, 8);
 
             string pt2 = pt2X.ToString() + "," + pt2Y.ToString() + "," + pt2Z.ToString();
 
@@ -101,11 +97,8 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                     maxDist = polycurve.Length;
                 }
 
-                Autodesk.DesignScript.Geometry.Point minusPt = polycurve.PointAtSegmentLength(minusDist);
-                Autodesk.DesignScript.Geometry.Point maxPt = polycurve.PointAtSegmentLength(maxDist);
-
                 double number = DSCore.Math.MapTo(0, 1, param, minusDist, maxDist);
-                Autodesk.DesignScript.Geometry.Point newPoint = polycurve.PointAtSegmentLength(number);
+                DSGeom.Point newPoint = polycurve.PointAtSegmentLength(number);
                 return newPoint;
 
             }
@@ -141,7 +134,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                 }
 
                 double i;
-                List<double> range = new List<double>();
+                List<double> range = [];
                 for (i = start; i <= end; i += 0.01)
                     range.Add(i);
 
@@ -150,7 +143,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
 
                 double item = range[index];
 
-                Autodesk.DesignScript.Geometry.Point newPoint = polycurve.PointAtParameter(item);
+                DSGeom.Point newPoint = polycurve.PointAtParameter(item);
                 return newPoint;
 
             }

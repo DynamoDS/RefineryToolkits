@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.Core.Utillites
@@ -13,7 +11,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
     {
         #region Internal Methods
         [IsVisibleInDynamoLibrary(false)]
-        public static Edge ToEdge(this Autodesk.DesignScript.Geometry.Line line)
+        public static Edge ToEdge(this DesignScript.Geometry.Line line)
         {
             return Edge.ByStartVertexEndVertex(line.StartPoint.ToVertex(), line.EndPoint.ToVertex());
         }
@@ -26,21 +24,21 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// <param name="curve"></param>
         /// <param name="curves"></param>
         /// <search></search>
-        public static List<Autodesk.DesignScript.Geometry.Curve> FindMatchingVectorCurves(this Autodesk.DesignScript.Geometry.Curve curve, List<Autodesk.DesignScript.Geometry.Curve> curves)
+        public static List<DesignScript.Geometry.Curve> FindMatchingVectorCurves(this DesignScript.Geometry.Curve curve, List<DesignScript.Geometry.Curve> curves)
         {
-            Autodesk.DesignScript.Geometry.Point stPt1 = curve.StartPoint;
-            Autodesk.DesignScript.Geometry.Point endPt1 = curve.EndPoint;
+            DesignScript.Geometry.Point stPt1 = curve.StartPoint;
+            DesignScript.Geometry.Point endPt1 = curve.EndPoint;
 
-            Autodesk.DesignScript.Geometry.Vector vec1 = Autodesk.DesignScript.Geometry.Vector.ByTwoPoints(stPt1, endPt1).Normalized();
+            DesignScript.Geometry.Vector vec1 = DesignScript.Geometry.Vector.ByTwoPoints(stPt1, endPt1).Normalized();
             string str1 = vec1.ToString();
 
-            List<string> curveList = new List<string>();
+            List<string> curveList = [];
             foreach (var c in curves)
             {
-                Autodesk.DesignScript.Geometry.Point stPt2 = c.StartPoint;
-                Autodesk.DesignScript.Geometry.Point endPt2 = c.EndPoint;
+                DesignScript.Geometry.Point stPt2 = c.StartPoint;
+                DesignScript.Geometry.Point endPt2 = c.EndPoint;
 
-                Autodesk.DesignScript.Geometry.Vector vec2 = Autodesk.DesignScript.Geometry.Vector.ByTwoPoints(stPt2, endPt2).Normalized();
+                DesignScript.Geometry.Vector vec2 = DesignScript.Geometry.Vector.ByTwoPoints(stPt2, endPt2).Normalized();
                 string str2 = vec2.ToString();
                 curveList.Add(str2);
 
@@ -50,7 +48,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                 vec2.Dispose();
             }
 
-            List<Autodesk.DesignScript.Geometry.Curve> matchingCurves = new List<Autodesk.DesignScript.Geometry.Curve>();
+            List<DesignScript.Geometry.Curve> matchingCurves = [];
             for (int i = 0; i < curveList.Count; i++)
             {
                 if (str1 == curveList[i])
@@ -61,13 +59,13 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
 
             if (matchingCurves.Count == 0)
             {
-                List<string> revCurveList = new List<string>();
+                List<string> revCurveList = [];
                 foreach (var c in curves)
                 {
-                    Autodesk.DesignScript.Geometry.Point stPt2 = c.StartPoint;
-                    Autodesk.DesignScript.Geometry.Point endPt2 = c.EndPoint;
+                    DesignScript.Geometry.Point stPt2 = c.StartPoint;
+                    DesignScript.Geometry.Point endPt2 = c.EndPoint;
 
-                    Autodesk.DesignScript.Geometry.Vector vec2 = Autodesk.DesignScript.Geometry.Vector.ByTwoPoints(endPt2, stPt2).Normalized();
+                    DesignScript.Geometry.Vector vec2 = DesignScript.Geometry.Vector.ByTwoPoints(endPt2, stPt2).Normalized();
                     string str2 = vec2.ToString();
                     revCurveList.Add(str2);
 
@@ -100,22 +98,22 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// </summary>
         /// <param name="curves"></param>
         /// <search></search>
-        [MultiReturn(new[] { "maxCrv", "otherCrvs" })]
-        public static Dictionary<string, dynamic> MaximumLength(this List<Autodesk.DesignScript.Geometry.Curve> curves)
+        [MultiReturn(["maxCrv", "otherCrvs"])]
+        public static Dictionary<string, dynamic> MaximumLength(this List<DesignScript.Geometry.Curve> curves)
         {
 
-            List<double> lengths = new List<double>();
+            List<double> lengths = [];
             for (int i = 0; i < curves.Count; i++)
             {
-                lengths.Add(System.Math.Round(curves[i].Length, 8));
+                lengths.Add(Math.Round(curves[i].Length, 8));
             }
 
-            List<Autodesk.DesignScript.Geometry.Curve> otherCurves = new List<Autodesk.DesignScript.Geometry.Curve>();
-            List<Autodesk.DesignScript.Geometry.Curve> maxCurve = new List<Autodesk.DesignScript.Geometry.Curve>();
+            List<DesignScript.Geometry.Curve> otherCurves = [];
+            List<DesignScript.Geometry.Curve> maxCurve = [];
 
             if (lengths.Any(o => o != lengths[0]))
             {
-                List<int> maxID = new List<int>();
+                List<int> maxID = [];
                 for (int i = 0; i < lengths.Count; i++)
                 {
                     if (lengths[i] == lengths.Max())
@@ -141,8 +139,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                 }
             }
 
-            Dictionary<string, dynamic> newOutput;
-            newOutput = new Dictionary<string, dynamic>
+            Dictionary<string, dynamic> newOutput = new()
             {
                 {"maxCrv",maxCurve},
                 {"otherCrvs",otherCurves}

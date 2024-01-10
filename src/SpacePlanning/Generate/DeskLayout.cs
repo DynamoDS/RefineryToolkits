@@ -26,7 +26,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             double backToBack = 2200)
         {
             Surface boundingSrf = surface.BoundingSurface();
-            List<Curve> perimCrvs = boundingSrf.PerimeterCurves().ToList();
+            List<Curve> perimCrvs = [.. boundingSrf.PerimeterCurves()];
 
             Curve max;
             List<Curve> others;
@@ -46,29 +46,27 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
             Point comPt = max.StartPoint;
 
-            List<List<bool>> boolList = new List<List<bool>>();
+            List<List<bool>> boolList = [];
             foreach (Curve crv in others)
             {
-                List<bool> subList = new List<bool>();
-                subList.Add(comPt.CompareCoincidental(crv.StartPoint));
-                subList.Add(comPt.CompareCoincidental(crv.EndPoint));
+                List<bool> subList = [comPt.CompareCoincidental(crv.StartPoint), comPt.CompareCoincidental(crv.EndPoint)];
                 boolList.Add(subList);
             }
 
-            List<bool> mask1 = new List<bool>();
+            List<bool> mask1 = [];
             foreach (List<bool> subList in boolList)
             {
                 mask1.Add(!subList.Any(c => c == true));
             }
 
             var transBoolList = boolList.SelectMany(inner => inner.Select((item, index) => new { item, index })).GroupBy(i => i.index, i => i.item).Select(g => g.ToList()).ToList();
-            List<bool> mask2 = new List<bool>();
+            List<bool> mask2 = [];
             foreach (List<bool> subList in transBoolList)
             {
                 mask2.Add(!subList.Any(c => c == true));
             }
 
-            List<string> strList = new List<string> { "start", "end" };
+            List<string> strList = ["start", "end"];
             Curve crv1 = others.Zip(mask2, (name, filter) => new { name, filter, }).Where(item => item.filter == true).Select(item => item.name).ToList()[0];
             string dir = strList.Zip(mask1, (name, filter) => new { name, filter, }).Where(item => item.filter == true).Select(item => item.name).ToList()[0];
 
@@ -84,38 +82,38 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             List<double> dims;
             if (vecCom)
             {
-                dims = new List<double> { deskWidth, deskDepth };
+                dims = [deskWidth, deskDepth];
             }
             else
             {
-                dims = new List<double> { deskDepth, deskWidth };
+                dims = [deskDepth, deskWidth];
             }
 
             double halfb2b = backToBack / 2;
             double halfDeskWidth = deskWidth / 2;
             double halfDeskDepth = deskDepth / 2;
 
-            List<double> lstA = new List<double>
-            {
+            List<double> lstA =
+            [
                 deskDepth,
-                halfDeskDepth+halfDeskDepth+backToBack
-            };
+                halfDeskDepth + halfDeskDepth + backToBack
+            ];
 
-            int amount = Convert.ToInt32(System.Math.Round(crvLen / lstA.Sum() + 1));
+            int amount = Convert.ToInt32(Math.Round(crvLen / lstA.Sum() + 1));
             var repeatLst = Enumerable.Repeat(lstA, amount).ToList();
             var flatLst = repeatLst.SelectMany(i => i).ToList();
             flatLst.Insert(0, halfb2b + halfDeskDepth);
 
             List<double> partials = flatLst.RunningTotals();
 
-            List<bool> mask3 = new List<bool>();
+            List<bool> mask3 = [];
             foreach (double p in partials)
             {
                 mask3.Add(p > crvLen);
             }
 
             List<double> partialFalse = partials.Zip(mask3, (name, filter) => new { name, filter, }).Where(item => item.filter == false).Select(item => item.name).ToList();
-            List<Curve> transGeo = new List<Curve>();
+            List<Curve> transGeo = [];
             foreach (double dis in partialFalse)
             {
                 transGeo.Add(max.Translate(vec, dis) as Curve);
@@ -123,14 +121,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
             double crvLen2 = transGeo[0].Length;
 
-            List<double> offsetNum = new List<double> { deskWidth };
+            List<double> offsetNum = [deskWidth];
             var offsetNums = Enumerable.Repeat(offsetNum, 100).ToList();
             var offsetNumFlat = offsetNums.SelectMany(i => i).ToList();
             offsetNumFlat.Insert(0, halfDeskWidth);
 
             List<double> partialsOffsets = offsetNumFlat.RunningTotals();
 
-            List<bool> mask4 = new List<bool>();
+            List<bool> mask4 = [];
             foreach (double p in partialsOffsets)
             {
                 if (p > crvLen2)
@@ -146,7 +144,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             List<double> offsetFalse = partialsOffsets.Zip(mask4, (name, filter) => new { name, filter, }).Where(item => item.filter == false).Select(item => item.name).ToList();
             double lastItem = offsetFalse[offsetFalse.Count - 1] + halfDeskWidth;
 
-            List<double> remLastItem = offsetFalse.ToList();
+            List<double> remLastItem = [.. offsetFalse];
             remLastItem.RemoveAt(remLastItem.Count - 1);
 
             List<double> segLengths;
@@ -159,7 +157,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                 segLengths = offsetFalse;
             }
 
-            List<Rectangle> rectList = new List<Rectangle>();
+            List<Rectangle> rectList = [];
             foreach (Curve c in transGeo)
             {
 
@@ -179,7 +177,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             Surface scSrf = boundingSrf.Scale(pln, 2, 2, 1) as Surface;
             Surface scSplit = scSrf.Split(surface)[0] as Surface;
 
-            List<Rectangle> cleanRect = new List<Rectangle>();
+            List<Rectangle> cleanRect = [];
             foreach (Rectangle r in rectList)
             {
                 if (r.DoesIntersect(scSplit))

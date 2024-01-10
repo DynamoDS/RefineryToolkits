@@ -10,9 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
 {
@@ -30,7 +27,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <summary>
         /// HeapIndices dictionary. For testing purposes only.
         /// </summary>
-        public Dictionary<TObject, int> HeapIndices { get { return heapIndices; } } 
+        public Dictionary<TObject, int> HeapIndices { get { return heapIndices; } }
         #endregion
 
         #region Constructors
@@ -41,7 +38,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <param name="heapType">MinHeap or MaxHeap</param>
         public PriorityQ(BinaryHeapType heapType) : base(heapType)
         {
-            heapIndices = new Dictionary<TObject, int>(this.Capacity);
+            heapIndices = new Dictionary<TObject, int>(Capacity);
         }
 
         /// <summary>
@@ -51,7 +48,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <param name="capacity">Initial capacity</param>
         public PriorityQ(BinaryHeapType heapType, int capacity) : base(heapType, capacity)
         {
-            heapIndices = new Dictionary<TObject, int>(this.Capacity);
+            heapIndices = new Dictionary<TObject, int>(Capacity);
         }
 
         #endregion
@@ -74,7 +71,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <param name="item">TObject to add</param>
         public override void Add(TObject item)
         {
-            heapIndices[item] = this.Size;
+            heapIndices[item] = Size;
             base.Add(item);
         }
 
@@ -84,9 +81,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <param name="items"></param>
         public override void AddRange(IEnumerable<TObject> items)
         {
-            foreach(TObject item in items)
+            foreach (TObject item in items)
             {
-                heapIndices[item] = this.Size;
+                heapIndices[item] = Size;
                 base.Add(item);
             }
         }
@@ -103,11 +100,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
             //IComparable currentValue = heapItem.Value;
             //heapItem.SetValue(newValue);
 
-            int comparison = item.CompareTo(this.Parent(index));
+            int comparison = item.CompareTo(Parent(index));
             // Update item in Heap
             //_heapItems[heapIndex] = newItem;
 
-            if ( (HeapType == BinaryHeapType.MinHeap && comparison < 0) ||
+            if ((HeapType == BinaryHeapType.MinHeap && comparison < 0) ||
                 (HeapType == BinaryHeapType.MaxHeap && comparison > 0))
             {
                 HeapifyUp(index);
@@ -145,9 +142,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <returns></returns>
         public int IndexOf(TObject item)
         {
-            if (heapIndices.ContainsKey(item))
+            if (heapIndices.TryGetValue(item, out int value))
             {
-                return heapIndices[item];
+                return value;
             }
             else
             {
@@ -231,9 +228,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <returns>Associated value</returns>
         public TValue GetValue(TObject item)
         {
-            HeapItem tempItem = new HeapItem(item, null);
-            if (!heapIndices.ContainsKey(tempItem)) { throw new ArgumentException("Element not existing in Priority Queue"); }
-            int heapIndex = heapIndices[tempItem];
+            HeapItem tempItem = new(item, null);
+            if (!heapIndices.TryGetValue(tempItem, out int heapIndex)) { throw new ArgumentException("Element not existing in Priority Queue"); }
             return (TValue)_heapItems[heapIndex].Value;
         }
 
@@ -244,11 +240,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <param name="value">Value to update object with</param>
         public void UpdateItem(TObject item, TValue value)
         {
-            HeapItem newItem = new HeapItem(item, value);
-            if (!heapIndices.ContainsKey(newItem)) { throw new ArgumentException("Element not existing in Priority Queue"); }
-            int heapIndex = heapIndices[newItem];
+            HeapItem newItem = new(item, value);
+            if (!heapIndices.TryGetValue(newItem, out int heapIndex)) { throw new ArgumentException("Element not existing in Priority Queue"); }
             _heapItems[heapIndex] = newItem;
-            base.UpdateAtIndex(heapIndex);
+            UpdateAtIndex(heapIndex);
         }
     }
 

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../CS.props" />
   <PropertyGroup>
     <RootNamespace>Autodesk.RefineryToolkits.MassingRevit</RootNamespace>
     <AssemblyName>Autodesk.RefineryToolkits.MassingRevit</AssemblyName>

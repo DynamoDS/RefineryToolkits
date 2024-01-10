@@ -1,10 +1,5 @@
 ﻿using NUnit.Framework;
-using Autodesk.RefineryToolkits.SpacePlanning.Generate;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServices;
 using Autodesk.DesignScript.Geometry;
 
@@ -21,7 +16,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             Rectangle layoutPolygon = Rectangle.ByWidthLength(500, 500);
             surface = Surface.ByPatch(layoutPolygon);
         }
-         
+
         /// <summary>
         /// Checks if the putput dictionary contains the necessary keys 
         /// </summary>

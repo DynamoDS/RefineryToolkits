@@ -9,10 +9,6 @@
 ***************************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.RefineryToolkits.Core.Utillites;
 
 namespace Autodesk.RefineryToolkits.Core.Geometry
@@ -23,24 +19,24 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
     // https://betterexplained.com/articles/cross-product/
     // http://mathworld.wolfram.com/CrossProduct.html
 
-    public class Vector 
+    public class Vector
     {
         #region Public Properties
         public double X { get; private set; }
         public double Y { get; private set; }
         public double Z { get; private set; }
-        public double Length { get; private set; } 
+        public double Length { get; private set; }
         #endregion
 
 
         #region Constructors
 
-        private Vector(double x, double y, double z, double length = Double.PositiveInfinity)
+        private Vector(double x, double y, double z, double length = double.PositiveInfinity)
         {
             X = x;
             Y = y;
             Z = z;
-            Length = (Double.IsPositiveInfinity(length)) ? Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2)) : length;
+            Length = (double.IsPositiveInfinity(length)) ? Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2)) : length;
         }
 
         public static Vector ByCoordinates(double x, double y, double z)
@@ -76,18 +72,18 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         #region Public Methods
         public double Dot(Vector vector)
         {
-            return (this.X * vector.X) + (this.Y * vector.Y) + (this.Z * vector.Z);
+            return (X * vector.X) + (Y * vector.Y) + (Z * vector.Z);
         }
 
         public double Angle(Vector vector)
         {
-            double dot = this.Dot(vector);
-            double cos = dot / (this.Length * vector.Length);
-            if(cos > 1)
+            double dot = Dot(vector);
+            double cos = dot / (Length * vector.Length);
+            if (cos > 1)
             {
                 return Math.Acos(1).ToDegrees();
             }
-            else if(cos < -1)
+            else if (cos < -1)
             {
                 return Math.Acos(-1).ToDegrees();
             }
@@ -99,33 +95,33 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
 
         public Vector Cross(Vector vector)
         {
-            double x = (this.Y * vector.Z) - (this.Z * vector.Y);
-            double y = (this.Z * vector.X) - (this.X * vector.Z);
-            double z = (this.X * vector.Y) - (this.Y * vector.X);
-            double angle = this.Angle(vector).ToRadians();
-            double length = this.Length * vector.Length * Math.Sin(angle);
+            double x = (Y * vector.Z) - (Z * vector.Y);
+            double y = (Z * vector.X) - (X * vector.Z);
+            double z = (X * vector.Y) - (Y * vector.X);
+            double angle = Angle(vector).ToRadians();
+            double length = Length * vector.Length * Math.Sin(angle);
             return new Vector(x, y, z, length);
         }
 
         public Vector Scale(double factor)
         {
-            return new Vector(this.X * factor, this.Y * factor, this.Z * factor);
+            return new Vector(X * factor, Y * factor, Z * factor);
         }
 
         public Vector Normalized()
         {
-            return new Vector(this.X / this.Length, this.Y / this.Length, this.Z / this.Length, this.Length / this.Length);
+            return new Vector(X / Length, Y / Length, Z / Length, Length / Length);
         }
 
         public bool IsParallelTo(Vector vector)
         {
-            var dot = Math.Abs(this.Normalized().Dot(vector.Normalized()));
+            var dot = Math.Abs(Normalized().Dot(vector.Normalized()));
             return dot.AlmostEqualTo(1);
         }
 
         public Vertex AsVertex()
         {
-            return Vertex.ByCoordinates(this.X, this.Y, this.Z);
+            return Vertex.ByCoordinates(X, Y, Z);
         }
 
         public static Vector operator *(Vector vector, double value)
@@ -145,8 +141,10 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <returns></returns>
         public override string ToString()
         {
-            System.Globalization.NumberFormatInfo inf = new System.Globalization.NumberFormatInfo();
-            inf.NumberDecimalSeparator = ".";
+            System.Globalization.NumberFormatInfo inf = new()
+            {
+                NumberDecimalSeparator = "."
+            };
             return string.Format("gVector(X = {0}, Y = {1}, Z = {2}, Length = {3}", X.ToString("0.000", inf), Y.ToString("0.000", inf), Z.ToString("0.000", inf), Length.ToString("0.000", inf));
         }
 

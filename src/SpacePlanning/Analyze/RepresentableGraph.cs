@@ -39,7 +39,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns name="visGraph">Visibility graph</returns>
         public static RepresentableGraph ByBaseGraph(BaseGraph baseGraph, bool reduced = true)
         {
-            if (baseGraph == null) throw new ArgumentNullException("graph");
+            ArgumentNullException.ThrowIfNull(baseGraph);
             var visGraph = new VisibilityGraph(baseGraph.graph, reduced, true);
             var visibilityGraph = new RepresentableGraph()
             {
@@ -63,7 +63,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns name="visGraph">Connected VisibilityGraph</returns>
         public static RepresentableGraph ConnectGraphs(List<RepresentableGraph> visibilityGraphs, List<DSGeom.Line> lines)
         {
-            if (visibilityGraphs == null) throw new ArgumentNullException("visibilityGraphs");
+            ArgumentNullException.ThrowIfNull(visibilityGraphs);
 
             List<VisibilityGraph> visGraphs = visibilityGraphs.Select(vg => (VisibilityGraph)vg.graph).ToList();
             VisibilityGraph mergedGraph = VisibilityGraph.Merge(visGraphs);
@@ -85,17 +85,17 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="indices">List of values between 0.0 and 1.0 to define the limits of colours</param>
         /// <returns name="visGraph">Visibility Graph</returns>
         /// <returns name="factors">Connectivity factors by edge on graph</returns>
-        [MultiReturn(new[] { graphOutput, factorsOutput })]
+        [MultiReturn([graphOutput, factorsOutput])]
         public static Dictionary<string, object> Connectivity(
             RepresentableGraph visGraph,
             [DefaultArgument("null")] List<DSCore.Color> colours,
             [DefaultArgument("null")] List<double> indices)
         {
-            if (visGraph == null) throw new ArgumentNullException("visGraph");
+            ArgumentNullException.ThrowIfNull(visGraph);
 
             VisibilityGraph visibilityGraph = visGraph.graph as VisibilityGraph;
 
-            RepresentableGraph graph = new RepresentableGraph()
+            RepresentableGraph graph = new()
             {
                 graph = visibilityGraph,
                 Factors = visibilityGraph.ConnectivityFactor()
@@ -103,7 +103,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 
             if (colours != null && indices != null && colours.Count == indices.Count)
             {
-                graph.colorRange = new Dictionary<double, DSCore.Color>();
+                graph.colorRange = [];
                 // Create KeyValuePairs and sort them by index in case unordered.
                 var pairs = indices.Zip(colours, (i, c) => new KeyValuePair<double, DSCore.Color>(i, c)).OrderBy(kv => kv.Key);
 
@@ -134,26 +134,26 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         public void TessellateVisibilityGraph(IRenderPackage package, TessellationParameters parameters)
         {
             package.RequiresPerVertexColoration = true;
-            var rangeColors = this.colorRange.Values.ToList();
-            for (var i = 0; i < base.graph.edges.Count; i++)
+            var rangeColors = colorRange.Values.ToList();
+            for (var i = 0; i < graph.edges.Count; i++)
             {
-                var e = base.graph.edges[i];
-                var factor = this.Factors[i];
+                var e = graph.edges[i];
+                var factor = Factors[i];
                 DSCore.Color color;
 
-                if (factor <= this.colorRange.First().Key)
+                if (factor <= colorRange.First().Key)
                 {
-                    color = this.colorRange.First().Value;
+                    color = colorRange.First().Value;
                 }
-                else if (factor >= this.colorRange.Last().Key)
+                else if (factor >= colorRange.Last().Key)
                 {
-                    color = this.colorRange.Last().Value;
+                    color = colorRange.Last().Value;
                 }
                 else
                 {
-                    int index = this.colorRange.Keys.ToList().BisectIndex(factor);
+                    int index = colorRange.Keys.ToList().BisectIndex(factor);
 
-                    color = DSCore.Color.Lerp(rangeColors[index - 1], rangeColors[index], this.Factors[i]);
+                    color = DSCore.Color.Lerp(rangeColors[index - 1], rangeColors[index], Factors[i]);
                 }
 
                 AddColouredEdge(package, e, color);

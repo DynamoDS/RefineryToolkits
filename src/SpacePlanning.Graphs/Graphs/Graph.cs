@@ -30,7 +30,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
         /// <summary>
         /// Polygons dictionary with their Id as dictionary key
         /// </summary>
-        internal Dictionary<int, Polygon> polygons = new Dictionary<int, Polygon>();
+        internal Dictionary<int, Polygon> polygons = [];
 
         /// <summary>
         /// Polygon's Id counter.
@@ -40,12 +40,12 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
         /// <summary>
         /// Dictionary with vertex as key and values edges associated with the vertex.
         /// </summary>
-        internal Dictionary<Vertex, List<Edge>> graph = new Dictionary<Vertex, List<Edge>>();
+        internal Dictionary<Vertex, List<Edge>> graph = [];
 
         /// <summary>
         /// Graph's vertices
         /// </summary>
-        public List<Vertex> vertices { get { return graph.Keys.ToList(); } }
+        public List<Vertex> vertices { get { return [.. graph.Keys]; } }
 
         /// <summary>
         /// Graph's edges
@@ -54,7 +54,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         public List<Polygon> Polygons
         {
-            get { return polygons.Values.ToList(); }
+            get { return [.. polygons.Values]; }
         }
 
         #endregion
@@ -62,13 +62,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
         #region Constructors
         public Graph()
         {
-            edges = new List<Edge>();
+            edges = [];
             Id = Guid.NewGuid();
         }
 
         public Graph(List<Polygon> gPolygonsSet)
         {
-            edges = new List<Edge>();
+            edges = [];
             Id = Guid.NewGuid();
             //Setting up Graph instance by adding vertices, edges and polygons
             foreach (Polygon gPolygon in gPolygonsSet)
@@ -79,20 +79,20 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                 gPolygon.edges.Clear();
 
                 //If there is only one polygon, treat it as boundary
-                if (gPolygonsSet.Count() == 1)
+                if (gPolygonsSet.Count == 1)
                 {
                     gPolygon.isBoundary = true;
                 }
 
                 //If first and last point of vertices list are the same, remove last.
-                if (vertices.First().Equals(vertices.Last()) && vertices.Count() > 1)
+                if (vertices.First().Equals(vertices.Last()) && vertices.Count > 1)
                 {
-                    vertices = vertices.Take(vertices.Count() - 1).ToList();
+                    vertices = vertices.Take(vertices.Count - 1).ToList();
                 }
 
                 //For each point, creates vertex and associated edge and adds them
                 //to the polygons Dictionary
-                int vertexCount = vertices.Count();
+                int vertexCount = vertices.Count;
 
                 // If valid polygon
                 if (vertexCount >= 3)
@@ -103,7 +103,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                         int next_index = (j + 1) % vertexCount;
                         Vertex vertex = vertices[j];
                         Vertex next_vertex = vertices[next_index];
-                        Edge edge = new Edge(vertex, next_vertex);
+                        Edge edge = new(vertex, next_vertex);
 
                         //If is a valid polygon, add id to vertex and
                         //edge to vertices dictionary
@@ -111,7 +111,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                         {
                             vertex.polygonId = newId;
                             next_vertex.polygonId = newId;
-                            Polygon gPol = new Polygon();
+                            Polygon gPol = new();
                             if (polygons.TryGetValue(newId, out gPol))
                             {
                                 gPol.edges.Add(edge);
@@ -136,9 +136,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         internal int GetNextId()
         {
-            if (this.pId == null)
+            if (pId == null)
             {
-                this.pId = 0;
+                pId = 0;
             }
             else
             {
@@ -149,14 +149,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         internal void ResetEdgesFromPolygons()
         {
-            this.edges.Clear();
-            this.graph.Clear();
+            edges.Clear();
+            graph.Clear();
 
             foreach (Polygon polygon in polygons.Values)
             {
                 foreach (Edge edge in polygon.edges)
                 {
-                    this.AddEdge(edge);
+                    AddEdge(edge);
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
         #region Public Methods
 
         /// <summary>
-        /// Contains mathod for vertex in graph
+        /// Contains method for vertex in graph
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
@@ -187,7 +187,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         public List<Edge> GetVertexEdges(Vertex vertex)
         {
-            List<Edge> edgesList = new List<Edge>();
+            List<Edge> edgesList = [];
             if (graph.TryGetValue(vertex, out edgesList))
             {
                 return edgesList;
@@ -195,7 +195,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
             else
             {
                 //graph.Add(vertex, new List<gEdge>());
-                return new List<Edge>();
+                return [];
             }
         }
 
@@ -210,15 +210,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
         /// <param name="edge">New edge</param>
         public void AddEdge(Edge edge)
         {
-            List<Edge> startEdgesList = new List<Edge>();
-            List<Edge> endEdgesList = new List<Edge>();
+            List<Edge> startEdgesList = [];
+            List<Edge> endEdgesList = [];
             if (graph.TryGetValue(edge.StartVertex, out startEdgesList))
             {
                 if (!startEdgesList.Contains(edge)) { startEdgesList.Add(edge); }
             }
             else
             {
-                graph.Add(edge.StartVertex, new List<Edge>() { edge });
+                graph.Add(edge.StartVertex, [edge]);
             }
 
             if (graph.TryGetValue(edge.EndVertex, out endEdgesList))
@@ -227,7 +227,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
             }
             else
             {
-                graph.Add(edge.EndVertex, new List<Edge>() { edge });
+                graph.Add(edge.EndVertex, [edge]);
             }
 
             if (!edges.Contains(edge)) { edges.Add(edge); }
@@ -246,7 +246,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                 if (computedVertices.Contains(v) || graph[v].Count > 2) { continue; }
 
                 computedVertices.Add(v);
-                Polygon polygon = new Polygon(GetNextId(), false);
+                Polygon polygon = new(GetNextId(), false);
 
                 polygon.AddVertex(v);
                 foreach (Edge edge in GetVertexEdges(v))
@@ -309,7 +309,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                         polygon.edges.Add(currentEdge);
                     }
                 }
-                this.polygons.Add(polygon.id, polygon);
+                polygons.Add(polygon.id, polygon);
             }
         }
 
@@ -324,14 +324,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
         /// <returns></returns>
         public virtual object Clone()
         {
-            Graph newGraph = new Graph()
+            Graph newGraph = new()
             {
-                graph = new Dictionary<Vertex, List<Edge>>(),
-                edges = new List<Edge>(this.edges),
-                polygons = new Dictionary<int, Polygon>(this.polygons)
+                graph = [],
+                edges = new List<Edge>(edges),
+                polygons = new Dictionary<int, Polygon>(polygons)
             };
 
-            foreach (var item in this.graph)
+            foreach (var item in graph)
             {
                 newGraph.graph.Add(item.Key, new List<Edge>(item.Value));
             }

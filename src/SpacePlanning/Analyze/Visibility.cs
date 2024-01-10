@@ -14,7 +14,6 @@ using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSGeom = Autodesk.DesignScript.Geometry;
 using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
@@ -35,18 +34,17 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="obstructions">List of Polygons representing internal obstructions</param>
         /// <returns name="percentageVisible">The percentage of target Points that are visible from the origin point.</returns>
         /// <returns name="visibleItems">The specific Points that are visible from the origin point.</returns>
-        [MultiReturn(new[] { percentageVisibleOutputPort, visibleItemsOutputPort })]
+        [MultiReturn([percentageVisibleOutputPort, visibleItemsOutputPort])]
         public static Dictionary<string, object> OfPointsFromOrigin(
             Point origin,
             List<Point> points,
             List<Polygon> boundary,
             [DefaultArgument("[]")] List<Polygon> obstructions = null)
         {
-            if (origin is null)
-                throw new ArgumentNullException(nameof(origin));
+            ArgumentNullException.ThrowIfNull(origin);
             if (points is null || points.Count == 0)
                 throw new ArgumentNullException(nameof(points));
-            if (obstructions == null) obstructions = new List<Polygon>();
+            obstructions ??= [];
 
             Polygon isovist = IsovistPolygon(origin, obstructions, boundary);
             GTGeom.Polygon isovistPolygon = GTGeom.Polygon.ByVertices(((PolyCurve)isovist).Points.Select(p => GTGeom.Vertex.ByCoordinates(p.X, p.Y, p.Z)).ToList());
@@ -89,7 +87,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns name="percentageVisible">The total percentage of 360 view from origin point that target lines are visible from.</returns>
         /// <returns name="visibilityPercentages">The percentage of 360 view from origin point that each target lines are visible from.</returns>
         /// <returns name="visibleItems">The specific Lines that are visible from the origin point.</returns>
-        [MultiReturn(new[] { percentageVisibleOutputPort, visibilityScoresOutputPort, visibleItemsOutputPort })]
+        [MultiReturn([percentageVisibleOutputPort, visibilityScoresOutputPort, visibleItemsOutputPort])]
         public static Dictionary<string, object> OfLinesFromOrigin(
             Point origin,
             List<Curve> targetLines,
@@ -97,9 +95,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             [DefaultArgument("[]")] List<Polygon> obstructions)
         {
             double[] visibilityPercentages = new double[targetLines.Count];
-            Surface isovist = Visibility.IsovistFromPoint(origin, boundary, obstructions);
+            Surface isovist = IsovistFromPoint(origin, boundary, obstructions);
 
-            List<Curve> lines = new List<Curve>();
+            List<Curve> lines = [];
             double outsideViewAngles = 0;
             for (var i = 0; i < targetLines.Count; i++)
             {
@@ -146,15 +144,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             List<Polygon> boundary,
             [DefaultArgument("[]")] List<Polygon> obstructions)
         {
-            var baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstructions);
-
-            if (baseGraph == null) throw new ArgumentNullException("graph");
-            if (point == null) throw new ArgumentNullException("point");
+            var baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstructions)
+                ?? throw new ArgumentNullException(nameof(boundary));
+            ArgumentNullException.ThrowIfNull(point);
 
             GTGeom.Vertex origin = GTGeom.Vertex.ByCoordinates(point.X, point.Y, point.Z);
 
             List<GTGeom.Vertex> vertices = VisibilityGraph.VertexVisibility(origin, baseGraph.graph);
-            var points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
+            var points = vertices.Select(GTGeom.Points.ToPoint).ToList();
 
             var polygon = Polygon.ByPoints(points);
 
@@ -179,24 +176,22 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 List<Polygon> obstacles,
                 List<Polygon> boundary)
         {
-            if (obstacles is null)
-                throw new ArgumentNullException(nameof(obstacles));
-            if (boundary is null)
-                throw new ArgumentNullException(nameof(boundary));
+            ArgumentNullException.ThrowIfNull(obstacles);
+            ArgumentNullException.ThrowIfNull(boundary);
 
             var originVertex = GTGeom.Vertex.ByCoordinates(originPoint.X, originPoint.Y, originPoint.Z);
             var baseGraph = BaseGraph.ByBoundaryAndInternalPolygons(boundary, obstacles);
 
-            List<GTGeom.Vertex> vertices = Graphs.VisibilityGraph.VertexVisibility(originVertex, baseGraph.graph);
-            List<DSGeom.Point> points = vertices.Select(v => GTGeom.Points.ToPoint(v)).ToList();
+            List<GTGeom.Vertex> vertices = VisibilityGraph.VertexVisibility(originVertex, baseGraph.graph);
+            List<Point> points = vertices.Select(GTGeom.Points.ToPoint).ToList();
 
-            var polygon = DSGeom.Polygon.ByPoints(points);
+            var polygon = Polygon.ByPoints(points);
 
             // if polygon is self intersecting, make new polygon
             if (polygon.SelfIntersections().Length > 0)
             {
                 points.Add(originPoint);
-                polygon = DSGeom.Polygon.ByPoints(points);
+                polygon = Polygon.ByPoints(points);
             }
             points.ForEach(x => x.Dispose());
 

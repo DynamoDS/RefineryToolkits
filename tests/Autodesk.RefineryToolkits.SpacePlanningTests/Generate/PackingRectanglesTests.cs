@@ -3,7 +3,6 @@ using Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using TestServices;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 {
@@ -29,7 +28,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 
             var expectedIndices = new List<List<int>>
             {
-                new List<int> { 0, 1, 2, 3 }
+                new() { 0, 1, 2, 3 }
             };
 
             // Act
@@ -67,7 +66,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             };
             var expectedIndices = new List<List<int>>
             {
-                new List<int> { 0, 1, 2, 4 }
+                new() { 0, 1, 2, 4 }
             };
 
             // Act
@@ -108,9 +107,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Rectangle.ByWidthLength(15,15)
             };
             var expectedIndices = new List<List<int>>{
-                new List<int>{0},
-                new List<int>{1, 4},
-                new List<int>{5 }
+                new() {0},
+                new() {1, 4},
+                new() {5 }
             };
 
             // Act

@@ -22,15 +22,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             [DefaultArgument("[]")] List<Polygon> boundary,
             [DefaultArgument("[]")] List<Polygon> obstructions)
         {
-            List<Curve> perimeterCrvs = surface.OffsetPerimeterCurves(searchDistance)["outsetCrvs"].ToList();
-            List<Polygon> intersectionPolygons = new List<Polygon>();
-            intersectionPolygons.AddRange(boundary);
-            intersectionPolygons.AddRange(obstructions);
+            var perimeterCrvs = surface.OffsetPerimeterCurves(searchDistance)["outsetCrvs"];
+            List<Polygon> intersectionPolygons = [.. boundary, .. obstructions];
 
             double perimeterLength = surface.Perimeter;
             double openessScore = 0;
 
-            for (var i = 0; i < perimeterCrvs.Count; i++)
+            for (var i = 0; i < perimeterCrvs.Length; i++)
             {
                 var crv = perimeterCrvs[i];
                 for (var j = 0; j < intersectionPolygons.Count; j++)
@@ -46,7 +44,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                             var intersection = intersections[k];
                             openessScore += intersection.Length / perimeterLength;
                             intersection.Dispose();
-                        }                       
+                        }
                     }
                     catch (System.InvalidCastException)
                     {

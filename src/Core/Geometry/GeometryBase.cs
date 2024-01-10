@@ -8,12 +8,6 @@
 *
 ***************************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Autodesk.RefineryToolkits.Core.Geometry
 {
     /// <summary>
@@ -36,7 +30,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         {
             get
             {
-                if(boundingBox == null) { boundingBox = ComputeBoundingBox(); }
+                boundingBox ??= ComputeBoundingBox();
                 return boundingBox;
             }
         }

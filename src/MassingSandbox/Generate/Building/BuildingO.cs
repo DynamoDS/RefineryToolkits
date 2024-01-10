@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
@@ -26,7 +24,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
             Curve boundary = null;
             var holes = new List<Curve>();
 
-            UsesDepth = Width <= Depth * 2 || Length <= Depth * 2 ? false : true;
+            UsesDepth = Width > Depth * 2 && Length > Depth * 2;
 
             if (IsCurved)
             {
@@ -43,7 +41,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
             else
             {
                 // Faceted O (box with courtyard)
-                
+
                 boundary = Rectangle.ByWidthLength(BaseCenter, Width, Length);
 
                 if (UsesDepth)
@@ -67,10 +65,10 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 using (var zAxis = Vector.ZAxis())
                 using (var plane = Plane.ByOriginNormal(point, zAxis))
                 {
-                    return new List<Curve>
-                    {
+                    return
+                    [
                         Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
-                    };
+                    ];
                 }
             }
             else

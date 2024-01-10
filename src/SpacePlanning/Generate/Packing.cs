@@ -29,14 +29,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <returns name="Packed Items">List of packed rectangles for each of the containers provided.</returns>
         /// <returns name="Packed Indices">Indices of packed rectangles for correlation to input items list.</returns>
         /// <returns name="Remaining Indices">Indices of items (rectangles) that didn't get packed.</returns>
-        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingIndicesOutputPort })]
+        [MultiReturn([packedItemsOutputPort, indicesOutputPort, remainingIndicesOutputPort])]
         public static Dictionary<string, object> PackRectangles(
             List<Rectangle> items,
             List<Rectangle> containers,
             [DefaultArgument("RectanglePackingStrategy.BestAreaFits")] RectanglePackingStrategy strategy)
         {
             var packer = new RectanglePacker();
-            var results = packer.PackMultipleContainers(items, containers, strategy);
+            var results = RectanglePacker.PackMultipleContainers(items, containers, strategy);
             return results.ToDictionary();
         }
 
@@ -51,13 +51,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <returns name="Remaining Indices">Indices of Cuboids that didn't get packed.</returns>
         /// <returns name="% Container Volume Packed">Metric : percentage of each container volume that was packed.</returns>
         /// <returns name="% Item Volume Packed">Metric : percentage expressing how much of total items volume was packed in each container.</returns>
-        [MultiReturn(new[] { packedItemsOutputPort, indicesOutputPort, remainingIndicesOutputPort, percentContainerVolumePackedPort, percentItemVolumePackedPort })]
+        [MultiReturn([packedItemsOutputPort, indicesOutputPort, remainingIndicesOutputPort, percentContainerVolumePackedPort, percentItemVolumePackedPort])]
         public static Dictionary<string, object> PackCuboids(
             List<Cuboid> items,
             List<Cuboid> containers)
         {
             var packer = new CuboidPacker();
-            var packingResult = packer.PackMultipleContainersWithStats(items, containers);
+            var packingResult = CuboidPacker.PackMultipleContainersWithStats(items, containers);
             return packingResult.ToDictionary();
         }
 

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../../src/CS.props" />
   <PropertyGroup>
     <RootNamespace>Autodesk.RefineryToolkits.SpacePlanningTests</RootNamespace>
     <AssemblyName>Autodesk.RefineryToolkits.SpacePlanningTests</AssemblyName>

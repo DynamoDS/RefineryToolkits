@@ -13,14 +13,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
         private const string percentContainerVolumePackedPort = "% Container Volume Packed";
         private const string percentItemVolumePackedPort = "% Items Volume Packed";
 
-        private List<string> expectedNodeOutputDictionaryKeys = new List<string>
-        {
+        private readonly List<string> expectedNodeOutputDictionaryKeys =
+        [
             packedItemsOutputPort,
             indicesOutputPort,
             remainingIndicesOutputPort,
             percentContainerVolumePackedPort,
             percentItemVolumePackedPort
-        };
+        ];
 
         [Test()]
         public void Cuboids_OneBin_CanPackWithLeftovers()
@@ -42,10 +42,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Cuboid.ByLengths(250, 200, 300)
             };
             var expectedIndices = new List<List<int>> {
-                new List<int>{ 3, 7, 6, 8, 1 }
+                new() { 3, 7, 6, 8, 1 }
             };
             var expectedPackedContainerVolumes = new List<List<int>> {
-                new List<int>{ 3, 7, 6, 8, 1 }
+                new() { 3, 7, 6, 8, 1 }
             };
             var expectedPercentageContainerVolumePacked = 91.67;
             var expectedPercentageItemVolumePacked = 70.06;
@@ -93,8 +93,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             }
 
             var expectedIndices = new List<List<int>> {
-                new List<int>{ 0, 1 },
-                new List<int>{ 2, 3 }
+                new() { 0, 1 },
+                new() { 2, 3 }
             };
 
             // Act
@@ -131,8 +131,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
             }
 
             var expectedIndices = new List<List<int>> {
-                new List<int>{ 0, 1 },
-                new List<int>{ 2, 3 }
+                new() { 0, 1 },
+                new() { 2, 3 }
             };
 
             // Act

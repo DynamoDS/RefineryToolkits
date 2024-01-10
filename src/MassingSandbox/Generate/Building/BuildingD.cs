@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
@@ -21,7 +20,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 facetLength = Width / (1 + Math.Sqrt(2));
             }
 
-            UsesDepth = Width <= Depth * 2 || Length <= Depth * 2 ? false : true;
+            UsesDepth = Width > Depth * 2 && Length > Depth * 2;
         }
 
         protected override (Curve boundary, List<Curve> holes) CreateBaseCurves()
@@ -51,26 +50,26 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
                 if (arcHeight < Length)
                 {
-                    points = new[]
-                    {
+                    points =
+                    [
                         Point.ByCoordinates(Width, arcHeight),
                         Point.ByCoordinates(Width, Length),
                         Point.ByCoordinates(0, Length),
                         Point.ByCoordinates(0, arcHeight)
-                    };
+                    ];
 
                     // Outside of D has a square back.
                     boundaryCurves.Add(PolyCurve.ByPoints(points));
-                    
+
                     points.ForEach(p => p.Dispose());
                 }
                 else
                 {
-                    points = new[]
-                    {
+                    points =
+                    [
                         Point.ByCoordinates(Width, Length),
                         Point.ByCoordinates(0, Length)
-                    };
+                    ];
 
                     // Outside of D is half an ellipse (or circle).
                     boundaryCurves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
@@ -87,13 +86,13 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
                     if (arcHeight < Length - Depth)
                     {
-                        points = new[]
-                        {
+                        points =
+                        [
                             Point.ByCoordinates(Depth, arcHeight),
                             Point.ByCoordinates(Depth, Length - Depth),
                             Point.ByCoordinates(Width - Depth, Length - Depth),
                             Point.ByCoordinates(Width - Depth, arcHeight)
-                        };
+                        ];
 
                         curves.Add(PolyCurve.ByPoints(points));
 
@@ -101,11 +100,11 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                     }
                     else
                     {
-                        points = new[]
-                        {
+                        points =
+                        [
                             Point.ByCoordinates(Depth, arcHeight),
                             Point.ByCoordinates(Width - Depth, arcHeight)
-                        };
+                        ];
 
                         curves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
 
@@ -126,28 +125,28 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 double baseWidth = Width * Math.Tan(Math.PI / 8);
                 double sideWidth = baseWidth * arcHeight / (2 * Width);
 
-                points = new[]
-                {
+                points =
+                [
                     Point.ByCoordinates(Width, Length),
                     Point.ByCoordinates(0, Length),
                     Point.ByCoordinates(0, arcHeight - sideWidth),
                     Point.ByCoordinates((Width - baseWidth) / 2, 0),
                     Point.ByCoordinates((Width + baseWidth) / 2, 0),
                     Point.ByCoordinates(Width, arcHeight - sideWidth)
-                };
+                ];
 
                 boundaryCurves.Add(PolyCurve.ByPoints(points, connectLastToFirst: true));
 
                 points.ForEach(p => p.Dispose());
-                
+
                 if (UsesDepth)
                 {
                     double angleA = Math.Atan2(2 * (arcHeight - sideWidth), Width - baseWidth);
                     double offsetBaseWidth = baseWidth - (2 * Depth / Math.Tan((Math.PI - angleA) / 2));
                     double offsetSideWidth = sideWidth - (Depth / Math.Tan((angleA / 2) + (Math.PI / 4)));
 
-                    points = new[]
-                    {
+                    points =
+                    [
                         Point.ByCoordinates(Width - Depth, Length - Depth),
                         Point.ByCoordinates(Width - Depth, arcHeight - offsetSideWidth),
                         Point.ByCoordinates((Width + offsetBaseWidth) / 2, Depth),
@@ -155,7 +154,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                         Point.ByCoordinates(Depth, arcHeight - offsetSideWidth),
                         Point.ByCoordinates(Depth, Length - Depth)
 
-                    };
+                    ];
 
                     holes.Add(PolyCurve.ByPoints(points, connectLastToFirst: true));
 
@@ -181,10 +180,10 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 using (var zAxis = Vector.ZAxis())
                 using (var plane = Plane.ByOriginNormal(point, zAxis))
                 {
-                    return new List<Curve>
-                    {
+                    return
+                    [
                         Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
-                    };
+                    ];
                 }
             }
             else
