@@ -1418,8 +1418,8 @@
   "Dependencies": [],
   "NodeLibraryDependencies": [
     {
-      "Name": "Refinery Toolkit for Space Planning",
-      "Version": "0.0.1",
+      "Name": "Refinery Toolkit",
+      "Version": "3.0.0",
       "ReferenceType": "Package",
       "Nodes": [
         "2bf910c44a1f4409bb6a03a295f85a8d"

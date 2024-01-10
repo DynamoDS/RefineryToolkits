@@ -679,7 +679,7 @@
   "NodeLibraryDependencies": [
     {
       "Name": "Refinery Toolkit",
-      "Version": "1.1.1",
+      "Version": "3.0.0",
       "ReferenceType": "Package",
       "Nodes": [
         "5f5fa1230cbc4b2ca63dd7288d728306",

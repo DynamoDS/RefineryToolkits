@@ -128,7 +128,7 @@
       ],
       "Replication": "Disabled",
       "Description": "Produces numeric values",
-      "InputValue": 18600.0
+      "InputValue": 18400.0
     },
     {
       "ConcreteType": "CoreNodeModels.Input.DoubleSlider, CoreNodeModels",
@@ -958,7 +958,7 @@
       ],
       "Replication": "Disabled",
       "Description": "Produces integer values",
-      "InputValue": 0
+      "InputValue": 2
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -1281,7 +1281,7 @@
       ],
       "Replication": "Disabled",
       "Description": "Produces numeric values",
-      "InputValue": 53.0
+      "InputValue": 12.0
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -2280,7 +2280,7 @@
   "NodeLibraryDependencies": [
     {
       "Name": "Refinery Toolkit",
-      "Version": "1.1.1",
+      "Version": "3.0.0",
       "ReferenceType": "Package",
       "Nodes": [
         "1d611087f40c46598b074b06789b3fd5",
@@ -2330,12 +2330,12 @@
     },
     "Camera": {
       "Name": "_Background Preview",
-      "EyeX": -166.6146240234375,
-      "EyeY": 401.8553466796875,
-      "EyeZ": 211.6616973876953,
-      "LookX": 203.71142578125,
-      "LookY": -268.60833740234375,
-      "LookZ": -228.0579376220703,
+      "EyeX": -132.7378158569336,
+      "EyeY": 375.2040710449219,
+      "EyeZ": 129.91578674316406,
+      "LookX": 163.4969940185547,
+      "LookY": -215.58270263671875,
+      "LookZ": -183.0373077392578,
       "UpX": 0.3221208155155182,
       "UpY": 0.8753235936164856,
       "UpZ": -0.3606199026107788
@@ -2808,7 +2808,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "ShowGeometry": true,
+        "ShowGeometry": false,
         "X": 205.7050544457244,
         "Y": -684.180091277804
       },
@@ -2970,7 +2970,7 @@
         "FontSize": 36.0,
         "GroupStyleId": "00000000-0000-0000-0000-000000000000",
         "InitialTop": -746.9048275962066,
-        "InitialHeight": 356.56544277213493,
+        "InitialHeight": 414.7242972840926,
         "TextblockHeight": 63.0,
         "Background": "#FFA4E1FF"
       },
@@ -3015,8 +3015,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 278.3022090936561,
-    "Y": 297.1745377909577,
-    "Zoom": 0.3087413474819883
+    "X": 151.44845529716815,
+    "Y": 290.8935577283995,
+    "Zoom": 0.2829262216576186
   }
 }

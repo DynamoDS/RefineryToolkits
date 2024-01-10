@@ -29,7 +29,7 @@
   </Target>
 
   <!--Copy the built extension to a local Dynamo packages folder for development.-->
-  <Target Name="CopyLocal" Condition=" '$(CopyLocal)' == 'True' " AfterTargets="DispatchToInnerBuilds">
+  <Target Name="CopyLocal" Condition=" '$(CopyLocal)' == 'True' " AfterTargets="PrepareExtension">
     <PropertyGroup>
       <ExtensionTarget>$(LocalCopyFolder)\Refinery Toolkit</ExtensionTarget>
     </PropertyGroup>

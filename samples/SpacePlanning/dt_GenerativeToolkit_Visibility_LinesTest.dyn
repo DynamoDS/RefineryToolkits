@@ -778,45 +778,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "Id": "ac7b08c36f2b48029b0e54ea2b48d694",
-      "NodeType": "FunctionNode",
-      "Inputs": [
-        {
-          "Id": "74b2f6c3f4fd4861b107b7cbbc48990a",
-          "Name": "curves",
-          "Description": "Curves to join into polycurve\n\nCurve[]",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "48e337c89ec9474ea132148e7da4af55",
-          "Name": "joinTolerance",
-          "Description": "Tolerance to determine size of gap allowed between curves to be joined\n\ndouble\nDefault value : 0.001",
-          "UsingDefaultValue": true,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "d1efd2057d394049ae5219d8b65607bc",
-          "Name": "PolyCurve",
-          "Description": "Polycurve created by joined curves",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "FunctionSignature": "Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves@Autodesk.DesignScript.Geometry.Curve[],double",
-      "Replication": "Auto",
-      "Description": "Make PolyCurve by joining curves. Flips curve as needed for connectivity. Choose a preferred join tolerance between 1e-6 and 1e-3 units.\n\nPolyCurve.ByJoinedCurves (curves: Curve[], joinTolerance: double = 0.001): PolyCurve"
-    },
-    {
-      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
       "Id": "4659d71a57d44434b073588ce758260a",
       "NodeType": "FunctionNode",
       "Inputs": [
@@ -1127,6 +1088,63 @@
       ],
       "Replication": "Disabled",
       "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "9427eed5068d441ca66d9b10cea312e4",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "466bfcbab0614fa48b3bc37bf4f8b14e",
+          "Name": "curves",
+          "Description": "Curves to join into polycurve\n\nCurve[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ac544fbd654340ca9bb8ff83a9bfc307",
+          "Name": "joinTolerance",
+          "Description": "Tolerance to determine size of gap allowed between curves to be joined\n\ndouble\nDefault value : 0.001",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "06e28d701e3c4e29a6ca1c34a0d10316",
+          "Name": "trimCurves",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d07b261918a54e988aefeffee92fcd4a",
+          "Name": "trimLength",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "997b93a6d5b54a64a361fbd8e278c8f7",
+          "Name": "PolyCurve",
+          "Description": "Polycurve created by joined curves",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves@Autodesk.DesignScript.Geometry.Curve[],double,bool,double",
+      "Replication": "Auto",
+      "Description": "Make PolyCurve by joining curves. Flips curve as needed for connectivity. Choose a preferred join tolerance between 1e-6 and 1e-3 units.\n\nPolyCurve.ByJoinedCurves (curves: Curve[], joinTolerance: double = 0.001, trimCurves: bool = false, trimLength: double = 0): PolyCurve"
     }
   ],
   "Connectors": [
@@ -1306,14 +1324,8 @@
     },
     {
       "Start": "993dadf7371f4ac8ac68fbb192b9adde",
-      "End": "74b2f6c3f4fd4861b107b7cbbc48990a",
-      "Id": "c5cf7af00ea84fae8b2d4d6a7471868e",
-      "IsHidden": "False"
-    },
-    {
-      "Start": "d1efd2057d394049ae5219d8b65607bc",
-      "End": "e3ae30bab2264d26b9e7f1785c86d842",
-      "Id": "38a8ee4c34074d68881853d9b7eff90c",
+      "End": "466bfcbab0614fa48b3bc37bf4f8b14e",
+      "Id": "078c320db6d249e7918d3b3c367a6fe2",
       "IsHidden": "False"
     },
     {
@@ -1375,13 +1387,19 @@
       "End": "a5c292f2a80f44148b93e555c068533e",
       "Id": "8a75fa4245374d74a13e41501c407d6a",
       "IsHidden": "False"
+    },
+    {
+      "Start": "997b93a6d5b54a64a361fbd8e278c8f7",
+      "End": "e3ae30bab2264d26b9e7f1785c86d842",
+      "Id": "26521a71a94049e78051323ab078633e",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
   "NodeLibraryDependencies": [
     {
       "Name": "Refinery Toolkit",
-      "Version": "1.1.1",
+      "Version": "3.0.0",
       "ReferenceType": "Package",
       "Nodes": [
         "38d406e5f1c74739afd5df054febd87f"
@@ -1389,7 +1407,7 @@
     }
   ],
   "EnableLegacyPolyCurveBehavior": true,
-  "Thumbnail": null,
+  "Thumbnail": "",
   "GraphDocumentationURL": null,
   "ExtensionWorkspaceData": [
     {
@@ -1418,7 +1436,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "3.0.0.7040",
+      "Version": "3.0.0.7127",
       "RunType": "Automatic",
       "RunPeriod": "1000"
     },
@@ -1617,16 +1635,6 @@
         "Y": 744.5445007623574
       },
       {
-        "Id": "ac7b08c36f2b48029b0e54ea2b48d694",
-        "Name": "PolyCurve.ByJoinedCurves",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "ShowGeometry": false,
-        "X": 4501.934081651437,
-        "Y": 744.5445007623574
-      },
-      {
         "Id": "4659d71a57d44434b073588ce758260a",
         "Name": "List.Transpose",
         "IsSetAsInput": false,
@@ -1705,6 +1713,16 @@
         "ShowGeometry": true,
         "X": 2916.811536536582,
         "Y": 239.2851645108742
+      },
+      {
+        "Id": "9427eed5068d441ca66d9b10cea312e4",
+        "Name": "PolyCurve.ByJoinedCurves",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 4513.992299402708,
+        "Y": 745.6942719852004
       }
     ],
     "Annotations": [
@@ -1730,7 +1748,7 @@
         "FontSize": 36.0,
         "GroupStyleId": "00000000-0000-0000-0000-000000000000",
         "InitialTop": 651.1046529464493,
-        "InitialHeight": 229.21333333333337,
+        "InitialHeight": 187.65499999999997,
         "TextblockHeight": 63.0,
         "Background": "#FFB9F9E1"
       },
@@ -1755,7 +1773,7 @@
         "FontSize": 36.0,
         "GroupStyleId": "00000000-0000-0000-0000-000000000000",
         "InitialTop": -265.6293738607245,
-        "InitialHeight": 337.0,
+        "InitialHeight": 451.0,
         "TextblockHeight": 63.0,
         "Background": "#FFD8D8D8"
       },
@@ -1782,7 +1800,7 @@
         "FontSize": 36.0,
         "GroupStyleId": "00000000-0000-0000-0000-000000000000",
         "InitialTop": 164.741531066898,
-        "InitialHeight": 275.5479008632128,
+        "InitialHeight": 293.655,
         "TextblockHeight": 63.0,
         "Background": "#FFB9F9E1"
       },
@@ -1806,7 +1824,7 @@
         "FontSize": 36.0,
         "GroupStyleId": "00000000-0000-0000-0000-000000000000",
         "InitialTop": 87.28516451087421,
-        "InitialHeight": 194.31347823934937,
+        "InitialHeight": 297.0,
         "TextblockHeight": 106.5,
         "Background": "#FFC1D676"
       },
@@ -1915,12 +1933,12 @@
           "38e4e209b31048dc85aeee92842636d5",
           "b48663597f5d4a26b063b9c26ffb47ab",
           "69719db8df574109a4c62d9cdf32d4b1",
-          "ac7b08c36f2b48029b0e54ea2b48d694",
           "4eb9285cccab4443a28dc19d4f11873e",
           "4659d71a57d44434b073588ce758260a",
           "06f357f414814215871f5d188698ae3a",
           "66ee514962d74879852598d4d6c0e4a5",
-          "1747e126049442508aac206496320bc7"
+          "1747e126049442508aac206496320bc7",
+          "9427eed5068d441ca66d9b10cea312e4"
         ],
         "HasNestedGroups": false,
         "Left": 2741.434081651437,
@@ -1930,7 +1948,7 @@
         "FontSize": 36.0,
         "GroupStyleId": "00000000-0000-0000-0000-000000000000",
         "InitialTop": 744.5445007623574,
-        "InitialHeight": 353.55609096523426,
+        "InitialHeight": 386.0000000000001,
         "TextblockHeight": 63.0,
         "Background": "#FFC1D676"
       },
@@ -2135,8 +2153,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 511.1472434320241,
-    "Y": 357.21796595745644,
-    "Zoom": 0.19792185489807762
+    "X": 250.30093674623387,
+    "Y": 343.5278359835405,
+    "Zoom": 0.15705813386303907
   }
 }

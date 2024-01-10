@@ -1255,8 +1255,8 @@
   "Dependencies": [],
   "NodeLibraryDependencies": [
     {
-      "Name": "Refinery Toolkit for Space Planning",
-      "Version": "0.0.1",
+      "Name": "Refinery Toolkit",
+      "Version": "3.0.0",
       "ReferenceType": "Package",
       "Nodes": [
         "b992c113c68946e98d9a9f5f559de443"
@@ -1293,7 +1293,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "3.0.0.7040",
+      "Version": "3.0.0.7127",
       "RunType": "Automatic",
       "RunPeriod": "1000"
     },
@@ -1904,26 +1904,6 @@
         "Background": "#FFC1D676"
       },
       {
-        "Id": "2f6727ad76414e6b80064481111df24c",
-        "Title": "Get Cuboid offset from plane",
-        "DescriptionText": null,
-        "IsExpanded": true,
-        "WidthAdjustment": 0.0,
-        "HeightAdjustment": 0.0,
-        "Nodes": [],
-        "HasNestedGroups": false,
-        "Left": 2684.94259784882,
-        "Top": -580.790026879979,
-        "Width": 0.0,
-        "Height": 0.0,
-        "FontSize": 36.0,
-        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
-        "InitialTop": 0.0,
-        "InitialHeight": 0.0,
-        "TextblockHeight": 0.0,
-        "Background": "#FFC1D676"
-      },
-      {
         "Id": "86e8955df6004f3c90b8a1bca3dfb0cc",
         "Title": "DYNAMO VERSION\r\n________________________________________________________\r\n\r\n3.0.0",
         "DescriptionText": null,
@@ -2124,8 +2104,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 257.1039725278033,
-    "Y": 308.8222328468412,
-    "Zoom": 0.18273381604675062
+    "X": 277.91520285959507,
+    "Y": 130.5192584815147,
+    "Zoom": 0.19947907810812038
   }
 }

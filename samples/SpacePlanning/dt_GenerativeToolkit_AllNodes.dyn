@@ -845,8 +845,8 @@
   "Dependencies": [],
   "NodeLibraryDependencies": [
     {
-      "Name": "Refinery Toolkit for Space Planning",
-      "Version": "0.0.1",
+      "Name": "Refinery Toolkit",
+      "Version": "3.0.0",
       "ReferenceType": "Package",
       "Nodes": [
         "d7e8736654804d35b00374ba1ce1dfcb",
