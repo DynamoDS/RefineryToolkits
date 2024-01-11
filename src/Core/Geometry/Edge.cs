@@ -9,10 +9,7 @@
 ***************************************************************************************/
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.RefineryToolkits.Core.Utillites;
 
 namespace Autodesk.RefineryToolkits.Core.Geometry
@@ -96,9 +93,9 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         public bool IsCoplanarTo(Edge edge)
         {
             // http://mathworld.wolfram.com/Coplanar.html
-            Vector a = this.Direction;
+            Vector a = Direction;
             Vector b = edge.Direction;
-            Vector c = Vector.ByTwoVertices(this.StartVertex, edge.StartVertex);
+            Vector c = Vector.ByTwoVertices(StartVertex, edge.StartVertex);
 
             return c.Dot(a.Cross(b)) == 0;
         }
@@ -106,31 +103,31 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         public GeometryBase Intersection(Edge other)
         {
             // http://mathworld.wolfram.com/Line-LineIntersection.html
-            if (!this.BoundingBox.Intersects(other.BoundingBox)) { return null; }
-            if (!this.IsCoplanarTo(other)) { return null; }
-            if (this.Equals(other)) { return this; } // Issues if same polygon id???
+            if (!BoundingBox.Intersects(other.BoundingBox)) { return null; }
+            if (!IsCoplanarTo(other)) { return null; }
+            if (Equals(other)) { return this; } // Issues if same polygon id???
 
-            var a = this.Direction;
+            var a = Direction;
             var b = other.Direction;
-            
+
             if (a.IsParallelTo(b))
             {
                 // Fully contains the test edge
                 if (other.StartVertex.OnEdge(this) && other.EndVertex.OnEdge(this)) { return other; }
                 // Is fully contained by test edge
-                else if (this.StartVertex.OnEdge(other) && this.EndVertex.OnEdge(other)) { return this; }
+                else if (StartVertex.OnEdge(other) && EndVertex.OnEdge(other)) { return this; }
                 // Not fully inclusive but overlapping
-                else if (this.StartVertex.OnEdge(other) || this.EndVertex.OnEdge(other))
+                else if (StartVertex.OnEdge(other) || EndVertex.OnEdge(other))
                 {
-                    Vertex[] vertices = new Vertex[4]
-                    {
-                        this.StartVertex,
-                        this.EndVertex,
+                    Vertex[] vertices =
+                    [
+                        StartVertex,
+                        EndVertex,
                         other.StartVertex,
                         other.EndVertex
-                    };
+                    ];
                     var sorted = vertices.OrderBy(v => v.Y).ThenBy(v => v.X).ThenBy(v => v.Z).ToList();
-                    return Edge.ByStartVertexEndVertex(sorted[1], sorted[2]);
+                    return ByStartVertexEndVertex(sorted[1], sorted[2]);
                 }
                 // Not intersecting
                 else
@@ -140,12 +137,12 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             }
 
             // No parallels but intersecting on one of the extreme vertices
-            if (other.Contains(this.StartVertex)) { return this.StartVertex; }
-            else if (other.Contains(this.EndVertex)) { return this.EndVertex; }
+            if (other.Contains(StartVertex)) { return StartVertex; }
+            else if (other.Contains(EndVertex)) { return EndVertex; }
 
 
             // No coincident nor same extremes
-            var c = Vector.ByTwoVertices(this.StartVertex, other.StartVertex);
+            var c = Vector.ByTwoVertices(StartVertex, other.StartVertex);
             var cxb = c.Cross(b);
             var axb = a.Cross(b);
             var dot = cxb.Dot(axb);
@@ -157,22 +154,22 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
 
             if (s.AlmostEqualTo(0))
             {
-                if (this.StartVertex.OnEdge(other)) { return this.StartVertex; }
-                else if(this.EndVertex.OnEdge(other)) { return this.EndVertex; }
-                else if(other.StartVertex.OnEdge(this)) { return other.StartVertex; }
-                else if(other.EndVertex.OnEdge(this)) { return other.EndVertex; }
+                if (StartVertex.OnEdge(other)) { return StartVertex; }
+                else if (EndVertex.OnEdge(other)) { return EndVertex; }
+                else if (other.StartVertex.OnEdge(this)) { return other.StartVertex; }
+                else if (other.EndVertex.OnEdge(this)) { return other.EndVertex; }
                 else { return null; }
             }
 
-            
-            
+
+
             // s > 1, means that "intersection" vertex is not on either edge
             // s == NaN means they are parallels so never intersect
-            if (s < 0 || s > 1 || Double.IsNaN(s)) { return null; }
+            if (s < 0 || s > 1 || double.IsNaN(s)) { return null; }
 
-            Vertex intersection = this.StartVertex.Translate(a.Scale(s));
+            Vertex intersection = StartVertex.Translate(a.Scale(s));
 
-            if (intersection.Equals(other.StartVertex)){ return other.StartVertex; }
+            if (intersection.Equals(other.StartVertex)) { return other.StartVertex; }
             if (intersection.Equals(other.EndVertex)) { return other.EndVertex; }
             if (!intersection.OnEdge(other))
             {
@@ -184,14 +181,14 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
 
         public bool Intersects(Edge edge)
         {
-            if(this.StartVertex.OnEdge(edge) || this.EndVertex.OnEdge(edge))
+            if (StartVertex.OnEdge(edge) || EndVertex.OnEdge(edge))
             {
-                if (this.Direction.IsParallelTo(edge.Direction))
+                if (Direction.IsParallelTo(edge.Direction))
                 {
                     return true;
                 }
             }
-            return this.Intersection(edge) != null;
+            return Intersection(edge) != null;
         }
 
         public double DistanceTo(Vertex vertex)
@@ -202,7 +199,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         public double DistanceTo(Edge edge)
         {
             // http://mathworld.wolfram.com/Line-LineDistance.html
-            if (this.IsCoplanarTo(edge))
+            if (IsCoplanarTo(edge))
             {
                 var distances = new double[4]{
                     StartVertex.DistanceTo(edge),
@@ -211,18 +208,19 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
                     edge.EndVertex.DistanceTo(this)
                 };
                 return distances.Min();
-            }else
+            }
+            else
             {
-                var a = this.Direction;
+                var a = Direction;
                 var b = edge.Direction;
-                var c = Vector.ByTwoVertices(this.StartVertex, edge.StartVertex);
+                var c = Vector.ByTwoVertices(StartVertex, edge.StartVertex);
                 Vector cross = a.Cross(b);
                 double numerator = c.Dot(cross);
                 double denominator = cross.Length;
                 return Math.Abs(numerator) / Math.Abs(denominator);
 
             }
-            
+
         }
 
         #region override methods
@@ -237,7 +235,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         {
             if (obj == null || GetType() != obj.GetType()) { return false; }
 
-            Edge e= (Edge)obj;
+            Edge e = (Edge)obj;
             if (StartVertex.Equals(e.StartVertex) && EndVertex.Equals(e.EndVertex)) { return true; }
             if (StartVertex.Equals(e.EndVertex) && EndVertex.Equals(e.StartVertex)) { return true; }
             return false;
@@ -260,7 +258,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("gEdge(StartVertex: {0}, EndVertex: {1})", StartVertex, EndVertex);
+            return string.Format("gEdge(StartVertex: {0}, EndVertex: {1})", StartVertex, EndVertex);
         }
 
         internal override BoundingBox ComputeBoundingBox()
@@ -269,5 +267,5 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         }
 
         #endregion
-    }   
+    }
 }

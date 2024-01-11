@@ -23,13 +23,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Explore
         {
             if (amount > MaxColorAmount)
             {
-                throw new System.ArgumentException(string.Format("Maximum number of colours supported right now is {0}", MaxColorAmount));
+                throw new ArgumentException(string.Format("Maximum number of colours supported right now is {0}", MaxColorAmount));
             }
-            Random rnd = new Random(seed);
+            Random rnd = new(seed);
             List<int> indexRanges = Enumerable.Range(0, MaxColorAmount).ToList();
-            List<int> shuffledIndexes = indexRanges.OrderBy(x => rnd.Next()).ToList();
+            List<int> shuffledIndexes = [.. indexRanges.OrderBy(x => rnd.Next())];
 
-            List<Color> colors = new List<Color>();
+            List<Color> colors = [];
             foreach (int i in shuffledIndexes.GetRange(0, amount))
             {
                 Color color = ColorPalette[i];
@@ -49,14 +49,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Explore
                     green = Convert.ToInt32((255 - color.Green) * brightness + color.Green);
                     blue = Convert.ToInt32((255 - color.Blue) * brightness + color.Blue);
                 }
-                colors.Add(Color.ByARGB(r: red, g: green, b: blue));
+                colors.Add(Color.ByARGB(red, green, blue));
             }
             return colors;
         }
 
         // Colors from https://www.materialpalette.com/colors
-        private static readonly List<Color> ColorPalette = new List<Color>()
-        {
+        private static readonly List<Color> ColorPalette =
+        [
             //Red
             Color.ByARGB(0, 244, 67, 54),
             //Pink
@@ -95,6 +95,6 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Explore
             Color.ByARGB(0, 158, 158, 158),
             //Blue Grey
             Color.ByARGB(0, 96, 125, 139)
-        };
+        ];
     }
 }

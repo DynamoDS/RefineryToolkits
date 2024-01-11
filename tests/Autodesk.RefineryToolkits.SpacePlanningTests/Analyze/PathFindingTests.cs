@@ -23,11 +23,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [SetUp]
         public void BeforeTest()
         {
-            this.boundary = Rectangle.ByWidthLength(50, 50) as Polygon;
-            this.internalPolygon = Rectangle.ByWidthLength(5, 25) as Polygon;
+            boundary = Rectangle.ByWidthLength(50, 50) as Polygon;
+            internalPolygon = Rectangle.ByWidthLength(5, 25) as Polygon;
             // Create origin and desitination point
-            this.originPoint = Point.ByCoordinates(-10, 5);
-            this.destination = Point.ByCoordinates(20, 3);
+            originPoint = Point.ByCoordinates(-10, 5);
+            destination = Point.ByCoordinates(20, 3);
         }
 
         /// <summary>
@@ -37,9 +37,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void ShortestPathCanCreateVisibilityGraphTest()
         {
             // Create visibility graph used to calculate the shortest path
-            this.visibilityGraph = PathFinding.CreateVisibilityGraph(new List<Polygon> { this.boundary }, new List<Polygon> { this.internalPolygon });
+            visibilityGraph = PathFinding.CreateVisibilityGraph([boundary], [internalPolygon]);
             // Check if the visibility graph is created properly
-            Assert.IsNotNull(this.visibilityGraph);
+            Assert.IsNotNull(visibilityGraph);
         }
 
         /// <summary>
@@ -49,15 +49,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void ShortestPathDictionaryOutputTest()
         {
             // Create shortest path
-            this.result = PathFinding.ShortestPath(
-                this.originPoint,
-                this.destination,
-                new List<Polygon> { this.boundary },
-                new List<Polygon> { this.internalPolygon });
+            result = PathFinding.ShortestPath(
+                originPoint,
+                destination,
+                [boundary],
+                [internalPolygon]);
 
             // Check if the result of the Shortest path is a dictionary containing the keys "path" and "length"
-            Assert.IsTrue(this.result.Keys.Contains(pathOutputPort));
-            Assert.IsTrue(this.result.Keys.Contains(lengthOutputPort));
+            Assert.IsTrue(result.Keys.Contains(pathOutputPort));
+            Assert.IsTrue(result.Keys.Contains(lengthOutputPort));
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [Test]
         public void ShortestPathLengthTest()
         {
-            var length = (double)this.result[lengthOutputPort];
+            var length = (double)result[lengthOutputPort];
             Assert.AreEqual(35.519, Math.Round(length, 3));
         }
 
@@ -76,8 +76,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         [Test]
         public void ShortestPathDynamoLinesFromPathTest()
         {
-            var lines = (List<Line>)this.result[pathOutputPort];
-            Assert.AreEqual(3, lines.Count());
+            var lines = (List<Line>)result[pathOutputPort];
+            Assert.AreEqual(3, lines.Count);
         }
     }
 }

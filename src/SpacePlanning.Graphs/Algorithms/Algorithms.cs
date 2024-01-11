@@ -10,9 +10,7 @@
 
 using Autodesk.RefineryToolkits.Core.Geometry;
 using Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.Algorithms
 {
@@ -20,7 +18,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.Algorithms
     {
         public static Graph Dijkstra(Graph graph, Vertex origin, Vertex destination, Graph tempGraph = null)
         {
-            MinPriorityQ<Vertex, double> Q = new MinPriorityQ<Vertex, double>();
+            MinPriorityQ<Vertex, double> Q = new();
             bool originInGraph = false;
 
             foreach (Vertex v in graph.vertices)
@@ -32,7 +30,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.Algorithms
                 }
                 else
                 {
-                    Q.Add(v, Double.PositiveInfinity);
+                    Q.Add(v, double.PositiveInfinity);
                 }
             }
 
@@ -42,10 +40,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.Algorithms
                 Q.Add(origin, 0);
             }
 
-            if (!graph.Contains(destination)) { Q.Add(destination, Double.PositiveInfinity); }
+            if (!graph.Contains(destination)) { Q.Add(destination, double.PositiveInfinity); }
 
-            Dictionary<Vertex, Vertex> ParentVertices = new Dictionary<Vertex, Vertex>();
-            List<Vertex> S = new List<Vertex>();
+            Dictionary<Vertex, Vertex> ParentVertices = [];
+            List<Vertex> S = [];
 
             while (Q.Size > 0)
             {
@@ -55,9 +53,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.Algorithms
 
                 if (vertex.Equals(destination)) { break; }
 
-                List<Edge> edges = new List<Edge>();
-                edges.AddRange(graph.GetVertexEdges(vertex));
-                if (tempGraph != null && tempGraph.edges.Any())
+                List<Edge> edges = [.. graph.GetVertexEdges(vertex)];
+                if (tempGraph != null && tempGraph.edges.Count != 0)
                 {
                     edges.AddRange(tempGraph.GetVertexEdges(vertex));
                 }
@@ -77,7 +74,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.Algorithms
 
             }
 
-            Graph path = new Graph();
+            Graph path = new();
             Vertex dest = destination;
             while (dest != origin)
             {

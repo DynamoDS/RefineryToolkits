@@ -20,17 +20,17 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="depth">The depth of the amenity space.</param> 
         /// <returns name="amenitySurface">The created amenity surface.</returns>
         /// <returns name="remainingSurface">The created amenity surface.</returns>
-        [MultiReturn(new[] { amenitySurfaceOutputPort, remainingSurfaceOutputPort })]
+        [MultiReturn([amenitySurfaceOutputPort, remainingSurfaceOutputPort])]
         [NodeCategory("Create")]
-        public static Dictionary<string, Autodesk.DesignScript.Geometry.Surface> Create(
-            Autodesk.DesignScript.Geometry.Surface surface,
+        public static Dictionary<string, Surface> Create(
+            Surface surface,
             double offset,
             double depth)
         {
             // offset perimeter curves by the specified offset and create new surface.
             // makes sure there are space between outer perimeter and the amenity space
-            List<Curve> inCrvs = surface.OffsetPerimeterCurves(offset)["insetCrvs"].ToList();
-            Surface inSrf = Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs));
+            List<Curve> inCrvs = [.. surface.OffsetPerimeterCurves(offset)["insetCrvs"]];
+            Surface inSrf = Surface.ByPatch(PolyCurve.ByJoinedCurves(inCrvs, 0.001, false));
 
             // get longest curve of the inSrf
             Curve max;
@@ -50,7 +50,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             }
 
             // get perimeter curves of input surface 
-            List<Curve> perimCrvs = surface.PerimeterCurves().ToList();
+            List<Curve> perimCrvs = [.. surface.PerimeterCurves()];
             List<Curve> matchCrvs = max.FindMatchingVectorCurves(perimCrvs);
 
             // get longest curve  
@@ -71,10 +71,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
             Line extendLine = transLine.ExtendAtBothEnds(1);
 
 
-            List<Curve> crvList = new List<Curve>() { max, extendLine };
+            List<Curve> crvList = [max, extendLine];
             Surface loftSrf = Surface.ByLoft(crvList);
 
-            List<bool> boolLst = new List<bool>();
+            List<bool> boolLst = [];
             foreach (var crv in others)
             {
                 bool b = max.DoesIntersect(crv);
@@ -86,7 +86,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                 .Where(item => item.filter == true)
                 .Select(item => item.name)
                 .ToList();
-            List<Curve> extendCurves = new List<Curve>();
+            List<Curve> extendCurves = [];
             foreach (Curve crv in intersectingCurves)
             {
                 var l = crv.ExtendAtBothEnds(1);

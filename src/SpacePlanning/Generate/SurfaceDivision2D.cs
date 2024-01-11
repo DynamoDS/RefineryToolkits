@@ -16,20 +16,20 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
         /// <param name="V">V parameter</param>
         /// <returns>List of individual surfaces</returns>
         [NodeCategory("Create")]
-        public static List<Autodesk.DesignScript.Geometry.Geometry> DivideSurface(
+        public static List<Geometry> DivideSurface(
             Surface surface,
             List<double> U,
             List<double> V)
         {
-            List<IDisposable> disposables = new List<IDisposable>();
-            List<Autodesk.DesignScript.Geometry.Geometry> dividedSurfaces = new List<Autodesk.DesignScript.Geometry.Geometry>();
+            List<IDisposable> disposables = [];
+            List<Geometry> dividedSurfaces = [];
 
-            List<PolySurface> polySurfaces = new List<PolySurface>();
-            List<List<double>> UV = new List<List<double>> { U, V };
+            List<PolySurface> polySurfaces = [];
+            List<List<double>> UV = [U, V];
             Curve uCurve = Curve.ByIsoCurveOnSurface(surface, 1, 0);
             for (int i = 0; i <= 1; i++)
             {
-                List<Surface> crvSurf = new List<Surface>();
+                List<Surface> crvSurf = [];
                 foreach (double item in UV[i])
                 {
                     Curve crv = Curve.ByIsoCurveOnSurface(surface, i, item);
@@ -39,8 +39,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                 polySurfaces.Add(PolySurface.ByJoinedSurfaces(crvSurf));
                 disposables.AddRange(crvSurf);
             }
-            List<Autodesk.DesignScript.Geometry.Geometry> splitSurfaces = surface.Split(polySurfaces[1]).ToList();
-            List<Autodesk.DesignScript.Geometry.Geometry> sortedSurfaces = splitSurfaces.OrderBy(x => uCurve.DistanceTo(x)).ToList();
+            var splitSurfaces = surface.Split(polySurfaces[1]);
+            var sortedSurfaces = splitSurfaces.OrderBy(uCurve.DistanceTo);
             disposables.AddRange(splitSurfaces);
 
             foreach (var surf in sortedSurfaces)

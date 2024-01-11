@@ -11,8 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.Core.Geometry
 {
@@ -37,12 +35,12 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <summary>
         /// Polygon's edges
         /// </summary>
-        public List<Edge> edges = new List<Edge>();
+        public List<Edge> edges = [];
 
         /// <summary>
         /// Polygon's Vertices
         /// </summary>
-        public List<Vertex> vertices = new List<Vertex>();
+        public List<Vertex> vertices = [];
         #endregion
 
         #region Public Variables
@@ -72,7 +70,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         {
             get
             {
-                return this.edges.Count > 2 && (edges.First().StartVertex.OnEdge(edges.Last()) || edges.First().EndVertex.OnEdge(edges.Last()));
+                return edges.Count > 2 && (edges.First().StartVertex.OnEdge(edges.Last()) || edges.First().EndVertex.OnEdge(edges.Last()));
             }
         }
         #endregion
@@ -96,15 +94,17 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <returns></returns>
         public static Polygon ByVertices(List<Vertex> vertices, bool isExternal = false)
         {
-            Polygon polygon = new Polygon(-1, isExternal);
-            polygon.vertices = vertices;
+            Polygon polygon = new(-1, isExternal)
+            {
+                vertices = vertices
+            };
             int vertexCount = vertices.Count;
             for (var j = 0; j < vertexCount; j++)
             {
                 int next_index = (j + 1) % vertexCount;
                 Vertex vertex = vertices[j];
                 Vertex next_vertex = vertices[next_index];
-                polygon.edges.Add( new Edge(vertex, next_vertex));
+                polygon.edges.Add(new Edge(vertex, next_vertex));
             }
             return polygon;
         }
@@ -112,10 +112,10 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         public static Polygon ByCenterRadiusAndSides(Vertex center, double radius, int sides)
         {
             // TODO: create polygon by plane?
-            if(sides < 3) { throw new ArgumentOutOfRangeException("sides", "Any polygon must have at least 3 sides."); }
-            List<Vertex> vertices = new List<Vertex>();
+            if (sides < 3) { throw new ArgumentOutOfRangeException("sides", "Any polygon must have at least 3 sides."); }
+            List<Vertex> vertices = [];
             double angle = (Math.PI * 2) / sides;
-            for(var i = 0; i < sides; i++)
+            for (var i = 0; i < sides; i++)
             {
                 var vertex = Vertex.ByCoordinates(
                         (Math.Sin(i * angle) * radius) + center.X,
@@ -124,7 +124,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
                         );
                 vertices.Add(vertex);
             }
-            return Polygon.ByVertices(vertices);
+            return ByVertices(vertices);
         }
         #endregion
 
@@ -133,17 +133,17 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         {
             if (vertex == null) return;
 
-            vertex.polygonId = this.id;
+            vertex.polygonId = id;
             vertices.Add(vertex);
         }
 
         public Polygon AddVertex(Vertex v, Edge intersectingEdge)
         {
             //Assumes that vertex v intersects one of polygons edges.
-            Polygon newPolygon = (Polygon)this.Clone();
+            Polygon newPolygon = (Polygon)Clone();
 
             // Assign the polygon Id to the new vertex.
-            v.polygonId = this.id;
+            v.polygonId = id;
 
             // Getting the index of the intersecting edge's start vertex and
             // inserting the new vertex at the following index.
@@ -173,7 +173,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         ///     equal 0 for vertex on the edge
         ///     less than 0 for vertex right of the edege
         /// </returns>
-        internal double IsLeft(Edge edge, Vertex vertex)
+        internal static double IsLeft(Edge edge, Vertex vertex)
         {
             var left = (edge.EndVertex.X - edge.StartVertex.X) * (vertex.Y - edge.StartVertex.Y) - (edge.EndVertex.Y - edge.StartVertex.Y) * (vertex.X - edge.StartVertex.X);
             return left;
@@ -197,15 +197,16 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             int windNumber = 0;
             foreach (Edge edge in edges)
             {
-                if(vertex.OnEdge(edge)) { return true; }
+                if (vertex.OnEdge(edge)) { return true; }
                 Vertex intersection = ray.Intersection(edge) as Vertex;
-                if (intersection is Vertex)
+                if (intersection is not null)
                 {
                     if (edge.StartVertex.Y <= vertex.Y)
                     {
                         if (edge.EndVertex.Y > vertex.Y)
                         {
-                            if(IsLeft(edge, vertex) > 0) {
+                            if (IsLeft(edge, vertex) > 0)
+                            {
                                 ++windNumber;
                             }
                         }
@@ -214,7 +215,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
                     {
                         if (edge.EndVertex.Y < vertex.Y)
                         {
-                            if(IsLeft(edge, vertex) < 0)
+                            if (IsLeft(edge, vertex) < 0)
                             {
                                 --windNumber;
                             }
@@ -237,9 +238,9 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         public bool ContainsEdge(Edge edge)
         {
             // TODO: Check if edge intersects polygon in vertices different than start/end.
-            return this.ContainsVertex(edge.StartVertex)
-                && this.ContainsVertex(edge.EndVertex)
-                && this.ContainsVertex(Vertex.MidVertex(edge.StartVertex, edge.EndVertex));
+            return ContainsVertex(edge.StartVertex)
+                && ContainsVertex(edge.EndVertex)
+                && ContainsVertex(Vertex.MidVertex(edge.StartVertex, edge.EndVertex));
         }
         /// <summary>
         /// Checks if a polygon is planar
@@ -259,7 +260,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <returns></returns>
         public static bool Coplanar(Polygon polygon, Polygon otherPolygon)
         {
-            List<Vertex> joinedVertices = new List<Vertex>(polygon.Vertices);
+            List<Vertex> joinedVertices = new(polygon.Vertices);
             joinedVertices.AddRange(otherPolygon.Vertices);
 
             return Vertex.Coplanar(joinedVertices);
@@ -368,18 +369,20 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <returns>Cloned gPolygon</returns>
         public object Clone()
         {
-            Polygon newPolygon = new Polygon(this.id, this.isBoundary);
-            newPolygon.edges = new List<Edge>(this.edges);
-            newPolygon.vertices = new List<Vertex>(this.vertices);
+            Polygon newPolygon = new(id, isBoundary)
+            {
+                edges = new List<Edge>(edges),
+                vertices = new List<Vertex>(vertices)
+            };
             return newPolygon;
         }
 
         internal override BoundingBox ComputeBoundingBox()
         {
-            var xCoord = new List<double>(this.vertices.Count);
-            var yCoord = new List<double>(this.vertices.Count);
-            var zCoord = new List<double>(this.vertices.Count);
-            foreach(Vertex v in vertices)
+            var xCoord = new List<double>(vertices.Count);
+            var yCoord = new List<double>(vertices.Count);
+            var zCoord = new List<double>(vertices.Count);
+            foreach (Vertex v in vertices)
             {
                 xCoord.Add(v.X);
                 yCoord.Add(v.Y);

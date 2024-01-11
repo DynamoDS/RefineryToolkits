@@ -8,11 +8,8 @@
 *
 ***************************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.RefineryToolkits.Core.Utillites;
@@ -67,7 +64,6 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
                 .OrderBy(p => p.Y)
                 .ThenBy(p => p.X)
                 .ThenBy(p => p.Z)
-                .ToList()
                 .Last();
         }
 
@@ -78,14 +74,11 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <param name="points">Points to order</param>
         /// <returns name="points">Ordered points</returns>
         public static List<Point> OrderByRadianAndDistance(
-            [DefaultArgument("Autodesk.DesignScript.Geometry.Point.ByCoordinates(0,0,0);")]Point centre,
+            [DefaultArgument("Autodesk.DesignScript.Geometry.Point.ByCoordinates(0,0,0);")] Point centre,
             List<Point> points)
         {
             //TODO: Add angle offet input
-            return points
-                .OrderBy(p => RadAngle(centre, p))
-                .ThenBy(p => centre.DistanceTo(p))
-                .ToList();
+            return [ ..points.OrderBy(p => RadAngle(centre, p)).ThenBy(centre.DistanceTo) ];
         }
 
         /// <summary>

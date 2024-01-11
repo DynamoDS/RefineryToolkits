@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
@@ -14,7 +13,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
         protected override void Setup()
         {
-            UsesDepth = Width > 2 * Depth && Length > Depth ? true : false;
+            UsesDepth = Width > 2 * Depth && Length > Depth;
         }
 
         protected override (Curve boundary, List<Curve> holes) CreateBaseCurves()
@@ -41,13 +40,13 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                         if (arcHeight < Length)
                         {
                             // Top of U has straight parts.
-                            points = new[]
-                            {
+                            points =
+                            [
                                 Point.ByCoordinates(Width, arcHeight),
                                 Point.ByCoordinates(Width, Length),
                                 Point.ByCoordinates(Width - Depth, Length),
                                 Point.ByCoordinates(Width - Depth, arcHeight)
-                            };
+                            ];
 
                             boundaryCurves.Add(PolyCurve.ByPoints(points));
 
@@ -55,11 +54,11 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                         }
                         else
                         {
-                            points = new[]
-                            {
+                            points =
+                            [
                                 Point.ByCoordinates(Width, Length),
                                 Point.ByCoordinates(Width - Depth, Length)
-                            };
+                            ];
 
                             // Top of U has no straight parts.
                             boundaryCurves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
@@ -73,14 +72,14 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                         {
                             // Top of U has straight parts.
 
-                            points = new[]
-                            {
+                            points =
+                            [
                                 Point.ByCoordinates(Depth, arcHeight),
                                 Point.ByCoordinates(Depth, Length),
                                 Point.ByCoordinates(0, Length),
                                 Point.ByCoordinates(0, arcHeight)
-                            };
-                            
+                            ];
+
                             boundaryCurves.Add(PolyCurve.ByPoints(points));
 
                             points.ForEach(p => p.Dispose());
@@ -89,11 +88,11 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                         {
                             // Top of U has no straight parts.
 
-                            points = new[]
-                            {
+                            points =
+                            [
                                 Point.ByCoordinates(Depth, Length),
                                 Point.ByCoordinates(0, Length)
-                            };
+                            ];
 
                             boundaryCurves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
 
@@ -106,13 +105,13 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
                         if (arcHeight < Length)
                         {
-                            points = new[]
-                                {
+                            points =
+                                [
                                 Point.ByCoordinates(Width, arcHeight),
-                                Point.ByCoordinates(Width, Length),
-                                Point.ByCoordinates(0, Length),
-                                Point.ByCoordinates(0, arcHeight)
-                            };
+                                    Point.ByCoordinates(Width, Length),
+                                    Point.ByCoordinates(0, Length),
+                                    Point.ByCoordinates(0, arcHeight)
+                            ];
 
                             boundaryCurves.Add(PolyCurve.ByPoints(points));
 
@@ -120,11 +119,11 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                         }
                         else
                         {
-                            points = new[]
-                            {
+                            points =
+                            [
                                 Point.ByCoordinates(Width, Length),
                                 Point.ByCoordinates(0, Length)
-                            };
+                            ];
 
                             boundaryCurves.Add(Line.ByStartPointEndPoint(points[0], points[1]));
 
@@ -133,7 +132,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                     }
                 }
 
-                boundary = PolyCurve.ByJoinedCurves(boundaryCurves);
+                boundary = PolyCurve.ByJoinedCurves(boundaryCurves, 0.001, false);
             }
             else
             {
@@ -141,8 +140,8 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
                 if (UsesDepth)
                 {
-                    points = new[]
-                    {
+                    points =
+                    [
                         Point.ByCoordinates(0, 0),
                         Point.ByCoordinates(Width, 0),
                         Point.ByCoordinates(Width, Length),
@@ -151,7 +150,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                         Point.ByCoordinates(Depth, Depth),
                         Point.ByCoordinates(Depth, Length),
                         Point.ByCoordinates(0, Length)
-                    };
+                    ];
 
                     boundary = PolyCurve.ByPoints(points, connectLastToFirst: true);
 
@@ -161,13 +160,13 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 {
                     // Solid straight U (rectangle)
 
-                    points = new[]
-                    {
+                    points =
+                    [
                         Point.ByCoordinates(0, 0),
                         Point.ByCoordinates(Width, 0),
                         Point.ByCoordinates(Width, Length),
                         Point.ByCoordinates(0, Length)
-                    };
+                    ];
 
                     boundary = PolyCurve.ByPoints(points, connectLastToFirst: true);
 
@@ -188,10 +187,10 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 using (var zAxis = Vector.ZAxis())
                 using (var plane = Plane.ByOriginNormal(point, zAxis))
                 {
-                    return new List<Curve>
-                    {
+                    return
+                    [
                         Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
-                    };
+                    ];
                 }
             }
             else

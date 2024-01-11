@@ -39,10 +39,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         /// </summary>
         public RectanglePacker()
         {
-            this.FreeRectangles = new List<FreeRectangle>();
-            this.PackedItems = new List<Rectangle>();
-            this.RemainingIndices = new List<int>();
-            this.PackedIndices = new List<int>();
+            FreeRectangles = [];
+            PackedItems = [];
+            RemainingIndices = [];
+            PackedIndices = [];
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         /// <param name="bin">The rectangle to use as a bin when packing.</param>
         public RectanglePacker(Rectangle bin) : this()
         {
-            this.InitialiseBinFromRectangle(bin);
+            InitialiseBinFromRectangle(bin);
         }
 
         #endregion
@@ -67,7 +67,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             List<Rectangle> items,
             Rectangle container)
         {
-            this.PackOneContainer(items, container, DEFAULT_PACKING_STRATEGY);
+            PackOneContainer(items, container, DEFAULT_PACKING_STRATEGY);
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             Rectangle container,
             RectanglePackingStrategy packingStrategy)
         {
-            this.InitialiseBinFromRectangle(container);
+            InitialiseBinFromRectangle(container);
 
-            if (this.FreeRectangles.Count == 0) throw new InvalidOperationException("Bin has not been initialised");
+            if (FreeRectangles.Count == 0) throw new InvalidOperationException("Bin has not been initialised");
             if (items.Count == 0) throw new ArgumentNullException(nameof(items));
 
             for (int i = 0; i < items.Count; i++)
@@ -92,7 +92,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
                 var rect = items[i];
                 if (rect == null) continue;
 
-                var placed = this.PlaceItem(rect, packingStrategy, i);
+                var placed = PlaceItem(rect, packingStrategy, i);
                 if (placed) items[i] = null;
             }
         }
@@ -107,7 +107,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             List<Rectangle> items,
             List<Rectangle> containers)
         {
-            return this.PackMultipleContainers(items, containers, DEFAULT_PACKING_STRATEGY);
+            return PackMultipleContainers(items, containers, DEFAULT_PACKING_STRATEGY);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         /// <param name="containers">The containers to pack into, clearing any previously initialised bin.</param>
         /// <param name="packingStrategy">The method to use when packing.</param>
         /// <returns>The list of packing results for each container.</returns>
-        public List<IPacker<Rectangle,Rectangle>> PackMultipleContainers(
+        public static List<IPacker<Rectangle, Rectangle>> PackMultipleContainers(
             List<Rectangle> items,
             List<Rectangle> containers,
             RectanglePackingStrategy packingStrategy)
@@ -132,7 +132,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
                 var packer = new RectanglePacker();
 
                 packer.PackOneContainer(remainingRects, containers[i], packingStrategy);
-                packers.Add(packer as IPacker<Rectangle,Rectangle>);
+                packers.Add(packer as IPacker<Rectangle, Rectangle>);
             }
             return packers;
         }
@@ -143,7 +143,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
         private void InitialiseBinFromRectangle(Rectangle bin)
         {
-            this.FreeRectangles.Add(new FreeRectangle
+            FreeRectangles.Add(new FreeRectangle
             {
                 width = bin.Width,
                 height = bin.Height,
@@ -163,11 +163,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             RectanglePackingStrategy placementMethod,
             int itemIndex)
         {
-            FreeRectangle freeRect = this.GetBestFreeRectangle(item, placementMethod);
+            FreeRectangle freeRect = GetBestFreeRectangle(item, placementMethod);
 
             if (freeRect == null)
             {
-                this.RemainingIndices.Add(itemIndex);
+                RemainingIndices.Add(itemIndex);
                 return false;
             }
 
@@ -178,15 +178,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             var placedRect = (Rectangle)item.Transform(originCS, newCS);
 
             // place rectangle and update 
-            this.PackedItems.Add(placedRect);
-            this.PackedIndices.Add(itemIndex);
-            this.FreeRectangles.Remove(freeRect);
+            PackedItems.Add(placedRect);
+            PackedIndices.Add(itemIndex);
+            FreeRectangles.Remove(freeRect);
 
             // update remaining free space
-            this.SplitFreeRectangle(freeRect, placedRect);
+            SplitFreeRectangle(freeRect, placedRect);
 
             List<double> itemBounds = RectBounds(placedRect);
-            this.RemoveOverlaps(itemBounds);
+            RemoveOverlaps(itemBounds);
 
             // Dispose Dynamo geometry
             newCS.Dispose();
@@ -208,9 +208,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             RectanglePackingStrategy placementMethod)
         {
             var freeRectangles = new List<FreeRectangle>();
-            for (int i = 0; i < this.FreeRectangles.Count; i++)
+            for (int i = 0; i < FreeRectangles.Count; i++)
             {
-                var fRect = this.FreeRectangles[i];
+                var fRect = FreeRectangles[i];
 
                 FreeRectangle chosenFreeRect;
                 var fitsItem = new List<FreeRectangle>
@@ -262,7 +262,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
                 var fH = fRect.height;
                 var fX = fRect.xPos + item.Width;
                 var fY = fRect.yPos;
-                this.FreeRectangles.Add(new FreeRectangle
+                FreeRectangles.Add(new FreeRectangle
                 {
                     width = fW,
                     height = fH,
@@ -276,7 +276,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
                 var fH = fRect.height - item.Height;
                 var fX = fRect.xPos;
                 var fY = fRect.yPos + item.Height;
-                this.FreeRectangles.Add(new FreeRectangle
+                FreeRectangles.Add(new FreeRectangle
                 {
                     width = fW,
                     height = fH,
@@ -291,19 +291,19 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         /// </summary>
         private void RemoveEncapsulated()
         {
-            for (var i = 0; i < this.FreeRectangles.Count; i++)
+            for (var i = 0; i < FreeRectangles.Count; i++)
             {
-                for (var j = i + 1; j < this.FreeRectangles.Count; j++)
+                for (var j = i + 1; j < FreeRectangles.Count; j++)
                 {
-                    if (IsEncapsulated(this.FreeRectangles[j], this.FreeRectangles[i]))
+                    if (IsEncapsulated(FreeRectangles[j], FreeRectangles[i]))
                     {
-                        this.FreeRectangles.Remove(this.FreeRectangles[i]);
+                        FreeRectangles.Remove(FreeRectangles[i]);
                         i--;
                         break;
                     }
-                    if (IsEncapsulated(this.FreeRectangles[i], this.FreeRectangles[j]))
+                    if (IsEncapsulated(FreeRectangles[i], FreeRectangles[j]))
                     {
-                        this.FreeRectangles.Remove(this.FreeRectangles[j]);
+                        FreeRectangles.Remove(FreeRectangles[j]);
                         j--;
                     }
                 }
@@ -317,7 +317,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         private void RemoveOverlaps(List<double> itemBounds)
         {
             var freeRects = new List<FreeRectangle>();
-            foreach (FreeRectangle rect in this.FreeRectangles)
+            foreach (FreeRectangle rect in FreeRectangles)
             {
                 if (RectangleOverlaps(rect, itemBounds))
                 {
@@ -330,8 +330,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
                     freeRects.Add(rect);
                 }
             }
-            this.FreeRectangles = freeRects;
-            this.RemoveEncapsulated();
+            FreeRectangles = freeRects;
+            RemoveEncapsulated();
         }
 
         private static FreeRectangle ScoreRectanglePlacementInBin(Rectangle item, RectanglePackingStrategy placementMethod, FreeRectangle fRect, bool rotate)
@@ -446,7 +446,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             var overlapTopRightX = x2 < x4 ? x2 : x4;
             var overlapTopRightY = y2 < y4 ? y2 : y4;
 
-            return new List<double> { overlapBotLeftX, overlapBotLeftY, overlapTopRightX, overlapTopRightY };
+            return [overlapBotLeftX, overlapBotLeftY, overlapTopRightX, overlapTopRightY];
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
             var BottomLeftY = rect.StartPoint.Y;
             var TopRightX = rect.StartPoint.X;
             var TopRightY = rect.StartPoint.Y + rect.Height;
-            return new List<double> { BottomLeftX, BottomLeftY, TopRightX, TopRightY };
+            return [BottomLeftX, BottomLeftY, TopRightX, TopRightY];
         }
 
         /// <summary>
@@ -662,7 +662,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
             public double area()
             {
-                return this.width * this.height;
+                return width * height;
             }
         }
         #endregion

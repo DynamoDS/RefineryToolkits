@@ -41,7 +41,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
             foreach (Edge edge in resultEdges)
             {
-                this.AddEdge(edge);
+                AddEdge(edge);
             }
         }
         #endregion
@@ -60,11 +60,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         public static VisibilityGraph Merge(List<VisibilityGraph> graphs)
         {
-            Graph graph = new Graph();
-            List<Edge> edges = new List<Edge>();
+            Graph graph = new();
+            List<Edge> edges = [];
             foreach (VisibilityGraph g in graphs)
             {
-                Dictionary<int, int> oldNewIds = new Dictionary<int, int>();
+                Dictionary<int, int> oldNewIds = [];
                 foreach (Polygon p in g.baseGraph.polygons.Values)
                 {
                     int nextId = graph.GetNextId();
@@ -84,9 +84,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                 }
             }
 
-            VisibilityGraph visibilityGraph = new VisibilityGraph()
+            VisibilityGraph visibilityGraph = new()
             {
-                baseGraph = new Graph(graph.polygons.Values.ToList()),
+                baseGraph = new Graph([.. graph.polygons.Values]),
             };
 
             foreach (Edge edge in edges)
@@ -104,13 +104,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         internal List<Edge> VisibilityAnalysis(Graph baseGraph, List<Vertex> vertices, bool reducedGraph, bool halfScan)
         {
-            List<Edge> visibleEdges = new List<Edge>();
+            List<Edge> visibleEdges = [];
 
             foreach (Vertex v in vertices)
             {
                 foreach (Vertex v2 in VisibleVertices(v, baseGraph, null, null, null, halfScan, reducedGraph))
                 {
-                    Edge newEdge = new Edge(v, v2);
+                    Edge newEdge = new(v, v2);
                     if (!visibleEdges.Contains(newEdge)) { visibleEdges.Add(newEdge); }
                 }
             }
@@ -159,7 +159,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
             #region Initialize openEdges
             //Initialize openEdges with any intersection edges on the half line 
             //from centre to maxDistance on the XAxis
-            List<EdgeKey> openEdges = new List<EdgeKey>();
+            List<EdgeKey> openEdges = [];
             double xMax = Math.Abs(centre.X) + 1.5 * maxDistance;
             Edge halfEdge = Edge.ByStartVertexEndVertex(centre, Vertex.ByCoordinates(xMax, centre.Y, centre.Z));
             foreach (Edge e in edges)
@@ -169,14 +169,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                 {
                     if (e.StartVertex.OnEdge(halfEdge)) { continue; }
                     if (e.EndVertex.OnEdge(halfEdge)) { continue; }
-                    EdgeKey k = new EdgeKey(halfEdge, e);
+                    EdgeKey k = new(halfEdge, e);
                     openEdges.AddItemSorted(k);
                 }
             }
 
             #endregion
 
-            List<Vertex> visibleVertices = new List<Vertex>();
+            List<Vertex> visibleVertices = [];
             Vertex prev = null;
             bool prevVisible = false;
             for (var i = 0; i < vertices.Count; i++)
@@ -186,15 +186,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                 //Check only half of vertices as eventually they will become 'v'
                 if (halfScan && Vertex.RadAngle(centre, vertex) > Math.PI) { break; }
                 //Removing clock wise edges incident on v
-                if (openEdges.Count > 0 && baseGraph.graph.ContainsKey(vertex))
+                if (openEdges.Count > 0 && baseGraph.graph.TryGetValue(vertex, out List<Edge> value))
                 {
-                    foreach (Edge edge in baseGraph.graph[vertex])
+                    foreach (Edge edge in value)
                     {
                         int orientation = Vertex.Orientation(centre, vertex, edge.GetVertexPair(vertex));
 
                         if (orientation == -1)
                         {
-                            EdgeKey k = new EdgeKey(centre, vertex, edge);
+                            EdgeKey k = new(centre, vertex, edge);
                             int index = openEdges.BisectIndex(k) - 1;
                             index = (index < 0) ? openEdges.Count - 1 : index;
                             if (openEdges.Count > 0 && openEdges.ElementAt(index).Equals(k))
@@ -338,7 +338,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                     {
                         if (!centre.OnEdge(e) && Vertex.Orientation(centre, vertex, e.GetVertexPair(vertex)) == 1)
                         {
-                            EdgeKey k = new EdgeKey(centre, vertex, e);
+                            EdgeKey k = new(centre, vertex, e);
                             openEdges.AddItemSorted(k);
                         }
                     }
@@ -359,16 +359,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                         Vertex projectionVertex = null;
 
                         // if both orientation are not on the same side, means that one of them is colinear
-                        isColinear = firstOrientation != secondOrientation ? true : false;
+                        isColinear = firstOrientation != secondOrientation;
 
                         foreach (EdgeKey ek in openEdges)
                         {
-                            Vertex intersection = rayEdge.Intersection(ek.Edge) as Vertex;
-                            if (intersection != null && !intersection.Equals(vertex))
+                            if (rayEdge.Intersection(ek.Edge) is Vertex intersection && !intersection.Equals(vertex))
                             {
                                 projectionVertex = intersection;
-                                Polygon polygon = null;
-                                baseGraph.polygons.TryGetValue(vertex.polygonId, out polygon);
+                                baseGraph.polygons.TryGetValue(vertex.polygonId, out Polygon polygon);
                                 if (polygon != null)
                                 {
                                     // If polygon is internal, don't compute intersection if mid point lies inside the polygon but not on its edges
@@ -407,8 +405,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         internal static bool EdgeIntersect(Edge halfEdge, Edge edge)
         {
-            //For simplicity, it only takes into acount the 2d projection to the xy plane,
-            //so the result will be based on a porjection even if points have z values.
+            //For simplicity, it only takes into account the 2d projection to the xy plane,
+            //so the result will be based on a projection even if points have z values.
             bool intersects = EdgeIntersectProjection(
                 halfEdge.StartVertex,
                 halfEdge.EndVertex,
@@ -421,7 +419,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         internal static bool EdgeIntersect(Vertex start, Vertex end, Edge edge)
         {
-            //For simplicity, it only takes into acount the 2d projection to the xy plane,
+            //For simplicity, it only takes into account the 2d projection to the xy plane,
             //so the result will be based on a projection even if points have z values.
             bool intersects = EdgeIntersectProjection(
                 start,
@@ -480,7 +478,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         internal static bool IsBoundaryVertex(Vertex vertex, Graph graph)
         {
-            return (vertex.polygonId < 0) ? false : graph.polygons[vertex.polygonId].isBoundary;
+            return vertex.polygonId >= 0 && graph.polygons[vertex.polygonId].isBoundary;
         }
 
 
@@ -496,7 +494,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
         public static VisibilityGraph AddEdges(VisibilityGraph visibilityGraph, List<Edge> edges)
         {
             if (edges == null) { throw new NullReferenceException("edges"); }
-            List<Vertex> singleVertices = new List<Vertex>();
+            List<Vertex> singleVertices = [];
 
             foreach (Edge e in edges)
             {
@@ -504,7 +502,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
                 if (!singleVertices.Contains(e.EndVertex)) { singleVertices.Add(e.EndVertex); }
             }
             VisibilityGraph updatedGraph = (VisibilityGraph)visibilityGraph.Clone();
-            if (singleVertices.Any())
+            if (singleVertices.Count != 0)
             {
                 updatedGraph = AddVertices(visibilityGraph, singleVertices);
 
@@ -527,7 +525,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
             if (vertices == null) { throw new NullReferenceException("vertices"); }
 
             VisibilityGraph newVisGraph = (VisibilityGraph)visibilityGraph.Clone();
-            List<Vertex> singleVertices = new List<Vertex>();
+            List<Vertex> singleVertices = [];
 
             foreach (Vertex v in vertices)
             {
@@ -574,7 +572,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
             {
                 Vertex gO = (!containsOrigin) ? origin : null;
                 Vertex gD = (!containsDestination) ? destination : null;
-                Graph tempGraph = new Graph();
+                Graph tempGraph = new();
 
                 if (!containsOrigin)
                 {
@@ -599,10 +597,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         public List<double> ConnectivityFactor()
         {
-            List<int> connected = new List<int>();
+            List<int> connected = [];
             foreach (Edge edge in edges)
             {
-                connected.Add(graph[edge.StartVertex].Count + graph[edge.EndVertex].Count());
+                connected.Add(graph[edge.StartVertex].Count + graph[edge.EndVertex].Count);
             }
             int min = connected.Min();
             int max = connected.Max();
@@ -614,21 +612,20 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
 
         public new object Clone()
         {
-            VisibilityGraph newGraph = new VisibilityGraph()
+            VisibilityGraph newGraph = new()
             {
-                graph = new Dictionary<Vertex, List<Edge>>(),
-                edges = new List<Edge>(this.edges),
-                polygons = new Dictionary<int, Polygon>(this.polygons),
-                baseGraph = (Graph)this.baseGraph.Clone()
+                graph = [],
+                edges = new List<Edge>(edges),
+                polygons = new Dictionary<int, Polygon>(polygons),
+                baseGraph = (Graph)baseGraph.Clone()
             };
 
-            foreach (var item in this.graph)
+            foreach (var item in graph)
             {
                 newGraph.graph.Add(item.Key, new List<Edge>(item.Value));
             }
 
             return newGraph;
         }
-
     }
 }

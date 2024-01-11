@@ -3,8 +3,6 @@ using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.Core.Utillites
 {
@@ -18,11 +16,11 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// </summary>
         /// <param name="surface"></param>
         /// <search></search>
-        public static Autodesk.DesignScript.Geometry.Surface BoundingSurface(this Autodesk.DesignScript.Geometry.Surface surface)
+        public static Surface BoundingSurface(this Surface surface)
         {
-            Autodesk.DesignScript.Geometry.BoundingBox bb = surface.BoundingBox;
+            BoundingBox bb = surface.BoundingBox;
             Cuboid c = bb.ToCuboid();
-            Autodesk.DesignScript.Geometry.Surface srf = (c.Explode())[0] as Autodesk.DesignScript.Geometry.Surface;
+            Surface srf = (c.Explode())[0] as Surface;
 
             bb.Dispose();
             c.Dispose();
@@ -37,18 +35,18 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// </summary>
         /// <param name="surfaces"></param>
         /// <search></search>
-        [MultiReturn(new[] { "maxSrf", "otherSrfs" })]
-        public static Dictionary<string, dynamic> MaximumArea(this List<Autodesk.DesignScript.Geometry.Surface> surfaces)
+        [MultiReturn(["maxSrf", "otherSrfs"])]
+        public static Dictionary<string, dynamic> MaximumArea(this List<Surface> surfaces)
         {
-            List<double> areas = new List<double>();
+            List<double> areas = [];
             for (int i = 0; i < surfaces.Count; i++)
             {
                 areas.Add(surfaces[i].Area);
             }
 
 
-            List<Autodesk.DesignScript.Geometry.Surface> otherSurfaces = new List<Autodesk.DesignScript.Geometry.Surface>();
-            List<int> maxID = new List<int>();
+            List<Surface> otherSurfaces = [];
+            List<int> maxID = [];
             for (int i = 0; i < areas.Count; i++)
             {
                 if (areas[i] == areas.Max())
@@ -61,10 +59,9 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                 }
             }
 
-            Autodesk.DesignScript.Geometry.Surface maxSurface = surfaces[maxID[0]];
+            Surface maxSurface = surfaces[maxID[0]];
 
-            Dictionary<string, dynamic> newOutput;
-            newOutput = new Dictionary<string, dynamic>
+            Dictionary<string, dynamic> newOutput = new()
             {
                 {"maxSrf",maxSurface},
                 {"otherSrfs",otherSurfaces}
@@ -81,12 +78,12 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// <param name="surface"></param>
         /// <param name="offset"></param>
         /// <search></search>
-        [MultiReturn(new[] { "insetCrvs", "outsetCrvs" })]
-        public static Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]> OffsetPerimeterCurves(this Autodesk.DesignScript.Geometry.Surface surface, double offset)
+        [MultiReturn(["insetCrvs", "outsetCrvs"])]
+        public static Dictionary<string, Curve[]> OffsetPerimeterCurves(this Surface surface, double offset)
         {
-            List<Autodesk.DesignScript.Geometry.Curve> srfPerimCrvs = surface.PerimeterCurves().ToList();
+            var srfPerimCrvs = surface.PerimeterCurves();
 
-            Autodesk.DesignScript.Geometry.PolyCurve plyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(srfPerimCrvs);
+            PolyCurve plyCrv = PolyCurve.ByJoinedCurves(srfPerimCrvs, 0.001, false);
 
             double inOffset;
             double outOffset;
@@ -102,19 +99,19 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                 outOffset = offset;
             }
 
-            Autodesk.DesignScript.Geometry.Curve[] inPerimCrvs;
+            Curve[] inPerimCrvs;
             try
             {
-                List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>() { (plyCrv.Offset(inOffset)) };
-                Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(inOffsetCrv);
-                List<Autodesk.DesignScript.Geometry.Curve> inOffsetCrvList = inOffsetPolyCrv.Curves().ToList();
-                List<Autodesk.DesignScript.Geometry.Point> inPts = new List<Autodesk.DesignScript.Geometry.Point>();
-                foreach (Autodesk.DesignScript.Geometry.Curve c in inOffsetCrvList)
+                var inOffsetCrv = plyCrv.OffsetMany(inOffset, false, plyCrv.Normal);
+                PolyCurve inOffsetPolyCrv = PolyCurve.ByJoinedCurves(inOffsetCrv, 0.001, false);
+                var inOffsetCrvList = inOffsetPolyCrv.Curves();
+                List<Point> inPts = [];
+                foreach (Curve c in inOffsetCrvList)
                 {
                     inPts.Add(c.StartPoint);
                 }
-                Autodesk.DesignScript.Geometry.PolyCurve inOffsetPolyCrv2 = PolyCurve.ByPoints(inPts, true);
-                Autodesk.DesignScript.Geometry.Surface inOffsetSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(inOffsetPolyCrv2);
+                PolyCurve inOffsetPolyCrv2 = PolyCurve.ByPoints(inPts, true);
+                Surface inOffsetSrf = Surface.ByPatch(inOffsetPolyCrv2);
                 inPerimCrvs = inOffsetSrf.PerimeterCurves();
                 inOffsetSrf.Dispose();
                 inOffsetPolyCrv.Dispose();
@@ -125,19 +122,19 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                 inPerimCrvs = null;
             }
 
-            Autodesk.DesignScript.Geometry.Curve[] outPerimCrvs;
+            Curve[] outPerimCrvs;
             try
             {
-                List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrv = new List<Autodesk.DesignScript.Geometry.Curve>() { (plyCrv.Offset(outOffset)) };
-                Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(outOffsetCrv);
-                List<Autodesk.DesignScript.Geometry.Curve> outOffsetCrvList = outOffsetPolyCrv.Curves().ToList();
-                List<Autodesk.DesignScript.Geometry.Point> outPts = new List<Autodesk.DesignScript.Geometry.Point>();
-                foreach (Autodesk.DesignScript.Geometry.Curve c in outOffsetCrvList)
+                var outOffsetCrv = plyCrv.OffsetMany(inOffset, false, plyCrv.Normal.Reverse());
+                var outOffsetPolyCrv = PolyCurve.ByJoinedCurves(outOffsetCrv, 0.001, false);
+                var outOffsetCrvList = outOffsetPolyCrv.Curves();
+                List<Point> outPts = [];
+                foreach (Curve c in outOffsetCrvList)
                 {
                     outPts.Add(c.StartPoint);
                 }
-                Autodesk.DesignScript.Geometry.PolyCurve outOffsetPolyCrv2 = PolyCurve.ByPoints(outPts, true);
-                Autodesk.DesignScript.Geometry.Surface outOffsetSrf = Autodesk.DesignScript.Geometry.Surface.ByPatch(outOffsetPolyCrv2);
+                PolyCurve outOffsetPolyCrv2 = PolyCurve.ByPoints(outPts, true);
+                Surface outOffsetSrf = Surface.ByPatch(outOffsetPolyCrv2);
                 outPerimCrvs = outOffsetSrf.PerimeterCurves();
                 outOffsetSrf.Dispose();
                 outOffsetPolyCrv.Dispose();
@@ -150,8 +147,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
             }
 
 
-            Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]> newOutput;
-            newOutput = new Dictionary<string, Autodesk.DesignScript.Geometry.Curve[]>
+            Dictionary<string, Curve[]> newOutput = new()
             {
                 {"insetCrvs",inPerimCrvs},
                 {"outsetCrvs",outPerimCrvs}
@@ -160,7 +156,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
             //Dispose all redundant geometry
 
             plyCrv.Dispose();
-            foreach (Autodesk.DesignScript.Geometry.Curve c in srfPerimCrvs)
+            foreach (Curve c in srfPerimCrvs)
             {
                 c.Dispose();
             }
@@ -176,10 +172,10 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// </summary>
         /// <param name="surfaces"></param>
         /// <search>geometry,base,planar,surface,surfaces,bottom</search>
-        [MultiReturn(new[] { "baseSurfaces", "otherSurfaces" })]
-        public static Dictionary<string, object> PlanarBase(this List<Autodesk.DesignScript.Geometry.Surface> surfaces)
+        [MultiReturn(["baseSurfaces", "otherSurfaces"])]
+        public static Dictionary<string, object> PlanarBase(this List<Surface> surfaces)
         {
-            List<double> zValues = new List<double>();
+            List<double> zValues = [];
             foreach (var srf in surfaces)
             {
                 double z = DSCore.Math.Round(srf.PointAtParameter(0.5, 0.5).Z);
@@ -187,7 +183,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
             }
             double min = zValues.Min();
 
-            List<bool> boolList = new List<bool>();
+            List<bool> boolList = [];
             foreach (double z in zValues)
             {
                 if (z == min)
@@ -199,11 +195,10 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                     boolList.Add(false);
                 }
             }
-            List<Autodesk.DesignScript.Geometry.Surface> baseSrfs = surfaces.Zip(boolList, (name, filter) => new { name = name, filter = filter, }).Where(item => item.filter == true).Select(item => item.name).ToList();
-            List<Autodesk.DesignScript.Geometry.Surface> otherSrfs = surfaces.Zip(boolList, (name, filter) => new { name = name, filter = filter, }).Where(item => item.filter == false).Select(item => item.name).ToList();
+            List<Surface> baseSrfs = surfaces.Zip(boolList, (name, filter) => new { name, filter, }).Where(item => item.filter == true).Select(item => item.name).ToList();
+            List<Surface> otherSrfs = surfaces.Zip(boolList, (name, filter) => new { name, filter, }).Where(item => item.filter == false).Select(item => item.name).ToList();
 
-            Dictionary<string, object> newOutput;
-            newOutput = new Dictionary<string, object>
+            Dictionary<string, object> newOutput = new()
             {
                 {"baseSurfaces",baseSrfs},
                 {"otherSurfaces",otherSrfs}
@@ -219,18 +214,18 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// </summary>
         /// <param name="surfaces"></param>
         /// <search>geometry,top,planar,surface,surfaces,ceiling</search>
-        [MultiReturn(new[] { "topSurfaces", "otherSurfaces" })]
-        public static Dictionary<string, object> PlanarTop(this List<Autodesk.DesignScript.Geometry.Surface> surfaces)
+        [MultiReturn(["topSurfaces", "otherSurfaces"])]
+        public static Dictionary<string, object> PlanarTop(this List<Surface> surfaces)
         {
-            List<double> zValues = new List<double>();
+            List<double> zValues = [];
             foreach (var srf in surfaces)
             {
-                double z = System.Math.Round(srf.PointAtParameter(0.5, 0.5).Z);
+                double z = Math.Round(srf.PointAtParameter(0.5, 0.5).Z);
                 zValues.Add(z);
             }
             double max = zValues.Max();
 
-            List<bool> boolList = new List<bool>();
+            List<bool> boolList = [];
             foreach (double z in zValues)
             {
                 if (z == max)
@@ -242,11 +237,10 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
                     boolList.Add(false);
                 }
             }
-            List<Autodesk.DesignScript.Geometry.Surface> topSrfs = surfaces.Zip(boolList, (name, filter) => new { name = name, filter = filter, }).Where(item => item.filter == true).Select(item => item.name).ToList();
-            List<Autodesk.DesignScript.Geometry.Surface> otherSrfs = surfaces.Zip(boolList, (name, filter) => new { name = name, filter = filter, }).Where(item => item.filter == false).Select(item => item.name).ToList();
+            List<Surface> topSrfs = surfaces.Zip(boolList, (name, filter) => new { name, filter, }).Where(item => item.filter == true).Select(item => item.name).ToList();
+            List<Surface> otherSrfs = surfaces.Zip(boolList, (name, filter) => new { name, filter, }).Where(item => item.filter == false).Select(item => item.name).ToList();
 
-            Dictionary<string, object> newOutput;
-            newOutput = new Dictionary<string, object>
+            Dictionary<string, object> newOutput = new()
             {
                 {"topSurfaces",topSrfs},
                 {"otherSurfaces",otherSrfs}
@@ -263,24 +257,24 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// <param name="srf"></param>
         /// <param name="crvs"></param>
         /// <search></search>
-        public static Autodesk.DesignScript.Geometry.Geometry[] SplitPlanarSurfaceByMultipleCurves(this Autodesk.DesignScript.Geometry.Surface srf, List<Autodesk.DesignScript.Geometry.Curve> crvs)
+        public static DesignScript.Geometry.Geometry[] SplitPlanarSurfaceByMultipleCurves(this Surface srf, List<Curve> crvs)
         {
-            Autodesk.DesignScript.Geometry.Vector vec = srf.NormalAtParameter(0.5, 0.5);
+            Vector vec = srf.NormalAtParameter(0.5, 0.5);
 
-            List<Autodesk.DesignScript.Geometry.Surface> srfLst = new List<Autodesk.DesignScript.Geometry.Surface>();
-            foreach (Autodesk.DesignScript.Geometry.Curve crv in crvs)
+            List<Surface> srfLst = [];
+            foreach (Curve crv in crvs)
             {
-                Autodesk.DesignScript.Geometry.Surface splitSrf = crv.Extrude(vec, 5000);
+                Surface splitSrf = crv.Extrude(vec, 5000);
                 srfLst.Add(splitSrf);
             }
 
-            Autodesk.DesignScript.Geometry.PolySurface polysrf = Autodesk.DesignScript.Geometry.PolySurface.ByJoinedSurfaces(srfLst);
+            PolySurface polysrf = PolySurface.ByJoinedSurfaces(srfLst);
 
-            Autodesk.DesignScript.Geometry.Geometry[] geo = srf.Split(polysrf);
+            DesignScript.Geometry.Geometry[] geo = srf.Split(polysrf);
 
             vec.Dispose();
             polysrf.Dispose();
-            foreach (Autodesk.DesignScript.Geometry.Surface s in srfLst)
+            foreach (Surface s in srfLst)
             {
                 s.Dispose();
             }

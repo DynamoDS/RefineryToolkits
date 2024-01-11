@@ -1,11 +1,10 @@
-﻿using Autodesk.DesignScript.Interfaces;
+﻿using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
 using Autodesk.RefineryToolkits.SpacePlanning.Graphs;
-using Dynamo.Graph.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DSGeom = Autodesk.DesignScript.Geometry;
 using GTGeom = Autodesk.RefineryToolkits.Core.Geometry;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
@@ -18,16 +17,15 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
     {
         #region Properties
         internal Graph graph { get; set; }
-        private DSCore.Color edgeDefaultColour = DSCore.Color.ByARGB(255, 150, 200, 255);
-        private DSCore.Color vertexDefaultColour = DSCore.Color.ByARGB(255, 75, 125, 180);
+        private readonly DSCore.Color edgeDefaultColour = DSCore.Color.ByARGB(255, 150, 200, 255);
+        private readonly DSCore.Color vertexDefaultColour = DSCore.Color.ByARGB(255, 75, 125, 180);
 
         /// <summary>
         /// Checks if the input is a Visibility or Base graph.
         /// </summary>
-        /// <param name="graph">Graph</param>
         /// <returns>Visibility Graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public bool IsVisibilityGraph() => this.GetType() == typeof(RepresentableGraph);
+        public bool IsVisibilityGraph() => GetType() == typeof(RepresentableGraph);
 
         #endregion
 
@@ -50,13 +48,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns name="baseGraph">Base graph</returns>
         [IsVisibleInDynamoLibrary(false)]
         public static BaseGraph ByBoundaryAndInternalPolygons(
-            List<DSGeom.Polygon> boundaries,
-            [DefaultArgument("[]")]List<DSGeom.Polygon> obstacles)
+            List<Polygon> boundaries,
+            [DefaultArgument("[]")] List<Polygon> obstacles)
         {
-            if (boundaries is null)
-                throw new ArgumentNullException(nameof(boundaries));
-            if (obstacles is null)
-                throw new ArgumentNullException(nameof(obstacles));
+            ArgumentNullException.ThrowIfNull(boundaries);
+            ArgumentNullException.ThrowIfNull(obstacles);
 
             var input = new List<GTGeom.Polygon>();
             input.AddRange(FromDynamoPolygons(boundaries, true));
@@ -90,12 +86,11 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="polygons">Polygons</param>
         /// <returns name="baseGraph">Base graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public static BaseGraph ByPolygons(List<DSGeom.Polygon> polygons)
+        public static BaseGraph ByPolygons(List<Polygon> polygons)
         {
             if (polygons is null || polygons.Count == 0)
                 throw new ArgumentNullException(nameof(polygons));
-            List<GTGeom.Polygon> input = new List<GTGeom.Polygon>();
-            input.AddRange(FromDynamoPolygons(polygons, false));
+            List<GTGeom.Polygon> input = [.. FromDynamoPolygons(polygons, false)];
             //foreach (DSGeom.Polygon pol in polygons)
             //{
             //    var vertices = pol.Points.Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z)).ToList();
@@ -112,7 +107,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <param name="lines">Lines</param>
         /// <returns name="baseGraph">Base Graph</returns>
         [IsVisibleInDynamoLibrary(false)]
-        public static BaseGraph ByLines(List<DSGeom.Line> lines)
+        public static BaseGraph ByLines(List<Line> lines)
         {
             if (lines is null || lines.Count == 0)
                 throw new ArgumentNullException(nameof(lines));
@@ -132,12 +127,12 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
 
         #region Helpers
 
-        private static List<GTGeom.Polygon> FromDynamoPolygons(List<DSGeom.Polygon> polygons, bool external)
+        private static List<GTGeom.Polygon> FromDynamoPolygons(List<Polygon> polygons, bool external)
         {
             var gtPolygons = new List<GTGeom.Polygon>();
             for (var i = 0; i < polygons.Count; i++)
             {
-                var vertices = polygons[i].Points
+                var vertices = ((PolyCurve)polygons[i]).Points
                     .Select(pt => GTGeom.Vertex.ByCoordinates(pt.X, pt.Y, pt.Z))
                     .ToList();
                 GTGeom.Polygon gPol = GTGeom.Polygon.ByVertices(vertices, external);
@@ -155,7 +150,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("Graph:(gVertices: {0}, gEdges: {1})", graph.vertices.Count.ToString(), graph.edges.Count.ToString());
+            return string.Format("Graph:(gVertices: {0}, gEdges: {1})", graph.vertices.Count.ToString(), graph.edges.Count.ToString());
         }
 
         /// <summary>
@@ -168,7 +163,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
             IRenderPackage package,
             TessellationParameters parameters)
         {
-            if (this.GetType() == typeof(RepresentableGraph))
+            if (GetType() == typeof(RepresentableGraph))
             {
                 RepresentableGraph visGraph = this as RepresentableGraph;
                 if (visGraph.Factors != null && visGraph.colorRange != null)

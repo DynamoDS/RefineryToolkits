@@ -1,10 +1,5 @@
 ﻿using NUnit.Framework;
-using Autodesk.RefineryToolkits.SpacePlanning.Rank;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Rank.Tests
 {
@@ -16,7 +11,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Rank.Tests
         [SetUp]
         public void BeforeTest()
         {
-            sampleList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            sampleList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         }
 
         /// <summary>
@@ -27,7 +22,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Rank.Tests
         public void ShuffledListIsDifferentFromOriginalListTest()
         {
             var listShuffle1 = ListShuffle.SeededShuffle(sampleList);
-            Assert.AreNotEqual(sampleList, listShuffle1);     
+            Assert.AreNotEqual(sampleList, listShuffle1);
         }
 
         /// <summary>

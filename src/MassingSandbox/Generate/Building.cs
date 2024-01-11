@@ -95,9 +95,9 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
         [NodeCategory("Create")]
-        [MultiReturn(new[] { "buildingSolid", "floorSrfList", "netFloorSrfList", "floorElevationList", "coreSolidList", "topPlane", "buildingVolume", "grossFloorArea", "netFloorArea", "totalFacadeArea", })]
+        [MultiReturn(["buildingSolid", "floorSrfList", "netFloorSrfList", "floorElevationList", "coreSolidList", "topPlane", "buildingVolume", "grossFloorArea", "netFloorArea", "totalFacadeArea",])]
         public static Dictionary<string, object> ByTypeArea(
-            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane basePlane = null,
+            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")] Plane basePlane = null,
             string typeStr = "L",
             double length = 50,
             double width = 40,
@@ -118,8 +118,8 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
             var building = InitializeBuilding(typeStr);
 
-            building.CreateBuilding(basePlane, floorHeight, 
-                buildingArea, floorCount: null, 
+            building.CreateBuilding(basePlane, floorHeight,
+                buildingArea, floorCount: null,
                 width, length, depth, curvedBool, createCoreBool, hallwayToDepth, coreSizeFactorFloors, coreSizeFactorArea);
 
             building.DisposeNonExports();
@@ -166,9 +166,9 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
         [NodeCategory("Create")]
-        [MultiReturn(new[] { "buildingSolid", "floorSrfList", "netFloorSrfList", "floorElevationList", "coreSolidList", "topPlane", "buildingVolume", "grossFloorArea", "netFloorArea", "totalFacadeArea", })]
+        [MultiReturn(["buildingSolid", "floorSrfList", "netFloorSrfList", "floorElevationList", "coreSolidList", "topPlane", "buildingVolume", "grossFloorArea", "netFloorArea", "totalFacadeArea",])]
         public static Dictionary<string, object> ByTypeFloors(
-            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")]Plane basePlane = null,
+            [DefaultArgument("Autodesk.DesignScript.Geometry.Plane.XY();")] Plane basePlane = null,
             string typeStr = "L",
             double length = 50,
             double width = 40,
@@ -189,8 +189,8 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
             var building = InitializeBuilding(typeStr);
 
-            building.CreateBuilding(basePlane, floorHeight, 
-                targetBuildingArea: null, floorCount: floorCount, 
+            building.CreateBuilding(basePlane, floorHeight,
+                targetBuildingArea: null, floorCount: floorCount,
                 width, length, depth, curvedBool, createCoreBool, hallwayToDepth, coreSizeFactorFloors, coreSizeFactorArea);
 
             building.DisposeNonExports();
@@ -219,13 +219,13 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         /// <returns name="horizontalSrfList">Horizontal surfaces.</returns>
         /// <search>building,design,refinery</search>
         [NodeCategory("Query")]
-        [MultiReturn(new[] { "verticalSrfList", "horizontalSrfList" })]
+        [MultiReturn(["verticalSrfList", "horizontalSrfList"])]
         public static Dictionary<string, object> DeconstructFacadeShell(Topology solid, double angleThreshold = 45)
         {
-            List<Surface> horizontal = new List<Surface>();
-            List<Surface> vertical = new List<Surface>();
+            List<Surface> horizontal = [];
+            List<Surface> vertical = [];
 
-            if (solid == null) { throw new ArgumentNullException(nameof(solid)); }
+            ArgumentNullException.ThrowIfNull(solid);
             if (angleThreshold < 0 || angleThreshold > 90)
             {
                 throw new ArgumentOutOfRangeException(nameof(angleThreshold), $"{nameof(angleThreshold)} must be between 0 and 90.");
@@ -263,7 +263,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         /// <exception cref="ArgumentNullException">Surface</exception>
         public static PolyCurve[] GetSurfaceLoops(Surface surface)
         {
-            if (surface == null) { throw new ArgumentNullException(nameof(surface)); }
+            ArgumentNullException.ThrowIfNull(surface);
 
             var curves = surface.PerimeterCurves();
 
@@ -300,7 +300,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
                 if (!added)
                 {
-                    loops.Add(PolyCurve.ByJoinedCurves(new[] { curve }));
+                    loops.Add(PolyCurve.ByJoinedCurves(new[] { curve }, 0.001, false));
                 }
 
                 curve.Dispose();
@@ -308,13 +308,16 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
             if (loops.Any(loop => !loop.IsClosed)) { throw new ArgumentException("Created non-closed polycurve."); }
 
-            return loops.OrderByDescending(c =>
-            {
-                using (var s = Surface.ByPatch(c))
-                {
-                    return s.Area;
-                }
-            }).ToArray();
+            return
+            [
+                .. loops.OrderByDescending(c =>
+                            {
+                                using (var s = Surface.ByPatch(c))
+                                {
+                                    return s.Area;
+                                }
+                            }),
+            ];
         }
 
         /// <summary>
@@ -332,7 +335,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
         [NodeCategory("Create")]
-        [MultiReturn(new[] { "buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea", })]
+        [MultiReturn(["buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea",])]
         public static Dictionary<string, object> ByOutlineArea(
             List<Curve> edgeLoopCrvList,
             double buildingArea = 10000,
@@ -374,7 +377,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         /// <returns name="totalFacadeArea">Combined area of all facades (vertical surfaces).</returns>
         /// <search>building,design,refinery</search>
         [NodeCategory("Create")]
-        [MultiReturn(new[] { "buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea", })]
+        [MultiReturn(["buildingSolid", "floorSrfList", "floorElevationList", "topPlane", "buildingVolume", "grossFloorArea", "totalFacadeArea",])]
         public static Dictionary<string, object> ByOutlineFloors(
             List<Curve> edgeLoopCrvList,
             int floorCount = 10,

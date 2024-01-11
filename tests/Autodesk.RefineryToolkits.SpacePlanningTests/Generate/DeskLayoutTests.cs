@@ -1,10 +1,5 @@
 ﻿using NUnit.Framework;
-using Autodesk.RefineryToolkits.SpacePlanning.Generate;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServices;
 using Autodesk.DesignScript.Geometry;
 

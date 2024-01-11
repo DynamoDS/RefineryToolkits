@@ -1,13 +1,7 @@
 ﻿using NUnit.Framework;
-using Autodesk.RefineryToolkits.SpacePlanning.Generate;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServices;
 using Autodesk.DesignScript.Geometry;
-using DSCore;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
 {
@@ -29,7 +23,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
                 Point.ByCoordinates(-7.419, 16.573, 0)
             }, true));
 
-            List<double> newRange = DSCore.Math.RemapRange(new List<double> { 0,1,2,3,4,5,6,7,8,9}, 0, 1) as List<double>;
+            List<double> newRange = DSCore.Math.RemapRange(new List<double> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 0, 1) as List<double>;
             uParams = newRange;
             vParams = newRange;
         }
@@ -40,9 +34,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Tests
         [Test]
         public void DivideSurfaceReturnsListOfSurfacesTest()
         {
-            var result = SurfaceDivision2D.DivideSurface(surface,uParams,vParams);
+            var result = SurfaceDivision2D.DivideSurface(surface, uParams, vParams);
 
-            Assert.IsTrue(result is List<Geometry>);
+            Assert.IsTrue(result is not null);
         }
 
         /// <summary>

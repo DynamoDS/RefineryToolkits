@@ -11,8 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.RefineryToolkits.Core.Utillites;
 
 namespace Autodesk.RefineryToolkits.Core.Geometry
@@ -67,7 +65,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <returns name="midVertex"></returns>
-        public static Vertex MidVertex ( Vertex v1, Vertex v2)
+        public static Vertex MidVertex(Vertex v1, Vertex v2)
         {
             double x = (v1.X + v2.X) / 2, y = (v1.Y + v2.Y) / 2, z = (v1.Z + v2.Z) / 2;
             return new Vertex(x, y, z);
@@ -78,12 +76,12 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             return new Vertex(0, 0, 0);
         }
         #endregion
-                
-        public static List<Vertex> OrderByRadianAndDistance (List<Vertex> vertices, Vertex centre = null)
+
+        public static List<Vertex> OrderByRadianAndDistance(List<Vertex> vertices, Vertex centre = null)
         {
-            if(centre == null) { centre = Vertex.MinimumVertex(vertices); }
-            return vertices.OrderBy(v => RadAngle(centre, v)).ThenBy(v => centre.DistanceTo(v)).ToList();
-            
+            centre ??= MinimumVertex(vertices);
+            return [.. vertices.OrderBy(v => RadAngle(centre, v)).ThenBy(v => centre.DistanceTo(v))];
+
         }
 
         public static int Orientation(Vertex v1, Vertex p2, Vertex p3, string plane = "xy")
@@ -118,7 +116,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             double dy = vertex.Y - centre.Y;
             bool onYAxis = dx.AlmostEqualTo(0);
             bool onXAxis = dy.AlmostEqualTo(0);
-            //TODO: Implement Z angle? that would becom UV coordinates.
+            //TODO: Implement Z angle? that would become UV coordinates.
             //double dz = vertex.point.Z - centre.point.Z;
 
             if (onYAxis && onXAxis) { return 0; }
@@ -150,7 +148,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             return Math.Atan(dy / dx);
         }
 
-        public static double ArcRadAngle (Vertex centre, Vertex start, Vertex end)
+        public static double ArcRadAngle(Vertex centre, Vertex start, Vertex end)
         {
             double a = Math.Pow((end.X - centre.X), 2) + Math.Pow((end.Y - centre.Y), 2);
             double b = Math.Pow((end.X - start.X), 2) + Math.Pow((end.Y - start.Y), 2);
@@ -177,32 +175,32 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             Vector denominator = Vector.ByTwoVertices(edge.EndVertex, edge.StartVertex);
             return numerator.Length / denominator.Length;
         }
-        
+
         public Vertex Translate(Vector vector)
         {
-            return Vertex.ByCoordinates(this.X + vector.X, this.Y + vector.Y, this.Z + vector.Z);
+            return ByCoordinates(X + vector.X, Y + vector.Y, Z + vector.Z);
         }
 
         public Vertex Translate(Vector vector, double distance)
         {
             Vector normalized = vector.Normalized();
             Vector distVector = normalized * distance;
-            return this.Translate(distVector);
+            return Translate(distVector);
         }
 
         public bool OnEdge(Edge edge)
         {
-            return this.OnEdge(edge.StartVertex, edge.EndVertex);
+            return OnEdge(edge.StartVertex, edge.EndVertex);
         }
 
         public bool OnEdge(Vertex start, Vertex end)
         {
-            if(this.Equals(start) || this.Equals(end)) { return true; }
+            if (Equals(start) || Equals(end)) { return true; }
             // https://www.lucidarme.me/check-if-a-point-belongs-on-a-line-segment/
             Vector startEnd = Vector.ByTwoVertices(start, end);
             Vector startMid = Vector.ByTwoVertices(start, this);
             Vector endMid = Vector.ByTwoVertices(this, end);
-            if (!startMid.IsParallelTo(endMid)){ return false; } // Not aligned
+            if (!startMid.IsParallelTo(endMid)) { return false; } // Not aligned
             double dotAC = startEnd.Dot(startMid);
             double dotAB = startEnd.Dot(startEnd);
             return 0 <= dotAC && dotAC <= dotAB;
@@ -216,7 +214,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         public static bool Coplanar(List<Vertex> vertices)
         {
             // https://math.stackexchange.com/questions/1330357/show-that-four-points-are-coplanar
-            if (!vertices.Any()) { throw new ArgumentOutOfRangeException("vertices", "Vertices list cannot be empty"); }
+            if (vertices.Count == 0) { throw new ArgumentOutOfRangeException("vertices", "Vertices list cannot be empty"); }
             if (vertices.Count <= 3) { return true; }
             Vector ab = Vector.ByTwoVertices(vertices[0], vertices[1]);
             Vector ac = Vector.ByTwoVertices(vertices[0], vertices[2]);
@@ -257,7 +255,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         public bool Equals(Vertex obj)
         {
             if (obj == null) { return false; }
-            bool eq = this.X.AlmostEqualTo(obj.X) && this.Y.AlmostEqualTo(obj.Y) && this.Z.AlmostEqualTo(obj.Z);
+            bool eq = X.AlmostEqualTo(obj.X) && Y.AlmostEqualTo(obj.Y) && Z.AlmostEqualTo(obj.Z);
             return eq;
         }
 
@@ -270,15 +268,17 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
             return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
         }
 
-       
+
         /// <summary>
         /// Override of ToStringMethod
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            System.Globalization.NumberFormatInfo inf = new System.Globalization.NumberFormatInfo();
-            inf.NumberDecimalSeparator = ".";
+            System.Globalization.NumberFormatInfo inf = new()
+            {
+                NumberDecimalSeparator = "."
+            };
             return string.Format("Vertex(X = {0}, Y = {1}, Z = {2})", X.ToString("0.000", inf), Y.ToString("0.000", inf), Z.ToString("0.000", inf));
         }
 
@@ -299,7 +299,7 @@ namespace Autodesk.RefineryToolkits.Core.Geometry
         /// </summary>
         public object Clone()
         {
-            Vertex newVertex = new Vertex(this.X, this.Y, this.Z, this.polygonId);
+            Vertex newVertex = new(X, Y, Z, polygonId);
 
             return newVertex;
         }

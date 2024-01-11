@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.Core.Utillites
 {
@@ -22,7 +20,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         public static void AddItemSorted<T>(this List<T> list, T item, IComparer<T> comparer = null) where T : IComparable<T>
         {
             int lo = 0;
-            int hi = list.Count();
+            int hi = list.Count;
             while (lo < hi)
             {
                 int mid = (int)(lo + hi) / 2;
@@ -49,9 +47,9 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// <param name="comparer"></param>
         public static void AddItemsSorted<T>(this List<T> list, T[] items, IComparer<T> comparer = null) where T : IComparable<T>
         {
-            foreach(var item in items)
+            foreach (var item in items)
             {
-                list.AddItemSorted<T>(item, comparer);
+                list.AddItemSorted(item, comparer);
             }
         }
 
@@ -64,7 +62,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// <param name="item"></param>
         /// <returns name="index">Item's index</returns>
         /// <param name="comparer"></param>
-        public static int BisectIndex<T> (this List<T> list, T item, IComparer<T> comparer = null) where T : IComparable<T>
+        public static int BisectIndex<T>(this List<T> list, T item, IComparer<T> comparer = null) where T : IComparable<T>
         {
             int lo = 0, hi = list.Count;
             while (lo < hi)
@@ -109,10 +107,10 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         public static List<double> RunningTotals(this List<double> numbers)
         {
             double count = 0;
-            List<double> runningTotals = new List<double>();
+            List<double> runningTotals = [];
             foreach (double n in numbers)
             {
-                count = count + n;
+                count += n;
                 runningTotals.Add(count);
             }
             return runningTotals;

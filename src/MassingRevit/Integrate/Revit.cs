@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using DynamoElements = Autodesk.DesignScript.Geometry;
 using Autodesk.Revit.DB;
-using Revit.Elements;
 using RevitElements = Autodesk.Revit.DB;
 using DynamoRevitElements = Revit.Elements;
-using Revit.GeometryConversion;
 using RevitServices.Persistence;
 using RevitServices.Transactions;
 using Autodesk.DesignScript.Geometry;
 using Dynamo.Graph.Nodes;
 using Autodesk.RefineryToolkits.MassingSandbox.Generate;
+using Revit.GeometryConversion;
+using Revit.Elements;
 
 namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
 {
@@ -33,18 +33,18 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
         [NodeCategory("Create")]
         public static List<List<DynamoRevitElements.Floor>> CreateRevitFloors(
             DynamoElements.Surface[][] srfList,
-            DynamoRevitElements.FloorType floorType, 
+            DynamoRevitElements.FloorType floorType,
             string levelPrefixStr = "Dynamo Level")
         {
-            if (srfList == null) { throw new ArgumentNullException(nameof(srfList)); }
-            
-            if (!(floorType.InternalElement is RevitElements.FloorType revitFloorType))
+            ArgumentNullException.ThrowIfNull(srfList);
+
+            if (floorType.InternalElement is not RevitElements.FloorType revitFloorType)
             {
                 throw new ArgumentOutOfRangeException(nameof(floorType));
             }
 
-            DisplayUnitType unitType = Document.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits;
-            
+            var unitType = Document.GetUnits().GetFormatOptions(SpecTypeId.Length).GetUnitTypeId();
+
             var FloorElements = new List<List<DynamoRevitElements.Floor>>();
             var collector = new FilteredElementCollector(Document);
 
@@ -56,10 +56,9 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
 
             for (var i = 0; i < srfList.Length; i++)
             {
+                ArgumentNullException.ThrowIfNull(srfList[i]);
 
-                if (srfList[i] == null) { throw new ArgumentNullException(nameof(srfList)); }
-
-                FloorElements.Add(new List<DynamoRevitElements.Floor>());
+                FloorElements.Add([]);
 
                 string levelName = $"{levelPrefixStr} {i + 1}";
                 var revitLevel = levels.FirstOrDefault(level => level.Name == levelName);
@@ -83,17 +82,18 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
                     revitLevel.Name = levelName;
                 }
 
+                var floorCurves = new List<CurveLoop>();
                 var revitCurves = new CurveArray();
 
                 foreach (var surface in srfList[i])
                 {
                     var loops = Building.GetSurfaceLoops(surface);
 
-                    revitCurves.Clear();
+                    floorCurves.Clear();
 
-                    loops[0].Curves().ForEach(curve => revitCurves.Append(curve.ToRevitType()));
-                    
-                    var revitFloor = Document.Create.NewFloor(revitCurves, revitFloorType, revitLevel, true);
+                    floorCurves.Add(loops[0].ToRevitType());
+
+                    var revitFloor = RevitElements.Floor.Create(Document, floorCurves, revitFloorType.Id, revitLevel.Id);
 
                     FloorElements.Last().Add(revitFloor.ToDSType(false) as DynamoRevitElements.Floor);
 
@@ -113,12 +113,14 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
                     loops.ForEach(x => x.Dispose());
                     revitFloor.Dispose();
                 }
-                
+
                 revitCurves.Dispose();
+                floorCurves.ForEach(x => x.Dispose());
+                floorCurves.Clear();
             }
 
             TransactionManager.Instance.TransactionTaskDone();
-            
+
             collector.Dispose();
 
             return FloorElements;
@@ -134,10 +136,7 @@ namespace Autodesk.RefineryToolkits.MassingRevit.Integrate
         [NodeCategory("Create")]
         public static DynamoRevitElements.DirectShape CreateRevitMass(DynamoElements.Solid BuildingSolid, DynamoRevitElements.Category Category)
         {
-            if (BuildingSolid == null)
-            {
-                throw new ArgumentNullException(nameof(BuildingSolid));
-            }
+            ArgumentNullException.ThrowIfNull(BuildingSolid);
 
             var revitCategory = Document.Settings.Categories.get_Item(Category.Name);
 

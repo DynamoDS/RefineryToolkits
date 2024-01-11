@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
@@ -14,13 +12,13 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
         protected override void Setup()
         {
-            UsesDepth = Width <= Depth * 2 || Length <= Depth ? false : true;
+            UsesDepth = Width > Depth * 2 && Length > Depth;
         }
 
         protected override (Curve boundary, List<Curve> holes) CreateBaseCurves()
         {
             Curve boundary = null;
-            
+
             if (UsesDepth)
             {
                 var points = new[]
@@ -60,10 +58,10 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
                 double coreHeight = Depth * (1 - (2 * hallwayToDepth));
 
-                return new List<Curve>
-                {
+                return
+                [
                     Rectangle.ByWidthLength(BaseCenter, CoreArea / coreHeight, coreHeight)
-                };
+                ];
             }
             else
             {

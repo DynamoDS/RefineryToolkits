@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
@@ -14,7 +12,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
         protected override void Setup()
         {
-            UsesDepth = Width <= Depth || Length <= Depth ? false : true;
+            UsesDepth = Width > Depth && Length > Depth;
         }
 
         protected override (Curve boundary, List<Curve> holes) CreateBaseCurves()
@@ -59,10 +57,10 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 using (var zAxis = Vector.ZAxis())
                 using (var plane = Plane.ByOriginNormal(point, zAxis))
                 {
-                    return new List<Curve>
-                    {
+                    return
+                    [
                         Rectangle.ByWidthLength(plane, CoreArea / coreHeight, coreHeight)
-                    };
+                    ];
                 }
             }
             else

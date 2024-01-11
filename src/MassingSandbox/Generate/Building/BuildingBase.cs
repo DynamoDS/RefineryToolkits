@@ -20,12 +20,12 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         public double FloorHeight { get; protected set; }
         public bool IsCurved { get; protected set; }
         public Solid Mass { get; protected set; }
-        public List<Solid> Cores { get; protected set; } = new List<Solid>();
+        public List<Solid> Cores { get; protected set; } = [];
         public double TotalVolume { get; protected set; }
         public Plane TopPlane { get; protected set; }
         public double FacadeArea { get; protected set; }
-        public List<double> FloorElevations { get; protected set; } = new List<double>();
-        public List<Surface[]> Floors { get; protected set; } = new List<Surface[]>();
+        public List<double> FloorElevations { get; protected set; } = [];
+        public List<Surface[]> Floors { get; protected set; } = [];
         public List<Surface[]> NetFloors { get; protected set; }
         public int FloorCount { get; set; }
         public ShapeType Type { get; set; }
@@ -48,7 +48,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         }
 
         public void CreateBuilding(
-            Plane basePlane, double floorHeight, 
+            Plane basePlane, double floorHeight,
             double? targetBuildingArea = null, int? floorCount = null,
             double width = 0, double length = 0, double depth = 0,
             bool isCurved = false, bool createCores = false,
@@ -72,9 +72,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
 
             Setup();
 
-            Surface baseSurface = MakeBaseSurface();
-
-            if (baseSurface == null) { throw new ArgumentException("Could not create building shape."); }
+            Surface baseSurface = MakeBaseSurface() ?? throw new ArgumentException("Could not create building shape.");
 
             // Surface is constructed with lower left corner at (0,0). Move and rotate to given base plane.
             baseSurface = TransformFromOrigin(baseSurface);
@@ -104,7 +102,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
             {
                 using (var offsetVector = Vector.ByCoordinates(0, 0, i * FloorHeight))
                 {
-                    Floors.Add(new[] { (Surface)baseSurface.Translate(offsetVector) });
+                    Floors.Add([(Surface)baseSurface.Translate(offsetVector)]);
                     FloorElevations.Add(BasePlane.Origin.Z + (i * FloorHeight));
                 }
             }
@@ -127,7 +125,8 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 }
 
                 // Transform all cores from origin.
-                foreach (var coreBase in coreBases){
+                foreach (var coreBase in coreBases)
+                {
                     using (var core = coreBase.Thicken(FloorCount * FloorHeight, both_sides: false))
                     {
                         Cores.Add(TransformFromOrigin(core));
@@ -137,11 +136,11 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 }
 
                 // Cut cores out of floors.
-                NetFloors = new List<Surface[]>();
+                NetFloors = [];
 
                 foreach (var floor in Floors)
                 {
-                    NetFloors.Add(Cores.Aggregate(floor, 
+                    NetFloors.Add(Cores.Aggregate(floor,
                         (f, core) => f.SelectMany(
                                 surface => surface.SubtractFrom(core))
                             .Cast<Surface>()
@@ -177,13 +176,13 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         protected virtual List<Curve> CreateCoreCurves()
         {
             // Simple box building, core has same aspect ratio as floorplate.
-            return new List<Curve>
-            {
+            return
+            [
                 Rectangle.ByWidthLength(
                     BaseCenter,
                     Width * Math.Sqrt(CoreArea / FloorArea),
                     Length * Math.Sqrt(CoreArea / FloorArea))
-            };
+            ];
         }
 
         public virtual bool IsValid()
@@ -218,7 +217,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
                 {
                     try
                     {
-                        baseSurface = baseSurface.TrimWithEdgeLoops(holes.Select(c => PolyCurve.ByJoinedCurves(new[] { c })));
+                        baseSurface = baseSurface.TrimWithEdgeLoops(holes.Select(c => PolyCurve.ByJoinedCurves(new[] { c }, 0.0001, false)), 0);
                         break;
                     }
                     catch (ApplicationException)
@@ -239,11 +238,11 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
         {
             List<Curve> boundaries = CreateCoreCurves();
 
-            List<Surface> baseSurfaces = new List<Surface>();
+            List<Surface> baseSurfaces = [];
 
             try
             {
-                foreach(var boundary in boundaries)
+                foreach (var boundary in boundaries)
                 {
                     baseSurfaces.Add(Surface.ByPatch(boundary));
                 }
@@ -254,7 +253,7 @@ namespace Autodesk.RefineryToolkits.MassingSandbox.Generate
             }
 
             boundaries.ForEach(x => x.Dispose());
-            
+
             return baseSurfaces;
         }
 

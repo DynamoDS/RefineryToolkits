@@ -1,9 +1,4 @@
 ﻿using Autodesk.DesignScript.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.Core.Utillites
 {
@@ -18,18 +13,18 @@ namespace Autodesk.RefineryToolkits.Core.Utillites
         /// <param name="line"></param>
         /// <param name="distance"></param>
         /// <search></search>
-        public static Autodesk.DesignScript.Geometry.Line ExtendAtBothEnds(this Autodesk.DesignScript.Geometry.Curve line, double distance)
+        public static DesignScript.Geometry.Line ExtendAtBothEnds(this DesignScript.Geometry.Curve line, double distance)
         {
-            Autodesk.DesignScript.Geometry.Point stPt = line.StartPoint;
-            Autodesk.DesignScript.Geometry.Point endPt = line.EndPoint;
+            DesignScript.Geometry.Point stPt = line.StartPoint;
+            DesignScript.Geometry.Point endPt = line.EndPoint;
 
-            Autodesk.DesignScript.Geometry.Vector vec1 = Autodesk.DesignScript.Geometry.Vector.ByTwoPoints(endPt, stPt);
-            Autodesk.DesignScript.Geometry.Vector vec2 = Autodesk.DesignScript.Geometry.Vector.ByTwoPoints(stPt, endPt);
+            DesignScript.Geometry.Vector vec1 = DesignScript.Geometry.Vector.ByTwoPoints(endPt, stPt);
+            DesignScript.Geometry.Vector vec2 = DesignScript.Geometry.Vector.ByTwoPoints(stPt, endPt);
 
-            Autodesk.DesignScript.Geometry.Point newStPt = stPt.Translate(vec1, distance) as Autodesk.DesignScript.Geometry.Point;
-            Autodesk.DesignScript.Geometry.Point newEndPt = endPt.Translate(vec2, distance) as Autodesk.DesignScript.Geometry.Point;
+            DesignScript.Geometry.Point newStPt = stPt.Translate(vec1, distance) as DesignScript.Geometry.Point;
+            DesignScript.Geometry.Point newEndPt = endPt.Translate(vec2, distance) as DesignScript.Geometry.Point;
 
-            Autodesk.DesignScript.Geometry.Line newLine = Autodesk.DesignScript.Geometry.Line.ByStartPointEndPoint(newStPt, newEndPt);
+            DesignScript.Geometry.Line newLine = DesignScript.Geometry.Line.ByStartPointEndPoint(newStPt, newEndPt);
 
             //Dispose redundant geometry
             stPt.Dispose();

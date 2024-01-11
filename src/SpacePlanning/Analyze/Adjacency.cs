@@ -38,9 +38,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                 // when points are colinear, return the mid point of the line formed by all points
                 if (points.AreColinear())
                 {
-                    Point min = GTGeom.Points.MinimumPoint(points);
-                    Point max = GTGeom.Points.MaximumPoint(points);
-                    Point mid = GTGeom.Points.MidPoint(min, max);
+                    Point min = Points.MinimumPoint(points);
+                    Point max = Points.MaximumPoint(points);
+                    Point mid = Points.MidPoint(min, max);
                     min.Dispose();
                     max.Dispose();
 
@@ -130,7 +130,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
                         {
                             minimumDistance = newDistance;
                             currentX = points[i].X;
-                            currentX = points[i].Y;
+                            currentY = points[i].Y;
                         }
                     }
                 }
@@ -360,14 +360,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze
         #endregion
 
         [IsVisibleInDynamoLibrary(false)]
-        private class Vertex : IVertex
+        private class Vertex(double x, double y) : IVertex
         {
-            public Vertex(double x, double y)
-            {
-                this.Position = new double[2] { x, y };
-            }
-
-            public double[] Position { get; set; }
+            public double[] Position { get; set; } = [x, y];
         }
     }
 }

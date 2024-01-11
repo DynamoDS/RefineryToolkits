@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Autodesk.DesignScript.Geometry;
 
 namespace Autodesk.RefineryToolkits.MassingSandbox.Generate

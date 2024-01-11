@@ -140,7 +140,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("EdgeKey: (gEdge={0}, centre={1}, vertex={2})", Edge.ToString(), Centre.ToString(), Vertex.ToString());
+            return string.Format("EdgeKey: (gEdge={0}, centre={1}, vertex={2})", Edge.ToString(), Centre.ToString(), Vertex.ToString());
         }
     }
 

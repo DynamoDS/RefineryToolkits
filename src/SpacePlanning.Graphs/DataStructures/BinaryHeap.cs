@@ -11,8 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
 {
@@ -90,7 +88,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <param name="capacity">Heap initial capacity</param>
         public BinaryHeap(BinaryHeapType heapType, int capacity)
         {
-            if( capacity < 1) { throw new ArgumentException("Capacity must be greater than zero"); }
+            if (capacity < 1) { throw new ArgumentException("Capacity must be greater than zero"); }
             Capacity = capacity;
             _heapType = heapType;
             _heapItems = new TObject[capacity];
@@ -100,10 +98,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
 
         #region Private Methods
 
-        internal virtual void SetCapacity (int newCapacity)
+        internal virtual void SetCapacity(int newCapacity)
         {
             newCapacity = Math.Max(newCapacity, _size);
-            if(_capacity != newCapacity)
+            if (_capacity != newCapacity)
             {
                 _capacity = newCapacity;
                 Array.Resize(ref _heapItems, _capacity);
@@ -112,7 +110,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
 
         private void EnsureCapacity(int itemsToAdd = 0)
         {
-            if(_size + itemsToAdd >= _capacity)
+            if (_size + itemsToAdd >= _capacity)
             {
                 SetCapacity(_capacity * GROWTH_FACTOR);
             }
@@ -127,17 +125,17 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
 
         #region Internal Methods
 
-        internal int ParentIndex (int childIndex) { return (childIndex - 1) / 2; }
-        internal int LeftChildIndex (int parentIndex) { return 2 * parentIndex + 1; }
-        internal int RightChildIndex (int parentIndex) { return 2 * parentIndex + 2; }
+        internal static int ParentIndex(int childIndex) { return (childIndex - 1) / 2; }
+        internal static int LeftChildIndex(int parentIndex) { return 2 * parentIndex + 1; }
+        internal static int RightChildIndex(int parentIndex) { return 2 * parentIndex + 2; }
 
-        internal bool HasLeftChild (int parentIndex) { return LeftChildIndex(parentIndex) < _size; }
-        internal bool HasRightChild (int parentIndex) { return RightChildIndex(parentIndex) < _size; }
-        internal bool HasParent (int childIndex) { return ParentIndex(childIndex) >= 0; }
+        internal bool HasLeftChild(int parentIndex) { return LeftChildIndex(parentIndex) < _size; }
+        internal bool HasRightChild(int parentIndex) { return RightChildIndex(parentIndex) < _size; }
+        internal bool HasParent(int childIndex) { return ParentIndex(childIndex) >= 0; }
 
-        internal TObject LeftChild (int parentIndex) { return _heapItems[LeftChildIndex(parentIndex)]; }
-        internal TObject RightChild (int parentIndex) { return _heapItems[RightChildIndex(parentIndex)]; }
-        internal TObject Parent (int childIndex) { return _heapItems[ParentIndex(childIndex)]; }
+        internal TObject LeftChild(int parentIndex) { return _heapItems[LeftChildIndex(parentIndex)]; }
+        internal TObject RightChild(int parentIndex) { return _heapItems[RightChildIndex(parentIndex)]; }
+        internal TObject Parent(int childIndex) { return _heapItems[ParentIndex(childIndex)]; }
 
         /// <summary>
         /// Swap items
@@ -146,9 +144,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <param name="secondIndex">Index of second item</param>
         internal virtual void Swap(int firstIndex, int secondIndex)
         {
-            var tempItem = _heapItems[firstIndex];
-            _heapItems[firstIndex] = _heapItems[secondIndex];
-            _heapItems[secondIndex] = tempItem;
+            (_heapItems[secondIndex], _heapItems[firstIndex]) = (_heapItems[firstIndex], _heapItems[secondIndex]);
         }
 
         internal void HeapifyDown(int index = 0)
@@ -161,7 +157,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
                     switch (HeapType)
                     {
                         case BinaryHeapType.MinHeap:
-                            if(RightChild(index).CompareTo(LeftChild(index)) == -1) { smallestChildIndex = RightChildIndex(index); }
+                            if (RightChild(index).CompareTo(LeftChild(index)) == -1) { smallestChildIndex = RightChildIndex(index); }
                             break;
                         case BinaryHeapType.MaxHeap:
                             if (RightChild(index).CompareTo(LeftChild(index)) == 1) { smallestChildIndex = RightChildIndex(index); }
@@ -169,14 +165,14 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
                         default:
                             break;
                     }
-                    
+
                 }
 
                 if (HeapType == BinaryHeapType.MinHeap && _heapItems[index].CompareTo(_heapItems[smallestChildIndex]) == -1)
                 {
                     break;
                 }
-                else if(HeapType == BinaryHeapType.MaxHeap && _heapItems[index].CompareTo(_heapItems[smallestChildIndex]) == 1)
+                else if (HeapType == BinaryHeapType.MaxHeap && _heapItems[index].CompareTo(_heapItems[smallestChildIndex]) == 1)
                 {
                     break;
                 }
@@ -190,15 +186,16 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
 
         internal void HeapifyUp(int index = -1)
         {
-            index = (index < 0) ? this.Size - 1 : index;
-            if(HeapType == BinaryHeapType.MinHeap)
+            index = (index < 0) ? Size - 1 : index;
+            if (HeapType == BinaryHeapType.MinHeap)
             {
                 while (HasParent(index) && _heapItems[index].CompareTo(Parent(index)) == -1)
                 {
                     Swap(index, ParentIndex(index));
                     index = ParentIndex(index);
                 }
-            }else
+            }
+            else
             {
                 while (HasParent(index) && _heapItems[index].CompareTo(Parent(index)) == 1)
                 {
@@ -237,7 +234,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <returns>First TObject</returns>
         public virtual TObject Take()
         {
-            TObject first = this.Peek();
+            TObject first = Peek();
             _heapItems[0] = _heapItems[_size - 1];
             _size--;
             HeapifyDown();
@@ -272,7 +269,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         public virtual void AddRange(IEnumerable<TObject> items)
         {
             EnsureCapacity(items.Count());
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 _heapItems[_size] = item;
                 _size++;
@@ -420,31 +417,26 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
     /// <summary>
     /// Class to use in BinaryHeaps when the object is not of type IComparable
     /// </summary>
-    public class HeapItem : IEquatable<HeapItem>, IComparable<HeapItem>
+    /// <remarks>
+    /// HeapItem default constructor
+    /// </remarks>
+    /// <param name="data">Object to store</param>
+    /// <param name="value">Associated value</param>
+    public class HeapItem(object data, IComparable value) : IEquatable<HeapItem>, IComparable<HeapItem>
     {
         #region Properties
         /// <summary>
         /// Object to store
         /// </summary>
-        public object Item { get; private set; }
+        public object Item { get; private set; } = data;
 
         /// <summary>
         /// Item's associated value
         /// </summary>
-        public IComparable Value { get; private set; }
-        #endregion
+        public IComparable Value { get; private set; } = value;
 
+        #endregion
         #region Constructors
-        /// <summary>
-        /// HeapItem default constructor
-        /// </summary>
-        /// <param name="data">Object to store</param>
-        /// <param name="value">Associated value</param>
-        public HeapItem(object data, IComparable value)
-        {
-            Item = data;
-            Value = value;
-        } 
         #endregion
 
         /// <summary>
@@ -464,7 +456,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <returns></returns>
         public bool Equals(HeapItem obj)
         {
-            return this.Item.Equals(obj.Item);
+            return Item.Equals(obj.Item);
         }
 
         /// <summary>
@@ -483,7 +475,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Graphs.DataStructures
         /// <returns></returns>
         public int CompareTo(HeapItem obj)
         {
-            return this.Value.CompareTo(obj.Value);
+            return Value.CompareTo(obj.Value);
         }
 
         /// <summary>

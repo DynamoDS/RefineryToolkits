@@ -15,22 +15,24 @@ namespace Autodesk.RefineryToolkits.Core.Utillites.Tests
         [SetUp]
         public void BeforeTest()
         {
-            this.ColinearPoints = new List<Point>
-            {
+            ColinearPoints =
+            [
                 Point.ByCoordinates(260,600),
                 Point.ByCoordinates(285,600),
                 Point.ByCoordinates(310,600),
                 Point.ByCoordinates(335,600)
-            };
+            ];
 
-            this.NonColinearPoints = new List<Point>(this.ColinearPoints);
-            this.NonColinearPoints.Add(Point.ByCoordinates(250, 600 + MarginOfError));
+            NonColinearPoints = new List<Point>(ColinearPoints)
+            {
+                Point.ByCoordinates(250, 600 + MarginOfError)
+            };
         }
 
         [Test]
         public void Colinear_CanIdentifyNonColinear()
         {
-            var noncolinear = this.NonColinearPoints.AreColinear();
+            var noncolinear = NonColinearPoints.AreColinear();
             Assert.IsFalse(noncolinear);
         }
 
@@ -39,7 +41,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites.Tests
         public void Colinear_CanIdentify3Points()
         {
             // Arrange
-            var threePoints = new List<Point>(this.ColinearPoints);
+            var threePoints = new List<Point>(ColinearPoints);
             threePoints.RemoveAt(threePoints.Count - 1);
 
             // Act
@@ -53,7 +55,7 @@ namespace Autodesk.RefineryToolkits.Core.Utillites.Tests
         [Test]
         public void Colinear_CanIdentify4Points()
         {
-            var colinear = this.ColinearPoints.AreColinear();
+            var colinear = ColinearPoints.AreColinear();
             Assert.IsTrue(colinear);
             Assert.AreEqual(4, ColinearPoints.Count);
         }
@@ -62,9 +64,11 @@ namespace Autodesk.RefineryToolkits.Core.Utillites.Tests
         public void Colinear_CanIdentify6Points()
         {
             // Arrange
-            var fivePoints = new List<Point>(this.ColinearPoints);
-            fivePoints.Add(Point.ByCoordinates(250, 600));
-            fivePoints.Add(Point.ByCoordinates(350, 600));
+            var fivePoints = new List<Point>(ColinearPoints)
+            {
+                Point.ByCoordinates(250, 600),
+                Point.ByCoordinates(350, 600)
+            };
 
             // Act
             var colinear = fivePoints.AreColinear();

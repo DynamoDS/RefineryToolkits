@@ -16,7 +16,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         private const string PackingFailed = "Could not pack items in container.";
         private const string BinNotInitialised = "Bin has not been initialised";
         private Container bin;
-        private Cuboid containerCuboid;
+        private readonly Cuboid containerCuboid;
 
         public List<Cuboid> PackedItems { get; private set; }
 
@@ -34,18 +34,17 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
         public CuboidPacker()
         {
-            this.PackedItems = new List<Cuboid>();
-            this.PackedIndices = new List<int>();
-            this.RemainingIndices = new List<int>();
-            this.bin = null;
+            PackedItems = [];
+            PackedIndices = [];
+            RemainingIndices = [];
+            bin = null;
         }
 
         public CuboidPacker(Cuboid bin, int id) : this()
         {
-            if (bin is null)
-                throw new ArgumentNullException(nameof(bin));
+            ArgumentNullException.ThrowIfNull(bin);
 
-            this.containerCuboid = bin;
+            containerCuboid = bin;
             this.bin = ContainerFromCuboid(bin, id);
         }
 
@@ -55,60 +54,58 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
         private void PackItems(List<Item> items)
         {
-            if (this.bin == null) throw new InvalidOperationException(BinNotInitialised);
+            if (bin == null) throw new InvalidOperationException(BinNotInitialised);
             if (items.Count == 0) throw new ArgumentNullException(nameof(items));
 
             var algorithm = new List<int> { PACKING_ALGORITHM_ID };
 
-            var containerPackingResult = CromulentBisgetti.ContainerPacking.PackingService.Pack(new List<Container> { this.bin }, items, algorithm);
+            var containerPackingResult = CromulentBisgetti.ContainerPacking.PackingService.Pack([bin], items, algorithm);
             if (containerPackingResult == null || containerPackingResult.Count == 0) throw new InvalidOperationException(PackingFailed);
 
             // we are only packing in 1 container at a time so there will only ever be 1 packing result
-            var packingResult = containerPackingResult.FirstOrDefault().AlgorithmPackingResults.FirstOrDefault();
-            if (packingResult == null) throw new InvalidOperationException(PackingFailed);
+            var packingResult = containerPackingResult.FirstOrDefault().AlgorithmPackingResults.FirstOrDefault() ?? throw new InvalidOperationException(PackingFailed);
 
             // record results in this packer instance    
-            
+
             // if the container was not used, we return a blank list
-            if (!packingResult.PackedItems.Any())
+            if (packingResult.PackedItems.Count == 0)
             {
-                this.PackedItems = new List<Cuboid>();
-                this.RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
-                this.PackedIndices = new List<int>();
-                this.PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
-                this.PercentItemVolumePacked = decimal.ToDouble(packingResult.PercentItemVolumePacked);
+                PackedItems = [];
+                RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
+                PackedIndices = [];
+                PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
+                PercentItemVolumePacked = decimal.ToDouble(packingResult.PercentItemVolumePacked);
                 return;
             }
 
             var packedCuboids = CuboidsFromItems(packingResult.PackedItems);
-            this.PackedItems = TransformPackedCuboidsToContainerCuboidCoords(this.containerCuboid, packedCuboids);
-            this.RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
-            this.PackedIndices = IdsFromItems(packingResult.PackedItems);
-            this.PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
-            this.PercentItemVolumePacked = decimal.ToDouble(packingResult.PercentItemVolumePacked);
+            PackedItems = TransformPackedCuboidsToContainerCuboidCoords(containerCuboid, packedCuboids);
+            RemainingIndices = IdsFromItems(packingResult.UnpackedItems);
+            PackedIndices = IdsFromItems(packingResult.PackedItems);
+            PercentContainerVolumePacked = decimal.ToDouble(packingResult.PercentContainerVolumePacked);
+            PercentItemVolumePacked = decimal.ToDouble(packingResult.PercentItemVolumePacked);
         }
 
         public void PackOneContainer(List<Cuboid> items, Cuboid container)
         {
             if (items.Count == 0)
                 throw new ArgumentNullException(nameof(items));
-            if (container is null)
-                throw new ArgumentNullException(nameof(container));
+            ArgumentNullException.ThrowIfNull(container);
 
-            this.bin = ContainerFromCuboid(container, 0);
+            bin = ContainerFromCuboid(container, 0);
 
             // convert cuboids to items and containers so packing library can process them
             var itemsToPack = ItemsFromCuboids(items);
 
-            this.PackItems(itemsToPack);
+            PackItems(itemsToPack);
         }
 
         public List<IPacker<Cuboid, Cuboid>> PackMultipleContainers(
             List<Cuboid> items,
             List<Cuboid> containers)
         {
-            return this.PackMultipleContainersWithStats(items, containers)
-                .Select(x=>x as IPacker<Cuboid,Cuboid>)
+            return PackMultipleContainersWithStats(items, containers)
+                .Select(x => x as IPacker<Cuboid, Cuboid>)
                 .ToList();
         }
 
@@ -118,7 +115,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
         /// <param name="items">The items to pack.</param>
         /// <param name="containers">The containers to pack into.</param>
         /// <returns>Packing results and expanded statistics about packing performance.</returns>
-        public List<CuboidPacker> PackMultipleContainersWithStats(
+        public static List<CuboidPacker> PackMultipleContainersWithStats(
             List<Cuboid> items,
             List<Cuboid> containers)
         {
@@ -138,7 +135,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
                 //this moves on if the pack is complete and there are containers left
                 if (remainingItems.Count == 0)
                     continue;
-                
+
                 // pack items
                 var currentBin = containers[i];
                 var packer = new CuboidPacker(currentBin, i);
@@ -242,8 +239,7 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate.Packers
 
         private static List<Cuboid> TransformPackedCuboidsToContainerCuboidCoords(Cuboid container, List<Cuboid> packedItems)
         {
-            if (container == null)
-                throw new ArgumentNullException(nameof(container));
+            ArgumentNullException.ThrowIfNull(container);
 
             if (packedItems == null || packedItems.Count == 0)
                 throw new ArgumentNullException(nameof(packedItems));

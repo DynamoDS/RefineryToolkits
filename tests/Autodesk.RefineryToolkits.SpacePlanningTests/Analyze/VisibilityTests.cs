@@ -10,8 +10,8 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
     [TestFixture]
     public partial class VisibilityTests : GeometricTestBase
     {
-        private const string percentageVisibleOutputPort = "Percentage visible";
-        private const string visibleItemsOutputPort = "Visible items";
+        private const string percentageVisibleOutputPort = "percentageVisible";
+        private const string visibleItemsOutputPort = "visibleItems";
 
         // Points
         private Polygon pointObstacles;
@@ -27,21 +27,21 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void BeforeTest()
         {
             // for Points
-            this.boundaryPoly = new List<Polygon> { Rectangle.ByWidthLength(50, 50) as Polygon };
-            this.pointObstacles = Rectangle.ByWidthLength(15, 15) as Polygon;
-            this.samplePoints = new List<Point>();
+            boundaryPoly = [Rectangle.ByWidthLength(50, 50) as Polygon];
+            pointObstacles = Rectangle.ByWidthLength(15, 15) as Polygon;
+            samplePoints = [];
             foreach (int n in Enumerable.Range(16, 10))
             {
                 foreach (int i in Enumerable.Range(-25, 10))
                 {
-                    this.samplePoints.Add(Point.ByCoordinates(n, i));
+                    samplePoints.Add(Point.ByCoordinates(n, i));
                 }
             }
-            this.pointOrigin = Point.ByCoordinates(-20, -2);
+            pointOrigin = Point.ByCoordinates(-20, -2);
 
             // for Lines
-            this.lines = this.boundaryPoly[0].Explode().Cast<Curve>().ToList();
-            this.originZero = Point.ByCoordinates(0, 0);
+            lines = boundaryPoly[0].Explode().Cast<Curve>().ToList();
+            originZero = Point.ByCoordinates(0, 0);
         }
 
         #region Points
@@ -53,10 +53,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void OfPoints_DicionaryOutputTest()
         {
             var result = Visibility.OfPointsFromOrigin(
-                this.pointOrigin,
-                this.samplePoints,
-                this.boundaryPoly,
-                new List<Polygon> { this.pointObstacles });
+                pointOrigin,
+                samplePoints,
+                boundaryPoly,
+                [pointObstacles]);
 
             Assert.IsTrue(result.Keys.Contains(percentageVisibleOutputPort));
             Assert.IsTrue(result.Keys.Contains(visibleItemsOutputPort));
@@ -71,10 +71,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         {
             var expectedVisibilityPercentage = 57d;
             var result = Visibility.OfPointsFromOrigin(
-                this.pointOrigin,
-                this.samplePoints,
-                this.boundaryPoly,
-                new List<Polygon> { this.pointObstacles });
+                pointOrigin,
+                samplePoints,
+                boundaryPoly,
+                [pointObstacles]);
 
             var visiblePointsScore = (double)result[percentageVisibleOutputPort];
 
@@ -92,10 +92,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         public void OfLines_DictionaryOutputTest()
         {
             var result = Visibility.OfLinesFromOrigin(
-                this.originZero,
-                this.lines,
-                this.boundaryPoly,
-                new List<Polygon> { });
+                originZero,
+                lines,
+                boundaryPoly,
+                []);
 
             // Check if output of node is a Dictionary that contains the correct output ports
             Assert.IsTrue(result.Keys.Contains(percentageVisibleOutputPort));
@@ -110,10 +110,10 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         {
             var expectedVisibilityPercentage = 100d;
             var result = Visibility.OfLinesFromOrigin(
-                this.originZero,
-                this.lines,
-                this.boundaryPoly,
-                new List<Polygon> { });
+                originZero,
+                lines,
+                boundaryPoly,
+                []);
 
             // Check if the score output is 1.0
             // as there are no obstacles blocking the views to outside
@@ -129,13 +129,13 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Analyze.Tests
         {
             var notExpectedVisibilityPercentage = 100d;
             Polygon internalPoly = Rectangle.ByWidthLength(5, 5) as Polygon;
-            Point newOrigin = this.originZero.Translate(10) as Point;
-            
+            Point newOrigin = originZero.Translate(10) as Point;
+
             var result = Visibility.OfLinesFromOrigin(
                 newOrigin,
-                this.lines,
-                this.boundaryPoly,
-                new List<Polygon> { internalPoly });
+                lines,
+                boundaryPoly,
+                [internalPoly]);
 
             var viewScore = (double)result[percentageVisibleOutputPort];
             Assert.Less(viewScore, notExpectedVisibilityPercentage);
