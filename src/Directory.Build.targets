@@ -25,7 +25,7 @@
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(ExtensionOutput)\bin\%(RecursiveDir)" />
     <Copy SourceFiles="@(OtherFiles)" DestinationFolder="$(ExtensionOutput)\%(Folder)" />
   
-    <WriteLinesToFile File="$(ExtensionOutput)pkg.json" Lines="$([System.IO.File]::ReadAllText($(MSBuildThisFileDirectory)pkg.json).Replace('$Version$','$(Version)').Replace('$DynamoVersion$','$(DynamoVersion)'))" Overwrite="true" Encoding="Unicode" />
+    <WriteLinesToFile File="$(ExtensionOutput)pkg.json" Lines="$([System.IO.File]::ReadAllText($(MSBuildThisFileDirectory)pkg.json).Replace('$Version$','$(Version)').Replace('$DynamoVersion$','$(DynamoPackageVersion)'))" Overwrite="true" Encoding="Unicode" />
   </Target>
 
   <!--Copy the built extension to a local Dynamo packages folder for development.-->
