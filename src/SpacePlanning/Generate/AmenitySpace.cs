@@ -49,13 +49,12 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
                 others = dict["otherCrvs"];
             }
 
-            // get perimeter curves of input surface 
-            List<Curve> perimCrvs = [.. surface.PerimeterCurves()];
-            List<Curve> matchCrvs = max.FindMatchingVectorCurves(perimCrvs);
+            // offset the perimeter curves of input surface close to the offset curve.
+            List<Curve> inCrvs2 = [.. surface.OffsetPerimeterCurves(offset*0.95)["insetCrvs"]];
 
             // get longest curve  
             Curve max2;
-            Dictionary<string, dynamic> dict2 = matchCrvs.MaximumLength();
+            Dictionary<string, dynamic> dict2 = inCrvs2.MaximumLength();
             if (dict2["maxCrv"].Count < 1)
             {
                 max2 = dict2["otherCrvs"][0] as Curve;
@@ -111,10 +110,9 @@ namespace Autodesk.RefineryToolkits.SpacePlanning.Generate
 
             //Dispose redundant geometry
             inCrvs.ForEach(crv => crv.Dispose());
+            inCrvs2.ForEach(crv => crv.Dispose());
             inSrf.Dispose();
             max.Dispose();
-            perimCrvs.ForEach(crv => crv.Dispose());
-            matchCrvs.ForEach(crv => crv.Dispose());
             max2.Dispose();
             vec.Dispose();
             transLine.Dispose();
