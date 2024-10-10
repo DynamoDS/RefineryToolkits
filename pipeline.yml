@@ -27,18 +27,18 @@ deployment:
   -
     type: customized
     scripts:
-      - "pwsh.exe -ExecutionPolicy ByPass -Command Compress-Archive -Path build -DestinationPath RefineryToolkits.zip"
+      - "pwsh.exe -ExecutionPolicy ByPass -Command Compress-Archive -Path build -DestinationPath RefineryToolkit.zip"
   -
     type: artifacts
     publish_to_jenkins: true
     publish_to_artifactory: false
     allow_branches: ".*"
     outputs:
-      - RefineryToolkits.zip
+      - RefineryToolkit.zip
   -
     type: artifacts
     publish_to_jenkins: false
     publish_to_artifactory: true
     allow_branches: ".*"
     outputs:
-      - RefineryToolkits.zip
+      - RefineryToolkit.zip
