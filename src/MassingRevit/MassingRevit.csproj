@@ -6,15 +6,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit Preview Release\RevitAPI.dll</HintPath>
+      <HintPath>..\..\lib\Revit\2025\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitServices">
-      <HintPath>C:\Program Files\Autodesk\Revit Preview Release\AddIns\DynamoForRevit\Revit\RevitServices.dll</HintPath>
+      <HintPath>..\..\lib\Revit\2025\RevitServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitNodes">
-      <HintPath>C:\Program Files\Autodesk\Revit Preview Release\AddIns\DynamoForRevit\Revit\RevitNodes.dll</HintPath>
+      <HintPath>..\..\lib\Revit\2025\RevitNodes.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
