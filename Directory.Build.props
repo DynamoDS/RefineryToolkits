@@ -1,7 +1,9 @@
 <Project>
   <PropertyGroup>
     <Copyright>Copyright © 2024</Copyright>
-    <Version>3.0.1</Version>
+    <!-- This is populated by the CI library. Using `VersionPrefix` allows specifying a `version-suffix` argument when packing for beta releases. -->
+    <MS_PACKAGE_VERSION Condition="'$(MS_PACKAGE_VERSION)' == ''">0.0.0.0</MS_PACKAGE_VERSION>
+    <VersionPrefix>$(MS_PACKAGE_VERSION)</VersionPrefix>
     <DynamoVersion>3.0</DynamoVersion>
     <DynamoPackageVersion>3.0.0.7190</DynamoPackageVersion>
     <Company>Autodesk Inc</Company>
