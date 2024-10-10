@@ -39,6 +39,5 @@ deployment:
     type: artifacts
     publish_to_jenkins: false
     publish_to_artifactory: true
-    allow_branches: ".*"
     outputs:
       - RefineryToolkit.zip
