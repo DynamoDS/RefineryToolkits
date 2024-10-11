@@ -1,0 +1,40 @@
+version: 3.0.1
+pipeline_os: windows
+create_github_release: true
+create_pr_release_to_master: true
+
+env:
+  - GITHUB_ACCESS_TOKEN_ID: github_access_token_acsbuildguy
+  - JENKINS_NODE_WIN: DynamoWinBuild
+
+code_analysis:
+  sonarqube:
+    source_encoding: UTF-8
+    src: .
+    coverage_reports:
+      - coverage.info
+
+build:
+  -
+    scripts:
+      - dotnet msbuild src/Autodesk.RefineryToolkits.sln -p:Configuration=Release -p:CopyLocal=False -restore
+
+deployment:
+  -
+    type: sign
+    files_to_sign:
+      - build/bin/Autodesk.RefineryToolkits.*.dll
+  -
+    type: customized
+    scripts:
+      - "pwsh.exe -ExecutionPolicy ByPass -Command Compress-Archive -Path build -DestinationPath RefineryToolkit.zip"
+  -
+    type: artifacts
+    publish_to_jenkins: true
+    publish_to_artifactory: true
+    outputs:
+      - RefineryToolkit.zip
+  -
+    type: github
+    outputs:
+      - RefineryToolkit.zip
