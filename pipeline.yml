@@ -31,13 +31,6 @@ deployment:
   -
     type: artifacts
     publish_to_jenkins: true
-    publish_to_artifactory: false
-    allow_branches: ".*"
-    outputs:
-      - RefineryToolkit.zip
-  -
-    type: artifacts
-    publish_to_jenkins: false
     publish_to_artifactory: true
     outputs:
       - RefineryToolkit.zip
