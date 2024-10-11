@@ -41,3 +41,7 @@ deployment:
     publish_to_artifactory: true
     outputs:
       - RefineryToolkit.zip
+  -
+    type: github
+    outputs:
+      - RefineryToolkit.zip
