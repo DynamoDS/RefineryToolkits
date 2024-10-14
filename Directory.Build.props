@@ -3,6 +3,8 @@
     <Copyright>Copyright © 2024</Copyright>
     <!-- This is populated by the CI library. Using `VersionPrefix` allows specifying a `version-suffix` argument when packing for beta releases. -->
     <MS_PACKAGE_VERSION Condition="'$(MS_PACKAGE_VERSION)' == ''">0.0.0.0</MS_PACKAGE_VERSION>
+    <!-- PKG_JSON_VERSION is used as the pkg.json version for the Dynamo package. (Dynamo Package Manager only supports 3 version numbers.)-->
+    <PKG_JSON_VERSION>$([System.Text.RegularExpressions.Regex]::Replace( $(MS_PACKAGE_VERSION), '(\d+).(\d+).(\d+).(\d+)', '$1.$2.$3' ) )</PKG_JSON_VERSION>
     <VersionPrefix>$(MS_PACKAGE_VERSION)</VersionPrefix>
     <DynamoVersion>3.0</DynamoVersion>
     <DynamoPackageVersion>3.0.0.7190</DynamoPackageVersion>

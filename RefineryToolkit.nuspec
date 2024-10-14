@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>RefineryToolkit</id>
-        <version>1.1.1</version>
+        <version>0.0.0</version>
         <authors>Autodesk</authors>
         <owners>Autodesk</owners>
         <license type="expression">Apache-2.0</license>
@@ -12,8 +12,8 @@
         <copyright>Copyright Autodesk 2024</copyright>
     </metadata>
     <files>
-        <file src="build\pkg.json" target="" />
-        <file src="build\bin\**" target="bin\" exclude="bin\*.pdb;" />
-        <file src="build\Extra\**" target="Extra\" />
+        <file src="build\Refinery Toolkit\pkg.json" target="" />
+        <file src="build\Refinery Toolkit\bin\**" target="bin\" exclude="bin\Refinery Toolkit\*.pdb;" />
+        <file src="build\Refinery Toolkit\Extra\**" target="Extra\" />
     </files>
 </package>

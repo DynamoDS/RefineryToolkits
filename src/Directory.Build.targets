@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <ExtensionOutput>$(MSBuildThisFileDirectory)..\build\</ExtensionOutput>
+    <ExtensionOutput>$(MSBuildThisFileDirectory)..\build\Refinery Toolkit\</ExtensionOutput>
 
     <!-- Set these in a csproj.user file (or here, just don't commit the change) to override. -->
     <LocalCopyFolder>$(AppData)/Dynamo/Dynamo Core/$(DynamoVersion)/packages</LocalCopyFolder>
@@ -25,7 +25,7 @@
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(ExtensionOutput)\bin\%(RecursiveDir)" />
     <Copy SourceFiles="@(OtherFiles)" DestinationFolder="$(ExtensionOutput)\%(Folder)" />
 
-    <WriteLinesToFile File="$(ExtensionOutput)pkg.json" Lines="$([System.IO.File]::ReadAllText($(MSBuildThisFileDirectory)pkg.json).Replace('$Version$','$(_PACKAGE_VERSION)').Replace('$DynamoVersion$','$(DynamoPackageVersion)'))" Overwrite="true" Encoding="Unicode" />
+    <WriteLinesToFile File="$(ExtensionOutput)pkg.json" Lines="$([System.IO.File]::ReadAllText($(MSBuildThisFileDirectory)pkg.json).Replace('$Version$','$(PKG_JSON_VERSION)').Replace('$DynamoVersion$','$(DynamoPackageVersion)'))" Overwrite="true" Encoding="Unicode" />
   </Target>
 
   <!--Copy the built extension to a local Dynamo packages folder for development.-->

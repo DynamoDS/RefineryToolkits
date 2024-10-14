@@ -1,11 +1,15 @@
 version: 3.0.1
 pipeline_os: windows
-create_github_release: true
-create_pr_release_to_master: true
 
 env:
   - GITHUB_ACCESS_TOKEN_ID: github_access_token_acsbuildguy
   - JENKINS_NODE_WIN: DynamoWinBuild
+
+jenkins_creds:
+  -
+    type: secretText
+    credentialsId: svc_d_dyntest-apikey-artifactory-dynamo-team-nuget
+    secretText: API_KEY
 
 code_analysis:
   sonarqube:
@@ -23,18 +27,23 @@ deployment:
   -
     type: sign
     files_to_sign:
-      - build/bin/Autodesk.RefineryToolkits.*.dll
+      - build/Refinery Toolkit/bin/Autodesk.RefineryToolkits.*.dll
   -
     type: customized
     scripts:
-      - "pwsh.exe -ExecutionPolicy ByPass -Command Compress-Archive -Path build -DestinationPath RefineryToolkit.zip"
+      - "pwsh.exe -ExecutionPolicy ByPass -Command Compress-Archive -Path build/Refinery Toolkit -DestinationPath RefineryToolkit.zip"
   -
     type: artifacts
     publish_to_jenkins: true
-    publish_to_artifactory: true
+    publish_to_artifactory: false
     outputs:
       - RefineryToolkit.zip
   -
-    type: github
-    outputs:
-      - RefineryToolkit.zip
+    type: nuget
+    custom_api_key: ${API_KEY}
+    nuget_config_file: src/nuget.config
+    allow_branches: master
+    nuspec_files:
+      - RefineryToolkit.nuspec
+    package_version_cmd: echo %MS_PACKAGE_VERSION%
+    destination_source_name: Dynamo Artifactory
