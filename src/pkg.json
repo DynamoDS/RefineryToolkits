@@ -24,8 +24,8 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "Autodesk.RefineryToolkits.MassingRevit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Autodesk.RefineryToolkits.MassingSandbox, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Autodesk.RefineryToolkits.SpacePlanning, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+    "Autodesk.RefineryToolkits.MassingRevit, Version=$DllVersion$, Culture=neutral, PublicKeyToken=null",
+    "Autodesk.RefineryToolkits.MassingSandbox, Version=$DllVersion$, Culture=neutral, PublicKeyToken=null",
+    "Autodesk.RefineryToolkits.SpacePlanning, Version=$DllVersion$, Culture=neutral, PublicKeyToken=null"
   ]
 }
