@@ -3,7 +3,7 @@ pipeline_os: windows
 
 env:
   - GITHUB_ACCESS_TOKEN_ID: github_access_token_acsbuildguy
-  - JENKINS_NODE_WIN: DynamoWinBuild
+  - JENKINS_NODE_WIN: CDA-VS22-SVC
 
 jenkins_creds:
   -
