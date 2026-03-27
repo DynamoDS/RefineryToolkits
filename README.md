@@ -1,5 +1,7 @@
 # Refinery Toolkits
 
+[![Build Status](https://c007.cloudbees-ci.autodesk.com/buildStatus/icon?job=DYNCI%2FDynamo%2FRefineryToolkits%2Fmaster)](https://c007.cloudbees-ci.autodesk.com/job/DYNCI/job/Dynamo/job/RefineryToolkits/job/master/)
+
 A collection of packages to accelerate generative design workflows in [Dynamo](http://www.dynamobim.org) & [Generative Design](https://www.autodesk.com/solutions/generative-design/architecture-engineering-construction) (formerly "Refinery").
 
 ![Space Planning Toolkit floorplan layout](samples/SpacePlanning/SpacePlanningToolkit_floorplan_layout.png)
