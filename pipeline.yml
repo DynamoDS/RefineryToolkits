@@ -3,11 +3,10 @@ pipeline_os: windows
 
 env:
   - GITHUB_ACCESS_TOKEN_ID: github_access_token_acsbuildguy
-  - JENKINS_NODE_WIN: CDA-VS22-SVC
+  - JENKINS_NODE_WIN: CDA-VS22-CBCI-SVC
 
 jenkins_creds:
-  -
-    type: secretText
+  - type: secretText
     credentialsId: svc_d_dyntest-apikey-artifactory-dynamo-team-nuget
     secretText: API_KEY
 
@@ -19,27 +18,22 @@ code_analysis:
       - coverage.info
 
 build:
-  -
-    scripts:
+  - scripts:
       - dotnet msbuild src/Autodesk.RefineryToolkits.sln -p:Configuration=Release -p:CopyLocal=False -restore
 
 deployment:
-  -
-    type: sign
+  - type: sign
     files_to_sign:
       - build/Refinery Toolkit/bin/Autodesk.RefineryToolkits.*.dll
-  -
-    type: customized
+  - type: customized
     scripts:
       - pwsh.exe -ExecutionPolicy ByPass -Command Compress-Archive -Path 'build/Refinery Toolkit' -DestinationPath RefineryToolkit.zip
-  -
-    type: artifacts
+  - type: artifacts
     publish_to_jenkins: true
     publish_to_artifactory: false
     outputs:
       - RefineryToolkit.zip
-  -
-    type: nuget
+  - type: nuget
     custom_api_key: ${API_KEY}
     nuget_config_file: src/nuget.config
     allow_branches: master
